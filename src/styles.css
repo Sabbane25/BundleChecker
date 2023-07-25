@@ -1,1 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+
+/* -------- NAV STYLE --------------*/
+.container-fluid {
+    background-color: #00528D;
+    padding-left: 100px;
+    padding-right: 100px; 
+}
+
+nav .container-fluid a{
+    color: white;
+}
+
+/* --------- KOMPONENTEN ------------*/
+h2{
+    margin-top: 16px;
+    font-size: 18px;
+}
