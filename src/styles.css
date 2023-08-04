@@ -1,4 +1,7 @@
-
+*{
+    padding: 0px;
+    margin: 0px;
+}
 /* -------- NAV STYLE --------------*/
 .container-fluid {
     background-color: #00528D;
@@ -10,8 +13,23 @@ nav .container-fluid a{
     color: white;
 }
 
-/* --------- KOMPONENTEN ------------*/
+/* ------------------------PC-KONFIGURATIONSEITE----------------------------*/
+/* Title (PC-Konfiguration))*/
 h2{
     margin-top: 16px;
-    font-size: 18px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+/* Button: Komponenten und Übersicht */
+.custom-bg-color{
+    background-color: #00528D;
+    color: white;
+}
+
+/*--------- ROUTER-OUTLET von app.component.html --------*/
+router-outlet{
+    margin-right: 100px;
+    margin-bottom: 100px;
+    background-color: red;
 }

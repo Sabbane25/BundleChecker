@@ -9,7 +9,7 @@ import { MerkzettelModule } from './merkzettel/merkzettel.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
