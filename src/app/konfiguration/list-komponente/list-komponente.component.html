@@ -1,0 +1,22 @@
+
+<div class="row border justify-content-center mt-3">
+    <div class="col-6 border">
+        <div class="accordion" id="accordionExample"  *ngFor="let komponante of komponantenList">   
+            <div class="accordion-item">
+                <div class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    {{ komponante }}
+                  </button>
+                </div>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                  </div>
+                </div>
+            </div>        
+        </div>
+    </div>
+    <div class="col-4 border ms-3">
+        <p>Neue <span>Konfigutation</span></p>
+    </div>
+</div>
