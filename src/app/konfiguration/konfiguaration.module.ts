@@ -1,19 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UebersichtComponent } from './uebersicht/uebersicht.component';
-import { ListKomponenteComponent } from './list-komponente/list-komponente.component';
+import { UebersichtComponent } from './uebersicht/uebersicht.component'; // Stellen Sie sicher, dass der Pfad korrekt ist.
 import { KonfigurationComponent } from './konfiguration/konfiguration.component';
 
-
-
 @NgModule({
-  declarations: [
-    KonfigurationComponent,
-    UebersichtComponent,
-    ListKomponenteComponent,
-  ],
-  imports: [
-    CommonModule,
-  ]
+  declarations: [UebersichtComponent, KonfigurationComponent], // Hier die Komponenten deklarieren.
+  imports: [CommonModule],
+  exports: [KonfigurationComponent], // Wenn die KonfigurationComponent exportiert werden muss.
 })
-export class KonfiguarationModule { }
+export class KonfigurationModule { }
