@@ -3,7 +3,10 @@ import { CommonModule } from '@angular/common';
 import { UebersichtComponent } from './uebersicht/uebersicht.component';
 import { ListKomponenteComponent } from './list-komponente/list-komponente.component';
 import { KonfigurationComponent } from './konfiguration/konfiguration.component';
+import { RouterModule, Routes } from '@angular/router';
 
+const komponentenRoutes: Routes = [
+];
 
 
 @NgModule({
@@ -13,6 +16,7 @@ import { KonfigurationComponent } from './konfiguration/konfiguration.component'
     ListKomponenteComponent,
   ],
   imports: [
+    RouterModule.forChild(komponentenRoutes),
     CommonModule,
   ]
 })

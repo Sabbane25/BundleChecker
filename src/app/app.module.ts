@@ -12,8 +12,8 @@ import { MerkzettelModule } from './merkzettel/merkzettel.module';
     AppComponent,
   ],
   imports: [
-    BrowserModule,
     KonfiguarationModule,
+    BrowserModule,
     KontaktModule,
     MerkzettelModule,
     AppRoutingModule,

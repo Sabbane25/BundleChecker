@@ -1,12 +1,17 @@
 <h2 class="text-center">PC KONFIGURATION</h2>
 
-<div class="container border">
+<div class="">
     <div class="d-flex">
-        <div class="p-2 me-2 flex-fill text-center border rounded-4 custom-bg-color" (click)="chargerComposant('ListKomponenteComponent')" >Komponanten</div>
-        <div class="p-2 ms-2 flex-fill text-center border rounded-4 custom-bg-color" (click)="chargerComposant('UebersichtComponent')" >Übersicht</div>
+        <div class="p-2 me-2 flex-fill text-center border rounded-4 custom-bg-color" (click)="zuKomponenten()" [style.backgroundColor]="gitFarbe ? 'white' : '#00528D'"> Komponanten</div>
+        <div class="p-2 ms-2 flex-fill text-center border rounded-4 custom-bg-color" (click)="zuUebersicht()" [style.backgroundColor]="gitFarbe ? '#00528D' : 'white'"> Übersicht</div>
     </div>
 
-    <div class="container mt-3">
+    <div *ngIf="zeigeListKomponenten">
+        <app-list-komponent></app-list-komponent>
+    </div>
+
+    <div *ngIf="zeigeListUebersicht">
         <app-uebersicht></app-uebersicht>
     </div>
 </div>
+

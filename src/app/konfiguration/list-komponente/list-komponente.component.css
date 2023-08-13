@@ -1,0 +1,240 @@
+/* ------ Komponenten-list --------*/
+*{
+  margin: 0px;
+  padding: 0px;
+}
+.komponenten-main{
+  display: flex;
+  margin-top: 28px;
+
+}
+.komponanten-div{
+  flex: 0 0 auto; /* Équivalent à flex-grow: 0; flex-shrink: 0; flex-basis: auto; */
+  align-self: flex-start;
+  margin: 0px;
+  padding:0px;
+  width: 63%;
+  /*box-shadow: 0px 0px 15px rgba(160, 160, 160, 0.6);*/
+}
+
+/*----- ITEM STYLE -------*/
+.komponanten-div .accordion{
+  margin-bottom: 18px;
+}
+
+.komponanten-div .accordion .accordion-item{
+  margin-bottom: 16px;
+  box-shadow: 0px 0px 15px rgba(160, 160, 160, 0.6);
+  border-radius: 12px;
+}
+
+.komponanten-div .accordion-item .accordion-header{
+  height: 58px;
+  border: 1px solid #00528D;
+  border-radius: 12px;
+}
+
+.komponanten-div .accordion-item .accordion-header .accordion-button{
+  height: 100%;
+  border-radius: 12px;
+  padding-right: 12px;
+}
+
+.komponanten-div .accordion-item .accordion-header .accordion-button .item-img{
+  width:58px; 
+  height: 100%; 
+  background-color:#00528D; 
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.komponanten-div .accordion-item .accordion-header .accordion-button .item-img img{
+  width: 68%;
+  height: 68%;
+}
+
+/*-------- ENDE ITEM STYLE ---------*/
+/*####### SUCHE UND FILTER ########*/
+.komponanten-div .suche-filter{
+  margin-top: 20px;
+}
+.komponanten-div .suche-filter .suche-leiste input{
+  width: 100%;
+  padding: 8px;
+  font-size: 12px;
+  border-radius: 6px;
+  border: 1px solid rgb(38, 38, 38);
+}
+
+.komponanten-div .suche-filter .filter select{
+  margin: 8px 18px 10px 0px;
+  font-size: 12px;
+  padding: 6px 0px 6px 10px;
+  width: 40%;
+  border: 1px solid rgb(38, 38, 38);
+}
+
+/*-------- ENDE SUCHE UND FILTER STYLE ---------*/
+/*####### LISTE ARTIKEL ########*/
+
+.listeKomponenten{
+  display: flex;
+  border: 1px solid rgb(148, 148, 148);
+  justify-content: space-between;
+  align-items: stretch;
+  border-radius: 12px;
+}
+
+.titleKomponante{
+  flex: 2;
+}
+
+.titleKomponante h4{
+  color: black;
+  margin-top: 20px;
+  size: 1px;
+  font-size: 16px;
+}
+
+.pfeilKomponante{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  background-color: #00528D;
+  color: white;
+  border-bottom-right-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.pfeilKomponante h4{
+  margin-top: 18px;
+  font-size: 18px;
+}
+
+.imgKomponante{
+  width: 60px;
+  height: 60px;
+  margin-right: 16px;
+  background-color: #00528D;
+  padding: 10px 10px;
+  border-radius: 12px;
+}
+
+.imgKomponante img{
+  max-width: 100%;
+  height: 100%;
+}
+
+/*---Aller Artikeln einer Komponente ----*/
+.komponanten-div .artikl-container{
+  /*border: 3px solid green;*/
+  padding: 16px 0px 16px 0px;
+}
+
+.komponanten-div .list-artikel {
+  margin-top: 8px;
+  border-top: 1px solid black;
+}
+
+.komponanten-div .list-artikel .row .col-1{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background-color: black;
+  margin: auto;
+  margin-right: 8px;
+}
+
+.komponanten-div .list-artikel .row .col-1 h5{
+  color: white;
+  font-size: 14px;
+}
+
+.komponanten-div .list-artikel .row .col{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.komponanten-div .list-artikel .row .col button{
+  width: 80%;
+  background-color: green;
+  font-size: 10px;
+  color: white;
+  padding: 4px 8px;
+  border-style: none;
+}
+
+/* ------- NEU PC KONFIG ------ */
+.neu-konfig-div{
+  width: 37%;
+}
+
+.neu-konfig-div .container{
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  box-shadow: 0px 0px 15px rgba(160, 160, 160, 0.6);
+  width: 95%;
+  margin-left: 26px;
+  padding: 16px 16px 40px 16px;
+}
+
+.neu-konfig-div .container1{
+  display: flex;
+  justify-content: center;
+}
+
+.description-img{
+  margin: 16px;
+}
+
+.neu-konfig-div .container1 h3{
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 24px;
+}
+.neu-konfig-div .container1 h3 span{
+  display: block;
+}
+
+.neu-konfig-div .container1 img{
+  max-width: 120px;
+}
+
+.neu-konfig-div .container .button-artikel button{
+  width: 100%;
+  height: 50px;
+  color: white;
+  background-color: black;
+  border-radius: 10px;
+  border-style: none;
+}
+
+.neu-konfig-div .container .button-artikel button h3{
+  font-size: 16px;
+}
+
+.neu-konfig-div .container .artikel{
+  margin-top: 10px;
+  padding: 4px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid black;
+}
+
+.neu-konfig-div .container .artikel h4{
+  font-size: 14px;
+}
+
+.neu-konfig-div .container .artikel p{
+  font-size: 10px;
+}

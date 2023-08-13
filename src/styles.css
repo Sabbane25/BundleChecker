@@ -16,20 +16,48 @@ nav .container-fluid a{
 /* ------------------------PC-KONFIGURATIONSEITE----------------------------*/
 /* Title (PC-Konfiguration))*/
 h2{
-    margin-top: 16px;
-    margin-bottom: 20px;
-    font-size: 16px;
+    color: #00528D;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    font-size: 24px;
+    font-weight: 500;
 }
 
 /* Button: Komponenten und Übersicht */
 .custom-bg-color{
-    background-color: #00528D;
-    color: white;
+    /*background-color: #00528D;*/
+    color: black;
 }
 
 /*--------- ROUTER-OUTLET von app.component.html --------*/
-router-outlet{
-    margin-right: 100px;
-    margin-bottom: 100px;
-    background-color: red;
+.router-oulet-main{
+    margin: auto;
+    width: 80%;
+}
+
+.context-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.context-menu button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.context-menu menu {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0px 0px 16px rgba(0,0,0,0.5);
+    padding: 0;
+    list-style: none;
+}
+
+.context-menu menu li {
+    padding: 8px 16px;
+    cursor: pointer;
 }
