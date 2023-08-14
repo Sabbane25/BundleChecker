@@ -1,0 +1,44 @@
+/* styles.css */
+
+/* Hauptcontainer */
+div.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Dies setzt die Höhe des Containers auf die volle Bildschirmhöhe, um ihn in der Mitte zu zentrieren */
+}
+
+/* Allgemeine Stile für die Übersicht */
+h2 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Button-Styling */
+button {
+  background-color: #00528D;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Container für jedes Bundle */
+div.bundle-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+/* Stile für die Summe */
+p.sum {
+  font-weight: bold;
+}

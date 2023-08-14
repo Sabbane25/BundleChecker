@@ -25,11 +25,4 @@ export class KonfigurationComponent {
     this.zeigeListKomponenten = true;
     this.gitFarbe = this.zeigeListUebersicht;
   }
-
-
-  
-
-
-
-
 }

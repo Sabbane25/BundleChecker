@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { KonfiguarationModule } from './konfiguration/konfiguaration.module';
+import { KonfigurationModule } from './konfiguration/konfiguration.module';
 import { KontaktModule } from './kontakt/kontakt.module';
 import { MerkzettelModule } from './merkzettel/merkzettel.module';
 
@@ -12,8 +11,8 @@ import { MerkzettelModule } from './merkzettel/merkzettel.module';
     AppComponent,
   ],
   imports: [
-    KonfiguarationModule,
     BrowserModule,
+    KonfigurationModule,
     KontaktModule,
     MerkzettelModule,
     AppRoutingModule,
