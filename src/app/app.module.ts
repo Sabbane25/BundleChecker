@@ -5,10 +5,12 @@ import { AppComponent } from './app.component';
 import { KonfigurationModule } from './konfiguration/konfiguration.module';
 import { KontaktModule } from './kontakt/kontakt.module';
 import { MerkzettelModule } from './merkzettel/merkzettel.module';
+import { ProductListComponent } from './product-list/product-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ProductListComponent,
   ],
   imports: [
     BrowserModule,
