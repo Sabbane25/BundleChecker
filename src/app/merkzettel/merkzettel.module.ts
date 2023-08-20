@@ -4,9 +4,10 @@ import { MerkzettelComponent } from './merkzettel/merkzettel.component';
 
 
 
+
 @NgModule({
   declarations: [
-    MerkzettelComponent
+    MerkzettelComponent,
   ],
   imports: [
     CommonModule

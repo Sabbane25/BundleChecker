@@ -3,8 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-merkzettel',
   templateUrl: './merkzettel.component.html',
-  styles: [
-  ]
+  styleUrls: ['./merkzettel.component.css']
 })
 export class MerkzettelComponent {
 
