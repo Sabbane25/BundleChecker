@@ -3,8 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { KontaktComponent } from './kontakt/kontakt/kontakt.component';
 import { MerkzettelComponent } from './merkzettel/merkzettel/merkzettel.component';
 import { KonfigurationComponent } from './konfiguration/konfiguration/konfiguration.component';
+import { KontoComponent } from './konto/konto/konto.component';
 
 const routes: Routes = [
+  { path: 'konto', component: KontoComponent },
   { path: 'konfiguration', component: KonfigurationComponent },
   { path: 'kontakt', component: KontaktComponent },
   { path: 'merkzettel', component: MerkzettelComponent },

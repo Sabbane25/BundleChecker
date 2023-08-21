@@ -2,11 +2,19 @@
     padding: 0px;
     margin: 0px;
 }
+
 /* -------- NAV STYLE --------------*/
-.container-fluid {
+.navbar{
     background-color: #00528D;
-    padding-left: 100px;
-    padding-right: 100px; 
+    padding: 10px 0px;
+}
+.container-fluid {
+    width: 75%;
+}
+
+.container-fluid h1{
+    margin: auto 0;
+    font-size: 28px;
 }
 
 nav .container-fluid a{
@@ -32,7 +40,10 @@ h2{
 /*--------- ROUTER-OUTLET von app.component.html --------*/
 .router-oulet-main{
     margin: auto;
-    width: 80%;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .context-menu {
@@ -61,3 +72,6 @@ h2{
     padding: 8px 16px;
     cursor: pointer;
 }
+
+
+/*--------- FOOTER --------*/

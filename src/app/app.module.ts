@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { KonfigurationModule } from './konfiguration/konfiguration.module';
 import { KontaktModule } from './kontakt/kontakt.module';
 import { MerkzettelModule } from './merkzettel/merkzettel.module';
+import { KontoModule } from './konto/konto.module';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { MerkzettelModule } from './merkzettel/merkzettel.module';
   ],
   imports: [
     BrowserModule,
+    KontoModule,
     KonfigurationModule,
     KontaktModule,
     MerkzettelModule,
