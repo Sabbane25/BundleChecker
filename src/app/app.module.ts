@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { KonfigurationModule } from './konfiguration/konfiguration.module';
 import { KontaktModule } from './kontakt/kontakt.module';
 import { MerkzettelModule } from './merkzettel/merkzettel.module';
-import { KontoModule } from './konto/konto.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,6 +18,7 @@ import { KontoModule } from './konto/konto.module';
     KontaktModule,
     MerkzettelModule,
     AppRoutingModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
