@@ -6,6 +6,7 @@ import { KonfigurationModule } from './konfiguration/konfiguration.module';
 import { KontaktModule } from './kontakt/kontakt.module';
 import { MerkzettelModule } from './merkzettel/merkzettel.module';
 import { HttpClientModule } from '@angular/common/http';
+import { KontoModule } from './konto/konto.module';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
+    KontoModule,
     KonfigurationModule,
     KontaktModule,
     MerkzettelModule,
