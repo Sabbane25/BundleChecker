@@ -2,14 +2,30 @@
     width: 800px;
     height: 120px;
     border: 2px solid #00528d65;
-    padding-left: 20px;
-    padding-top: 20px;
-    display: flex;
+    padding: 20px;
+    border-radius: 12px;
 }
-
-
 
 .center{
     display: flex;
     justify-content: center;
 }
+
+.containerSpaltennamen{
+    height:30px;
+    margin-top: 7px;
+}
+
+.containerZeile{
+    padding: 5px;
+}
+
+
+.containerZeile ul li{
+    list-style-type: none;
+    display: inline;
+}
+
+
+
+
