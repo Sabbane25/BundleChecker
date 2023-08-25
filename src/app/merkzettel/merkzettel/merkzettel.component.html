@@ -3,12 +3,37 @@
 <div class="center">
     <!-- Aussecontainer für die Border -->
     <div class="containerAussen">
-        <!-- Klasse für Spaltennamen -->
-        
-            <p style="font-weight: bold; width: 70%;">Bundlename</p>
-            <p style="font-weight: bold; width: 50%;">Preis</p>
-        
-        
-        
-    <div>
+        <!-- Container für die erste Zeile(Spaltenüberschriften)-->
+        <div class="containerSpaltennamen">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+                <!-- Spaltenüberschriften in Textformat in Fett-->
+                <p style="font-weight: bold;width: 60%; padding-left: 4px">Bundlename</p>
+                <p style="font-weight: bold;width: 30%;">Preis</p>
+            </div>
+        </div>
+        <!-- Container für eine Zeile des Merkzettelinhalts-->
+        <div class="containerZeile">
+            <!-- Stil des Containers mit Border nach oben-->
+            <div style="display: flex; align-items: center; justify-content: space-between; border-top: 2px solid #00528ddc ">
+                <h5 style="font-size: 16px;">Bundle 1</h5>
+                <!-- Anfang einer ungeordneten Liste für den Preis, Bearbeiten Button und Entfernen Button-->
+                    <ul style="margin-top: 8px; display: flex; justify-content: left;">
+                        <li style="margin-right: 20px;">679,80€</li>
+                        <li style="margin-right: 15px">
+                            <button style= "font-size: 12px;
+                                            background-color: #00528ddc;
+                                            color: #fff;
+                                            box-shadow: 5px 5px 8px rgba(81, 124, 202, 0.6);"
+                                            >Bearbeiten
+                            </button>
+                        </li>
+                        <!-- Liste mit "Entfernen" Button und passender Bilddatei-->
+                        <li> 
+                            <button style="height: 22px; width: 22px; border: none;background-color: #fff;"> <img src="./assets/trash-regular-24(1).png" alt="" style="height: 20px; width: 20px; ">
+                            </button>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+    </div>
 </div>
