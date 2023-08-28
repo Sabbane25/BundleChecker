@@ -1,4 +1,6 @@
 import { Component, ElementRef, Renderer2} from '@angular/core';
+import { Komponent } from 'src/komponent';
+import { KOMPOENTEN } from 'src/mock-komponenten-list';
 
 @Component({
   selector: 'app-list-komponent',
@@ -11,6 +13,8 @@ export class ListKomponenteComponent {
 
   }
 
+  listKomponenten: Komponent[] = KOMPOENTEN;
+
   komponantenList = ["CPU", "GPU", "MAINBOARD", "RAM", "RM"];
 
   showArtikel: boolean = false;
@@ -18,6 +22,5 @@ export class ListKomponenteComponent {
   toggleMenu(){
     this.showArtikel = !this.showArtikel;
   }
-
  
 }
