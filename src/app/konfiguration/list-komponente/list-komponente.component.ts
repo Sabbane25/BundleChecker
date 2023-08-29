@@ -1,6 +1,5 @@
 import { Component, ElementRef, Renderer2} from '@angular/core';
-import { Komponent } from 'src/komponent';
-import { KOMPOENTEN } from 'src/mock-komponenten-list';
+import { DataService } from 'src/app/data.service';
 
 @Component({
   selector: 'app-list-komponent',
@@ -9,13 +8,20 @@ import { KOMPOENTEN } from 'src/mock-komponenten-list';
 })
 export class ListKomponenteComponent {
 
-  constructor(private renderer: Renderer2, private el: ElementRef){
+  //die Variable wird benutzt, um alle Artkel der Tabelle RAM zu speichern
+  artikel_RAM: any[] = [];
 
-  }
+  constructor(private renderer: Renderer2, private el: ElementRef, private dataService: DataService) {}
 
-  listKomponenten: Komponent[] = KOMPOENTEN;
+  // Die Funktion "loadProdukts()" wird im "ngOnInit()" aufgerufen, um beim Start der App alle Produkte anzuzeigen.
+  ngOnInit(): void {
+    this.loadProdukts();
+  } 
 
-  komponantenList = ["CPU", "GPU", "MAINBOARD", "RAM", "RM"];
+  //speichert die Data in dem entsprechenden Variable. Die kommen aus der Service (DataService)
+  loadProdukts(): void {
+    this.dataService.getAllProducts("RAM").subscribe(data => this.artikel_RAM = data);
+  }  
 
   showArtikel: boolean = false;
   

@@ -11,6 +11,15 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
   getProducts(): Observable<any> {
-    return this.http.get<any>(`${this.apiURL}/products`);
+    return this.http.get<any>(`${this.apiURL}/`);
+  } 
+
+  /* 
+    Die Methode dient dazu Produkte aus der DB abzurufen
+    Mit dem Parameter {Produkt} kann man angeben, um welches Produkt es sich handelt. 
+    z.B.: RAM, CPU, Speicher, Grafikkarte....
+   */
+  getAllProducts(products: string): Observable<any> {
+    return this.http.get<any>(`${this.apiURL}/products/${products}`);
   }
 }

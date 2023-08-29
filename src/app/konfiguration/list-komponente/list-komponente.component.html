@@ -19,17 +19,27 @@
               <!-- Filter -->
               <div class="suche-filter">
                 <div class="filter" style="display: flex; justify-content: end;">
-                  <select class="form-select form-select-lg" aria-label="Large select example">
+                  <div style="display: flex;">
+                    <div style="display: flex;">
+                      <h4>von</h4>
+                      <input type="text">
+                    </div>
+                    <div style="display: flex;">
+                      <h4>bis</h4>
+                      <input type="text">
+                    </div>
+                  </div>
+                  <!-- <select class="form-select form-select-lg" aria-label="Large select example">
                     <option value="1">Filter</option>
                     <option value="1">Preis</option>
                     <option value="2">Marke</option>
                     <option value="3">Kapazität</option>
-                  </select> 
+                  </select>  -->
                 </div> 
-                <!-- Aller Artieln einer Komponente -->
-                <div class="list-artikel">
+                <!-- Aller Artikeln einer Komponente -->
+                <div class="list-artikel" *ngFor="let artikel of artikel_RAM">
                   <div class="row m-2">
-                    <!-- produkt name -->
+                    <!-- produkt Image -->
                     <div class="col-1 border justify-content-md-center">
                         <h5>RAM</h5>
                     </div>
@@ -37,6 +47,7 @@
                     <div class="col-9">
                       <h4 style="font-size: 14px; margin: 2px 0px 4px 0px">G.Skill DIMM 16GB DDR4-3200</h4>
                       <p style="font-size: 10px; opacity: 0.8;">Kapazität: 16GB (2x 8GB), Standard: DDR4</p> 
+                      <p>{{ artikel.Marke }}</p>
                     </div>
                     <!-- button hinzufügen -->
                     <div class="col">
@@ -65,7 +76,9 @@
                 <div class="filter" style="display: flex; justify-content: end;">
                   <select class="form-select form-select-lg" aria-label="Large select example">
                     <option selected>Filter</option>
-                    <option value="1">Preis</option>
+                    <option value="1">
+                      Preiss
+                    </option>
                     <option value="2">Marke</option>
                     <option value="3">Sockel</option>
                     <option value="3">Interne Grafik</option>
