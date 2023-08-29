@@ -1,3 +1,4 @@
+<body>
 
 <div class="komponenten-main">
     <!-- div, das alle Komponenten enthält -->
@@ -19,25 +20,52 @@
               <!-- Filter -->
               <div class="suche-filter">
                 <div class="filter" style="display: flex; justify-content: end;">
-                  <div style="display: flex;">
-                    <div style="display: flex;">
-                      <h4>von</h4>
-                      <input type="text">
-                    </div>
-                    <div style="display: flex;">
-                      <h4>bis</h4>
-                      <input type="text">
-                    </div>
-                  </div>
-                  <!-- <select class="form-select form-select-lg" aria-label="Large select example">
-                    <option value="1">Filter</option>
-                    <option value="1">Preis</option>
-                    <option value="2">Marke</option>
-                    <option value="3">Kapazität</option>
-                  </select>  -->
+                  <select id="filterSelect" class="form-select form-select-lg" aria-label="Large select example">
+                    <option value="none">Filter</option>
+                    <option value="preis">Preis</option>
+                    <option value="Marke">Marke</option>
+                    <option value="Kapazität">Kapazität</option>
+                  </select> 
                 </div> 
-                <!-- Aller Artikeln einer Komponente -->
-                <div class="list-artikel" *ngFor="let artikel of artikel_RAM">
+                <div id="filteredOptions" style="display: none;">
+
+                  <div id="priceFilter" style="display: none;">
+                    <label for="priceInput">Preis:</label>
+                    <input type="number" id="priceInput" min="0">
+                    <button id="applyPriceFilter">Anwenden</button>
+                  </div>
+
+                  <div id="brandFilter" style="display: none;">
+                    <label for="brandSelect">Marke:</label>
+                    <select id="brandSelect">
+                      <option value="">Alle</option>
+                      <option value="Gskill">Gskill</option>
+                      <option value="Corsair">Corsair</option>
+                      <option value="Crucial">Crucial</option>
+                      <!-- Weitere Marken hinzufügen -->
+                    </select>
+                    <button id="applyBrandFilter">Anwenden</button>
+                  </div>
+                  <div id="capacityFilter" style="display: none;">
+                    <label for="capacitySelect">Kapazität:</label>
+                    <select id="capacitySelect">
+                      <option value="">Alle</option>
+                      <option value="256GB">256GB</option>
+                      <option value="512GB">512GB</option>
+                      <!-- Weitere Optionen hinzufügen -->
+                    </select>
+                    <button id="applyCapacityFilter">Anwenden</button>
+                  </div>
+                </div>
+                <div id="filteredResults">
+                  <!-- Hier werden die gefilterten Ergebnisse angezeigt -->
+                  <ul id="filteredItemsList">
+                    <!-- Hier werden die einzelnen gefilterten Elemente angezeigt -->
+                  </ul>
+                </div>
+                
+                <!-- Aller Artieln einer Komponente -->
+                <div class="list-artikel">
                   <div class="row m-2">
                     <!-- produkt Image -->
                     <div class="col-1 border justify-content-md-center">
@@ -583,3 +611,55 @@
         </div>
     </div>
 </div>
+
+<script>
+
+  const filterSelect = document.getElementById('filterSelect');
+  const filterOptions = document.getElementById('filterOptions');
+  const priceFilter = document.getElementById('priceFilter');
+  const priceInput = document.getElementById('priceInput');
+  const applyPriceFilter = document.getElementById('applyPriceFilter');
+  const capacitySelect = document.getElementById('capacitySelect');
+  const applyCapacityFilter = document.getElementById('applyCapacityFilter');
+  const filteredResults = document.getElementById('filteredResults');
+
+  filterSelect.addEventListener('change', () => {
+    const selectedFilter = filterSelect.value;
+    filterOptions.style.display = 'none';
+    if (selectedFilter !== 'none') {
+      filterOptions.style.display = 'block';
+      if (selectedFilter === 'price') {
+        priceFilter.style.display = 'block';
+        capacityFilter.style.display = 'none';
+        // Verstecke Marke-Filteroptionen usw. wenn vorhanden
+      } else if (selectedFilter === 'capacity') {
+        priceFilter.style.display = 'none';
+        capacityFilter.style.display = 'block';
+        // Verstecke Marke-Filteroptionen usw. wenn vorhanden
+      } else {
+        // Verstecke andere Filteroptionen
+      }
+    }
+  });
+
+  applyPriceFilter.addEventListener('click', () => {
+    const selectedPrice = priceInput.value;
+    fetch(`/filtered-components?category=storage&price=${selectedPrice}`)
+      .then(response => response.json())
+      .then(data => {
+        // Hier die gefilterten Ergebnisse anzeigen
+      })
+      .catch(error => console.error('Error fetching filtered data:', error));
+  });
+
+  applyCapacityFilter.addEventListener('click', () => {
+    const selectedCapacity = capacitySelect.value;
+    fetch(`/filtered-components?category=storage&capacity=${selectedCapacity}`)
+      .then(response => response.json())
+      .then(data => {
+        // Hier die gefilterten Ergebnisse anzeigen
+      })
+      .catch(error => console.error('Error fetching filtered data:', error));
+  });
+</script>
+</body>
