@@ -1,35 +1,12 @@
 <body>
 
 <div class="komponenten-main">
-    <!-- <div class="col-7 ">
-        <div class="accordion" id="accordionExample"  *ngFor="let komponante of komponantenList">   
-            <div class="accordion-item">
-                <div class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    {{ komponante }}
-                  </button>
-                </div>
-                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                  <div class="accordion-body">
-                    <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                  </div>
-                </div>
-            </div>        
-        </div>
-
-        <div class="border">
-        <h2 class="border" (click)="toggleMenu()"><button> button</button></h2>
-        <div *ngIf="showArtikel" class="my-artikel-list-div">
-          contenu
-        </div>
-      </div> 
-    </div> -->
-
-    <!-- Listet alle Komponenten -->
+    <!-- div, das alle Komponenten enthält -->
     <div class="komponanten-div" >
       <div class="accordion" id="accordionExample">
-        <!-- item-1 -->
+        <!-- item-1 / Komponent 1: RAM -->
         <div class="accordion-item">
+          <!-- Name der Komponente-->
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
               <div class="item-img"> 
@@ -37,11 +14,11 @@
               </div>RAM
             </button>
           </h2>
+          <!-- Enthält alle Produkte einer Komponente + Filter -->
           <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
             <div class="accordion-body">
               <!-- Filter -->
               <div class="suche-filter">
-                <!-- filter-->
                 <div class="filter" style="display: flex; justify-content: end;">
                   <select id="filterSelect" class="form-select form-select-lg" aria-label="Large select example">
                     <option value="none">Filter</option>
@@ -90,51 +67,27 @@
                 <!-- Aller Artieln einer Komponente -->
                 <div class="list-artikel">
                   <div class="row m-2">
+                    <!-- produkt Image -->
                     <div class="col-1 border justify-content-md-center">
                         <h5>RAM</h5>
                     </div>
+                    <!-- enthält die Beschreibung des Proldukts -->
                     <div class="col-9">
                       <h4 style="font-size: 14px; margin: 2px 0px 4px 0px">G.Skill DIMM 16GB DDR4-3200</h4>
                       <p style="font-size: 10px; opacity: 0.8;">Kapazität: 16GB (2x 8GB), Standard: DDR4</p> 
+                      <p>{{ artikel.Marke }}</p>
                     </div>
+                    <!-- button hinzufügen -->
                     <div class="col">
                       <button>HINZUFÜGEN</button>
                     </div>
                   </div>
                 </div><!-- ENDE -->  
-                <div class="list-artikel">
-                  <div class="row m-2">
-                    <div class="col-1 border justify-content-md-center">
-                        <h5>RAM</h5>
-                    </div>
-                    <div class="col-9">
-                      <h4 style="font-size: 14px; margin: 2px 0px 4px 0px">Corsair DIMM 32GB DDR4-3600</h4>
-                      <p style="font-size: 10px; opacity: 0.8;">Kapazität: 32GB (2x 16GB), Standard: DDR4</p>
-                    </div>
-                    <div class="col">
-                      <button>HINZUFÜGEN</button>
-                    </div>
-                  </div>
-                </div><!-- ENDE -->
-                <div class="list-artikel">
-                  <div class="row m-2">
-                    <div class="col-1 border justify-content-md-center">
-                        <h5>RAM</h5>
-                    </div>
-                    <div class="col-9">
-                      <h4 style="font-size: 14px; margin: 2px 0px 4px 0px">Kingston FURY DIMM 32GB DDR5-6000</h4>
-                      <p style="font-size: 10px; opacity: 0.8;">Kapazität: 32GB (2x 16GB), Standard: DDR5</p>
-                    </div>
-                    <div class="col">
-                      <button>HINZUFÜGEN</button>
-                    </div>
-                  </div>
-                </div><!-- ENDE -->   
               </div>
             </div>
           </div>
         </div>
-        <!-- item-2 -->
+        <!-- item-2 / Komponent 2: PROZESSOR -->
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -151,7 +104,9 @@
                 <div class="filter" style="display: flex; justify-content: end;">
                   <select class="form-select form-select-lg" aria-label="Large select example">
                     <option selected>Filter</option>
-                    <option value="1">Preis</option>
+                    <option value="1">
+                      Preiss
+                    </option>
                     <option value="2">Marke</option>
                     <option value="3">Sockel</option>
                     <option value="3">Interne Grafik</option>
@@ -204,7 +159,7 @@
             </div>
           </div>
         </div>
-        <!-- item-3 -->
+        <!-- item-3 / Komponent 3: BETRIEBSSYSTEM -->
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseTwo">
@@ -271,7 +226,7 @@
             </div>
           </div>
         </div>
-        <!-- item-4 -->
+        <!-- item-4 / Komponent 4: GRAFIKKARTE -->
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseTwo">
@@ -282,9 +237,8 @@
           </h2>
           <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
             <div class="accordion-body">
-              <!-- Filter -->
+              <!-- filter-->
               <div class="suche-filter">
-                <!-- filter-->
                 <div class="filter" style="display: flex; justify-content: end;">
                   <select class="form-select form-select-lg" aria-label="Large select example">
                     <option selected>Filter</option>
@@ -293,7 +247,7 @@
                     <option value="3">Kapazität</option>
                   </select> 
                 </div> 
-                <!-- Aller Artieln einer Komponente -->
+                <!-- Alle Arten von Grafikkarten -->
                 <div class="list-artikel">
                   <div class="row m-2">
                     <div class="col-1 border justify-content-md-center">
@@ -340,7 +294,7 @@
             </div>
           </div>
         </div>
-        <!-- item-5 -->
+        <!-- item-4 / Komponent 4: SPEICKER -->
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseTwo">
@@ -378,39 +332,11 @@
                     </div>
                   </div>
                 </div><!-- ENDE -->  
-                <div class="list-artikel">
-                  <div class="row m-2">
-                    <div class="col-1 border justify-content-md-center">
-                        <h5>CPU</h5>
-                    </div>
-                    <div class="col-9">
-                      <h4 style="font-size: 14px; margin: 2px 0px 4px 0px">CPU</h4>
-                      <p style="font-size: 10px; opacity: 0.8;">AMD Ryzen 7 7800X, Prozessor</p>
-                    </div>
-                    <div class="col">
-                      <button>HINZUFÜGEN</button>
-                    </div>
-                  </div>
-                </div><!-- ENDE -->
-                <div class="list-artikel">
-                  <div class="row m-2">
-                    <div class="col-1 border justify-content-md-center">
-                        <h5>CPU</h5>
-                    </div>
-                    <div class="col-9">
-                      <h4 style="font-size: 14px; margin: 2px 0px 4px 0px">CPU</h4>
-                      <p style="font-size: 10px; opacity: 0.8;">AMD Ryzen 7 7800X, Prozessor</p>
-                    </div>
-                    <div class="col">
-                      <button>HINZUFÜGEN</button>
-                    </div>
-                  </div>
-                </div><!-- ENDE -->   
               </div>
             </div>
           </div>
         </div>
-        <!-- item-6 -->
+        <!-- item-6 / Komponent 6: PC-KÜHLER  -->
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseTwo">
@@ -478,7 +404,7 @@
             </div>
           </div>
         </div>
-        <!-- item-7 -->
+        <!-- item-7 / Komponent 7: PC-KÜHLER -->
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseTwo">
@@ -514,40 +440,12 @@
                       <button>HINZUFÜGEN</button>
                     </div>
                   </div>
-                </div><!-- ENDE -->  
-                <div class="list-artikel">
-                  <div class="row m-2">
-                    <div class="col-1 border justify-content-md-center">
-                        <h5>CPU</h5>
-                    </div>
-                    <div class="col-9">
-                      <h4 style="font-size: 14px; margin: 2px 0px 4px 0px">CPU</h4>
-                      <p style="font-size: 10px; opacity: 0.8;">AMD Ryzen 7 7800X, Prozessor</p>
-                    </div>
-                    <div class="col">
-                      <button>HINZUFÜGEN</button>
-                    </div>
-                  </div>
-                </div><!-- ENDE -->
-                <div class="list-artikel">
-                  <div class="row m-2">
-                    <div class="col-1 border justify-content-md-center">
-                        <h5>CPU</h5>
-                    </div>
-                    <div class="col-9">
-                      <h4 style="font-size: 14px; margin: 2px 0px 4px 0px">CPU</h4>
-                      <p style="font-size: 10px; opacity: 0.8;">AMD Ryzen 7 7800X, Prozessor</p>
-                    </div>
-                    <div class="col">
-                      <button>HINZUFÜGEN</button>
-                    </div>
-                  </div>
-                </div><!-- ENDE -->   
+                </div>  
               </div>
             </div>
           </div>
         </div>
-        <!-- item-8 -->
+        <!-- item-8 / Komponent 8: MAINBOARD -->
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseTwo">
