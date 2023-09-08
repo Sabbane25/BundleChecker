@@ -3,11 +3,12 @@
   margin: 0px;
   padding: 0px;
 }
+
 .komponenten-main{
   display: flex;
   margin-top: 28px;
-
 }
+
 .komponanten-div{
   flex: 0 0 auto; /* Équivalent à flex-grow: 0; flex-shrink: 0; flex-basis: auto; */
   align-self: flex-start;
@@ -57,26 +58,7 @@
   height: 68%;
 }
 
-/*-------- ENDE ITEM STYLE ---------*/
 /*####### SUCHE UND FILTER ########*/
-.komponanten-div .suche-filter{
-  margin-top: 20px;
-}
-.komponanten-div .suche-filter .suche-leiste input{
-  width: 100%;
-  padding: 8px;
-  font-size: 12px;
-  border-radius: 6px;
-  border: 1px solid rgb(38, 38, 38);
-}
-
-.komponanten-div .suche-filter .filter select{
-  margin: 8px 18px 10px 0px;
-  font-size: 12px;
-  padding: 6px 0px 6px 10px;
-  width: 40%;
-  border: 1px solid rgb(38, 38, 38);
-}
 
 /*-------- ENDE SUCHE UND FILTER STYLE ---------*/
 /*####### LISTE ARTIKEL ########*/
@@ -140,7 +122,6 @@
 
 .komponanten-div .list-artikel {
   margin-top: 8px;
-  border-top: 1px solid black;
 }
 
 .komponanten-div .list-artikel .row .col-1{
@@ -174,7 +155,7 @@
   border-style: none;
 }
 
-/* ------- NEU PC KONFIG ------ */
+/* ########### NEU PC KONFIG ############ */
 .neu-konfig-div{
   width: 37%;
 }

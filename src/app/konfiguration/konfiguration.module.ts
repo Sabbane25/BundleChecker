@@ -4,10 +4,18 @@ import { UebersichtComponent } from './uebersicht/uebersicht.component'; // Stel
 import { KonfigurationComponent } from './konfiguration/konfiguration.component';
 import { RouterModule, Routes } from '@angular/router';
 import { ListKomponenteComponent } from './list-komponente/list-komponente.component';
+import { DropDownMenuComponent } from '../drop-down-menu/drop-down-menu.component';
+import { FilterComponent } from '../filter/filter.component';
 
 
 @NgModule({
-  declarations: [ListKomponenteComponent, UebersichtComponent, KonfigurationComponent], // Hier die Komponenten deklarieren.
+  declarations: [
+    ListKomponenteComponent, 
+    UebersichtComponent, 
+    KonfigurationComponent,
+    DropDownMenuComponent,
+    FilterComponent
+  ], // Hier die Komponenten deklarieren.
   imports: [CommonModule],
   exports: [KonfigurationComponent], // Wenn die KonfigurationComponent exportiert werden muss.
 
