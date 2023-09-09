@@ -1,0 +1,59 @@
+<div class="fiterContainer">
+     <div class="filterBorderAusser">
+      <h4 (click)="zeigeFilter()">Filter</h4>
+      <!-- Filter -->
+      <div class="accordion accordion-flush filter" id="accordionFlushExample" [hidden]="!isFilterSichtbar">
+        <!-- Filter-Item 1: Preis-->
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+              Preis
+            </button>
+          </h2>
+          <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body filterItem">
+              <div class="" style="border-bottom: 1px solid black;">
+                <div class="itemInhalt">
+                  <div class="von">
+                    <p>von</p>
+                    <input type="number" name="von" id="von">
+                  </div>
+                  <div class="preis">
+                    <p>bis</p>
+                    <input type="number" name="bis" id="bis">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Filter-Item 2: Marke-->
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+              Marke
+            </button>
+          </h2>
+          <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+              //TODO
+            </div>
+          </div>
+        </div>
+        <!-- Filter-Item 3: Marke-->
+        <div class="accordion-item">
+          <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+              Item #3
+            </button>
+          </h2>
+          <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+              //TODO
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> 
+</div>
+
