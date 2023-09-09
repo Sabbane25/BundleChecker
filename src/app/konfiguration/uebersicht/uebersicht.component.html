@@ -1,19 +1,16 @@
-<div>
-  <h2>Übersicht der erstellten Bundles:</h2>
-
-  <!-- Schleife über die Bundles -->
-  <div *ngFor="let bundle of bundles">
-    <h3>Bundle {{ bundle.id }}</h3>
-    <ul *ngIf="bundle.components.length > 0">
-      <li *ngFor="let component of bundle.components">{{ component.kategorie }}: {{ component.produkt }} - {{ component.price }} €</li>
-    </ul>
-    <p *ngIf="bundle.components.length === 0">Keine Komponenten ausgewählt.</p>
-
-    <div *ngIf="bundle.components.length > 0">
-      <p>Summe: {{ calculateTotalPrice(bundle) }} €</p>
-      <button (click)="confirmConfiguration(bundle)">Bestätigen</button>
-      <button (click)="editConfiguration(bundle)">Bearbeiten</button>
-    </div>
-    
-  </div>
-</div>
+<table>
+  <thead>
+    <tr>
+      <th>Produktname</th>
+      <th>Preis</th>
+      <!-- Weitere Spalten, falls benötigt -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let produkt of ausgewaehlteProdukte">
+      <td>{{ produkt.name }}</td>
+      <td>{{ produkt.preis }}</td>
+      <!-- Weitere Spalten, falls benötigt -->
+    </tr>
+  </tbody>
+</table>
