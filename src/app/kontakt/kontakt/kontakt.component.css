@@ -1,0 +1,54 @@
+/* Formatierung jedes Textes und Textfeldes im Gesamten HTML Dokument */
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+/* Zentrierung des gesamten Feldes */
+.kontakt{
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.container{
+    display: flex;
+    justify-content: center;
+    width: 800px; 
+    height: 160px; 
+    margin-bottom: 40px; 
+}
+
+/* Formatierung des Hauptcontainers */
+.containerAussen{
+    border: 2px solid #00528d65;
+    box-shadow: 0px 0px 15px rgba(160, 160, 160, 0.6);
+    border-radius: 12px;
+    display: inline-block;
+    justify-content: center; 
+    padding: 16px;
+    margin-bottom: 80px;
+}
+
+/* Formatierung des Textes im "container" */
+.container p{
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+
+/* Formatierung des Buttons im "containerAussen */
+.containerAussen button{
+    width: 100px;
+    height: 40px;
+    font-weight: bold;
+    background-color: #00528D;
+    color: #fff;
+    border: none; /* Keine Border */
+    box-shadow: 5px 5px 8px rgba(81, 124, 202, 0.6);
+    float: right;
+}
+
+
+
+

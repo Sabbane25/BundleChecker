@@ -1,7 +1,7 @@
 <!-- Navigation bar -->
-<nav class="navbar bg-body-tertiary ">
+<nav class="navbar ">
     <div class="container-fluid">
-        <a class="navbar-brand" rorouterLink="/konfiguration">Bundler Checker</a>
+        <h1><a style="text-decoration: none; " routerLink="/konfiguration">Bundler Checker</a></h1>
         <ul class="nav justify-content-end ">
             <li class="nav-item">
                 <a class="nav-link active" aria-current="page" routerLink="/konfiguration">PC-Konfiguration</a>
@@ -13,14 +13,34 @@
                 <a class="nav-link" routerLink="/kontakt">Kontakt</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" routerLink="Konto">Konto</a>
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Konto
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" routerLink="konto">Anmelden</a></li>
+                        <li><a class="dropdown-item" href="#">Mein Konto</a></li>
+                    </ul>
+                </div>
             </li>
         </ul>
     </div>    
 </nav>
 
-<div class="mx-5">
-    <router-outlet>
-
-    </router-outlet>
+<div class="router-oulet-main">
+    <router-outlet></router-outlet>
 </div>
+
+
+<footer>
+    <div class="footer-div">
+        <ul>
+            <li class="copywrite">© BundleChecker</li>
+            <li> <a routerLink="/ueber-uns">Über uns</a> </li>
+            <li> <a routerLink="/datenschutz">Datenschutz</a> </li>
+            <li> <a routerLink="/datenschutz">Impressum / AGB</a> </li>
+        </ul>
+    </div>
+</footer>
+
+
