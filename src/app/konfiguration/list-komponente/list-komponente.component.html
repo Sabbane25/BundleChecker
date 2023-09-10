@@ -10,8 +10,9 @@
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#' + kategorieItem.kategorie"  aria-expanded="false" aria-controls="flush-collapseTwo">
               <div class="item-img"> 
-                <img src="./assets/Komponenten/gpu.jpg" alt="">
-              </div> {{ kategorieItem.kategorie }}
+                <img src="./assets/Komponenten/{{kategorieItem.kategorie}}.jpg" alt="">
+              </div> 
+              {{ kategorieItem.kategorie }}
             </button>
           </h2>
           <!-- Hier wird alle Produkt einer Kategorie angezeigt. Und ein geeignetes Filter -->
