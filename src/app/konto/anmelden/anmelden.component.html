@@ -2,21 +2,24 @@
 <div class="container">
     <div class="container-form">
         <form #myForm="ngForm" (ngSubmit)="onSubmit()">
+            <!-- E-Mail Eingabe-->
             <div class="email">
+                <!-- Titel-->
                 <label for="email">Email</label><br>
-                <input type="text" name="email" id="email" placeholder=" Email Adress">
+                <input type="text" name="email" id="email" placeholder=" E-Mail Adresse">
             </div>
-            
             <div class="passwort">
+                <!-- Titel-->
                 <label for="passwort">Passwort</label><br>
-                <input type="password" name="passwort" id="passwort" placeholder=" Passwort">
+                <input type="password" name="password" id="passwort" placeholder=" Passwort">
             </div>
-
+            <!-- Anmeldebutton-->
             <input type="submit" value="ANMELDEN" style="margin-top: 14px; border-style: none; border-radius: 0px; font-size: 16px; color: white; background-color: rgb(151, 6, 6);">
-            
+            <!--Problembehandlung bei Anmeldung-->
             <div class="container-hinweis" style="text-align: center; margin-top: 8px;">
-                <!-- <p style="color: rgb(166, 0, 0); margin: 8px 0px; font-style: italic; font-size: 14px;">Füllen Sie alle Felder auf</p> -->
-                <p>Passwort vergessen? <span><a style="color: #00528D;">Neues Passwort anfordern</a></span></p> 
+                <!-- Bei Passwortverlust neues Passwort anfordern-->
+                <p>Passwort vergessen? <span><a style="color: #00528D;">Neues Passwort anfordern</a></span></p>
+                <!-- Registriermöglichkeit-->
                 <p>Kein Kundenkonto? <span><a (click)="retrunViewRegistrieren()" style="color: #00528D; cursor: pointer;">Jetzt registrieren</a></span></p> 
             </div>
         </form>
