@@ -1,291 +1,113 @@
-
 <div class="komponenten-main">
-    <!-- Das Div beinhahlt alle Komponenten und jede Komponente die entspechenden Artikel -->
-    <!-- Die Komponenten werden mit Hilfe einer schleife generiert -->
-    <div class="komponanten-div" >
-      <div class="accordion" id="accordionExample">
-        <!-- stellt eine Komponente dar. Mit Hilfe der Directive *ngFor wird alle Komponenten angezeigt -->
-        <div class="accordion-item" *ngFor="let kategorieItem of artikel_Kategorien">
-          <!--Komponente-Title. Es ist auch gleichzeitig den Dropdowm menu, um Artikel einer Komponente aufzulisten -->
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-              <div class="item-img"> 
-                <img src="./assets/Komponenten/RAM.jpg" alt="">
-              </div>RAM
-            </button>
-          </h2>
-          <!-- Enthält alle Produkte einer Komponente + Filter -->
-          <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              <!-- Filter -->
-              <div class="suche-filter">
-                <div class="filter" style="display: flex; justify-content: end;">
-                  <select id="filterSelect" class="form-select form-select-lg" aria-label="Large select example">
-                    <option value="none">Filter</option>
-                    <option value="preis">Preis</option>
-                    <option value="Marke">Marke</option>
-                    <option value="Kapazität">Kapazität</option>
-                  </select> 
-                </div> 
-                <div id="filteredOptions" style="display: none;">
+  <!-- Das Div beinhahlt alle Komponenten und jede Komponente die entspechenden Artikel -->
+  <!-- Die Komponenten werden mit Hilfe einer schleife generiert -->
+  <div class="komponanten-div">
+    <div class="accordion" id="accordionExample">
+      <!-- stellt eine Komponente dar. Mit Hilfe der Directive *ngFor wird alle Komponenten angezeigt -->
+      <div class="accordion-item" *ngFor="let kategorieItem of artikel_Kategorien">
+        <!--Komponente-Title. Es ist auch gleichzeitig den Dropdown-Menu, um Artikel einer Komponente aufzulisten -->
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+            <div class="item-img">
+              <img src="./assets/Komponenten/RAM.jpg" alt="">
+            </div>RAM
+          </button>
+        </h2>
+        <!-- Enthält alle Produkte einer Komponente + Filter -->
+        <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <!-- Filter -->
+            <div class="suche-filter">
+              <div class="filter" style="display: flex; justify-content: end;">
+                <select id="filterSelect" class="form-select form-select-lg" aria-label="Large select example">
+                  <option value="none">Filter</option>
+                  <option value="preis">Preis</option>
+                  <option value="Marke">Marke</option>
+                  <option value="Kapazität">Kapazität</option>
+                </select>
+              </div>
+              <div id="filteredOptions" style="display: none;">
 
-                  <div id="priceFilter" style="display: none;">
-                    <label for="priceInput">Preis:</label>
-                    <input type="number" id="priceInput" min="0">
-                    <button id="applyPriceFilter">Anwenden</button>
-                  </div>
+                <div id="priceFilter" style="display: none;">
+                  <label for="priceInput">Preis:</label>
+                  <input type="number" id="priceInput" min="0">
+                  <button id="applyPriceFilter">Anwenden</button>
+                </div>
 
-                  <div id="brandFilter" style="display: none;">
-                    <label for="brandSelect">Marke:</label>
-                    <select id="brandSelect">
-                      <option value="">Alle</option>
-                      <option value="Gskill">Gskill</option>
-                      <option value="Corsair">Corsair</option>
-                      <option value="Crucial">Crucial</option>
-                      <!-- Weitere Marken hinzufügen -->
-                    </select>
-                    <button id="applyBrandFilter">Anwenden</button>
-                  </div>
-                  <div id="capacityFilter" style="display: none;">
-                    <label for="capacitySelect">Kapazität:</label>
-                    <select id="capacitySelect">
-                      <option value="">Alle</option>
-                      <option value="256GB">256GB</option>
-                      <option value="512GB">512GB</option>
-                      <!-- Weitere Optionen hinzufügen -->
-                    </select>
-                    <button id="applyCapacityFilter">Anwenden</button>
-                  </div>
+                <div id="brandFilter" style="display: none;">
+                  <label for="brandSelect">Marke:</label>
+                  <select id="brandSelect">
+                    <option value="">Alle</option>
+                    <option value="Gskill">Gskill</option>
+                    <option value="Corsair">Corsair</option>
+                    <option value="Crucial">Crucial</option>
+                    <!-- Weitere Marken hinzufügen -->
+                  </select>
+                  <button id="applyBrandFilter">Anwenden</button>
                 </div>
-                <div id="filteredResults">
-                  <!-- Hier werden die gefilterten Ergebnisse angezeigt -->
-                  <ul id="filteredItemsList">
-                    <!-- Hier werden die einzelnen gefilterten Elemente angezeigt -->
-                  </ul>
+                <div id="capacityFilter" style="display: none;">
+                  <label for="capacitySelect">Kapazität:</label>
+                  <select id="capacitySelect">
+                    <option value="">Alle</option>
+                    <option value="256GB">256GB</option>
+                    <option value="512GB">512GB</option>
+                    <!-- Weitere Optionen hinzufügen -->
+                  </select>
+                  <button id="applyCapacityFilter">Anwenden</button>
                 </div>
-                
-                <!-- Aller Artieln einer Komponente -->
-                <div class="list-artikel">
-                  <div class="row m-2">
-                    <!-- produkt Image -->
-                    <div class="col-1 border justify-content-md-center">
-                        <h5>RAM</h5>
-                    </div>
-                    <!-- enthält die Beschreibung des Proldukts -->
-                    <div class="col-9">
-                      <h4 style="font-size: 14px; margin: 2px 0px 4px 0px">G.Skill DIMM 16GB DDR4-3200</h4>
-                      <p style="font-size: 10px; opacity: 0.8;">Kapazität: 16GB (2x 8GB), Standard: DDR4</p> 
-                      
-                    </div>
-                    <!-- button hinzufügen -->
-                    <div class="col">
-                      <button>HINZUFÜGEN</button>
-                    </div>
-                  </div>
-                </div><!-- ENDE -->  
               </div>
-            </div>
-          </div>
-        </div>
-        <!-- item-2 / Komponent 2: PROZESSOR -->
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-              <div class="item-img"> 
-                <img src="./assets/Komponenten/prozessor.jpg" alt="">
-              </div>Prozessor
-            </button>
-          </h2>
-          <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              <!-- Filter -->
-              <div class="suche-filter">
-                <!-- filter-->
-                <div class="filter" style="display: flex; justify-content: end;">
-                  <select class="form-select form-select-lg" aria-label="Large select example">
-                    <option selected>Filter</option>
-                    <option value="1">
-                      Preiss
-                    </option>
-                    <option value="2">Marke</option>
-                    <option value="3">Sockel</option>
-                    <option value="3">Interne Grafik</option>
-                  </select> 
-                </div> 
-                <!-- Aller Artieln einer Komponente -->
-                <div class="list-artikel">
-                  <div class="row m-2">
-                    <div class="col-1 border justify-content-md-center">
-                        <h5>CPU</h5>
-                    </div>
-                    <div class="col-9">
-                      <h4 style="font-size: 14px; margin: 2px 0px 4px 0px">AMD Ryzen 7 7800X, Prozessor</h4>
-                      <p style="font-size: 10px; opacity: 0.8;">Anzahl Kerne: 12, Taktfrequenz: 4,2Ghz</p>
-                    </div>
-                    <div class="col">
-                      <button>HINZUFÜGEN</button>
-                    </div>
-                  </div>
-                </div><!-- ENDE -->  
-                <div class="list-artikel">
-                  <div class="row m-2">
-                    <div class="col-1 border justify-content-md-center">
-                        <h5>CPU</h5>
-                    </div>
-                    <div class="col-9">
-                      <h4 style="font-size: 14px; margin: 2px 0px 4px 0px">CPU</h4>
-                      <p style="font-size: 10px; opacity: 0.8;">AMD Ryzen 7 7800X, Prozessor</p>
-                    </div>
-                    <div class="col">
-                      <button>HINZUFÜGEN</button>
-                    </div>
-                  </div>
-                </div><!-- ENDE -->
-                <div class="list-artikel">
-                  <div class="row m-2">
-                    <div class="col-1 border justify-content-md-center">
-                        <h5>CPU</h5>
-                    </div>
-                    <div class="col-9">
-                      <h4 style="font-size: 14px; margin: 2px 0px 4px 0px">CPU</h4>
-                      <p style="font-size: 10px; opacity: 0.8;">AMD Ryzen 7 7800X, Prozessor</p>
-                    </div>
-                    <div class="col">
-                      <button>HINZUFÜGEN</button>
-                    </div>
-                  </div>
-                </div><!-- ENDE -->   
+              <div id="filteredResults">
+                <!-- Hier werden die gefilterten Ergebnisse angezeigt -->
+                <ul id="filteredItemsList">
+                  <!-- Hier werden die einzelnen gefilterten Elemente angezeigt -->
+                </ul>
               </div>
-            </div>
-          </div>
-        </div>
-        <!-- item-3 / Komponent 3: BETRIEBSSYSTEM -->
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseTwo">
-              <div class="item-img"> 
-                <img src="./assets/Komponenten/Betriebssystem.jpg" alt="">
-              </div>Betriebssystem
-            </button>
-          </h2>
-          <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-            <div class="accordion-body">
-              <!-- Filter -->
-              <div class="suche-filter">
-                <!-- filter-->
-                <div class="filter" style="display: flex; justify-content: end;">
-                  <select class="form-select form-select-lg" aria-label="Large select example">
-                    <option selected>Filter</option>
-                    <option value="1">Hersteller</option>
-                  </select> 
-                </div> 
-                <!-- Aller Artieln einer Komponente -->
-                <div class="list-artikel">
-                  <div class="row m-2">
-                    <div class="col-1 border justify-content-md-center">
-                        <h5>CPU</h5>
-                    </div>
-                    <div class="col-9">
-                      <h4 style="font-size: 14px; margin: 2px 0px 4px 0px">CPU</h4>
-                      <p style="font-size: 10px; opacity: 0.8;">AMD Ryzen 7 7800X, Prozessor</p>
-                    </div>
-                    <div class="col">
-                      <button>HINZUFÜGEN</button>
-                    </div>
-                  </div>
-                </div><!-- ENDE -->  
-                <div class="list-artikel">
-                  <div class="row m-2">
-                    <div class="col-1 border justify-content-md-center">
-                        <h5>CPU</h5>
-                    </div>
-                    <div class="col-9">
-                      <h4 style="font-size: 14px; margin: 2px 0px 4px 0px">CPU</h4>
-                      <p style="font-size: 10px; opacity: 0.8;">AMD Ryzen 7 7800X, Prozessor</p>
-                    </div>
-                    <div class="col">
-                      <button>HINZUFÜGEN</button>
-                    </div>
-                  </div>
-                </div><!-- ENDE -->
-                <div class="list-artikel">
-                  <div class="row m-2">
-                    <div class="col-1 border justify-content-md-center">
-                        <h5>CPU</h5>
-                    </div>
-                    <div class="col-9">
-                      <h4 style="font-size: 14px; margin: 2px 0px 4px 0px">CPU</h4>
-                      <p style="font-size: 10px; opacity: 0.8;">AMD Ryzen 7 7800X, Prozessor</p>
-                    </div>
-                    <div class="col">
-                      <button>HINZUFÜGEN</button>
-                    </div>
-                  </div>
-                </div><!-- ENDE -->   
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- item-4 / Komponent 4: GRAFIKKARTE -->
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseTwo">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#' + kategorieItem.kategorie"  aria-expanded="false" aria-controls="flush-collapseTwo">
-              <div class="item-img"> 
-                <img src="./assets/Komponenten/gpu.jpg" alt="">
-              </div> {{ kategorieItem.kategorie }}
-            </button>
-          </h2>
-          <!-- Hier wird alle Produkt einer Kategorie angezeigt. Und ein geeignetes Filter -->
-          <div [id]="kategorieItem.kategorie" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">  
-            <div class="accordion-body">
-              <!-- filter (Es handelt es sich um eine separat Composant)-->
-              <app-filter></app-filter>
-              <div class="list-artikel" *ngFor="let artikel of artikelList">
-                <div class="row m-2" *ngIf="artikel.Kategorie === kategorieItem.kategorie">
-                  <!-- BILD Komponente(keine echtes Bild. Nur Kategorie Abkürzung) -->
+
+              <!-- Aller Artieln einer Komponente -->
+              <div class="list-artikel">
+                <div class="row m-2">
+                  <!-- produkt Image -->
                   <div class="col-1 border justify-content-md-center">
-                      <h5> {{ artikel.Kategorie.substring(0, 3).toUpperCase() }} </h5>
+                    <h5>RAM</h5>
                   </div>
+                  <!-- enthält die Beschreibung des Proldukts -->
                   <div class="col-9">
-                    <h4 style="font-size: 14px; margin: 2px 0px 4px 0px"> {{ artikel.Kategorie }} </h4>
-                    <p style="font-size: 10px; opacity: 0.8;"> {{artikel.Preis / 100 }}€  </p>
-                    <p>{{gibAttributte(artikel)}} </p>
+                    <h4 style="font-size: 14px; margin: 2px 0px 4px 0px">G.Skill DIMM 16GB DDR4-3200</h4>
+                    <p style="font-size: 10px; opacity: 0.8;">Kapazität: 16GB (2x 8GB), Standard: DDR4</p>
                   </div>
+                  <!-- button hinzufügen -->
                   <div class="col">
                     <button>HINZUFÜGEN</button>
                   </div>
                 </div>
-              </div>
+              </div><!-- ENDE -->
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Neue Konfiguration (aside)-->
-    <div class="neu-konfig-div">
-        <div class="container">
-          <div class="container1">
-            <div class="description-img">
-              <h3>Neue <span>Konfiguration</span></h3>
-              <img src="./assets/konfiguarion.png" alt="">
-            </div>
-          </div>
-          <div class="button-artikel">
-            <button><h3>Zur Übersicht</h3></button>
-          </div>
-          <div class="artikel">
-            <h4>CPU</h4>
-            <p>AMD Ryzen 7 7800X, Prozessor</p>
-          </div>
-          <div class="artikel">
-            <h4>CPU</h4>
-            <p>AMD Ryzen 7 7800X, Prozessor</p>
-          </div>
+  <!-- Neue Konfiguration (aside)-->
+  <div class="neu-konfig-div">
+    <div class="container">
+      <div class="container1">
+        <div class="description-img">
+          <h3>Neue <span>Konfiguration</span></h3>
+          <img src="./assets/konfiguarion.png" alt="">
         </div>
+      </div>
+      <div class="button-artikel">
+        <button><h3>Zur Übersicht</h3></button>
+      </div>
+      <div class="artikel">
+        <h4>CPU</h4>
+        <p>AMD Ryzen 7 7800X, Prozessor</p>
+      </div>
+      <div class="artikel">
+        <h4>CPU</h4>
+        <p>AMD Ryzen 7 7800X, Prozessor</p>
+      </div>
     </div>
+  </div>
 </div>
-
-
-
