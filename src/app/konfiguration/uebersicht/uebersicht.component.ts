@@ -13,8 +13,10 @@ export class UebersichtComponent implements OnInit {
 
   ngOnInit() {
     // Sende eine HTTP-Anfrage an deinen API-Endpunkt, um die Daten abzurufen.
+    /*
     this.http.get('/api/bundles').subscribe((data: any[]) => {
       this.ausgewaehlteProdukte = data;
     });
+    */
   }
 }
