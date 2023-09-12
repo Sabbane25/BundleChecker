@@ -22,4 +22,10 @@ export class DataService {
   getAllProducts(products: string): Observable<any> {
     return this.http.get<any>(`${this.apiURL}/products/${products}`);
   }
+
+  istMailVerfuegbar(): Observable<any> {
+    return this.http.get<any>(`${this.apiURL}/checkEmail`);
+  }
 }
+
+

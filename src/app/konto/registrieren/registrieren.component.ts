@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataService } from 'src/app/data.service';
 
 @Component({
   selector: 'app-registrieren',
@@ -8,10 +9,14 @@ import { Router } from '@angular/router';
 })
 export class RegistrierenComponent {
 
-  constructor(private router: Router) {}
+  constructor(private dataService :DataService, private router: Router) {}
 
   returnViewAnmelden(){
     this.router.navigate(['konto/anmelden']);
+  }
+
+  gitbBenutzer(): void {
+    this.dataService.istMailVerfuegbar().subscribe(data => this)
   }
 
 }

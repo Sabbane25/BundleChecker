@@ -1,34 +1,53 @@
 
+<body>
+    <div class="container">
+        <div class="container-form">
+            <form action="">
 
-<div class="container">
-    <div class="container-form">
-        <form action="">
-            <!-- E-Mail Eingabefeld-->
-            <div class="email">
-                <label for="email">E-Mail</label><br>
-                <input type="text" name="email" id="email" placeholder=" E-Mail Adresse">
-            </div>
-            <!-- Name Eingabefeld-->
-            <div class="name">
-                <label for="name">Name</label><br>
-                <input type="text" name="name" id="name" placeholder=" Name">
-            </div>
-            <!-- Vorname Eingabefeld-->
-            <div class="vorname">
-                <label for="vorname">Vorname</label><br>
-                <input type="text" name="vorname" id="vorname" placeholder=" Vorname">
-            </div>
-            <!-- Passwort Eingabefeld-->
-            <div class="passwort">
-                <label for="passwort">Passwort</label><br>
-                <input type="password" name="password" id="password" placeholder=" Passwort">
-            </div>
-            <!-- Button, um die Registrierung abzuschließen-->
-                <input type="submit" value="REGISTRIEREN" style="margin-top: 16px; border-style: none; border-radius: 0px; font-size: 14px; color: white; background-color: rgb(151, 6, 6);">
-            <!-- Falls bereits registriert, kann man hier zur Anmeldung springen-->
-            <div class="container-hinweis" style="text-align: center; margin-top: 8px;">
-                <p style="color: rgba(0, 0, 0, 0.615);">Haben Sie schon einen Kundenkonto?<br><span><a (click)="returnViewAnmelden()" style="color: #00528D; cursor: pointer;"> Jetzt anmelden</a></span></p> 
-            </div>
-        </form>
+                <div class="name">
+                    <label for="name">Name</label><br>
+                    <input type="text" name="name" id="name" placeholder=" Name">
+                </div>
+            
+                <div class="vorname">
+                    <label for="vorname">Vorname</label><br>
+                    <input type="text" name="vorname" id="vorname" placeholder=" Vorname">
+                </div>
+
+                <div class="email">
+                    <label for="email">E-Mail</label><br>
+                    <input type="text" name="email" id="email" placeholder=" Email Adresse">
+                </div>
+
+                <div class="passwort">
+                    <label for="passwort">Passwort</label><br>
+                    <input type="password" name="password" id="password" placeholder=" Passwort">
+                </div>
+
+                <div class="passwort">
+                    <label for="passwort">Passwort wiederholen</label><br>
+                    <input type="password" name="password" id="password" placeholder=" Passwort">
+                </div>
+
+                <button type="submit" name="Registrieren" id="submit" style= 
+                                           
+                                            "background-color: rgb(151, 6, 6);
+                                            color: #fff;
+                                            box-shadow: 5px 5px 8px rgb(151, 6, 6);
+                                            width: 100%;
+                                            height: 36px;"
+                                            >Registrieren
+                            </button>
+            
+                <div class="container-hinweis" style="text-align: center; margin-top: 8px;">
+                    <!-- <p style="color: rgb(166, 0, 0); margin: 8px 0px; font-style: italic; font-size: 14px;">FehlerMeldung</p> -->
+                    <p style="color: rgba(0, 0, 0, 0.615);">Haben Sie schon einen Kundenkonto?<br><span><a (click)="returnViewAnmelden()" style="color: #00528D; cursor: pointer;"> Jetzt anmelden</a></span></p> 
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+    <script>
+
+    </script>
+    
+</body>
