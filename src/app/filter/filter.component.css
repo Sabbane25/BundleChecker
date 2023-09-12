@@ -1,0 +1,59 @@
+*{
+  padding: 0px;
+  margin: 0px;
+}
+
+.filter{
+  padding: 0px 0px;
+  border: 1px solid rgb(186, 186, 186);
+  margin: 8px 8px;
+}
+
+.accordion-item{
+  margin-top: 8px;
+}
+
+.accordion-item button{
+  border-style: none;
+  padding: 8px;
+}
+
+
+.accordion-body{
+  margin: 4px 0px;
+}
+
+.fiterContainer{
+  padding-top: 8px;
+}
+
+.fiterContainer .filterBorderAusser{
+  border: 1px solid rgb(146, 146, 146);
+  border-radius: 4px;
+  margin: 16px;
+  padding: 4px;
+}
+  
+  .fiterContainer .filterBorderAusser h4{
+    font-size: 16px;
+    padding: 4px;
+    text-align: center;
+    color: rgb(64, 63, 63);
+  }
+  
+  .accordion-collapse .itemInhalt{
+    display: flex;
+    width: 100%;
+    padding: 8px 8px;
+  }
+  
+  .accordion-collapse .itemInhalt div{
+    display: flex;
+  }
+  
+  .accordion-collapse .itemInhalt input{
+    width: 100%;
+    margin-left: 8px;
+    margin-right: 4px;
+  } 
+
