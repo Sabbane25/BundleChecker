@@ -10,7 +10,7 @@ export class AnmeldenComponent {
 
   constructor(private router: Router) {}
 
-retrunViewRegistrieren() {
+returnViewRegistrieren() {
   this.router.navigate(['konto/registrieren']);
 }
 
