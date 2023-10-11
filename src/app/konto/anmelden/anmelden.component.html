@@ -5,7 +5,7 @@
             <!-- E-Mail Eingabe-->
             <div class="email">
                 <!-- Titel-->
-                <label for="email">Email</label><br>
+                <label for="email">E-Mail</label><br>
                 <input type="text" name="email" id="email" placeholder=" E-Mail Adresse">
             </div>
             <div class="passwort">
@@ -14,13 +14,13 @@
                 <input type="password" name="password" id="passwort" placeholder=" Passwort">
             </div>
             <!-- Anmeldebutton-->
-            <input type="submit" value="ANMELDEN" style="margin-top: 14px; border-style: none; border-radius: 0px; font-size: 16px; color: white; background-color: rgb(151, 6, 6);">
+            <input type="submit" (click)="returnViewRegistrieren()" value="Anmelden" style="margin-top: 14px; border-style: none; border-radius: 0px; font-size: 16px; color: white; background-color: rgb(151, 6, 6);">
             <!--Problembehandlung bei Anmeldung-->
             <div class="container-hinweis" style="text-align: center; margin-top: 8px;">
                 <!-- Bei Passwortverlust neues Passwort anfordern-->
                 <p>Passwort vergessen? <span><a style="color: #00528D;">Neues Passwort anfordern</a></span></p>
                 <!-- Registriermöglichkeit-->
-                <p>Kein Kundenkonto? <span><a (click)="retrunViewRegistrieren()" style="color: #00528D; cursor: pointer;">Jetzt registrieren</a></span></p> 
+                <p>Kein Kundenkonto? <span><a (click)="returnViewRegistrieren()" style="color: #00528D; cursor: pointer;">Jetzt registrieren</a></span></p> 
             </div>
         </form>
     </div>
