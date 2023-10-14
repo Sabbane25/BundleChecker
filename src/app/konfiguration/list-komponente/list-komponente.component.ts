@@ -5,6 +5,7 @@ import { Ram } from 'src/models/ram.model';
 import { Artikel } from 'src/models/artikel.model';
 import { NgFor } from '@angular/common';
 import { ArtikelService } from 'src/services/artikel.service';
+import { ARTIKEL_LIST } from 'src/models/artikel_mockup';
 
 @Component({
   selector: 'app-list-komponent',
