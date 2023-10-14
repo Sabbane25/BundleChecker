@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
+import { Artikel } from 'src/models/artikel.model';
+import { Ram } from 'src/models/ram.model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +32,37 @@ export class ArtikelService {
    */
   getAllProducts(products: string): Observable<any> {
     return this.http.get<any>(`${this.apiURL}/Produkte/${products}`);
+  }
+
+  getAllArtikel2(kategorie: string): Observable<any> {
+    return this.http.get<Ram[]>(`${this.apiURL}/Artikel/${kategorie}`);
+  }
+
+  /**
+   * 
+   * @param kategorie es handelt sich um die Kategorie, für die man eine Artikelliste haben möchte
+   * z.B: RAM, CPU, Speicher, Grafikkarte....
+   * @returns eine Liste von Alle Artikel dieser Kategorie
+   */
+  getAllArtikel(kategorie: string): Observable<any> {
+    return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`).pipe(
+      map((data) => {
+        // Transformez les données en objets Ram
+        return data.map((ramData: any) => {
+          return new Ram(
+            ramData.Artikelnummer,
+            ramData.Kapazitaet,
+            ramData.Kategorie,
+            ramData.Marke,
+            ramData.Modell,
+            ramData.Preis,
+            ramData.ProduktLink,
+            ramData.ShopID,
+            ramData.Timings,
+            ramData.Typ
+          );
+        });
+      })
+    );
   }
 }

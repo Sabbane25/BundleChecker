@@ -1,18 +1,14 @@
 import { Artikel } from "./artikel.model";
 
 export class BetriebsSystem extends Artikel{
-    name: string;
-    hersteller: string;
+    Name: string;
+    Hersteller: string;
 
-    constructor(artikelnummer: number, shopID: number, produktLink: string, preis: number, kategorie: string, 
-                                                                                name: string, hersteller: string) {
-        super(artikelnummer, kategorie, preis,  shopID, produktLink)
-        this.artikelnummer = artikelnummer;
-        this.shopID = shopID;
-        this.produktLink = produktLink;
-        this.preis = preis;
-        this.kategorie = kategorie;
-        this.name = name;
-        this.hersteller = hersteller;
+    constructor(Artikelnummer: number, Kategorie: string, Preis: number, ShopID: number, ProduktLink: string,
+         Name: string, Hersteller: string) {
+
+        super(Artikelnummer, Kategorie, Preis,  ShopID, ProduktLink)
+        this.Name = Name;
+        this.Hersteller = Hersteller;
     }
 }

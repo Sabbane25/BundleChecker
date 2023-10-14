@@ -8,10 +8,17 @@ import { Router } from '@angular/router';
 })
 export class AnmeldenComponent {
 
+  //fehler die auftaucht, falls der nutzer das Formular zuschicken möchte ohne alle Felder aufzufüllen
+  fehlerMeldung: string = "FüllenSie alle Felder auf";
+
+  onSubmit() {
+    console.log("formulaire marche");
+  }
+
   constructor(private router: Router) {}
 
-retrunViewRegistrieren() {
-  this.router.navigate(['konto/registrieren']);
-}
+  retrunViewRegistrieren() {
+    this.router.navigate(['konto/registrieren']);
+  }
 
 }

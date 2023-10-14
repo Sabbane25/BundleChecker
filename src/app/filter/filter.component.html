@@ -12,7 +12,7 @@
           </h2>
           <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
             <div class="accordion-body filterItem">
-              <div class="" style="border-bottom: 1px solid black;">
+              <div>
                 <div class="itemInhalt">
                   <div class="von">
                     <p>von</p>
@@ -35,22 +35,43 @@
             </button>
           </h2>
           <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <div class="accordion-body">
-              //TODO
+            <div class="accordion-body p-2" >
+              <div>
+                <input type="checkbox">
+                <label class="ms-2" for="">Marke 1</label>
+              </div>
+              <div>
+                <input type="checkbox">
+                <label class="ms-2" for="">Marke 2</label>
+              </div>
             </div>
           </div>
         </div>
-        <!-- Filter-Item 3: Marke-->
+        <!-- Filter-Item 3: Modell-->
         <div class="accordion-item">
           <h2 class="accordion-header">
             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-              Item #3
+              Modell
             </button>
           </h2>
           <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <div class="accordion-body">
-              //TODO
+            <div class="accordion-body p-2" >
+              <div>
+                <input type="checkbox">
+                <label class="ms-2" for="">Model 1</label>
+              </div>
+              <div>
+                <input type="checkbox">
+                <label class="ms-2" for="">Model 2</label>
+              </div>
             </div>
+          </div>
+        </div>
+        <!-- Button für die Bestätigung oder Abbrechen eines Filters -->
+        <div class="accordion-item">
+          <div class="filter_button">
+            <button (click)="filterErgebniss()" class="bestaetigen_click">Bestätigen</button>
+            <button class="abbrechen_click">Abbrechen</button>
           </div>
         </div>
       </div>

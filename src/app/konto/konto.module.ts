@@ -4,6 +4,7 @@ import { AnmeldenComponent } from './anmelden/anmelden.component';
 import { KontoComponent } from './konto/konto.component';
 import { RouterModule, Routes } from '@angular/router';
 import { RegistrierenComponent } from './registrieren/registrieren.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -27,7 +28,11 @@ const routes: Routes = [
     //CommonModule
     
   ]*/
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule.forRoot(routes)
+  ],
   exports: [RouterModule]
 })
 export class KontoModule { }

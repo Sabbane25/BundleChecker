@@ -1,21 +1,15 @@
 export class Artikel {
-    artikelnummer: number;
-    kategorie: string;
-    preis: number;
-    shopID: number;
-    produktLink: string;
+    Artikelnummer: number;
+    Kategorie: string;
+    Preis: number;
+    ShopID: number;
+    ProduktLink: string;
 
-    constructor(
-        artikelnummer: number,
-        kategorie: string,
-        preis: number,
-        shopID: number,
-        produktLink: string
-      ) {
-        this.artikelnummer = artikelnummer;
-        this.kategorie = kategorie;
-        this.preis = preis;
-        this.shopID = shopID;
-        this.produktLink = produktLink;
+    constructor(Artikelnummer: number, Kategorie: string, Preis: number, ShopID: number, ProduktLink: string) {
+        this.Artikelnummer = Artikelnummer;
+        this.Kategorie = Kategorie;
+        this.Preis = Preis;
+        this.ShopID = ShopID;
+        this.ProduktLink = ProduktLink;
       }
 }

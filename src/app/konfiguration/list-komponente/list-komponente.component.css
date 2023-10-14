@@ -124,6 +124,17 @@
   margin-top: 8px;
 }
 
+.komponanten-div .list-artikel .col-9 p{
+  color: rgb(47, 47, 47);
+  font-size: 12px; 
+  opacity: 0.9;
+
+}
+
+.komponanten-div .list-artikel span{
+  color: black;
+}
+
 .komponanten-div .list-artikel .row .col-1{
   display: flex;
   align-items: center;
@@ -158,6 +169,7 @@
 /* ########### NEU PC KONFIG ############ */
 .neu-konfig-div{
   width: 37%;
+  margin-bottom: 32px;
 }
 
 .neu-konfig-div .container{
@@ -217,5 +229,6 @@
 }
 
 .neu-konfig-div .container .artikel p{
-  font-size: 10px;
+  font-size: 11px;
+  color: rgb(54, 54, 54);
 }

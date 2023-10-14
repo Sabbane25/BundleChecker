@@ -6,11 +6,12 @@
 .filter{
   padding: 0px 0px;
   border: 1px solid rgb(186, 186, 186);
-  margin: 8px 8px;
+  margin: 4px 4px;
 }
 
-.accordion-item{
+.accordion-item h2{
   margin-top: 8px;
+  margin: 0px;
 }
 
 .accordion-item button{
@@ -56,4 +57,29 @@
     margin-left: 8px;
     margin-right: 4px;
   } 
+
+  /* ************** STYLE FÜR BESTÄTIGEN UND ABBRECHEN DES FILTER ************* */
+  .accordion-item .filter_button {
+    color: red;
+    display: flex;
+    margin-top: 8px;
+  }
+
+  .accordion-item .filter_button button{
+    height: 30px;
+    font-size: 14px;
+    padding-bottom: 30px;
+  }
+
+  .accordion-item .filter_button .bestaetigen_click{
+    width: 79%;
+    color: white;
+    margin-right: 1%;
+    background-color: black;
+  }
+
+  .accordion-item .filter_button .abbrechen_click{
+    width: 20%;
+    
+  }
 
