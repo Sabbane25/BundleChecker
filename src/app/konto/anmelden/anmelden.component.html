@@ -1,23 +1,33 @@
 
 <div class="container">
     <div class="container-form">
-        <form action="">
+        <form action="" id="login-form">
             <!-- E-Mail Eingabe-->
             <div class="email">
                 <!-- Titel-->
                 <label for="email">E-Mail</label><br>
                 <!-- Eigabefeld mit Placeholder-->
-                <input type="text" name="email" id="" placeholder=" E-Mail Adresse">
+                <input type="text" name="email" id="email" placeholder=" E-Mail Adresse" #emailInput>
             </div>
             <!-- Passworteinagbe-->
             <div class="passwort">
                 <!-- Titel-->
                 <label for="passwort">Passwort</label><br>
                 <!--Eingabefeld für das Passwort-->
-                <input type="password" name="password" id="" placeholder=" Passwort">
+                <input type="passwort" name="passwort" id="passwort" placeholder=" Passwort" #passwortInput>
             </div>
             <!-- Anmeldebutton-->
-            <input type="submit" (click)="returnViewRegistrieren()" value="Anmelden" style="margin-top: 14px; border-style: none; border-radius: 0px; font-size: 16px; color: white; background-color: rgb(151, 6, 6);">
+            <button type="button" 
+                    (click)="returnViewRegistrieren()" 
+                    id="loginButton"
+                	value="Anmelden"
+                    style=" font-size: 12px;
+                            width: 100%;
+                            height: 40px;
+                            background-color: rgb(151, 6, 6);
+                            color: #fff;
+                            border-radius: 12px;"> Anmelden      
+            </button>
             <!--Problembehandlung bei Anmeldung-->
             <div class="container-hinweis" style="text-align: center; margin-top: 8px;">
                 <!-- Bei Passwortverlust neues Passwort anfordern-->

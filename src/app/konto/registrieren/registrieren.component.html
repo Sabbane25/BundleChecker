@@ -2,44 +2,31 @@
     <div class="container">
         <div class="container-form">
             <form action="" id="registration-form">
-                <!-- Name Eingabefeld-->
-                <div class="name">
-                    <label for="name">Name</label><br>
-                    <input type="text" name="name" id="name" placeholder=" Name">
-                </div>
-                <!-- Vorname Eingabefeld-->
-                <div class="vorname">
-                    <label for="vorname">Vorname</label><br>
-                    <input type="text" name="vorname" id="vorname" placeholder=" Vorname">
-                </div>
                 <!-- E-Mail Eingabefeld-->
                 <div class="email">
                     <label for="email">E-Mail</label><br>
-                    <input type="text" name="email" id="email" placeholder=" E-Mail Adresse">
-                    <!-- Anzeigen einer Meldung, ob die E-Mail bereits registriert ist -->
-                    <div *ngIf="doesUserExists()">
-                    Diese E-Mail-Adresse ist bereits registriert.
-                    </div>
+                    <input type="text" name="email" id="email" placeholder=" E-Mail Adresse" #emailInput>
                 </div>
                 <!-- Passwort Eingabefeld-->
                 <div class="passwort">
                     <label for="passwort">Passwort</label><br>
-                    <input type="password" name="passwort" id="password" placeholder=" Passwort">
+                    <input type="password" name="passwort" id="password" placeholder=" Passwort" #passwortInput>
                 </div>
                 <!-- Passwort Eingabefeld-->
                 <div class="passwort">
                     <label for="passwortRepeat">Passwort wiederholen</label><br>
-                    <input type="password" name="passwortRepeat" id="passwordRepeat" placeholder=" Passwort">
+                    <input type="password" name="passwortRepeat" id="passwordRepeat" placeholder=" Passwort" #passwortRepeatInput>
                 </div>
                 <!-- Button, um die Registrierung abzuschließen-->
-                <button  type="submit" id="register" onclick="createUser(document.getElementById('name').value,document.getElementById('vorname').value,
-                    document.getElementById('email').value, document.getElementById('password').value, 
-                    document.getElementById('passwordRepeat').value )" style="  font-size: 12px;
-                                                            width: 100%;
-                                                            height: 40px;
-                                                            background-color: rgb(151, 6, 6);
-                                                            color: #fff;
-                                                            border-radius: 12px;">Registrieren
+                <button type="button" 
+                        id="register" 
+                        (click)="addUser(emailInput.value, passwortInput.value, passwortRepeatInput.value)" 
+                        style=" font-size: 12px;
+                                width: 100%;
+                                height: 40px;
+                                background-color: rgb(151, 6, 6);
+                                color: #fff;
+                                border-radius: 12px;">Registrieren
                 </button>
                 <!-- Falls bereits registriert, kann man hier zur Anmeldung springen-->
                 <div class="container-hinweis" style="text-align: center; margin-top: 8px;">
@@ -52,7 +39,7 @@
     </div>
 </body>
 
-
+<!--
 <script>
 
     // Event-Listener für das Formular hinzufügen
@@ -113,4 +100,4 @@
     }); 
 
 </script>
-
+-->

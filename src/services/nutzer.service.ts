@@ -14,10 +14,12 @@ export class NutzerService {
     return this.http.get<any>(`${this.apiURL}/Emails`);
   }
 
-  addUser(name: string, vorname: string, email: string, passwort: string): Observable<any>{
-    const newUser= {name, vorname, email, passwort};
-
-    return this.http.post<any>(`${this.apiURL}/Nutzer`, newUser);
+  addUser(email: string, passwort: string): Observable<any> {
+    const data = { email, passwort };
+    return this.http.post<any>(`${this.apiURL}/addUser`, data);
   }
 
+  getUserData(email: string) : Observable<any> {
+    return this.http.get<any>(`${this.apiURL}/getUserData`);
+  }
 }
