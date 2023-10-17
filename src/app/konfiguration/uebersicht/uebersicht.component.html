@@ -1,16 +1,14 @@
-<table>
-  <thead>
-    <tr>
-      <th>Produktname</th>
-      <th>Preis</th>
-      <!-- Weitere Spalten, falls benötigt -->
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let produkt of ausgewaehlteProdukte">
-      <td>{{ produkt.name }}</td>
-      <td>{{ produkt.preis }}</td>
-      <!-- Weitere Spalten, falls benötigt -->
-    </tr>
-  </tbody>
-</table>
+
+
+<!-- Arnauld: danach kannst du löschen oder damit weiter.-->
+<div class="container-bundler">
+
+  <div class="container-bundle1">
+    <h3>Bundle 1: Alternate</h3>
+    <p *ngFor="let artikel of gibguenstigstesBundle()"> preis: {{ artikel.preis }}, Kategorie: {{ artikel.kategorie}}, Anbieter: {{ artikel.anbieter}} </p>
+  </div>
+
+  <div class="container-bundle2">
+
+  </div>
+</div>

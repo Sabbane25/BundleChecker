@@ -10,10 +10,10 @@ export class Cpu extends Artikel{
     anzahlKerne: string;
     interneGrafik: string;
 
-    constructor(Artikelnummer: number, Kategorie: string, Preis: number, ShopID: number, ProduktLink: string, marke: string, 
+    constructor(artikelnummer: number, kategorie: string, preis: number, shopID: number, produktLink: string, anbieter: string, marke: string, 
         modell: string, stromverbrauch: string, taktfrequenz: string, sockel: string, anzahlKerne: string, interneGrafik: string) {
 
-        super(Artikelnummer, Kategorie, Preis, ShopID, ProduktLink)
+        super(artikelnummer, kategorie, preis,  shopID, produktLink, anbieter)
         this.marke = marke;
         this.modell = modell;
         this.stromverbrauch = stromverbrauch;

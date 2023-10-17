@@ -8,10 +8,10 @@ export class Speicher extends Artikel{
     Schreibgeschwindigkeit: string;
     Lesegeschwindigkeit: string;
 
-    constructor(Artikelnummer: number, Kategorie: string, Preis: number, ShopID: number, ProduktLink: string, Marke: string, Modell: string, Speichertyp: string, Kapazitaet: string, 
-                                Schreibgeschwindigkeit: string, Lesegeschwindigkeit: string)
+    constructor(artikelnummer: number, kategorie: string, preis: number, shopID: number, produktLink: string, anbieter: string,
+                                Marke: string, Modell: string, Speichertyp: string, Kapazitaet: string, Schreibgeschwindigkeit: string, Lesegeschwindigkeit: string)
                                    {
-        super(Artikelnummer, Kategorie, Preis, ShopID, ProduktLink)
+        super(artikelnummer, kategorie, preis,  shopID, produktLink, anbieter)
         this.Marke = Marke;
         this.Modell = Modell;
         this.Speichertyp = Speichertyp;

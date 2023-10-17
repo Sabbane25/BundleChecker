@@ -49,17 +49,18 @@ export class ArtikelService {
       map((data) => {
         // Transformez les données en objets Ram
         return data.map((ramData: any) => {
-          return new Ram(
-            ramData.Artikelnummer,
-            ramData.Kapazitaet,
-            ramData.Kategorie,
+          return new Ram( 
+            ramData.artikelnummer,
+            ramData.kategorie,
+            ramData.Preis,
+            ramData.ShopID,
+            ramData.ProduktLink,
+            ramData.anbieter,
             ramData.Marke,
             ramData.Modell,
-            ramData.Preis,
-            ramData.ProduktLink,
-            ramData.ShopID,
+            ramData.Typ,
+            ramData.kapazitaet,
             ramData.Timings,
-            ramData.Typ
           );
         });
       })

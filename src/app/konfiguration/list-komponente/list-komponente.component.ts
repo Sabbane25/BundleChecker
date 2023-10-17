@@ -45,6 +45,7 @@ export class ListKomponenteComponent {
   ngOnInit(): void {
     this.loadProdukts();
     console.log(this.listRAM2);
+    this.gibAlleArtikel();
   } 
 
   //speichert die Data in dem entsprechenden Variable. Die kommen aus der Service (DataService)
@@ -53,8 +54,17 @@ export class ListKomponenteComponent {
     this.artikelService.getAllArtikel2("RAM").subscribe((data) => { for(let a of data) this.artikelList2.push(a)});
     this.artikelService.getAllArtikel2("Speicher").subscribe((data) => { for(let a of data) this.artikelList2.push(a)});
     this.artikelService.getAllArtikel2("CPU").subscribe((data) => { 
-      console.log(data);
-      for(let a of data) this.artikelList2.push(a)});
+    console.log(data);
+    for(let a of data) this.artikelList2.push(a)});
   }  
+  
+  gibAlleArtikel(): void {
+    for(let artikel_Kategorien of ARTIKEL_LIST){
+      if (artikel_Kategorien instanceof Ram){
+        console.log(artikel_Kategorien.kapazitaet);
+      }else if(artikel_Kategorien instanceof BetriebsSystem){
+      }
+    }
+  }
  
 }
