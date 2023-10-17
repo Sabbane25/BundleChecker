@@ -1,97 +1,69 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NutzerService } from 'src/services/nutzer.service';
+
 
 @Component({
   selector: 'app-registrieren',
   templateUrl: './registrieren.component.html',
   styleUrls: ['./registrieren.component.css']
 })
-export class RegistrierenComponent {
-
+export class RegistrierenComponent implements OnInit {
+  registerForm: FormGroup;
+  email: string= '';
+  password: string = '';
+  passwordRepeat: string = '';
   constructor(private router: Router, private nutzerService: NutzerService) {}
 
   alleNutzer: any[] = [];
 
-  returnViewAnmelden(){
-    this.router.navigate(['konto/anmelden']);
+  // returnViewAnmelden(){
+  //   this.router.navigate(['konto/anmelden']);
+  // }
+
+  async ngOnInit(){
+    // this.createUser ("karazon@test.de", "12345678", )
+    // this.nutzerService.getAllEmails().subscribe(data => this.alleNutzer = data);
   }
 
-  ngOnInit(): void{
-    this.nutzerService.getAllEmails().subscribe(data => this.alleNutzer = data);
-  }
+  // }
 
-   createUser(name: string, vorname: string, email: string, passwort: string, passwortRepeat: string){
+  createUser(emailEl: HTMLInputElement, passwortEl: HTMLInputElement, passwortRepeatEl: HTMLInputElement, registerButton: HTMLButtonElement, emailNote: HTMLSpanElement, passwortNote: HTMLSpanElement, passwordRepeatNote: HTMLSpanElement): void{
+    const passwort = passwortEl.value;
+    const passwortRepeat = passwortRepeatEl.value;
+    const email = emailEl.value;
 
-    //Prüfung, ob Email bereits registriert ist
-    if(this.alleNutzer.includes(email)){
-      console.error("E-Mail bereits registriert!");
+    // Deaktiviere Button
+    registerButton.disabled = true;
+
+    // Setze Info-Felder zurück
+    emailNote.textContent = '';
+    passwordRepeatNote.textContent = '';
+    passwortNote.textContent = '';
+
+    // Prüft, ob Passwörter identisch sind
+    if(passwort !== passwortRepeat) {
+      console.error('Passwörter stimmen nicht überein!');
+      passwordRepeatNote.textContent = 'Passwörter stimmen nicht überein!';
+
+      // Aktiviere Button
+      registerButton.disabled = false;
+    } else {
+      //Prüft, ob Passwort die Mindestanforderung erfüllt
+      if(passwort.length < 5) {
+        console.error('Passwort zu kurz! Mindestens 5 Zeichen!')
+        passwortNote.textContent = 'Passwort zu kurz! Mindestens 5 Zeichen!';
+
+        // Aktiviere Button
+        registerButton.disabled = false;
+      } else {
+        console.log("Nutzer wird hinzugefügt...")
+
+        //Fügt den Nutzer der Datenbank hinzu
+        this.nutzerService.addUser(email, passwort, registerButton, emailNote);
+      }
     }
-    //Falls Email verfügbar
-    else{
-      //Passwörter auf Übereinstimmung prüfen
-      if(passwort === passwortRepeat){
-        console.error("Passwörter stimmen nicht überein!");
-      }
-      //Falls Passwörter übereinstimmen
-      else{
-        //Passwort auf Erfüllung der Bedingungen prüfen
-        if (passwort.length <= 8) { 
-          console.error("Eingegebenes Passwort erfüllt nicht die Mindestanforderungen!");
-        }
-        //Wenn alle Eingaben korrekt sind (Nutzer kann angelegt werden)
-        else{
-          this.nutzerService.addUser(name, vorname, email, passwort)
-          .subscribe(
-            (response) => {
-              console.log("Benutzer erfolgreich hinzugefügt", response);
-              this.router.navigate(['konto/anmelden']);
-            },
-            (error) => {
-              console.error("Fehler beim Hinzufügen des Nutzers:", error);
-            }
-          );
-        }
-      }
-    }
-  } 
-/** 
-  createUser(name: string, vorname: string, email: string, password: string, passwordRepeat: string) {
-
-    // Validierung schon abgeschlossen
-
-    this.checkPassword;
-
-    this.doesUserExist;
-
-    if (!this.checkPassword) {
-      // Meldung, dass das Passwort nicht übereinstimmt.
-    }
-
-    if (!this.doesUserExist) {
-      // Meldung, dass es den User bereits gibt.
-    }
-
-    // Logik für das Erstellen des Users.
-
-    // createUser im service
-
-    // Feedback von der DB abfangen
-
-  }
-  */
-/*
-  checkPassword(passwort: string, passwortRepeat: string){
-    return (passwort.length <= 8 || !/[A-Z]/.test(passwort) || !/[a-z]/.test(passwort) || !/[!@#$%^&*()_+{}\[\]:;<>,.?~\\-=]/.test(passwort))
-      ? passwort !== passwortRepeat
-      : false;
-  }
-
-  /*
-  doesUserExist(email: ){
-    return 
-  } 
-  */
-
+  }
 }
 

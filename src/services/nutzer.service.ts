@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class NutzerService {
-  private apiURL = 'http://localhost:3000'; //API-URL vom Server
+  private apiURL = 'http://192.168.198.48:3000'; //API-URL vom Server: 192.168.198.48
 
   constructor(private http: HttpClient) { }
 
@@ -14,10 +14,34 @@ export class NutzerService {
     return this.http.get<any>(`${this.apiURL}/Emails`);
   }
 
-  addUser(name: string, vorname: string, email: string, passwort: string): Observable<any>{
-    const newUser= {name, vorname, email, passwort};
+  addUser(email: string, passwort: string, registerButton: HTMLButtonElement, emailNote: HTMLSpanElement): Observable<ApiMessage>{
+    const newUser = {
+      email: email,
+      password: passwort
+    }
+    
+    const request = this.http.post<ApiMessage>(`${this.apiURL}/addUser`, newUser);
+    request.subscribe(response => {
+      if (response.code !== 1697580318) {
+        // Aktiviere button
+        registerButton.disabled = false;
+      }
 
-    return this.http.post<any>(`${this.apiURL}/Nutzer`, newUser);
+      if (response.code === 1697580307) {
+        emailNote.textContent = response.message;
+      } else {
+        alert(response.message);
+      }
+    });
+
+    return request;
   }
 
+}
+
+interface ApiMessage {
+  state: boolean;
+  success: boolean;
+  message: string;
+  code: number;
 }
