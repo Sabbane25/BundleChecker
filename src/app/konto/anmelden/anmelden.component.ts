@@ -33,16 +33,25 @@ anmelden(email: string, passwort: string) {
   }
 
 
-  else if(enthaeltAt && endePasst && validEmail) {
+  else if (enthaeltAt && endePasst && validEmail) {
+    let password: string;
+  
+    this.nutzerService.getUserPassword(email)
+      .subscribe((passwordValue: string) => {
+        // Die Methode `subscribe` wird aufgerufen, wenn der Wert verfügbar ist
+        password = passwordValue;
+  
+        // Hier kannst du mit dem `password` Wert arbeiten
+        console.log("Passwort abgerufen:", password);
+      });
+  } else {
+    console.error("Bedingungen wurden nicht erfüllt.");
+  }
 
-    this.nutzerService.getUserData(email).subscribe({
-      next: (response: any) => {
-        console.log('Daten erfolgreich abgefragt');
-      }
-    })
+    
   }
 }
 
 
 
-}
+

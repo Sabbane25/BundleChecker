@@ -8,6 +8,7 @@ import { NutzerService } from 'src/services/nutzer.service';
   templateUrl: './registrieren.component.html',
   styleUrls: ['./registrieren.component.css']
 })
+
 export class RegistrierenComponent {
 
   constructor(private router: Router, private nutzerService: NutzerService) {}

@@ -19,7 +19,7 @@ export class NutzerService {
     return this.http.post<any>(`${this.apiURL}/addUser`, data);
   }
 
-  getUserData(email: string) : Observable<any> {
-    return this.http.get<any>(`${this.apiURL}/getUserData`);
+  getUserPassword(email: string) {
+    return this.http.get<any>(`${this.apiURL}/getUserPassword`);
   }
 }
