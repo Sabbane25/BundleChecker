@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { AnmeldenComponent } from './anmelden/anmelden.component';
 import { KontoComponent } from './konto/konto.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -28,11 +28,12 @@ const routes: Routes = [
     //CommonModule
     
   ]*/
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule.forRoot(routes)
-  ],
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule.forRoot(routes),
+        NgIf
+    ],
   exports: [RouterModule]
 })
 export class KontoModule { }

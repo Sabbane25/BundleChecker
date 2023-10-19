@@ -10,11 +10,7 @@ export class NutzerService {
 
   constructor(private http: HttpClient) { }
 
-  getAllEmails(): Observable<any> {
-    return this.http.get<any>(`${this.apiURL}/Emails`);
-  }
-
-  addUser(email: string, passwort: string, registerButton: HTMLButtonElement, emailNote: HTMLSpanElement): Observable<ApiMessage>{
+  addUser(email: string, passwort: string, emailInputNote: HTMLSpanElement): Observable<ApiMessage>{
     const newUser = {
       email: email,
       password: passwort
@@ -22,13 +18,8 @@ export class NutzerService {
     
     const request = this.http.post<ApiMessage>(`${this.apiURL}/addUser`, newUser);
     request.subscribe(response => {
-      if (response.code !== 1697580318) {
-        // Aktiviere button
-        registerButton.disabled = false;
-      }
-
       if (response.code === 1697580307) {
-        emailNote.textContent = response.message;
+        emailInputNote.textContent = response.message;
       } else {
         alert(response.message);
       }
