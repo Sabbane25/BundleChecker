@@ -1,4 +1,4 @@
-export class Artikel {
+export abstract class Artikel {
   artikelnummer: number;
   kategorie: string;
   preis: number;
@@ -15,23 +15,7 @@ export class Artikel {
     this.anbieter = anbieter;
   }
 
-  public gibArtikelKategorie(): string {
-    return this.kategorie;
-  }
+  abstract gibArtikelBeschreibung(): string;
 
-  gibArikelPreis(): number {
-    return this.preis;
-  }
-
-  public gibShopID(): number {
-    return this.shopID;
-  }
-
-  public gibProduktLink(): string {
-    return this.produktLink;
-  }
-
-  public gibAnbieter(): string {
-    return this.anbieter;
-  }
+  abstract gibArtikelTitel(): string;
 }

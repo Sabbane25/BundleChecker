@@ -1,6 +1,7 @@
 import { Artikel } from "./artikel.model";
 
 export class Gehaeuse extends Artikel{
+   
     marke: string;
     modell: string;
     frontenschluesse: number;
@@ -18,4 +19,13 @@ export class Gehaeuse extends Artikel{
         this.material = material;
         this.abmessungen = abmessungen;
     }
+
+    override gibArtikelTitel(): string {
+        return `${this.marke}`;
+    }
+
+    override gibArtikelBeschreibung(): string {
+        return `${this.modell} • ${this.frontenschluesse} • ${this.mainboardFormfaktor} • ${this.material} • ${this.abmessungen}`;
+    }
+    
 }

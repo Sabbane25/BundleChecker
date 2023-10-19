@@ -19,4 +19,12 @@ export class Speicher extends Artikel{
         this.Schreibgeschwindigkeit = Schreibgeschwindigkeit;
         this.Lesegeschwindigkeit = Lesegeschwindigkeit;
     }
+
+    override gibArtikelTitel(): string {
+        return `${this.Marke}`;
+    }
+
+    override gibArtikelBeschreibung(): string {
+        return `${this.Modell} • ${this.Speichertyp} • ${this.Kapazitaet} • ${this.Schreibgeschwindigkeit} • ${this.Lesegeschwindigkeit}`;
+    }
 }

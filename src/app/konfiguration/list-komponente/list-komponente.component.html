@@ -3,37 +3,34 @@
     <!-- Die Komponenten werden mit Hilfe einer schleife generiert -->
     <div class="komponanten-div" >
       <div class="accordion" id="accordionExample">
-        <!-- stellt eine Komponente dar. Mit Hilfe der Directive *ngFor wird alle Komponenten angezeigt -->
-        <div class="accordion-item" *ngFor="let kategorieItem of artikel_Kategorien">
+        <!-- stellt eine Komponente dar. Mit Hilfe der Directive *ngFor werden alle Komponenten angezeigt -->
+        <div class="accordion-item" *ngFor="let kategorieItem of gibKategorieArtikel()">
         <!--Komponente-Title. Es ist auch gleichzeitig den Dropdowm menu, um Artikel einer Komponente aufzulisten -->
         <!-- item-4 / Komponent 4: GRAFIKKARTE -->
           <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#' + kategorieItem.kategorie"  aria-expanded="false" aria-controls="flush-collapseTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#' + kategorieItem"  aria-expanded="false" aria-controls="flush-collapseTwo">
               <div class="item-img"> 
-                <img src="./assets/Komponenten/{{ kategorieItem.kategorie }}.jpg" alt="">
-              </div> {{ kategorieItem.kategorie }}
+                <img src="./assets/Komponenten/{{ kategorieItem }}.jpg" alt="">
+              </div> 
+              {{ kategorieItem }}
             </button>
           </h2>
           <!-- Hier wird alle Produkt einer Kategorie angezeigt. Und ein geeignetes Filter -->
-          <div [id]="kategorieItem.kategorie" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">  
+          <div [id]="kategorieItem" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">  
             <div class="accordion-body">
               <!-- filter (Es handelt es sich um eine separat Composant)-->
-              <app-filter [listKomponente]="artikelList2" [listKomponenteItem]="kategorieItem"></app-filter>
-              <div class="list-artikel" *ngFor="let artikel of artikelList2">
-                <div class="row m-2" *ngIf="artikel.Kategorie === kategorieItem.kategorie">
+              <!-- <app-filter [listKomponente]="artikelList3" [listKomponenteItem]="kategorieItem"></app-filter> -->
+              <div class="list-artikel" *ngFor="let artikel of artikelListe">
+                <div class="row  item" *ngIf="artikel.kategorie === kategorieItem">
                   <!-- BILD Komponente(keine echtes Bild. Nur Kategorie Abkürzung) -->
                   <div class="col-1 border justify-content-md-center">
-                      <h5> {{ artikel.Kategorie.substring(0, 3).toUpperCase() }} </h5>
+                      <h5> {{ artikel.kategorie.substring(0, 3).toUpperCase() }} </h5>
                   </div>
-                  <div class="col-9">
-                    <h4 style="font-size: 14px; margin: 2px 0px 4px 0px"> {{ artikel.Kategorie }} </h4>
-                    <p style="font-size: 10px; opacity: 0.8;"> Preis: {{artikel.Preis / 100 }}€  </p>
-                    <p *ngIf="artikel.Kategorie === 'Speicher'">
-                      Marke:{{artikel.Marke}}; Modell:{{artikel.Modell}}; Speichertyp:{{artikel.Speichertyp}}; Kapazitaet:{{artikel.Kapazitaet}}; Schreibgeschwindigkeit:{{artikel.Schreibgeschwindigkeit}}
-                    </p>
-                    <p *ngIf="artikel.Kategorie === 'RAM'">
-                      <span>Marke</span>:{{artikel.Marke}}; <span>Modell</span>:{{artikel.Modell}}; <span>Typ</span>:{{artikel.Typ}}; <span>Kapazitaet</span>:{{artikel.Kapazitaet}}; <span>Timings</span>:{{artikel.Timings}}
-                    </p>
+                  <!-- Beschreibung der Artikels-->
+                  <div class="col-9 artikel-info">
+                    <h5> {{ artikel.gibArtikelTitel() }}</h5>
+                    <p> {{ artikel.gibArtikelBeschreibung() }} </p>
+                    <h6> {{ artikel.anbieter }}</h6>
                   </div>
                   <div class="col">
                     <button (click)="onButtonhinzufuegen(artikel)">HINZUFÜGEN</button>
@@ -59,13 +56,8 @@
             <button><h3>Zur Übersicht</h3></button>
           </div>
           <div class="artikel" *ngFor="let artikel of hinzugefuegteArtikel">
-            <h4>{{artikel.Kategorie}}</h4>
-            <p *ngIf="artikel.Kategorie === 'Speicher'">
-              {{artikel.Marke}} {{artikel.Modell}} {{artikel.Speichertyp}} {{artikel.Kapazitaet}} {{artikel.Schreibgeschwindigkeit}}
-            </p>
-            <p *ngIf="artikel.Kategorie === 'RAM'">
-              {{artikel.Marke}} {{artikel.Modell}} {{artikel.Typ}} {{artikel.Kapazitaet}} {{artikel.Timings}}
-            </p>
+            <h4>{{artikel.kategorie}}: {{artikel.gibArtikelTitel()}}</h4>
+            <p> {{artikel.gibArtikelBeschreibung()}} </p>
           </div>
         </div>
     </div>
