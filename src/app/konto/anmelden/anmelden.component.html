@@ -1,4 +1,5 @@
 
+<body>
 <div class="container">
     <div class="container-form">
         <form #myForm="ngForm" (ngSubmit)="onSubmit()">
@@ -6,12 +7,13 @@
             <div class="email">
                 <!-- Titel-->
                 <label for="email">E-Mail</label><br>
-                <input type="text" name="email" id="email" placeholder=" E-Mail Adresse">
+                <input type="email" name="email" id="email" placeholder=" E-Mail Adresse" #emailInput>
             </div>
             <div class="passwort">
                 <!-- Titel-->
-                <label for="passwort">Passwort</label><br>
-                <input type="password" name="password" id="passwort" placeholder=" Passwort">
+                <label for="password">Passwort</label><br>
+                <!--Eingabefeld für das Passwort-->
+                <input type="password" name="password" id="password" placeholder=" Passwort" #passwordInput>
             </div>
             <!-- Anmeldebutton-->
             <input type="submit" (click)="returnViewRegistrieren()" value="Anmelden" style="margin-top: 14px; border-style: none; border-radius: 0px; font-size: 16px; color: white; background-color: rgb(151, 6, 6);">
@@ -25,3 +27,4 @@
         </form>
     </div>
 </div>
+</body>

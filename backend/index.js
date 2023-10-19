@@ -19,7 +19,12 @@ connection.connect((err) => {
     console.log('Connected to the database');
   }
 });
-
+/** 
+app.post('/setToken', (req, res)) => {
+  const {email} = req.body;
+  const password = 'GET Passwort FROM Nutzer WHERE Passwort ="${password}"'
+}
+*/
 //Verwendung des cors-Pakets
 app.use(cors());
 
@@ -85,6 +90,8 @@ app.post('/addUser', (req, res) => {
     }
   });
 });
+
+
 
 app.get('/Emails', (req, res) => {
 
