@@ -17,6 +17,15 @@ export class Ram extends Artikel{
         this.timings = timings;
     }
 
+    override gibArtikelBeschreibung(): string{
+
+        return `${this.modell} • ${this.typ} • ${this.kapazitaet} • ${this.timings}`;
+    }
+
+    override gibArtikelTitel(): string {
+        return `${this.marke}`;
+    }
+
     override getSpezifischeAttribute(): string {
         return `Marke: ${this.marke}, Modell: ${this.modell}, Typ: ${this.typ}, Kapazität: ${this.kapazitaet}, Timings: ${this.timings}`;
       }

@@ -58,9 +58,6 @@
   height: 68%;
 }
 
-/*####### SUCHE UND FILTER ########*/
-
-/*-------- ENDE SUCHE UND FILTER STYLE ---------*/
 /*####### LISTE ARTIKEL ########*/
 
 .listeKomponenten{
@@ -120,16 +117,30 @@
   padding: 16px 0px 16px 0px;
 }
 
-.komponanten-div .list-artikel {
-  margin-top: 8px;
+.komponanten-div .accordion-body{
+  padding: 8px 0px 8px 0px;
 }
 
-.komponanten-div .list-artikel .col-9 p{
+.komponanten-div .list-artikel .item{
+  border-top: 1px solid rgb(147, 147, 147);
+  padding: 8px 14px 8px 14px;
+}
+
+.komponanten-div .list-artikel .artikel-info p{
   color: rgb(47, 47, 47);
   font-size: 12px; 
   opacity: 0.9;
-
 }
+
+.komponanten-div .list-artikel .artikel-info h5{
+  font-size: 16px; 
+  font-weight: 300px;
+}
+
+.komponanten-div .list-artikel .artikel-info h6{
+  font-size: 12px; 
+}
+
 
 .komponanten-div .list-artikel span{
   color: black;
@@ -154,7 +165,7 @@
 .komponanten-div .list-artikel .row .col{
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: end;
 }
 
 .komponanten-div .list-artikel .row .col button{

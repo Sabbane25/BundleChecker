@@ -23,6 +23,14 @@ export class Cpu extends Artikel{
         this.interneGrafik = interneGrafik; 
     }
 
+    override gibArtikelTitel(): string {
+        return `${this.marke}`;
+    }
+
+    override gibArtikelBeschreibung(): string {
+        return `${this.modell} - ${this.stromverbrauch} - ${this.taktfrequenz} - ${this.sockel} - ${this.anzahlKerne} - ${this.interneGrafik}`;
+    }
+    
     override getSpezifischeAttribute(): string {
         return `Marke: ${this.marke}, Modell: ${this.modell}, 
         Stromverbrauch: ${this.stromverbrauch}, Taktfrequenz: ${this.taktfrequenz}, 
