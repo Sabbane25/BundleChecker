@@ -12,7 +12,7 @@ import {passwordRepeatValidator} from "../../validators/passwordRepeatValidator"
 })
 
 export class RegistrierenComponent {
-    passwordMinLength: number = 5;
+    passwordMinLength: number = 6;
 
     email = new FormControl('', [
         Validators.required,
