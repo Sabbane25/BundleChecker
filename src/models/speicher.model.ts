@@ -19,4 +19,9 @@ export class Speicher extends Artikel{
         this.Schreibgeschwindigkeit = Schreibgeschwindigkeit;
         this.Lesegeschwindigkeit = Lesegeschwindigkeit;
     }
+
+    override getSpezifischeAttribute(): string {
+        return `Marke: ${this.Marke}, Modell: ${this.Modell}, Speichertyp: ${this.Speichertyp}, Kapazität: ${this.Kapazitaet}, 
+        Schreibgeschwindigkeit: ${this.Schreibgeschwindigkeit}, Lesegeschwindigkeit: ${this.Lesegeschwindigkeit}`;
+      }
 }

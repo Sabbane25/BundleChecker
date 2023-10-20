@@ -18,4 +18,8 @@ export class Gehaeuse extends Artikel{
         this.material = material;
         this.abmessungen = abmessungen;
     }
+
+    override getSpezifischeAttribute(): string {
+        return `Marke: ${this.marke}, Modell: ${this.modell}, Frontanschlüsse: ${this.frontenschluesse}, Mainboard Formfaktor: ${this.mainboardFormfaktor}, Material: ${this.material}, Abmessungen: ${this.abmessungen}`;
+      }
 }

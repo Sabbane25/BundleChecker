@@ -1,45 +1,50 @@
-/* styles.css */
-
-
-/* Hauptcontainer */
-div.container {
+.container-bundler {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh; /* Dies setzt die Höhe des Containers auf die volle Bildschirmhöhe, um ihn in der Mitte zu zentrieren */
+  flex-wrap: wrap;
 }
 
-/* Allgemeine Stile für die Übersicht */
-h2 {
-  color: #333;
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-/* Button-Styling */
-button {
-  background-color: #00528D;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin-right: 10px;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-/* Container für jedes Bundle */
-div.bundle-container {
+.container-bundle {
+  flex: 1;
+  max-width: 300px;
   border: 1px solid #ccc;
   padding: 10px;
-  margin-bottom: 20px;
-  border-radius: 5px;
+  margin: 0 10px 10px 0; /* Hier wird der Abstand zwischen den Bundles festgelegt */
 }
 
-/* Stile für die Summe */
-p.sum {
+
+/* Überschriften-Stil */
+h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+h5 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* Artikelinformationen */
+.artikel-info {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+
+/* Stil für Artikelattribute */
+.artikel-kategorie, .artikel-preis, .artikel-produktlink, .artikel-spezifisch, .artikel-anbieter {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+/* Stil für spezifische Attribute */
+.artikel-spezifisch {
   font-weight: bold;
+}
+
+/* Hover-Stil für Artikel */
+.artikel-info:hover {
+  background-color: #e8e8e8;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
 }

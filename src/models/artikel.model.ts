@@ -34,4 +34,11 @@ export class Artikel {
   public gibAnbieter(): string {
     return this.anbieter;
   }
+
+  /*Yahya: Diese Template-Methode wird von den Unterklassen überschrieben werden,
+  /um das Anzeigen von verschiedenen Attributen zu ermöglichen.
+  */
+  getSpezifischeAttribute(): string {
+    return '';
+  }
 }

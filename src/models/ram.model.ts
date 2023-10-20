@@ -16,4 +16,8 @@ export class Ram extends Artikel{
         this.kapazitaet = kapazitaet;
         this.timings = timings;
     }
+
+    override getSpezifischeAttribute(): string {
+        return `Marke: ${this.marke}, Modell: ${this.modell}, Typ: ${this.typ}, Kapazität: ${this.kapazitaet}, Timings: ${this.timings}`;
+      }
 }
