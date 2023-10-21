@@ -15,12 +15,12 @@ const puppeteer = require('puppeteer');
 
     try {
       // Attendez que le bouton soit présent pendant 1 seconde
-      await page.waitForSelector(buttonSelektor, { timeout: 1000 });
+      //await page.waitForSelector(buttonSelektor, { timeout: 1000 });
 
       if (await page.$(buttonSelektor) !== null) {
         // Cliquez sur le bouton
         await page.click(buttonSelektor);
-        await page.waitForTimeout(2000);
+        await page.waitForTimeout(1000);
         url = page.url();
       } else {
         gibNaechsteSeite = false;
@@ -40,14 +40,27 @@ const puppeteer = require('puppeteer');
   const elements = await page.$$('#tle-configurator-components\\:components\\:0\\:component-form\\:tle-configurator-listing\\:listingItems' + ' *');
 
   for (const element of elements) {
+    console.log('0er console ' ,page.url())
     // Vérifiez si l'élément est une balise <a>
     const tagName = await page.evaluate(el => el.tagName, element);
     if (tagName.toLowerCase() === 'a') {
-      // Récupérez le contenu du lien
-      const linkContent = await page.evaluate(el => el.textContent, element);
-      const linkId = await page.evaluate(el => el.getAttribute('id'), element);
-      // affiche le resultat
-      console.log('contenu ', linkContent,'  id: ', linkId)
+      // Récupérez l'URL du lien
+      const linkURL = await page.evaluate(el => el.href, element);
+      const itemSelektorClass = 'a#tle-configurator-components\\:components\\:0\\:component-form\\:tle-configurator-listing\\:listing-items\\:0\\:j_idt1909';
+
+      //await page.goto(url);
+
+      console.log('1er console ' ,page.url())
+      // Cliquez sur le lien pour accéder à son contenu
+      await page.click(itemSelektorClass);
+      console.log('2em console ', page.url())
+      await page.waitForNavigation({ timeout: 60000 });
+      console.log('3eme ', page.url())
+      
+      // À ce stade, vous êtes sur la page liée par le lien, et vous pouvez extraire le contenu que vous souhaitez
+
+      // Revenez à la page précédente
+     // await page.goBack();
     }
   }
 

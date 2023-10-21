@@ -15,12 +15,12 @@ const puppeteer = require('puppeteer');
 
     try {
       // Attendez que le bouton soit présent pendant 1 seconde
-      await page.waitForSelector(buttonSelektor, { timeout: 1000 });
+      //await page.waitForSelector(buttonSelektor, { timeout: 1000 });
 
       if (await page.$(buttonSelektor) !== null) {
         // Cliquez sur le bouton
         await page.click(buttonSelektor);
-        await page.waitForTimeout(2000);
+        await page.waitForTimeout(1000);
         url = page.url();
       } else {
         gibNaechsteSeite = false;
@@ -34,7 +34,7 @@ const puppeteer = require('puppeteer');
     console.log(url);
   }
 
-  console.log('hor de la boucle')
+  console.log('Premiere boucle termine')
 
   //selectionne le ID du div qui contient tous les produits
   const elements = await page.$$('#tle-configurator-components\\:components\\:0\\:component-form\\:tle-configurator-listing\\:listingItems' + ' *');
@@ -44,10 +44,28 @@ const puppeteer = require('puppeteer');
     const tagName = await page.evaluate(el => el.tagName, element);
     if (tagName.toLowerCase() === 'a') {
       // Récupérez le contenu du lien
-      const linkContent = await page.evaluate(el => el.textContent, element);
-      const linkId = await page.evaluate(el => el.getAttribute('id'), element);
-      // affiche le resultat
-      console.log('contenu ', linkContent,'  id: ', linkId)
+      const linkContent = await page.evaluate(el => el.tagName, element);
+      const itemSelektor = await page.$(linkContent);
+
+
+      try{
+        if(await page.$(itemSelektor !== null)){
+          //await page.waitForSelector(linkContent.toLowerCase(), { timeout: 1000 });
+          await page.click(itemSelektor);
+          await page.waitForTimeout(3000);
+          // const linkId = await page.evaluate(el => el.getAttribute('id'), element);
+          url = page.url();
+          console.log('click', url);
+        }else {
+
+        }
+      }catch (error) {
+        // Si le bouton n'est plus présent, sortez de la boucle
+        //console.log('Programme terminé en raison de l\'absence du bouton');
+      }
+      
+      console.log('contenu ', linkContent.toLowerCase(), ' url:', url);
+      //await page.goto(url);
     }
   }
 
