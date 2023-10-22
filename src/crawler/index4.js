@@ -4,54 +4,22 @@ const puppeteer = require('puppeteer');
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
-  let url = 'https://www.alternate.de/configurator.xhtml?pca=20&pco=44&pcs=relevance';
-  const buttonSelektor = '#tle-configurator-components\\:components\\:0\\:component-form\\:tle-configurator-listing\\:load-more-products-btn';
+  const url = 'https://www.notebooksbilliger.de/';
 
-  let i = 0; 
-  let gibNaechsteSeite = true;
+  await page.goto(url);
 
-  while (gibNaechsteSeite) {
-    await page.goto(url);
+  const element = await page.$('.logo.logo--navigation');
+    
+    const contenu = await page.evaluate(element => {
 
-    try {
-      // Attendez que le bouton soit présent pendant 1 seconde
-      await page.waitForSelector(buttonSelektor, { timeout: 1000 });
+      const data = [
+        {product_name: element.querySelector('a').innerHTML,
+        }
+      ]
+      return data;
+    }, element);
 
-      if (await page.$(buttonSelektor) !== null) {
-        // Cliquez sur le bouton
-        await page.click(buttonSelektor);
-        await page.waitForTimeout(2000);
-        url = page.url();
-      } else {
-        gibNaechsteSeite = false;
-        console.log('Programme terminé');
-      }
-    } catch (error) {
-      // Si le bouton n'est plus présent, sortez de la boucle
-      gibNaechsteSeite = false;
-      console.log('Programme terminé en raison de l\'absence du bouton');
-    }
-    console.log(url);
-  }
+  console.log('Titre de la page:', contenu);
 
-  console.log('hor de la boucle')
-
-  //selectionne le ID du div qui contient tous les produits
-  const elements = await page.$$('#tle-configurator-components\\:components\\:0\\:component-form\\:tle-configurator-listing\\:listingItems' + ' *');
-
-  for (const element of elements) {
-    // Vérifiez si l'élément est une balise <a>
-    const tagName = await page.evaluate(el => el.tagName, element);
-    if (tagName.toLowerCase() === 'a') {
-      // Récupérez le contenu du lien
-      const linkContent = await page.evaluate(el => el.textContent, element);
-      const linkId = await page.evaluate(el => el.getAttribute('id'), element);
-      // affiche le resultat
-      console.log('contenu ', linkContent,'  id: ', linkId)
-    }
-  }
-
-  console.log('apres la contdition')
-  
   await browser.close();
 })();
