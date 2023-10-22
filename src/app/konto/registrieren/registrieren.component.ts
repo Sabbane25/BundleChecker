@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
-import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {NutzerService} from 'src/services/nutzer.service';
-import {passwordRepeatValidator} from "../../validators/passwordRepeatValidator";
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NutzerService} from 'src/services/nutzer.service';
+import { passwordRepeatValidator } from "../../validators/passwordRepeatValidator";
 
 
 @Component({
