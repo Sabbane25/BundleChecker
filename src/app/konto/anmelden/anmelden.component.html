@@ -1,24 +1,30 @@
 
+<body>
 <div class="container">
     <div class="container-form">
         <form #myForm="ngForm" (ngSubmit)="onSubmit()">
+            <!-- E-Mail Eingabe-->
             <div class="email">
-                <label for="email">Email</label><br>
-                <input type="text" name="email" id="email" placeholder=" Email Adress">
+                <!-- Titel-->
+                <label for="email">E-Mail</label><br>
+                <input type="email" name="email" id="email" placeholder=" E-Mail Adresse" #emailInput>
             </div>
-            
             <div class="passwort">
-                <label for="passwort">Passwort</label><br>
-                <input type="password" name="passwort" id="passwort" placeholder=" Passwort">
+                <!-- Titel-->
+                <label for="password">Passwort</label><br>
+                <!--Eingabefeld für das Passwort-->
+                <input type="password" name="password" id="password" placeholder=" Passwort" #passwordInput>
             </div>
-
-            <input type="submit" value="ANMELDEN" style="margin-top: 14px; border-style: none; border-radius: 0px; font-size: 16px; color: white; background-color: rgb(151, 6, 6);">
-            
+            <!-- Anmeldebutton-->
+            <input type="submit" (click)="returnViewRegistrieren()" value="Anmelden" style="margin-top: 14px; border-style: none; border-radius: 0px; font-size: 16px; color: white; background-color: rgb(151, 6, 6);">
+            <!--Problembehandlung bei Anmeldung-->
             <div class="container-hinweis" style="text-align: center; margin-top: 8px;">
-                <!-- <p style="color: rgb(166, 0, 0); margin: 8px 0px; font-style: italic; font-size: 14px;">Füllen Sie alle Felder auf</p> -->
-                <p>Passwort vergessen? <span><a style="color: #00528D;">Neues Passwort anfordern</a></span></p> 
-                <p>Kein Kundenkonto? <span><a (click)="retrunViewRegistrieren()" style="color: #00528D; cursor: pointer;">Jetzt registrieren</a></span></p> 
+                <!-- Bei Passwortverlust neues Passwort anfordern-->
+                <p>Passwort vergessen? <span><a style="color: #00528D;">Neues Passwort anfordern</a></span></p>
+                <!-- Registriermöglichkeit-->
+                <p>Kein Kundenkonto? <span><a (click)="returnViewRegistrieren()" style="color: #00528D; cursor: pointer;">Jetzt registrieren</a></span></p> 
             </div>
         </form>
     </div>
 </div>
+</body>

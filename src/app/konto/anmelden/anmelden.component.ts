@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { NutzerService } from 'src/services/nutzer.service';
+
 
 @Component({
   selector: 'app-anmelden',
@@ -17,8 +19,7 @@ export class AnmeldenComponent {
 
   constructor(private router: Router) {}
 
-  retrunViewRegistrieren() {
+  returnViewRegistrieren() {
     this.router.navigate(['konto/registrieren']);
   }
-
 }
