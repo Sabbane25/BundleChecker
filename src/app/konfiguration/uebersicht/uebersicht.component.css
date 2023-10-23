@@ -1,21 +1,36 @@
 .container-bundler {
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+  position: relative;
   display: flex;
   flex-wrap: wrap;
 }
 
 .container-bundle {
-  flex: 1;
-  max-width: 300px;
-  border: 1px solid #ccc;
+  margin: auto;
+  width: 90%;
+  border: 1px solid #ddd;
   padding: 10px;
-  margin: 0 10px 10px 0; /* Hier wird der Abstand zwischen den Bundles festgelegt */
+  margin-bottom: 20px;
 }
 
+.bundleName {
+  color: #00528D;
+}
+
+h2 {
+  color: purple;
+}
 
 /* Überschriften-Stil */
 h3 {
   font-size: 24px;
   margin-bottom: 10px;
+}
+
+h4 {
+  color: red;
 }
 
 h5 {
@@ -47,4 +62,39 @@ h5 {
 .artikel-info:hover {
   background-color: #e8e8e8;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+}
+
+
+/* Allgemeine Stilrichtlinien für Buttons */
+.button {
+  padding: 5px 10px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+/* Stil für den Löschen-Button */
+.delete-button {
+  background-color: #963939;
+}
+
+.delete-button:hover {
+  background-color: #CC0000;
+}
+
+/* Stil für den "Zum Merkzettel hinzufügen"-Button */
+.add-to-wishlist-button {
+  background-color: #4CAF50;
+}
+
+.add-to-wishlist-button:hover {
+  background-color: #45a049;
 }

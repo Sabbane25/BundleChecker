@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ARTIKEL_LIST } from 'src/models/artikel_mockup';
 import { Artikel } from 'src/models/artikel.model';
+import { MerkzettelComponent } from 'src/app/merkzettel/merkzettel/merkzettel.component';
 
 @Component({
   selector: 'app-uebersicht',
@@ -12,6 +13,7 @@ export class UebersichtComponent implements OnInit {
 
   ausgewaehlteProdukte: any[] = [];
   bundles: { anbieter: string; artikelList: Artikel[] }[] = []; // Hier wird bundles deklariert
+  merkzettel: { anbieter: string; artikelList: Artikel[] }[] = []; //Array, um die Bundles im Merkzettel aufzurufen/speichern.
 
   constructor(private http: HttpClient) {}
 
@@ -60,7 +62,9 @@ gibGuenstigstesBundle(listArtikel: Artikel[]): Artikel[] {
 
 }
 
-
+/**
+ * Die Methode prüft, ob ein Artikel aus einer Kategorie bereits im Bundle ist, falls ja, wird einen Artikel pro Kategorie genommen.
+ */
 groupByAnbieter() {
   // Gruppieren der Artikel nach Anbieter
   const groupedByAnbieter: { [key: string]: Artikel[] } = {};
@@ -90,6 +94,33 @@ groupByAnbieter() {
     artikelList: groupedByAnbieter[anbieter],
   }));
 }
+
+  // Methode zum Löschen eines Bundles oder Artikel.
+  delete(bundle: { anbieter: string; artikelList: Artikel[] }) {
+    // Hier implementierst du die Logik zum Löschen des ausgewählten Bundles.
+    // Das Bundle wird aus dem 'bundles'-Array entfernt.
+    const index = this.bundles.indexOf(bundle);
+    if (index !== -1) {
+      this.bundles.splice(index, 1);
+    }
+  }
+
+  //Methode, um Bundle im Merkzettel hinzuzufügen.
+  addToMerkzettel(bundle: { anbieter: string; artikelList: Artikel[] }) {
+    // Nehme den gesamten Bundle und füge ihn dem Merkzettel hinzu
+    this.merkzettel.push(bundle);
+  }
+  
+  deleteBundle(bundle: { anbieter: string; artikelList: Artikel[] }) {
+    // Hier implementierst du die Logik zum Löschen des gesamten Bundles.
+    // Du kannst die Bundles-Liste durchsuchen und das gewünschte Bundle entfernen.
+    const index = this.bundles.findIndex(b => b === bundle);
+    if (index !== -1) {
+      this.bundles.splice(index, 1);
+    }
+  }
+  
+  
 
 
 }
