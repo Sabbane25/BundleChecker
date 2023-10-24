@@ -28,6 +28,12 @@ export class NutzerService {
     return request;
   }
 
+  suche(email:string){}
+/**
+  getUser(email: string): Observable<any> {
+    const request = this.http.get<any>(`${this.apiURL}/getUser`)
+  }*/
+
 }
 
 interface ApiMessage {
