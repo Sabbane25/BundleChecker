@@ -4,32 +4,31 @@ const puppeteer = require('puppeteer');
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
-  let url = 'https://www.alternate.de/configurator.xhtml?pca=20&pco=44&pcs=relevance';
-  const buttonSelektor = '#tle-configurator-components\\:components\\:0\\:component-form\\:tle-configurator-listing\\:load-more-products-btn';
+  const url = 'https://www.alternate.de/configurator.xhtml?pca=20&pco=44&pcs=relevance';
 
-  let i = 0; 
-  let gibNaechsteSeite = true;
+  await page.goto(url);
 
-  while(gibNaechsteSeite){
+  for(let i = 0; i < 25; i++){
 
-    await page.goto(url);
-    // Attendez que la page soit complètement chargée
-    await page.waitForSelector(buttonSelektor); 
+    const element = await page.$('#tle-configurator-components\\:components\\:0\\:component-form\\:tle-configurator-listing\\:listing-items\\:'+i+'\\:listingitem-container');
+    
+    const contenu = await page.evaluate(element => {
+      const data = [
+        {product_name: element.querySelector('.col-12.font-weight-bold.product-name').textContent,
+         stand: element.querySelector('.col-12.d-none.d-md-block').querySelector('small').innerText,
+         img_url: 'https://www.alternate.de' + element.querySelector('.col-auto.px-2.position-relative').querySelector('img').getAttribute('src'),
+         stand: element.querySelector('.col-12.d-none.d-md-block').querySelector('small').innerText,
+         description: Array.from(element.querySelector('.col-12.d-none.d-md-block').querySelectorAll('small')).map((element) => element.innerText).join(' '),
+         artikel: element.querySelector('.row.collapse.details-section').querySelector('.col-12').getAttribute('data-kid')
+        }
+      ]
+      return data;
+    }, element);
 
-    try{
-      // Cliquez sur le bouton
-      await page.click(buttonSelektor);
-      await page.waitForTimeout(3000);
-      url =  page.url();
-    }catch(error){
-      gibNaechsteSeite = false;
-      console.log('Programme terminE');
-    }
-    console.log(url);
-    //i++;
+    console.log('Contenu de l\'élément:', contenu);
+    console.log("Nombre total de page: " + i);
   }
-
-  console.log('Programme terminE 2');
+ // console.log('Contenu de l\'élément:', contenu);
 
   await browser.close();
 })();

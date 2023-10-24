@@ -1,35 +1,34 @@
 const puppeteer = require('puppeteer');
 
 (async () => {
-  const browser = await puppeteer.launch();
+  // Lancer le navigateur et ouvrir une nouvelle page
+  const browser = await puppeteer.launch({
+    headless: false,
+    defaultViewport: false,
+  });
   const page = await browser.newPage();
 
-  const url = 'https://www.alternate.de/configurator.xhtml?pca=20&pco=44&pcs=relevance';
+  await page.waitForTimeout(10000);
 
-  await page.goto(url);
+  // Naviguer vers l'URL de la page
+  await page.goto('https://www.computeruniverse.net/de/c/hardware-komponenten/prozessoren');
 
-  for(let i = 0; i < 25; i++){
+  //Liste von Url für jeden Artikel
+  let listVonUrlArtikel = [];
 
-    const element = await page.$('#tle-configurator-components\\:components\\:0\\:component-form\\:tle-configurator-listing\\:listing-items\\:'+i+'\\:listingitem-container');
-    
-    const contenu = await page.evaluate(element => {
+  // Utilisez page.$$eval pour extraire toutes les données
+  const elements = await page.$$('.AlgoliaHooks_hits__FFyff div.ProductListItemRow_product__zBkg9');
 
-      const data = [
-        {product_name: element.querySelector('.col-12.font-weight-bold.product-name').textContent,
-         stand: element.querySelector('.col-12.d-none.d-md-block').querySelector('small').innerText,
-         img_url: 'https://www.alternate.de' + element.querySelector('.col-auto.px-2.position-relative').querySelector('img').getAttribute('src'),
-         stand: element.querySelector('.col-12.d-none.d-md-block').querySelector('small').innerText,
-         description: Array.from(element.querySelector('.col-12.d-none.d-md-block').querySelectorAll('small')).map((element) => element.innerText).join(' '),
-         artikel: element.querySelector('.row.collapse.details-section').querySelector('.col-12').getAttribute('data-kid')
-        }
-      ]
-      return data;
-    }, element);
+  for(let element of elements){
 
-    console.log('Contenu de l\'élément:', contenu);
-    console.log("Nombre total de page: " + i);
+    const urlArtikel = await page.evaluate(el => el.querySelector("a.mb-4").getAttribute('href'), element)
+    listVonUrlArtikel.push(urlArtikel);
   }
- // console.log('Contenu de l\'élément:', contenu);
 
+  console.log(listVonUrlArtikel);
+
+
+  // Navigator schliessen
   await browser.close();
 })();
+

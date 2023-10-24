@@ -28,10 +28,5 @@ async function ladedieganzeSeite(url, buttonSelektor, page) {
       }
       console.log(url);
     }
-    
     return url;
-}
-
-export function test(){
-    return "test test"
 }
