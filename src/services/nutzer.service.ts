@@ -30,6 +30,12 @@ export class NutzerService {
     }, httpOptions);
   }
 
+  suche(email:string){}
+  /**
+  getUser(email: string): Observable<any> {
+    const request = this.http.get<any>(`${this.apiURL}/getUser`)
+  }*/
+
   getPublicContent(): Observable<any> {
     return this.http.get(API_URL + 'all', { responseType: 'text' });
   }
