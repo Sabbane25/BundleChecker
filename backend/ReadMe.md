@@ -32,3 +32,15 @@ forever list
 ```
 
 In der Datei [nutzer.service.ts](../src/services/nutzer.service.ts) muss unter `apiURL` die IP-Adresse des Servers hinterlegt sein.
+
+## Routen hinzufügen
+
+Um Routen hinzuzufügen, muss eine Datei im Ordner `routes` angelegt werden und anschließend in der `index.js` ergänzt werden.
+
+```js
+require('./routes/auth.routes')(app);
+```
+
+Eine Route sollte auf einen Controller in `controllers` verweisen.
+
+Wenn Daten abgerufen oder in die Datenbank hinzugefügt werden sollten, sollte ein Model in `models` angelegt werden: https://sequelize.org/docs/v6/core-concepts/model-instances/
