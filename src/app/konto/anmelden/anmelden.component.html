@@ -1,22 +1,44 @@
 
-<body>
 <div class="container">
     <div class="container-form">
-        <form #myForm="ngForm" (ngSubmit)="onSubmit()">
+        <div class="alert alert-success" *ngIf="isLoggedIn">
+            Angemeldet als {{ roles }}.
+          </div>
+        <form
+            *ngIf="!isLoggedIn"
+            name="form"
+            (ngSubmit)="f.form.valid && onSubmit()"
+            #f="ngForm"
+            novalidate
+        >
             <!-- E-Mail Eingabe-->
             <div class="email">
                 <!-- Titel-->
                 <label for="email">E-Mail</label><br>
-                <input type="email" name="email" id="email" placeholder=" E-Mail Adresse" #emailInput>
+                <input type="email" name="email" [(ngModel)]="form.email" placeholder="E-Mail Adresse" required #email="ngModel">
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="email.errors && f.submitted">
+                E-Mail Adresse is erforderlich
             </div>
             <div class="passwort">
                 <!-- Titel-->
                 <label for="password">Passwort</label><br>
                 <!--Eingabefeld für das Passwort-->
-                <input type="password" name="password" id="password" placeholder=" Passwort" #passwordInput>
+                <input type="password" name="password" [(ngModel)]="form.password" placeholder="Passwort" required minlength="5" #password="ngModel">
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="password.errors && f.submitted">
+                <div *ngIf="password.errors['required']">Password ist erforderlich</div>
+                <div *ngIf="password.errors['minlength']">
+                    Das Passwort muss mindestens 5 Zeichen lang sein
+                </div>
             </div>
             <!-- Anmeldebutton-->
-            <input type="submit" (click)="returnViewRegistrieren()" value="Anmelden" style="margin-top: 14px; border-style: none; border-radius: 0px; font-size: 16px; color: white; background-color: rgb(151, 6, 6);">
+            <button style="margin-top: 14px; border-style: none; border-radius: 0px; font-size: 16px; color: white; background-color: rgb(151, 6, 6);">
+                Anmelden
+            </button>
+            <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isLoginFailed">
+                Login fehlgeschlagen: {{errorMessage}}
+            </div>
             <!--Problembehandlung bei Anmeldung-->
             <div class="container-hinweis" style="text-align: center; margin-top: 8px;">
                 <!-- Bei Passwortverlust neues Passwort anfordern-->
@@ -27,4 +49,3 @@
         </form>
     </div>
 </div>
-</body>
