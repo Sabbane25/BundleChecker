@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { TokenStorageService } from 'src/services/token-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -10,21 +11,40 @@ export class AppComponent {
 
   title = 'bundle-checker';
 
+  private roles: string[] = [];
+
+  // Wenn der Nutzer angemeldet ist
+  isLoggedIn = false;
+
+  // true, wenn Admin-Board angezeigt werden kann
+  showAdminBoard = false;
+
+  // Die E-Mail Adresse des Nutzers
+  email?: string;
+
   //gib true zurück wenn die Seite /admin aufgerufen ist
   istUrlAdmin: boolean = false;
 
   //gib true zurück wenn ein User angemledet ist. 
   istVerbundet: boolean = true;
 
-  //Anmelden Zustand: Anmelden oder Angemeldet. Die Variable ist auch in HTML benutzt, um die Seite dynamisch zu aktualisieren
-  userStatus = 'Anmelden';
-
   //verwaltet die Aktivierung des Links: 
   linkZumAnmelden = 'konto';
 
-  constructor(private router: Router){}
+  constructor(private router: Router, private tokenStorageService: TokenStorageService){}
 
   ngOnInit() {
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+
+    if (this.isLoggedIn) {
+      const user = this.tokenStorageService.getUser();
+      this.roles = user.roles;
+
+      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
+
+      this.email = user.email;
+    }
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const url = event.url;
@@ -34,33 +54,12 @@ export class AppComponent {
   }
 
   /**
-   * prüfe ob ein User angemeldet ist: 
-   * ANMELDEN switch zu ANGEMELDET und ein Dropdownmenu ist sichbar
-   * @returns true: verändert sich die Navigationleiste
+   * Melde den Nutzer ab
    */
-  isBenutzerangemeldet(){
-
-    if(this.istVerbundet){
-      this.userStatus = 'Angemeldet';
-    }else{
-      this.userStatus = 'Anmelden';
-    }
-    return this.istVerbundet;
-  }
-
-  /** aktiviert oder deaktiviert den Link je nachdem, ob der Benutzer angemeldet ist. */
-  istschonangemeldet(){
-    if(this.isBenutzerangemeldet()){
-      this.linkZumAnmelden = '#'
-    }else{
-      this.linkZumAnmelden = 'konto';
-    }
-  }
-
-  meldetDenUserAb(){
-    if(this.isBenutzerangemeldet() === true){
-      this.istVerbundet = false;
-    }
+  logout(){
+    this.tokenStorageService.signOut();
+    this.router.navigate(['/konto/anmelden']);
+    window.location.reload();
   }
   
 }

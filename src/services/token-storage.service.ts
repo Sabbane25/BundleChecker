@@ -36,4 +36,15 @@ export class TokenStorageService {
 
     return {};
   }
+
+  public isLoggedIn(): boolean {
+    const user = window.sessionStorage.getItem(USER_KEY);
+    if (user) {
+      const currentUser = JSON.parse(user);
+
+      return currentUser.hasOwnProperty('email');
+    }
+
+    return false;
+  }
 }
