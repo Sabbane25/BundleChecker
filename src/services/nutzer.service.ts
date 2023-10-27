@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Nutzer } from 'src/models/nutzer.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,11 +29,10 @@ export class NutzerService {
     return request;
   }
 
-  suche(email:string){}
-/**
-  getUser(email: string): Observable<any> {
-    const request = this.http.get<any>(`${this.apiURL}/getUser`)
-  }*/
+  getUsers(): Observable<Nutzer[]> {
+    // Verwende das User-Interface als Datentyp für die Antwort
+    return this.http.get<Nutzer[]>(this.apiURL);
+  }
 
 }
 
