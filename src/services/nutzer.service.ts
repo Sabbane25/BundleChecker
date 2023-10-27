@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { apiConfig } from '../config/api.config';
+import { Nutzer } from 'src/models/nutzer.model';
 
 const AUTH_API = `http://${apiConfig.HOST}:3000/api/auth/`;
 const API_URL = `http://${apiConfig.HOST}:3000/api/test/`;
+const apiURL = `http://${apiConfig.HOST}:3000`;
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -31,10 +33,11 @@ export class NutzerService {
   }
 
   suche(email:string){}
-  /**
-  getUser(email: string): Observable<any> {
-    const request = this.http.get<any>(`${this.apiURL}/getUser`)
-  }*/
+
+  getUsers(): Observable<Nutzer[]> {
+    // Verwende das User-Interface als Datentyp für die Antwort
+    return this.http.get<Nutzer[]>(apiURL);
+  }
 
   getPublicContent(): Observable<any> {
     return this.http.get(API_URL + 'all', { responseType: 'text' });

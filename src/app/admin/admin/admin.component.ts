@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { AnmeldenComponent } from 'src/app/konto/anmelden/anmelden.component';
-import { NutzerService} from 'src/services/nutzer.service';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { NutzerService } from 'src/services/nutzer.service';
+import { Nutzer } from 'src/models/nutzer.model';
 
 @Component({
   selector: 'app-admin',
@@ -8,14 +9,18 @@ import { NutzerService} from 'src/services/nutzer.service';
   styleUrls: ['admin.component.css']
 })
 
-export class AdminComponent {
+export class AdminComponent implements OnInit {
 
-  constructor(){}
+  users: Nutzer[] = [];
 
-/**
-  searchOnEnter(emailInput: string, event: KeyboardEvent) {
-    if (event.key === 'Enter') {
-      emailInput.suche(emailInput);
+  constructor(private nutzerService: NutzerService) {}
+
+  ngOnInit(): void {
+    this.nutzerService.getUsers().subscribe((data) => {
+      this.users = data;
+    })
+
   }
-}*/
+
 }
+
