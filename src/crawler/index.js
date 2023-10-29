@@ -1,34 +1,10 @@
-const puppeteer = require('puppeteer');
+const { scrapeComputerUniverseUrls } = require('./funktionen');
 
-(async () => {
-  // Lancer le navigateur et ouvrir une nouvelle page
-  const browser = await puppeteer.launch({
-    headless: false,
-    defaultViewport: false,
-  });
-  const page = await browser.newPage();
+//console.log(scrapeComputerUniverseUrls("https://www.future-x.de/pc-geh%C3%A4use-c-17_24362_5345/?cPath=17_24362_5345&page=", 3));
 
-  await page.waitForTimeout(10000);
-
-  // Naviguer vers l'URL de la page
-  await page.goto('https://www.computeruniverse.net/de/c/hardware-komponenten/prozessoren');
-
-  //Liste von Url für jeden Artikel
-  let listVonUrlArtikel = [];
-
-  // Utilisez page.$$eval pour extraire toutes les données
-  const elements = await page.$$('.AlgoliaHooks_hits__FFyff div.ProductListItemRow_product__zBkg9');
-
-  for(let element of elements){
-
-    const urlArtikel = await page.evaluate(el => el.querySelector("a.mb-4").getAttribute('href'), element)
-    listVonUrlArtikel.push(urlArtikel);
-  }
-
-  console.log(listVonUrlArtikel);
-
-
-  // Navigator schliessen
-  await browser.close();
-})();
-
+async function main() {
+    const result = await scrapeComputerUniverseUrls("https://www.future-x.de/pc-geh%C3%A4use-c-17_24362_5345/?cPath=17_24362_5345&page=", 3)
+    console.log(result);
+}
+  
+main();

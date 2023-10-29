@@ -1,32 +1,34 @@
 const puppeteer = require('puppeteer');
-//permet de charger et donner tous les Articles de la page grace au clic sur le button
-async function ladedieganzeSeite(url, buttonSelektor, page) {
-    let i = 0; 
-    let gibNaechsteSeite = true;
-  
-    while (gibNaechsteSeite) {
 
-      await page.goto(url);
+async function scrapeComputerUniverseUrls(url, anzahlSeite) {
+
+  let linkListe = [];
+  const browser = await puppeteer.launch();
+
+  for(let i = 1; i < anzahlSeite; i++){
+
+    const page = await browser.newPage();
+    await page.waitForTimeout(20000);
   
-      try {
-        // Attendez que le bouton soit présent pendant 1 seconde
-        await page.waitForSelector(buttonSelektor, { timeout: 1000 });
-  
-        if (await page.$(buttonSelektor) !== null) {
-          // Cliquez sur le bouton
-          await page.click(buttonSelektor);
-          await page.waitForTimeout(3000);
-          url = page.url();
-        } else {
-          gibNaechsteSeite = false;
-          console.log('Programme terminé');
-        }
-      } catch (error) {
-        // Si le bouton n'est plus présent, sortez de la boucle
-        gibNaechsteSeite = false;
-        console.log('Programme terminé en raison de l\'absence du bouton');
-      }
-      console.log(url);
+    await page.goto(url + i);
+    await page.waitForTimeout(10000);
+
+    // Utilisez page.$$eval pour extraire toutes les données
+    const elements = await page.$$('.row.productRow.product_box.list-box');
+
+    for(let element of elements){
+        const link = await page.evaluate(el => el.querySelector('.col-12.col-md-6.productText').querySelector('a').getAttribute('href'), element)
+        linkListe.push(link);
     }
-    return url;
+  }
+  console.log(linkListe.length);
+
+  await browser.close();
+
+  return linkListe;
 }
+
+
+module.exports = {
+  scrapeComputerUniverseUrls
+};
