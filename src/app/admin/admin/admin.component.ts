@@ -11,16 +11,28 @@ import { Nutzer } from 'src/models/nutzer.model';
 
 export class AdminComponent implements OnInit {
 
-  users: Nutzer[] = [];
+  users: any[] = [];
 
   constructor(private nutzerService: NutzerService) {}
 
-  ngOnInit(): void {
-    this.nutzerService.getUsers().subscribe((data) => {
-      this.users = data;
-    })
+   ngOnInit(): void {
+     console.log("Hallo hier");
+     this.nutzerService.getUsers().subscribe((data) => {
+       this.users =  ['nutzer'];
+     })
+
+   }
+
+  /**ngOnInit(): void {
+    console.log("Hallo hier");
+    this.getUsers();
 
   }
+
+  async getUsers() {
+    this.users = await this.nutzerService.getUsers();
+    console.log(this.users);
+  }*/
 
 }
 
