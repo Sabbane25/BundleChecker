@@ -10,7 +10,8 @@ export class NutzerService {
   private apiURL = 'http://192.168.198.48:3000'; //API-URL vom Server: 192.168.198.48
 
   constructor(private http: HttpClient) { }
-
+  
+  // getUser()
   addUser(email: string, passwort: string, emailInputNote: HTMLSpanElement): Observable<ApiMessage>{
     const newUser = {
       email: email,
@@ -29,10 +30,27 @@ export class NutzerService {
     return request;
   }
 
-  getUsers(): Observable<Nutzer[]> {
+   getUsers(): Observable<any[]> {
+     // Verwende das User-Interface als Datentyp für die Antwort
+     console.log("getUsers");
+     console.log(this.http.get<any[]>(this.apiURL));
+     console.log("test")
+    return this.http.get<any>(`${this.apiURL}/getUsers`);
+
+   }
+
+  /**getUsers(): Nutzer[] {
     // Verwende das User-Interface als Datentyp für die Antwort
-    return this.http.get<Nutzer[]>(this.apiURL);
-  }
+    console.log("getUsers");
+    console.log(this.http.get<Nutzer[]>(this.apiURL));
+    console.log("test")
+
+    let result: Nutzer[] = [];
+    this.http.get<Nutzer[]>(this.apiURL).subscribe(data => {
+      result = data as Nutzer[];
+    });
+    return result;
+  }*/
 
 }
 

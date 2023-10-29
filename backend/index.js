@@ -35,6 +35,38 @@ app.use((req, res, next) => {
   next();
 })
 
+// app.get('/getUsers', (req, res) => {
+//   const query = `SELECT n.email, n.password` +  
+//                 `FROM nutzer n` +  
+//                 `JOIN nutzer_nutzer_rollen_join nr ON n.user_id = nr.user_id` +  
+//                 `WHERE nr.role_id = 1`;
+
+//   connection.query(query, (err, results) => {
+//     if (err) {
+//       console.error('Fehler beim Abrufen der Nutzerdaten: ' + err);
+//       res.status(500).json({ error: 'Fehler beim Abrufen der Nutzerdaten' });
+//       return;
+//     }
+//     res.json(results);
+//   });
+// });
+
+app.get('/getUsers', (req, res) => {
+  const query = `SELECT n.email, n.password 
+                FROM nutzer n  
+                JOIN nutzer_nutzer_rollen_join nr ON n.user_id = nr.user_id 
+                WHERE nr.role_id = 1`;
+
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error('Fehler beim Abrufen der Nutzerdaten: ' + err);
+      res.status(500).json({ error: 'Fehler beim Abrufen der Nutzerdaten' });
+      return;
+    }
+    res.json(results);
+  });
+});
+
 app.post('/addUser', (req, res) => {
   const { email, password } = req.body;
 
