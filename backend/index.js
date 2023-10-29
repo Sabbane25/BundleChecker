@@ -59,6 +59,109 @@ require('./routes/table.routes')(app, connection);
 require('./routes/email.routes')(app, connection);
 // require('./routes/user.routes')(app);
 
+app.get('/getUsers', (req, res) => {
+  const query = `SELECT n.email, n.password, n.id 
+                FROM nutzer n  
+                JOIN nutzer_nutzer_rollen_join nr ON n.user_id = nr.user_id 
+                WHERE nr.role_id = 1`;
+
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error('Fehler beim Abrufen der Nutzerdaten: ' + err);
+      res.status(500).json({ error: 'Fehler beim Abrufen der Nutzerdaten' });
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.post('/addUser', (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    console.log('E-Mail und/oder Passwort fehlen.');
+    return res.status(400).json({ message: 'E-Mail und Passwort sind erforderlich' });
+  }
+
+  let sqlCheckMail = `SELECT * FROM Nutzer WHERE Email = "${email}"`;
+  connection.query(sqlCheckMail, (error, results, fields) => {
+    if (error) {
+      // Fehlermeldung bei Fehler
+      res.status(500).send({
+        state: true,
+        success: false,
+        message: error.message,
+        code: 1697580279
+      });
+      console.log('Datenbank fehler');
+    }
+
+    if (results.length > 0) {
+      // E-Mail Adresse bereits vorhanden
+      res.status(200).send({
+        state: true,
+        success: false,
+        message: "E-Mail Adresse bereits vorhanden.",
+        code: 1697580307
+      });
+      console.log('E-Mail bereits vorhanden.');
+    } else {
+      const sql = 'INSERT INTO Nutzer (Email, Passwort) VALUES (?, ?)';
+      connection.query(sql, [email, password], (err, results) => {
+        if (err) {
+          console.error('Fehler beim Ausführen der Datenbankabfrage: ' + err.message);
+          res.status(500).send({
+            state: true,
+            success: false,
+            message: "Fehler beim Hinzufügen des Benutzers",
+            code: 1697580312
+          });
+          console.log('fehler beim hinzufügen');
+        } else {
+          res.status(200).send({
+            state: true,
+            success: true,
+            message: "Benutzer erfolgreich hinzugefügt",
+            code: 1697580318
+          });
+          console.log('hinzugefügt');
+        }
+      });
+    }
+  });
+});
+
+
+app.get('/Emails', (req, res) => {
+
+        const query = `SELECT Email FROM Nutzer`;
+        connection.query(query, (error, results) => {
+                if (error) throw error;
+                res.json(results);
+        });
+});
+
+// GET-Endpunkt zum Abrufen von der Datenbank
+app.get('/api/data/:table', (req, res) => {
+  const tableName = req.params.table;
+  // Überprüfen, ob die angegebene Tabelle existiert oder Zugriff erlaubt ist
+  if (allowedTables.includes(tableName)) {
+    const query = `SELECT * FROM ${tableName}`; //Ruft die im Link angegebene Tabelle auf
+    connection.query(query, (err, results) => {
+      if (err) {
+        console.error('Error executing query: ', err);
+        res.status(500).json({ error: 'An error occurred' });
+      } else {
+        res.json(results);
+      }
+    });
+  } else {
+    res.status(400).json({ error: 'Invalid table name' }); //Falls der  Tabellename falsch ist
+  }
+});
+
+
+// Server starten und auf Anfragen lauschen
 app.listen(port, () => {
   console.log(`Server läuft auf Port ${port}`);
 });

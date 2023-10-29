@@ -33,11 +33,47 @@ export class NutzerService {
   }
 
   suche(email:string){}
+  
+  // getUser()
+  addUser(email: string, passwort: string, emailInputNote: HTMLSpanElement): Observable<ApiMessage>{
+    const newUser = {
+      email: email,
+      password: passwort
+    }
+    
+    const request = this.http.post<ApiMessage>(`${this.apiURL}/addUser`, newUser);
+    request.subscribe(response => {
+      if (response.code === 1697580307) {
+        emailInputNote.textContent = response.message;
+      } else {
+        alert(response.message);
+      }
+    });
 
-  getUsers(): Observable<Nutzer[]> {
-    // Verwende das User-Interface als Datentyp für die Antwort
-    return this.http.get<Nutzer[]>(apiURL);
+    return request;
   }
+
+   getUsers(): Observable<any[]> {
+     // Verwende das User-Interface als Datentyp für die Antwort
+     console.log("getUsers");
+     console.log(this.http.get<any[]>(this.apiURL));
+     console.log("test")
+    return this.http.get<any>(`${this.apiURL}/getUsers`);
+
+   }
+
+  /**getUsers(): Nutzer[] {
+    // Verwende das User-Interface als Datentyp für die Antwort
+    console.log("getUsers");
+    console.log(this.http.get<Nutzer[]>(this.apiURL));
+    console.log("test")
+
+    let result: Nutzer[] = [];
+    this.http.get<Nutzer[]>(this.apiURL).subscribe(data => {
+      result = data as Nutzer[];
+    });
+    return result;
+  }*/
 
   getPublicContent(): Observable<any> {
     return this.http.get(API_URL + 'all', { responseType: 'text' });
