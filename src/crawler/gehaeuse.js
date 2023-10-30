@@ -4,14 +4,12 @@ const { scrapeComputerUniverseUrls } = require('./funktionen');
 //Liste von Url für jeden Artikel
 let listVonUrlArtikel = [];
 
-//for(let i = 0; i < urls.length; i++){
-
-  (async () => {
+(async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.waitForTimeout(10000);
 
-    const result = await scrapeComputerUniverseUrls("https://www.future-x.de/festplatten-c-17_24362_5440/?cPath=17_24362_5440&page=", 2)
+    const result = await scrapeComputerUniverseUrls("https://www.future-x.de/festplatten-c-17_24362_5440/?cPath=17_24362_5440&page=", 1)
 
     for(let i = 0; i < result.length; i++){
 

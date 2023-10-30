@@ -8,10 +8,10 @@ async function scrapeComputerUniverseUrls(url, anzahlSeite) {
   for(let i = 1; i < anzahlSeite; i++){
 
     const page = await browser.newPage();
-    await page.waitForTimeout(20000);
+    await page.waitForTimeout(10000);
   
     await page.goto(url + i);
-    await page.waitForTimeout(10000);
+    //await page.waitForTimeout(10000);
 
     // Utilisez page.$$eval pour extraire toutes les données
     const elements = await page.$$('.row.productRow.product_box.list-box');
