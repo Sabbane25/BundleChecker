@@ -25,12 +25,12 @@ export class AppComponent {
   constructor(private router: Router){}
 
   ngOnInit() {
-    this.router.events.subscribe(event => {
+    /*this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const url = event.url;
         this.istUrlAdmin = url === '/admin';
       }
-    });
+    }); */
   }
 
   /**
@@ -38,7 +38,7 @@ export class AppComponent {
    * ANMELDEN switch zu ANGEMELDET und ein Dropdownmenu ist sichbar
    * @returns true: verändert sich die Navigationleiste
    */
-  isBenutzerangemeldet(){
+  /*isBenutzerangemeldet(){
 
     if(this.istVerbundet){
       this.userStatus = 'Angemeldet';
@@ -49,6 +49,7 @@ export class AppComponent {
   }
 
   /** aktiviert oder deaktiviert den Link je nachdem, ob der Benutzer angemeldet ist. */
+  /*
   istschonangemeldet(){
     if(this.isBenutzerangemeldet()){
       this.linkZumAnmelden = '#'
@@ -62,5 +63,6 @@ export class AppComponent {
       this.istVerbundet = false;
     }
   }
+  */
   
 }

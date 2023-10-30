@@ -7,6 +7,7 @@ import { KontaktModule } from './kontakt/kontakt.module';
 import { MerkzettelModule } from './merkzettel/merkzettel.module';
 import { HttpClientModule } from '@angular/common/http';
 import { KontoModule } from './konto/konto.module';
+import { AdminModule } from './admin/admin.module';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { KontoModule } from './konto/konto.module';
     
   ],
   imports: [
+    AdminModule,
     BrowserModule,
     KontoModule,
     KonfigurationModule,

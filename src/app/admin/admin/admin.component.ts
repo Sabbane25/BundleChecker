@@ -11,16 +11,17 @@ import { Nutzer } from 'src/models/nutzer.model';
 
 export class AdminComponent implements OnInit {
 
-  users: any[] = [];
+  users: any [] = ["test, test"];
+  
 
   constructor(private nutzerService: NutzerService) {}
 
    ngOnInit(): void {
      console.log("Hallo hier");
      this.nutzerService.getUsers().subscribe((data) => {
-       this.users =  ['nutzer'];
+       this.users.push(data) ;
      })
-
+     console.log(this.users)
    }
 
   /**ngOnInit(): void {

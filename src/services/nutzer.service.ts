@@ -30,14 +30,14 @@ export class NutzerService {
     return request;
   }
 
-   getUsers(): Observable<any[]> {
+   getUsers(): Observable<any> {
      // Verwende das User-Interface als Datentyp für die Antwort
      console.log("getUsers");
-     console.log(this.http.get<any[]>(this.apiURL));
+     console.log("test", this.http.get<Nutzer[]>(this.apiURL));
      console.log("test")
     return this.http.get<any>(`${this.apiURL}/getUsers`);
-
    }
+
 
   /**getUsers(): Nutzer[] {
     // Verwende das User-Interface als Datentyp für die Antwort
