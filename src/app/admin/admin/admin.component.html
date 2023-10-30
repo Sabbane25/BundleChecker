@@ -10,11 +10,11 @@
         <div class="userContainer">
             <div class="user" *ngFor="let user of users">
                 <ul style="margin-top: 8px; display: flex; justify-content: space-between;">
-                    <li style="width: 40%; text-align: start;">{{user.email}}</li>
+                    <li style="width: 40%; text-align: start;">{{user}}</li>
                     <li style="width: 50%; ">
                         <ul>
-                            <button type ="submit" id="bearbeiten">Bearbeiten</button>
-                            <button type="submit" id="loeschen">Löschen</button>
+                            <li><button type="submit" id="bearbeiten">Bearbeiten</button></li>
+                            <li><button type="submit" id="loeschen">Löschen</button></li>
                         </ul>
                     </li>
                 </ul>
@@ -28,8 +28,34 @@
                     </li>
                 </ul> 
             </div>
+        </div><br><br>
+
+        <!-- ich wurde es so machen (Arnauld) -->
+        <div class="userListContainer">
+            <ul>
+                <li style="background-color: #00528d49;">
+                    <h4>Email1</h4>
+                    <div>
+                        <button class="button_bearbeiten">Bearbeiten</button>
+                        <button class="button_löschen">Löschen</button>
+                    </div>
+                </li>
+                <li style="background-color: white;">
+                    <h4>Email2</h4>
+                    <div>
+                        <button class="button_bearbeiten">Bearbeiten</button>
+                        <button class="button_löschen">Löschen</button>
+                    </div>
+                </li>
+                <li style="background-color: #00528d49;">
+                    <h4>Email3</h4>
+                    <div>
+                        <button class="button_bearbeiten">Bearbeiten</button>
+                        <button class="button_löschen">Löschen</button>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div> 
  </div> 
-
 

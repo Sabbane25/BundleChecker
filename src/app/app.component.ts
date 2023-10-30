@@ -61,5 +61,4 @@ export class AppComponent {
     this.router.navigate(['/konto/anmelden']);
     window.location.reload();
   }
-  
 }
