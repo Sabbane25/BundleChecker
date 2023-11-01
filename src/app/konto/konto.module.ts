@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { AnmeldenComponent } from './anmelden/anmelden.component';
 import { KontoComponent } from './konto/konto.component';
 import { RouterModule, Routes } from '@angular/router';
 import { RegistrierenComponent } from './registrieren/registrieren.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MeinkontoComponent } from './meinkonto/meinkonto.component';
 
 const routes: Routes = [
   {
     path: 'konto',
     component: KontoComponent,
     children:[
+      { path: 'meinkonto', component: MeinkontoComponent },
       { path: 'anmelden', component: AnmeldenComponent },
       { path: 'registrieren', component: RegistrierenComponent },
       { path: '', redirectTo: 'anmelden', pathMatch: 'full'},
@@ -22,16 +24,14 @@ const routes: Routes = [
   declarations: [
     AnmeldenComponent,
     KontoComponent,
-    RegistrierenComponent
+    RegistrierenComponent,
+    MeinkontoComponent
   ],
-  /*imports: [
-    //CommonModule
-    
-  ]*/
   imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule.forRoot(routes)
+      CommonModule,
+      FormsModule,
+      ReactiveFormsModule,
+      RouterModule.forRoot(routes),
   ],
   exports: [RouterModule]
 })

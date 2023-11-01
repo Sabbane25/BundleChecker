@@ -6,8 +6,10 @@ import { KonfigurationComponent } from './konfiguration/konfiguration/konfigurat
 import { KontoComponent } from './konto/konto/konto.component';
 import { DatenschutzComponent } from './hilfe/datenschutz/datenschutz.component';
 import { UeberUnsComponent } from './hilfe/ueber-uns/ueber-uns.component';
+import { AdminComponent } from './admin/admin/admin.component';
 
 const routes: Routes = [
+  { path: 'admin', component: AdminComponent },
   { path: 'ueber-uns', component: UeberUnsComponent },
   { path: 'datenschutz', component: DatenschutzComponent },
   { path: 'konto', component: KontoComponent },

@@ -1,14 +1,51 @@
+      <!--Yahya: Bundle Nr.1 gibt eine Darstellung vom Bundle mit den günstigsten Komponenten. Alle Produkten werden hier betrachten-->
+      <!--Günstigster Bundle-->    
+      <div class="container-bundler">
+        <div class="container-bundle">
+          <h3 class="bundleName">Bundle 1: (niedrigster Preis)</h3>
+          <ul>
+            <li *ngFor="let bundle of bundles">
+              <h4>{{ bundle.anbieter }}</h4>
+              <ul>
+                <li *ngFor="let artikel of bundle.artikelList">
+                  <div class="artikel-info">
+                    <span class="artikel-kategorie">Kategorie: {{ artikel.kategorie }}</span>
+                    <span class="artikel-preis">Preis: {{ artikel.preis }} €</span>
+                    <span class="artikel-produktlink">Produkt-Link: {{ artikel.produktLink }}</span>
+                    <span class="artikel-spezifisch">{{ artikel.getSpezifischeAttribute() }}</span>
+                  </div>
+                  <div class="actions">
+                    <button class="button delete-button" (click)="delete(bundle)">Löschen</button>
+                    <!-- <button (click)="addToMerkzettel(bundle)">Zum Merkzettel hinzufügen</button> -->
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        <!-- </div> -->
+      </div>
+      
+      
+      
 
-
-<!-- Arnauld: danach kannst du löschen oder damit weiter.-->
-<div class="container-bundler">
-
-  <div class="container-bundle1">
-    <h3>Bundle 1: Alternate</h3>
-    <p *ngFor="let artikel of gibguenstigstesBundle()"> preis: {{ artikel.preis }}, Kategorie: {{ artikel.kategorie}}, Anbieter: {{ artikel.anbieter}} </p>
-  </div>
-
-  <div class="container-bundle2">
-
-  </div>
-</div>
+    <!--Yahya: Bundle Nr 2. Dies ist nur ein Bsp. Die Implementierung muss noch angepasst werden.-->
+    <!--Bundle mit schnellster Lieferzeit-->
+      <div class="container-bundle">
+        <h3 class="bundleName">Bundle 2: (schnellster Versand)</h3>
+        <h2>Dies ist nur ein Test!</h2>
+        <ul>
+          <li *ngFor="let bundle of bundles">
+            <h4>{{ bundle.anbieter }}</h4>
+            <ul>
+              <li *ngFor="let artikel of bundle.artikelList">
+                <div class="artikel-info">
+                  <span class="artikel-kategorie">Kategorie: {{ artikel.kategorie }}</span>
+                  <span class="artikel-preis">Preis: {{ artikel.preis }} €</span>
+                  <span class="artikel-produktlink">Produkt-Link: {{ artikel.produktLink }}</span>
+                  <span class="artikel-spezifisch">{{ artikel.getSpezifischeAttribute() }}</span>
+                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>

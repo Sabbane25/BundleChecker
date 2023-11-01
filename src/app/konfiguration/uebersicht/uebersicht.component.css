@@ -1,45 +1,100 @@
-/* styles.css */
-
-
-/* Hauptcontainer */
-div.container {
+.container-bundler {
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+  position: relative;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh; /* Dies setzt die Höhe des Containers auf die volle Bildschirmhöhe, um ihn in der Mitte zu zentrieren */
+  flex-wrap: wrap;
 }
 
-/* Allgemeine Stile für die Übersicht */
-h2 {
-  color: #333;
-  font-size: 24px;
+.container-bundle {
+  margin: auto;
+  width: 90%;
+  border: 1px solid #ddd;
+  padding: 10px;
   margin-bottom: 20px;
 }
 
-/* Button-Styling */
-button {
-  background-color: #00528D;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin-right: 10px;
+.bundleName {
+  color: #00528D;
 }
 
-button:hover {
+h2 {
+  color: purple;
+}
+
+/* Überschriften-Stil */
+h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+h4 {
+  color: red;
+}
+
+h5 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* Artikelinformationen */
+.artikel-info {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+
+/* Stil für Artikelattribute */
+.artikel-kategorie, .artikel-preis, .artikel-produktlink, .artikel-spezifisch, .artikel-anbieter {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+/* Stil für spezifische Attribute */
+.artikel-spezifisch {
+  font-weight: bold;
+}
+
+/* Hover-Stil für Artikel */
+.artikel-info:hover {
+  background-color: #e8e8e8;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+}
+
+
+/* Allgemeine Stilrichtlinien für Buttons */
+.button {
+  padding: 5px 10px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.button:hover {
   background-color: #0056b3;
 }
 
-/* Container für jedes Bundle */
-div.bundle-container {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin-bottom: 20px;
-  border-radius: 5px;
+/* Stil für den Löschen-Button */
+.delete-button {
+  background-color: #963939;
 }
 
-/* Stile für die Summe */
-p.sum {
-  font-weight: bold;
+.delete-button:hover {
+  background-color: #CC0000;
+}
+
+/* Stil für den "Zum Merkzettel hinzufügen"-Button */
+.add-to-wishlist-button {
+  background-color: #4CAF50;
+}
+
+.add-to-wishlist-button:hover {
+  background-color: #45a049;
 }

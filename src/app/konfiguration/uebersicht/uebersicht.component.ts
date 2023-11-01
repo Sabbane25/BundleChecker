@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ARTIKEL_LIST } from 'src/models/artikel_mockup';
 import { Artikel } from 'src/models/artikel.model';
-import { Cpu } from 'src/models/cpu.model';
+import { MerkzettelComponent } from 'src/app/merkzettel/merkzettel/merkzettel.component';
 
 @Component({
   selector: 'app-uebersicht',
@@ -12,38 +12,115 @@ import { Cpu } from 'src/models/cpu.model';
 export class UebersichtComponent implements OnInit {
 
   ausgewaehlteProdukte: any[] = [];
+  bundles: { anbieter: string; artikelList: Artikel[] }[] = []; // Hier wird bundles deklariert
+  merkzettel: { anbieter: string; artikelList: Artikel[] }[] = []; //Array, um die Bundles im Merkzettel aufzurufen/speichern.
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    // Sende eine HTTP-Anfrage an deinen API-Endpunkt, um die Daten abzurufen.
-  /*
-    this.http.get('/api/bundles').subscribe((data: any[]) => {
-      this.ausgewaehlteProdukte = data;
-    });
-    */
-   this.gibguenstigstesBundle();
+    this.gibGuenstigstesBundle(this.ausgewaehlteArtikel);
+    this.groupByAnbieter();
   }
+  
 
   //Die Variable enthält alle Artikel die in Listkomponenten ausgewälte wurde
   ausgewaehlteArtikel:  Artikel[] = ARTIKEL_LIST; 
 
-  /**
-   * 
-   * @param listArtikel Liste von allen ausgewälten Artikel in ListKomponenten
-   * @returns eine sortierte Liste von Artikeln mit niedrigster Preis. Die liste bildet BUNDLE 1
-   */
-  gibguenstigstesBundle(): Artikel[]{
-    const artikelListBundle1: Artikel[] = [];
+/**
+ * @param listArtikel Liste von allen verfügbaren Artikeln
+ * @returns Eine Liste mit jeweils dem günstigsten Produkt aus jeder Kategorie.
+ */
+gibGuenstigstesBundle(listArtikel: Artikel[]): Artikel[] {
+  const guenstigsteProdukte: Artikel[] = [];
 
-    for(let i = 0; i < this.ausgewaehlteArtikel.length; i++){
+  // Erstelle eine Map, um die günstigsten Produkte pro Kategorie zu verfolgen
+  const guenstigsteProKategorie = new Map<string, Artikel>();
 
-      if(this.ausgewaehlteArtikel[i].anbieter === "Alternate"){
-        artikelListBundle1.push(this.ausgewaehlteArtikel[i]);
+  // Iteriere durch alle verfügbaren Artikel
+  for (const artikel of listArtikel) {
+    const kategorie = artikel.kategorie;
+
+    // Prüfe, ob es bereits ein günstigstes Produkt in dieser Kategorie gibt
+    if (!guenstigsteProKategorie.has(kategorie)) {
+      guenstigsteProKategorie.set(kategorie, artikel);
+    } else {
+      // Vergleiche den Preis mit dem bisher günstigsten Produkt in dieser Kategorie
+      const bisherGuenstigstes = guenstigsteProKategorie.get(kategorie);
+      if (bisherGuenstigstes && artikel.preis < bisherGuenstigstes.preis) {
+        guenstigsteProKategorie.set(kategorie, artikel);
       }
     }
-
-    return artikelListBundle1;
   }
+
+  // Füge die günstigsten Produkte zur Ergebnisliste hinzu
+  guenstigsteProKategorie.forEach((artikel) => {
+    guenstigsteProdukte.push(artikel);
+  });
+
+  return guenstigsteProdukte;
+
+
+}
+
+/**
+ * Die Methode prüft, ob ein Artikel aus einer Kategorie bereits im Bundle ist, falls ja, wird einen Artikel pro Kategorie genommen.
+ */
+groupByAnbieter() {
+  // Gruppieren der Artikel nach Anbieter
+  const groupedByAnbieter: { [key: string]: Artikel[] } = {};
+
+  // Verfolgen der bereits verwendeten Kategorien
+  const usedKategorien: Set<string> = new Set();
+
+  this.ausgewaehlteArtikel.forEach((artikel) => {
+    const anbieter = artikel.anbieter;
+    const kategorie = artikel.kategorie;
+
+    // Prüfe, ob die Kategorie bereits in den Bundles verwendet wurde
+    if (!usedKategorien.has(kategorie)) {
+      if (!groupedByAnbieter[anbieter]) {
+        groupedByAnbieter[anbieter] = [];
+      }
+      groupedByAnbieter[anbieter].push(artikel);
+
+      // Markiere die Kategorie als verwendet
+      usedKategorien.add(kategorie);
+    }
+  });
+
+  // Umwandeln in ein Array für die Verwendung in der Vorlage
+  this.bundles = Object.keys(groupedByAnbieter).map((anbieter) => ({
+    anbieter,
+    artikelList: groupedByAnbieter[anbieter],
+  }));
+}
+
+  // Methode zum Löschen eines Bundles oder Artikel.
+  delete(bundle: { anbieter: string; artikelList: Artikel[] }) {
+    // Hier implementierst du die Logik zum Löschen des ausgewählten Bundles.
+    // Das Bundle wird aus dem 'bundles'-Array entfernt.
+    const index = this.bundles.indexOf(bundle);
+    if (index !== -1) {
+      this.bundles.splice(index, 1);
+    }
+  }
+
+  //Methode, um Bundle im Merkzettel hinzuzufügen.
+  addToMerkzettel(bundle: { anbieter: string; artikelList: Artikel[] }) {
+    // Nehme den gesamten Bundle und füge ihn dem Merkzettel hinzu
+    this.merkzettel.push(bundle);
+  }
+  
+  deleteBundle(bundle: { anbieter: string; artikelList: Artikel[] }) {
+    // Hier implementierst du die Logik zum Löschen des gesamten Bundles.
+    // Du kannst die Bundles-Liste durchsuchen und das gewünschte Bundle entfernen.
+    const index = this.bundles.findIndex(b => b === bundle);
+    if (index !== -1) {
+      this.bundles.splice(index, 1);
+    }
+  }
+  
+  
+
 
 }

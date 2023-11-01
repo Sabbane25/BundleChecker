@@ -1,32 +1,57 @@
-<div class="container">
-    <div class="container-form">
-        <form action="">
-            <div class="email">
-                <label for="email">Email</label><br>
-                <input type="text" name="email" id="email" placeholder=" Email Adress">
-            </div>
-
-            <div class="name">
-                <label for="name">Name</label><br>
-                <input type="text" name="name" id="name" placeholder=" Name">
-            </div>
-            
-            <div class="vorname">
-                <label for="vorname">Vorname</label><br>
-                <input type="text" name="vorname" id="vorname" placeholder=" Vorname">
-            </div>
-
-            <div class="passwort">
-                <label for="passwort">Passwort</label><br>
-                <input type="password" name="password" id="password" placeholder=" Passwort">
-            </div>
-
-            <input type="submit" value="REGISTRIEREN" style="margin-top: 16px; border-style: none; border-radius: 0px; font-size: 14px; color: white; background-color: rgb(151, 6, 6);">
-            
-            <div class="container-hinweis" style="text-align: center; margin-top: 8px;">
-                <!-- <p style="color: rgb(166, 0, 0); margin: 8px 0px; font-style: italic; font-size: 14px;">FehlerMeldung</p> -->
-                <p style="color: rgba(0, 0, 0, 0.615);">Haben Sie schon einen Kundenkonto?<br><span><a (click)="retrunViewAnmelden()" style="color: #00528D; cursor: pointer;"> Jetzt anmelden</a></span></p> 
-            </div>
-        </form>
+<body>
+    <div class="container">
+        <div class="container-form">
+            <form (ngSubmit)="createUser(emailInputNote)">
+                <!-- E-Mail Eingabefeld-->
+                <div class="email">
+                    <label for="emailInput">E-Mail*</label><br>
+                    <input type="email" id="emailInput" placeholder="E-Mail Adresse" [formControl]="email" />
+                    <span #emailInputNote class="input-note-error"></span>
+                    <div class="input-note-warning" *ngIf="email.invalid && (email.dirty || email.touched)">
+                        <div *ngIf="email.errors?.['email']">
+                            Bitte geben Sie eine gültige E-Mail Adresse ein.
+                        </div>
+                    </div>
+                </div>
+                <!-- Passwort Eingabefeld-->
+                <div class="passwort">
+                    <label for="passwordInput">Passwort*</label><br>
+                    <input type="password" id="passwordInput" placeholder="Passwort" [formControl]="password" />
+                    <div class="input-note-warning" *ngIf="password.invalid && (password.dirty || password.touched)">
+                        <div *ngIf="password.errors?.['minlength']">
+                            Das Passwort muss mindestens {{passwordMinLength}} Zeichen lang sein.
+                        </div>
+                    </div>
+                </div>
+                <!-- Passwort Eingabefeld-->
+                <div class="passwort">
+                    <label for="passwordRepeatInput">Passwort wiederholen</label><br>
+                    <input type="password" id="passwordRepeatInput" placeholder="Passwort wiederholen" [formControl]="passwordRepeat" />
+                    <div class="input-note-warning" *ngIf="passwordRepeat.getRawValue() && passwordRepeat.getRawValue() !== password.getRawValue()">
+                        <div *ngIf="passwordRepeat.errors?.['passwordRepeat']">
+                            Die Passwörter stimmen nicht überein.
+                        </div>
+                    </div>
+                </div>
+                <!-- Button, um die Registrierung abzuschließen-->
+                <button type="submit" class="registrieren-button" *ngIf="email.valid && password.valid && passwordRepeat.valid">
+                    Registrieren
+                </button>
+                <button type="button" disabled class="registrieren-button--invalid" *ngIf="email.invalid || password.invalid || passwordRepeat.invalid">
+                    Registrieren
+                </button>
+                <!-- Falls bereits registriert, kann man hier zur Anmeldung springen-->
+                <div class="container-hinweis" style="text-align: center; margin-top: 8px;">
+                    <p style="color: rgba(0, 0, 0, 0.615);">
+                        Haben Sie schon einen Kundenkonto?<br />
+                        <span>
+                            <a (click)="returnViewAnmelden()" style="color: #00528D; cursor: pointer;">
+                                Jetzt anmelden
+                            </a>
+                        </span>
+                    </p>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+</body>
