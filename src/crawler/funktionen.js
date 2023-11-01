@@ -28,7 +28,18 @@ async function scrapeComputerUniverseUrls(url, anzahlSeite) {
   return linkListe;
 }
 
+function filterKomponente(satz, wort) {
+  const komponenten = satz.split(" "); // Divise la phrase en mots
+  for (const komponent of komponenten) {
+    if (komponent === wort) {
+      return komponent; // Retourne le mot recherché s'il est trouvé
+    }
+  }
+  return null; // Retourne null si le mot n'est pas trouvé
+}
+
 
 module.exports = {
-  scrapeComputerUniverseUrls
+  scrapeComputerUniverseUrls,
+  filterKomponente
 };
