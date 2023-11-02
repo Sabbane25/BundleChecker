@@ -9,9 +9,11 @@ let listVonUrlArtikel = [];
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.waitForTimeout(10000);
-    await page.goto('https://www.future-x.de/intel-cpu-i9-13900ks-24-cores-6-ghz-lga1700-6-sockel-1700-core24-core-p-9113187/')
+    await page.goto('https://www.future-x.de/AMD-Ryzen-9-7950X-4500-AM5-WOF-R9-Sockel-Zen4/999515976')
 
-    const containerFluid = await page.$('main > .container-fluid');
+    const containerFluid = await page.$('main > .container-main .cms-section-default.boxed');
+
+    //cms-block  pos-2 cms-block-product-description-reviews
 
         if (containerFluid) {
             // Utilisez `element.$` pour sélectionner un élément enfant par classe
