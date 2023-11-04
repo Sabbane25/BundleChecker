@@ -1,100 +1,109 @@
+
 .container-bundler {
-    margin: auto;
-    width: 100%;
-    padding: 10px;
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.container-bundle {
   margin: auto;
-  width: 90%;
-  border: 1px solid #ddd;
+  width: 100%;
   padding: 10px;
-  margin-bottom: 20px;
+position: relative;
+display: flex;
+flex-wrap: wrap;
+}
+.container-bundle {
+margin: auto;
+width: 100%;
+border: 1px solid #ddd;
+padding: 10px;
+margin-bottom: 20px;
 }
 
+.container-bundle ul{
+  list-style-type: none;
+}
 .bundleName {
-  color: #00528D;
+color: #00528D;
 }
-
 h2 {
-  color: purple;
+color: purple;
 }
-
 /* Überschriften-Stil */
 h3 {
-  font-size: 24px;
-  margin-bottom: 10px;
+font-size: 24px;
+margin-bottom: 10px;
 }
-
 h4 {
-  color: red;
+color: red;
 }
-
 h5 {
-  font-size: 16px;
-  margin-bottom: 10px;
+font-size: 16px;
+margin-bottom: 10px;
 }
-
 /* Artikelinformationen */
 .artikel-info {
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 10px;
-  background-color: #f9f9f9;
+border: 1px solid #ddd;
+padding: 10px;
+margin-bottom: 10px;
+background-color: #f9f9f9;
 }
-
 /* Stil für Artikelattribute */
 .artikel-kategorie, .artikel-preis, .artikel-produktlink, .artikel-spezifisch, .artikel-anbieter {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 14px;
+display: block;
+margin-bottom: 5px;
+font-size: 14px;
 }
-
 /* Stil für spezifische Attribute */
 .artikel-spezifisch {
-  font-weight: bold;
+font-weight: bold;
 }
-
 /* Hover-Stil für Artikel */
 .artikel-info:hover {
-  background-color: #e8e8e8;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+background-color: #e8e8e8;
+box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
 }
-
 
 /* Allgemeine Stilrichtlinien für Buttons */
 .button {
-  padding: 5px 10px;
-  background-color: #007BFF;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  margin-bottom: 5px;
+padding: 5px 10px;
+background-color: #007BFF;
+color: #fff;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+font-size: 16px;
+margin-bottom: 5px;
 }
-
 .button:hover {
-  background-color: #0056b3;
+background-color: #0056b3;
 }
-
 /* Stil für den Löschen-Button */
 .delete-button {
-  background-color: #963939;
+background-color: #963939;
 }
-
 .delete-button:hover {
-  background-color: #CC0000;
+background-color: #CC0000;
 }
 
-/* Stil für den "Zum Merkzettel hinzufügen"-Button */
-.add-to-wishlist-button {
-  background-color: #4CAF50;
+/* Stil für den Gesamtpreis für Artikel */
+.total-price-products {
+  font-size: 18px;
+  margin-top: 10px;
+  color: #21364d;
+  text-align: right;
 }
 
-.add-to-wishlist-button:hover {
-  background-color: #45a049;
+/* Stil für den Gesamtpreis des Bundles */
+.total-price-bundle {
+  font-size: 25px;
+  margin-top: 10px;
+  color: #21364d;
+  text-align: center;
+}
+
+/* Stil für den Link des Produkts */
+.link-text {
+  color: blue; /* Setzen Sie die gewünschte Farbe für Links */
+  text-decoration: underline; /* Unterstreichung für Links */
+  cursor: pointer; /* Zeigen Sie den Mauszeiger als Zeigefinger, um anzuzeigen, dass es sich um einen Link handelt */
+}
+
+.link-text:hover {
+  text-decoration: none; /* Entfernen Sie die Unterstreichung, wenn der Link gehovered wird */
 }

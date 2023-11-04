@@ -7,13 +7,10 @@ import { KontaktModule } from './kontakt/kontakt.module';
 import { MerkzettelModule } from './merkzettel/merkzettel.module';
 import { HttpClientModule } from '@angular/common/http';
 import { KontoModule } from './konto/konto.module';
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    
-  ],
+
   imports: [
     BrowserModule,
     KontoModule,
@@ -21,7 +18,12 @@ import { KontoModule } from './konto/konto.module';
     KontaktModule,
     MerkzettelModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+  ],
+  declarations: [
+    AppComponent,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

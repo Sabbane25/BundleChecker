@@ -5,6 +5,7 @@ export abstract class Artikel {
   shopID: number;
   produktLink: string;
   anbieter: string;
+  menge: number;
 
   constructor(artikelnummer: number, kategorie: string, preis: number, shopID: number, produktLink: string, anbieter: string) {
     this.artikelnummer = artikelnummer;
@@ -25,4 +26,5 @@ export abstract class Artikel {
   getSpezifischeAttribute(): string {
     return '';
   }
+
 }
