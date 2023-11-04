@@ -8,6 +8,7 @@ import { Ram } from 'src/models/ram.model';
   providedIn: 'root'
 })
 export class ArtikelService {
+  
   private apiURL = 'http://192.168.198.48:3000'; //API-URL vom Server
 
   constructor(private http: HttpClient) { }

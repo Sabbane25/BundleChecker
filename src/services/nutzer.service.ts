@@ -11,7 +11,7 @@ export class NutzerService {
 
   constructor(private http: HttpClient) { }
   
-  // getUser()
+  
   addUser(email: string, passwort: string, emailInputNote: HTMLSpanElement): Observable<ApiMessage>{
     const newUser = {
       email: email,
@@ -32,12 +32,19 @@ export class NutzerService {
 
    getUsers(): Observable<any> {
      // Verwende das User-Interface als Datentyp für die Antwort
-     console.log("getUsers");
-     console.log("test", this.http.get<Nutzer[]>(this.apiURL));
-     console.log("test")
     return this.http.get<any>(`${this.apiURL}/getUsers`);
    }
-
+   
+   loeschen(user_id: number): Observable<void> {
+    const options = {
+      body: { user_id: user_id }};
+    console.log("In Nutzerservice");
+    console.log("Hallo", user_id);
+    // return this.http.delete<void>(`${this.apiURL}/userLoeschen:${user_id}`);
+    
+    return this.http.delete<void>(`${this.apiURL}/userLoeschen`, options);
+   }
+   
 
   /**getUsers(): Nutzer[] {
     // Verwende das User-Interface als Datentyp für die Antwort
