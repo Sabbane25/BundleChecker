@@ -17,10 +17,10 @@ app.use(express.json());
 // Parse Anfragen mit Content-Type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-// app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-//   next();
-// })
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  next();
+})
 
 // Datenbank
 const db = require("./models");
@@ -58,9 +58,27 @@ require('./routes/produkte.routes')(app, connection);
 require('./routes/table.routes')(app, connection);
 require('./routes/email.routes')(app, connection);
 // require('./routes/user.routes')(app);
+ 
+app.delete('/userLoeschen/:user_id', (req, res) => {
+  const user_id = req.params.user_id; // Nehmen Sie die E-Mail-Adresse des zu löschenden Benutzers aus der Anfrage (Stellen Sie sicher, dass die Anfrage dies enthält)
+
+  const query = `DELETE FROM nutzer WHERE user_id = ${user_id} `;
+  
+  console.log(user_id);
+
+  connection.query(query, [user_id], (err, results) => {
+    if (err) {
+      console.error('Fehler beim Löschen des Nutzers: ' + err.message);
+      res.status(500).json({ error: 'Fehler beim Löschen des Nutzers' }); // Senden Sie eine Fehlerantwort zurück
+    } else {
+      console.log('Nutzer wurde erfolgreich gelöscht.');
+      res.status(200).json({ message: 'Nutzer wurde erfolgreich gelöscht' }); // Senden Sie eine Erfolgsantwort zurück
+    }
+  });
+});
 
 app.get('/getUsers', (req, res) => {
-  const query = `SELECT n.email, n.password, n.id 
+  const query = `SELECT n.email, n.password, n.user_id
                 FROM nutzer n  
                 JOIN nutzer_nutzer_rollen_join nr ON n.user_id = nr.user_id 
                 WHERE nr.role_id = 1`;
