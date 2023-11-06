@@ -1,15 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { apiConfig } from '../config/api.config';
 
-/**
- * Den Wert auf `true` setzen, damit das lokale Backend verwendet wird und nicht der vom Server 
- */
-const lokal_backend = false;
-
-const ip_addresse = lokal_backend ? '127.0.0.1' : '192.168.198.48';
-const AUTH_API = `http://${ip_addresse}:3000/api/auth/`;
-const API_URL = `http://${ip_addresse}:3000/api/test/`;
+const AUTH_API = `http://${apiConfig.HOST}:3000/api/auth/`;
+const API_URL = `http://${apiConfig.HOST}:3000/api/test/`;
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
