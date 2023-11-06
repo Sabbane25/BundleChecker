@@ -1,31 +1,63 @@
-<h2 style="margin-top: 30px" class="text-center">KONTAKT</h2><br><br>
-<!-- Zusätzliche Klasse, um das erstellte Feld zu zentrieren -->
+<h2 style="margin-top: 30px" class="text-center">KONTAKT</h2>
+<br /><br />
 <div class="kontakt">
-    <!-- Container welcher die Inhalte umfasst(mit Border) -->
     <div class="containerAussen">
-        <!-- Innerer Container für die drei Attribute (Name, Vorname, Email) -->
-        <div class="container">
-             <!-- Innerer Container links für Name und Email -->
-            <div class="containerLinks" style= "width: 50%; ">
-                <p>Name:</p>
-                <!-- Textfeld mit Platzhalter -->
-                <input type="text" style="width: 95%" placeholder="Mustermann"><br><br>
-                <p>E-Mail:</p>
-                <!-- Textfeld mit Platzhalter -->
-                <input type="text" style="width: 95%" placeholder="maxmustermann@gmail.com"><br><br>
-            </div>
-            <!-- Innerer Container rechts für Vorname -->
-            <div class="containerRechts" style="width: 50%;">
-                <p>Vorname:</p>
-                <input type="text" style="width: 100%" placeholder="Max"><br><br>
-            </div>
+
+        <div class="alert alert-success" *ngIf="sendenSuccess">
+            Ihre Nachricht wurde erfolgreich abgeschickt.
         </div>
-        <div class="nachricht">
-            <p style="font-weight: bold"> Nachricht:</p>
-            <!-- Textfeld für die Nachricht -->
-            <input type="text" style="width: 100%; height: 400px">
-        </div>
-        <!-- Button, um eingebene Daten abzuschicken -->
-        <button style="margin-top: 30px;">Abschicken</button>
+        <form
+            *ngIf="!sendenSuccess"
+            name="form"
+            (ngSubmit)="f.form.valid && onSubmit()"
+            #f="ngForm"
+            novalidate
+        >
+            <div class="container">
+                <div class="flex-container">
+                    <div class="flex-items">
+                        <label for="nachname">Name*</label>
+                        <input type="text" name="nachname" [(ngModel)]="form.nachname" placeholder="Mustermann" required #nachname="ngModel" />
+                        <div class="alert alert-danger" role="alert" *ngIf="nachname.errors && f.submitted">
+                            Name ist erforderlich
+                        </div>
+                    </div>
+                    <div class="flex-items">
+                        <label for="vorname">Vorname*</label>
+                        <input type="text" name="vorname" [(ngModel)]="form.vorname" placeholder="Max" required #vorname="ngModel" />
+                        <div class="alert alert-danger" role="alert" *ngIf="vorname.errors && f.submitted">
+                            Vorname ist erforderlich
+                        </div>
+                    </div>
+                    <div class="flex-items">
+                        <label for="email">E-Mail*</label>
+                        <input type="email" name="email" [(ngModel)]="form.email" placeholder="maxmustermann@gmail.com" required #email="ngModel" />
+                        <div class="alert alert-danger" role="alert" *ngIf="email.errors && f.submitted">
+                            E-Mail Adresse ist erforderlich
+                        </div>
+                    </div>
+                    <div class="flex-items column-nachricht">
+                        <label for="nachricht">Nachricht*</label>
+                        <textarea name="nachricht" [(ngModel)]="form.nachricht" #nachricht="ngModel" rows="4" required></textarea>
+                        <div class="alert alert-danger" role="alert" *ngIf="nachricht.errors && f.submitted">
+                            Nachricht ist erforderlich
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="kontakt-footer-container">
+                <div class="kontakt-footer-col-left">
+                    <p>* Pflichtfeld</p>
+                </div>
+                <div class="kontakt-footer-col-right">
+                    <button type="submit" class="kontakt-submit">Abschicken</button>
+                </div>
+                <div class="kontakt-footer-message">
+                    <div class="alert alert-danger" role="alert" *ngIf="f.submitted && sendenFailed">
+                        Absenden fehlgeschlagen: {{errorMessage}}
+                    </div>
+                </div>
+            </div>
+        </form>
     <div>
 </div>
