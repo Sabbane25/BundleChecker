@@ -56,6 +56,7 @@ require('./routes/artikel.routes')(app, connection);
 require('./routes/kategorie.routes')(app, connection);
 require('./routes/produkte.routes')(app, connection);
 require('./routes/table.routes')(app, connection);
+require('./routes/email.routes')(app, connection);
 // require('./routes/user.routes')(app);
 
 app.listen(port, () => {
