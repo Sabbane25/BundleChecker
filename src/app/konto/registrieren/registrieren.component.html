@@ -58,8 +58,11 @@
                 </p>
             </div>
         </form>
-        <div class="alert alert-success" *ngIf="isSuccessful">
-            Die Registrierung war erfolgreich.
+        <div *ngIf="isSuccessful">
+            <p class="mb-3">
+                Die Registrierung war erfolgreich.
+            </p>
+            <a href="/konto" class="btn btn-success px-2 py-1">Weiter zur Anmeldung</a>
           </div>
     </div>
 </div>
