@@ -1,8 +1,8 @@
 
 .container-bundler {
-  margin: auto;
-  width: 100%;
-  padding: 10px;
+margin: auto;
+width: 100%;
+padding: 10px;
 position: relative;
 display: flex;
 flex-wrap: wrap;
@@ -13,6 +13,8 @@ width: 100%;
 border: 1px solid #ddd;
 padding: 10px;
 margin-bottom: 20px;
+border-style: outset;
+border-width: medium;
 }
 
 .container-bundle ul{
@@ -36,27 +38,41 @@ h5 {
 font-size: 16px;
 margin-bottom: 10px;
 }
-/* Artikelinformationen */
+/* Stil für die Artikelinformationen */
 .artikel-info {
-border: 1px solid #ddd;
-padding: 10px;
-margin-bottom: 10px;
-background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 10px;
+  /*margin-bottom: 10px;*/
+  background-color: #f9f9f9;
+  margin: 10px 10px;
 }
-/* Stil für Artikelattribute */
-.artikel-kategorie, .artikel-preis, .artikel-produktlink, .artikel-spezifisch, .artikel-anbieter {
-display: block;
-margin-bottom: 5px;
-font-size: 14px;
+
+/* Stil für Artikelattribute innerhalb von .artikel-info */
+.artikel-info .artikel-kategorie,
+.artikel-info,
+.artikel-info .artikel-produktlink,
+.artikel-info .artikel-spezifisch,
+.artikel-info .artikel-anbieter {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
 }
-/* Stil für spezifische Attribute */
-.artikel-spezifisch {
-font-weight: bold;
+.artikel-preis{
+  font-weight: bold;
 }
-/* Hover-Stil für Artikel */
+/* Stil für spezifische Attribute innerhalb von .artikel-info */
+.artikel-info .artikel-spezifisch {
+  font-weight: bold;
+}
+
+/* Hover-Stil für .artikel-info */
 .artikel-info:hover {
-background-color: #e8e8e8;
-box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+  background-color: #e8e8e8;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+}
+
+.artikelmenge {
+  margin: 0px 10px 5px 5px;
 }
 
 /* Allgemeine Stilrichtlinien für Buttons */
@@ -68,42 +84,75 @@ border: none;
 border-radius: 5px;
 cursor: pointer;
 font-size: 16px;
-margin-bottom: 5px;
+margin: 10px 10px;
 }
 .button:hover {
 background-color: #0056b3;
 }
 /* Stil für den Löschen-Button */
 .delete-button {
-background-color: #963939;
+  background-color: #ff0000c7;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 10px;
+  padding: 7px 15px; /* Anpassen Sie das Padding nach Bedarf */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 10px 10px; /* Abstand um den Button herum und "auto" für die rechte Ausrichtung */
+  transition: background-color 0.3s; /* Animiere die Hintergrundfarbe beim Hover */
 }
 .delete-button:hover {
 background-color: #CC0000;
 }
 
-/* Stil für den Gesamtpreis für Artikel */
+/* Stil für den Gesamtpreis bei Anbieter (ganz rechts ausgerichtet) */
 .total-price-products {
-  font-size: 18px;
-  margin-top: 10px;
-  color: #21364d;
   text-align: right;
+  font-weight: bold;
 }
 
-/* Stil für den Gesamtpreis des Bundles */
+/* Stil für den Gesamtpreis des Bundles (in der Mitte ausgerichtet) */
 .total-price-bundle {
-  font-size: 25px;
+  font-size: 20px;
   margin-top: 10px;
   color: #21364d;
-  text-align: center;
-}
-
-/* Stil für den Link des Produkts */
-.link-text {
-  color: blue; /* Setzen Sie die gewünschte Farbe für Links */
-  text-decoration: underline; /* Unterstreichung für Links */
-  cursor: pointer; /* Zeigen Sie den Mauszeiger als Zeigefinger, um anzuzeigen, dass es sich um einen Link handelt */
+  text-align: center; /* In der Mitte ausgerichtet */
+  background-color: #e0e0e0;
+  padding: 10px; /* Verringerte Polsterung für kleinere Box */
+  border-radius: 5px;
+  width: 150px; /* Kleinere Breite */
+  margin: 0 auto; /* In der Mitte ausgerichtet */
 }
 
 .link-text:hover {
   text-decoration: none; /* Entfernen Sie die Unterstreichung, wenn der Link gehovered wird */
 }
+
+.artikelmenge {
+  font-size: 14px; /* Kleinere Schriftgröße */
+  width: 60px;    /* Kleinere Breite */
+  padding: 5px;   /* Etwas Abstand um den Text herum */
+  border: 1px solid #ccc; /* Einen dünnen Rahmen hinzufügen */
+  border-radius: 5px;    /* Abgerundete Ecken für ein freundlicheres Aussehen */
+  text-align: center;    /* Text zentrieren */
+}
+
+/* Stil für die Schaltfläche "Produkt ansehen" */
+.link-button {
+  background-color: white;
+  color: black;
+  padding: 4px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 5px;
+  margin: 10px 10px;
+}
+
+.link-button:hover {
+  background-color: lightblue; /* Hintergrundfarbe ändert sich beim Hover */
+}
+

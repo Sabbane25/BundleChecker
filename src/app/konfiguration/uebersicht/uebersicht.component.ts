@@ -96,16 +96,30 @@ calculateArticlePrice(artikel: Artikel): number {
     return 0;
   } else if (artikel.menge === null || isNaN(artikel.menge)) {
     return artikel.preis;
-  } else
-  // Andernfalls berechne den Preis für die gegebene Menge.
-  return artikel.menge * artikel.preis;
+  } else {
+    // Andernfalls berechne den Preis für die gegebene Menge.
+    const preis = artikel.menge * artikel.preis;
+    
+    // Runde den Preis auf zwei Dezimalstellen
+    return parseFloat(preis.toFixed(2));
+  }
 }
+
 
 // Methode zur Aktualisierung des Preises eines einzelnen Artikels
 updateArticlePrice(bundle: any, artikel: Artikel) {
-  artikel.preis = artikel.menge * artikel.preis;
+  // Annahme: Der Preis wird aus Ihrem Artikelobjekt extrahiert (ersetzen Sie dies durch Ihren tatsächlichen Code)
+  const preis = artikel.preis; // Hier wird angenommen, dass der Preis im Artikelobjekt gespeichert ist.
+
+  // Berechnen Sie den neuen Preis (angenommen, die Menge bleibt unverändert)
+  artikel.preis = artikel.menge * preis;
+
+  // Runden Sie den Preis auf zwei Dezimalstellen
+  artikel.preis = parseFloat(artikel.preis.toFixed(2));
+
   this.updateTotalPrice(this.bundles.indexOf(bundle));
 }
+
 
 /**
  * 
@@ -117,26 +131,28 @@ calculateTotalPrice(artikelList: Artikel[]): number {
   for (const artikel of artikelList) {
     total += this.calculateArticlePrice(artikel);
   }
-  return total;
+  
+  // Runde den Gesamtpreis auf zwei Dezimalstellen
+  return parseFloat(total.toFixed(2));
 }
 
 calculateAnbieterTotalPrice(artikelList: Artikel[], anbieter: string): number {
   const artikelByAnbieter = artikelList.filter((artikel) => artikel.anbieter === anbieter);
-  return this.calculateTotalPrice(artikelByAnbieter);
+  
+  // Runde den Gesamtpreis auf zwei Dezimalstellen
+  return parseFloat(this.calculateTotalPrice(artikelByAnbieter).toFixed(2));
 }
 
-/**
- * Berechnet den Gesamtpreis eines Bundles, indem die Preise aller Artikel addiert werden.
- * @param bundle Das Bundle, für das der Gesamtpreis berechnet werden soll.
- * @returns Der Gesamtpreis des Bundles.
- */
 calculateBundleTotalPrice(bundles: { bundleName: string; anbieter: string; artikelList: Artikel[] }[]): number {
   let total = 0;
   for (const bundle of bundles) {
     total += this.calculateTotalPrice(bundle.artikelList);
   }
-  return total;
+  
+  // Runde den Gesamtpreis auf zwei Dezimalstellen
+  return parseFloat(total.toFixed(2));
 }
+
 
 /**
  * Die Methode prüft, ob ein Artikel aus einer Kategorie bereits im Bundle ist, falls ja, wird einen Artikel pro Kategorie genommen.
@@ -175,6 +191,21 @@ getUniqueAnbieter(artikelList: Artikel[]): string[] {
   return [...new Set(artikelList.map((artikel) => artikel.anbieter))];
 }
 
+/**
+ * Zum des Produktlinks auf einem neuen Fenster.
+ * @param produktLink 
+ */
+openProductLink(productLink: string) {
+  // Überprüfen, ob ein gültiger Produktlink vorhanden ist
+  if (productLink) {
+    // Die Methode window.open() öffnet den Link in einem neuen Tab oder Fenster
+    window.open(productLink, '_blank');
+  } else {
+    // Hier können Sie eine Meldung oder Aktion hinzufügen, wenn kein Produktlink vorhanden ist
+    alert("Kein gültiger Produktlink vorhanden.");
+  }
+}
+
 
 
   /**
@@ -194,6 +225,15 @@ getUniqueAnbieter(artikelList: Artikel[]): string[] {
         targetBundle.artikelList.splice(index, 1);
       }
     }
+  }
+  
+  /**
+   * 
+   * @param bundle 
+   * @param artikel 
+   */
+  deleteArticle(bundle: { bundleName: string; anbieter: string; artikelList: Artikel[] }, artikel: Artikel) {
+    this.delete(bundle, artikel);
   }
   
 }

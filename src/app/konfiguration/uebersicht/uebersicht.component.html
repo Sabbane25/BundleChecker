@@ -16,15 +16,17 @@
                             <span class="artikel-kategorie">Kategorie: {{ artikel.kategorie }}</span>
                             <span class="artikel-spezifisch">{{ artikel.getSpezifischeAttribute() }}</span>
                             <span class="artikel-preis">Preis: {{ calculateArticlePrice(artikel) }} €</span>
-                            <span class="artikel-produktlink link-text">Produkt-Link: {{ artikel.produktLink }}</span>
+                            <button class="link-button" (click)="openProductLink(artikel.produktLink)">Produkt ansehen</button>
                             <div>
                               <label for="quantity{{ bundleIndex }}_{{ artikelIndex }}">Menge:</label>
-                              <!--Wichtig: mit min=0 wird die Artikelmenge bei 0 sein und somit der Artikepreis auch 0€-->
-                              <input type="number" id="quantity{{ bundleIndex }}_{{ artikelIndex }}" [min]="1" [(ngModel)]="bundle.artikelList[artikelIndex].menge" (ngModelChange)="onMengeChange(bundleIndex, artikelIndex, $event)">
+                              <!--Wichtig: mit min=0 wird die Artikelmenge bei 0 sein und somit der Artikepreis auch bei 0€-->
+                              <input class="artikelmenge" type="number" id="quantity{{ bundleIndex }}_{{ artikelIndex }}" [min]="1" [(ngModel)]="bundle.artikelList[artikelIndex].menge" (ngModelChange)="onMengeChange(bundleIndex, artikelIndex, $event)">
+                              <button class="delete-button" (click)="deleteArticle(bundle, artikel)">Löschen</button>
                             </div>
                           </div>
                         </li>
                       </ul>
+                      <!--die css Klasse muss noch geändert werden-->
                       <div class="total-price-products">
                         Gesamtpreis bei {{ anbieter }}: {{ calculateAnbieterTotalPrice(bundle.artikelList, anbieter) }} €
                       </div>
