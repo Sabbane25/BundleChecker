@@ -27,6 +27,6 @@ export class BetriebsSystem extends Artikel{
 
 
     override getSpezifischeAttribute(): string {
-        return `Name: ${this.name}, Hersteller: ${this.hersteller}`;
+        return `Name: ${this.name}`;
       }
 }

@@ -75,38 +75,7 @@ margin-bottom: 10px;
   margin: 0px 10px 5px 5px;
 }
 
-/* Allgemeine Stilrichtlinien für Buttons */
-.button {
-padding: 5px 10px;
-background-color: #007BFF;
-color: #fff;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-font-size: 16px;
-margin: 10px 10px;
-}
-.button:hover {
-background-color: #0056b3;
-}
-/* Stil für den Löschen-Button */
-.delete-button {
-  background-color: #ff0000c7;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 10px;
-  padding: 7px 15px; /* Anpassen Sie das Padding nach Bedarf */
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  margin: 10px 10px; /* Abstand um den Button herum und "auto" für die rechte Ausrichtung */
-  transition: background-color 0.3s; /* Animiere die Hintergrundfarbe beim Hover */
-}
-.delete-button:hover {
-background-color: #CC0000;
-}
+
 
 /* Stil für den Gesamtpreis bei Anbieter (ganz rechts ausgerichtet) */
 .total-price-products {
@@ -120,11 +89,13 @@ background-color: #CC0000;
   margin-top: 10px;
   color: #21364d;
   text-align: center; /* In der Mitte ausgerichtet */
+  
   background-color: #e0e0e0;
   padding: 10px; /* Verringerte Polsterung für kleinere Box */
   border-radius: 5px;
   width: 150px; /* Kleinere Breite */
   margin: 0 auto; /* In der Mitte ausgerichtet */
+  box-shadow: 0 0 4px #111;
 }
 
 .link-text:hover {
@@ -138,6 +109,7 @@ background-color: #CC0000;
   border: 1px solid #ccc; /* Einen dünnen Rahmen hinzufügen */
   border-radius: 5px;    /* Abgerundete Ecken für ein freundlicheres Aussehen */
   text-align: center;    /* Text zentrieren */
+  box-shadow: 0 0 4px #111;
 }
 
 /* Stil für die Schaltfläche "Produkt ansehen" */
@@ -150,9 +122,45 @@ background-color: #CC0000;
   display: inline-block;
   border-radius: 5px;
   margin: 10px 10px;
+  box-shadow: 0 0 4px #111;
 }
 
 .link-button:hover {
-  background-color: lightblue; /* Hintergrundfarbe ändert sich beim Hover */
+  background-color: lightgreen; /* Hintergrundfarbe ändert sich beim Hover */
 }
 
+/*neue Style für Delete Button*/
+.delete-button {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border-radius: 25px;
+  border: 2px solid rgb(231, 50, 50);
+  background-color: #fff;
+  cursor: pointer;
+  box-shadow: 0 0 10px #333;
+  overflow: hidden;
+  transition: .3s;
+  margin: 10px 10px;
+}
+
+.delete-button:hover {
+  background-color: rgb(245, 207, 207);
+  transform: scale(1.2);
+  box-shadow: 0 0 4px #111;
+  transition: .3s;
+}
+
+svg {
+  color: rgb(231, 50, 50);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: .3s;
+}
+
+button:focus svg {
+  opacity: 0;
+  transition: .3s;
+}
