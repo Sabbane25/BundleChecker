@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { NutzerService } from 'src/services/nutzer.service';
+import { Component, OnInit, ElementRef, ViewChild  } from '@angular/core';
+import { data } from 'cheerio/lib/api/attributes';
 import { Nutzer } from 'src/models/nutzer.model';
-import { keyframes } from '@angular/animations';
+import { NutzerService } from 'src/services/nutzer.service';
+
 
 @Component({
   selector: 'app-admin',
@@ -10,23 +10,38 @@ import { keyframes } from '@angular/animations';
   styleUrls: ['admin.component.css']
 })
 
+
 export class AdminComponent implements OnInit {
 
-  users: any[] = [];
+  @ViewChild('emailInput', { static: false }) emailInput: ElementRef;
+
+  users: Nutzer[] = [{id: 2, email: "test", password: "password"}];
 
   constructor(private nutzerService: NutzerService) {}
+  
 
   ngOnInit(): void {
-    this.nutzerService.getUsers().subscribe((data) => {
+      this.nutzerService.getUsers().subscribe((data) => {
       this.users =  data;
-    })
+  })
+}
+  
+
+  onClick(event: KeyboardEvent) {
+    if(event.key === 'Enter') {
+      this.searchUser();
+    }
   }
+
+  searchUser() {
+    const suchanfrage = this.emailInput.nativeElement.value;
+    this.nutzerService.suchen(suchanfrage);
+}
    
   userLoeschen(user_id: number): void {
-      console.log("User wird gelöscht");
+      console.log("component.ts");
       this.nutzerService.loeschen(user_id);
   }
-  
 
 
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { apiConfig } from '../config/api.config';
+import { ApiMessage } from 'src/models/apiMessage.model';
 import { Nutzer } from 'src/models/nutzer.model';
 
 const AUTH_API = `http://${apiConfig.HOST}:3000/api/auth/`;
@@ -41,7 +42,7 @@ export class NutzerService {
       password: passwort
     }
     
-    const request = this.http.post<ApiMessage>(`${this.apiURL}/addUser`, newUser);
+    const request = this.http.post<ApiMessage>(`${apiURL}/addUser`, newUser);
     request.subscribe(response => {
       if (response.code === 1697580307) {
         emailInputNote.textContent = response.message;
@@ -55,7 +56,8 @@ export class NutzerService {
 
    getUsers(): Observable<any> {
      // Verwende das User-Interface als Datentyp für die Antwort
-    return this.http.get<any>(`${this.apiURL}/getUsers`);
+     console.log("test")
+    return this.http.get<any>(`${apiURL}/getUsers`);
    }
    
    loeschen(user_id: number): Observable<void> {
@@ -63,24 +65,19 @@ export class NutzerService {
       body: { user_id: user_id }};
     console.log("In Nutzerservice");
     console.log("Hallo", user_id);
-    // return this.http.delete<void>(`${this.apiURL}/userLoeschen:${user_id}`);
+    // return this.http.delete<void>(`${apiURL}/userLoeschen:${user_id}`);
     
-    return this.http.delete<void>(`${this.apiURL}/userLoeschen`, options);
+    return this.http.delete<void>(`${apiURL}/userLoeschen`, options);
    }
    
+   suchen(email: string): Observable<any> {
+    console.log("In Nutzerservice: " + email);
 
-  /**getUsers(): Nutzer[] {
-    // Verwende das User-Interface als Datentyp für die Antwort
-    console.log("getUsers");
-    console.log(this.http.get<Nutzer[]>(this.apiURL));
-    console.log("test")
-
-    let result: Nutzer[] = [];
-    this.http.get<Nutzer[]>(this.apiURL).subscribe(data => {
-      result = data as Nutzer[];
+    // Korrekte HTTP-Anfrage mit einem Query-Parameter "email"
+    return this.http.get<any>(`${apiURL}/userSuchen`, {
+        params: { email: email }
     });
-    return result;
-  }*/
+  }
 
   getPublicContent(): Observable<any> {
     return this.http.get(API_URL + 'all', { responseType: 'text' });
