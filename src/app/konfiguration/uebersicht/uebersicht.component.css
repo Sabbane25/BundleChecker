@@ -1,17 +1,12 @@
 
-.container-bundler {
-margin: auto;
+.container-bundle {
+margin-top: 90px;
 width: 100%;
 padding: 10px;
 position: relative;
 display: flex;
 flex-wrap: wrap;
-}
-.container-bundle {
-margin: auto;
-width: 100%;
 border: 1px solid #ddd;
-padding: 10px;
 margin-bottom: 20px;
 border-style: outset;
 border-width: medium;
@@ -114,7 +109,7 @@ margin-bottom: 10px;
 
 /* Stil für die Schaltfläche "Produkt ansehen" */
 .link-button {
-  background-color: white;
+  background-color: green;
   color: black;
   padding: 4px 10px;
   text-align: center;
@@ -126,7 +121,7 @@ margin-bottom: 10px;
 }
 
 .link-button:hover {
-  background-color: lightgreen; /* Hintergrundfarbe ändert sich beim Hover */
+  background-color: light green; /* Hintergrundfarbe ändert sich beim Hover */
 }
 
 /*neue Style für Delete Button*/
@@ -163,4 +158,10 @@ svg {
 button:focus svg {
   opacity: 0;
   transition: .3s;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: flex-end; /* Buttons rechts ausrichten */
+  margin-top: 10px; /* Optional: Füge etwas Abstand nach oben hinzu */
 }
