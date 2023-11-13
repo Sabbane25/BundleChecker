@@ -13,13 +13,22 @@ import { keyframes } from '@angular/animations';
 export class AdminComponent implements OnInit {
 
   users: any[] = [];
-
+  loading: boolean = true;
+  error: string = '';
   constructor(private nutzerService: NutzerService) {}
 
   ngOnInit(): void {
-    this.nutzerService.getUsers().subscribe((data) => {
-      this.users =  data;
-    })
+    this.nutzerService.getUsers().subscribe(
+      (data) => {
+        console.log('Daten vom Backend erhalten:', data);
+        this.users = data;
+        this.loading = false;
+      },
+      (error) => {
+        this.error = 'Fehler beim Laden der Nutzerdaten.';
+        this.loading = false;
+      }
+    );
   }
    
   userLoeschen(user_id: number): void {

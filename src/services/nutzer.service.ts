@@ -30,10 +30,10 @@ export class NutzerService {
     return request;
   }
 
-   getUsers(): Observable<any> {
-     // Verwende das User-Interface als Datentyp für die Antwort
-    return this.http.get<any>(`${this.apiURL}/getUsers`);
-   }
+  getUsers(): Observable<any> {
+    return this.http.get<any[]>(`${this.apiURL}/getUsers`, { withCredentials: true });
+  }
+  
    
    loeschen(user_id: number): Observable<void> {
     const options = {
