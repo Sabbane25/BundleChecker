@@ -1,18 +1,19 @@
 export abstract class Artikel {
-  artikelnummer: number;
   kategorie: string;
   preis: number;
   shopID: number;
-  produktLink: string;
-  anbieter: string;
+  produktURL: string;
+  bezeichnung: string;
+  lieferdatum: number;
 
-  constructor(artikelnummer: number, kategorie: string, preis: number, shopID: number, produktLink: string, anbieter: string) {
-    this.artikelnummer = artikelnummer;
+
+  constructor(kategorie: string, preis: number, shopID: number, produktURL: string, bezeichnung: string, lieferdatum: number) {
     this.kategorie = kategorie;
     this.preis = preis;
     this.shopID = shopID;
-    this.produktLink = produktLink;
-    this.anbieter = anbieter;
+    this.produktURL = produktURL;
+    this.bezeichnung = bezeichnung;
+    this.lieferdatum = lieferdatum;
   }
 
   abstract gibArtikelBeschreibung(): string;
