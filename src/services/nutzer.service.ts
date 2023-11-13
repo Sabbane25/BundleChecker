@@ -55,9 +55,10 @@ export class NutzerService {
   }
 
    getUsers(): Observable<any> {
-     // Verwende das User-Interface als Datentyp für die Antwort
-     console.log("test")
-    return this.http.get<any>(`${apiURL}/getUsers`);
+      // Verwende das User-Interface als Datentyp für die Antwort
+      console.log("test")
+      // return this.http.get<any>(`${apiURL}/getUsers`);
+      return this.http.get<any[]>(`${apiURL}/getUsers`, { withCredentials: true });
    }
    
    loeschen(user_id: number): Observable<void> {
