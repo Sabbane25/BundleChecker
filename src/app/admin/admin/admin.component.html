@@ -1,8 +1,9 @@
 <h2 class="text-center" style="padding-top: 30px;">SYSTEMADMIN</h2>
 <div class="center">
     <div class="suche">
-        <input type="email" id="suche" placeholder="Nutzer suchen" #emailInput>
+        <input style="width: 300px;" type="text" id="suche" placeholder="Nutzer suchen" [(ngModel)]="searchQuery" (keyup.enter)="filterUsers()">
     </div>
+</div>
     <div class="containerAdmin">
         <div class="tabellenueberschrift">
             <p>E-Mail</p>
@@ -19,5 +20,5 @@
             </ul>
         </div>
     </div> 
- </div> 
+ 
 

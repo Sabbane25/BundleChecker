@@ -60,7 +60,7 @@ export class NutzerService {
       // return this.http.get<any>(`${apiURL}/getUsers`);
       return this.http.get<any[]>(`${apiURL}/getUsers`, { withCredentials: true });
    }
-   
+
    loeschen(user_id: number): Observable<void> {
     const options = {
       body: { user_id: user_id }};
