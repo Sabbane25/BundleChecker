@@ -78,13 +78,10 @@ app.delete('/userLoeschen/:user_id', (req, res) => {
   });
 });
 
-app.get('/searchUser', (req, res) => {
-  const query = `SELECT email FROM nutzer WHERE email = `
-})
 app.get('/getUsers', (req, res) => {
   const query = `SELECT n.email, n.password, n.id
                 FROM nutzer n  
-                JOIN nutzer_nutzer_rollen_join nr ON n.id = nr.user_id 
+                JOIN nutzer_nutzer_rollen_join nr ON n.user_id = nr.user_id 
                 WHERE nr.role_id = 1`;
 
   connection.query(query, (err, results) => {
