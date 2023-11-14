@@ -2,20 +2,17 @@ import { Artikel } from "./artikel.model";
 
 export class Cpu extends Artikel{
     
-    marke: string;
-    modell: string;
-    stromverbrauch: string;
+    bezeichnung: string;
+    stromverbrauch: number;
     taktfrequenz: string;
     sockel: string;
-    anzahlKerne: string;
+    anzahlKerne: number;
     interneGrafik: string;
 
-    constructor(artikelnummer: number, kategorie: string, preis: number, shopID: number, produktLink: string, anbieter: string, marke: string, 
-        modell: string, stromverbrauch: string, taktfrequenz: string, sockel: string, anzahlKerne: string, interneGrafik: string) {
+    constructor(artikelnummer: number, kategorie: string, preis: number, shopID: number, bezeichnung: string, produktLink: string, stromverbrauch: number, taktfrequenz: string, sockel: string, anzahlKerne: number, interneGrafik: string) {
 
-        super(artikelnummer, kategorie, preis,  shopID, produktLink, anbieter)
-        this.marke = marke;
-        this.modell = modell;
+        super(artikelnummer, kategorie, preis, shopID, produktLink)
+        this.bezeichnung = bezeichnung;
         this.stromverbrauch = stromverbrauch;
         this.taktfrequenz = taktfrequenz;
         this.sockel = sockel; 
@@ -23,6 +20,15 @@ export class Cpu extends Artikel{
         this.interneGrafik = interneGrafik; 
     }
 
+
+    override getSpezifischeAttribute(): string {
+        return `Bezeichnung: ${this.bezeichnung}, 
+        Stromverbrauch: ${this.stromverbrauch}, Taktfrequenz: ${this.taktfrequenz}, 
+        Sockel: ${this.sockel}, Anzahl Kerne: ${this.anzahlKerne}, 
+        Interne Grafik: ${this.interneGrafik}`;
+      }
+
+    /** 
     override gibArtikelTitel(): string {
         return `${this.marke}`;
     }
@@ -37,4 +43,6 @@ export class Cpu extends Artikel{
         Sockel: ${this.sockel}, Anzahl Kerne: ${this.anzahlKerne}, 
         Interne Grafik: ${this.interneGrafik}`;
       }
+
+    */
 }
