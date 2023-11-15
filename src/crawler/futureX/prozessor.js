@@ -1,49 +1,129 @@
 const puppeteer = require('puppeteer');
-const { scrapeComputerUniverseUrls } = require('./funktionen');
-const { filterKomponente } = require('./funktionen');
+const { konvertiereInInt, konvertiereInFloat2, futureXUrls, extrahiereFloat2, extrahiereZahl, extrahiereDatum } = require('./funktionen.js');
+const { Prozessor } = require('./models.js')
 
-//Liste von Url für jeden Artikel
-let listVonUrlArtikel = [];
+let listProzessorArtikle = [];
 
 (async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.waitForTimeout(10000);
-    await page.goto('https://www.future-x.de/AMD-Ryzen-9-7950X-4500-AM5-WOF-R9-Sockel-Zen4/999515976')
+    let listVonUrlArtikel = await futureXUrls("https://www.future-x.de/Hardware-Netzwerk/PC-Komponenten/CPUs/?b2bListingView=listing&p=", 3);
+    
+    //await page.waitForTimeout(5000);
 
-    const containerFluid = await page.$('main > .container-main .cms-section-default.boxed');
+    for(let i = 0; i < listVonUrlArtikel.length; i++){ 
+        await page.goto(listVonUrlArtikel[i]);
+        let artikelProzessor = new Prozessor();
 
-    //cms-block  pos-2 cms-block-product-description-reviews
+        try{
+            const containerFluid = await page.$('main > .container-main');
+            const titleDiv = await containerFluid.$('.cms-element-product-name > h1');
+            const priceDiv = await containerFluid.$('.product-detail-price-container > p');
+            const liferungDiv = await containerFluid.$('.product-detail-delivery-information p');
+            const detailsSelektor = await containerFluid.$$('div.product-detail-description-text:nth-child(1) .table > tbody:nth-child(1) tr');
+            const imgSelektor = await containerFluid.$('.img-fluid.gallery-slider-image.magnifier-image.js-magnifier-image');
 
-        if (containerFluid) {
-            // Utilisez `element.$` pour sélectionner un élément enfant par classe
-            const titleDiv = await containerFluid.$('.col-md-9.col-lg-8.productTitle > h1');
-            const priceSelektor = await containerFluid.$('.row.mt-0.mt-md-3 .productPriceInner.pb-0.d-inline-block.w-100 .price');
-            const datum = await containerFluid.$('.row.mt-0.mt-md-3 .productPriceInner.pb-0.d-inline-block.w-100');
+            artikelProzessor.shopID = 2;
+            artikelProzessor.kategorie = 'Prozessor';
+            artikelProzessor.bezeichnung = await titleDiv.evaluate(node => node.innerText);
+            artikelProzessor.marke = (await titleDiv.evaluate(node => node.innerText)).split(" ")[0];
+            artikelProzessor.preis = extrahiereFloat2(await priceDiv.evaluate(node => node.innerText));
+            artikelProzessor.deliveryDate = extrahiereDatum(await liferungDiv.evaluate(node => node.innerText));
+            artikelProzessor.produktlink = listVonUrlArtikel[i];
+            artikelProzessor.imgUrl = await imgSelektor.evaluate(node => node.getAttribute('src'));
 
-            if (titleDiv) {
-                const title = await titleDiv.evaluate(node => node.textContent);
-                const price = await priceSelektor.evaluate(node => node.textContent);
-                const Formfaktor = await page.evaluate(el => el.querySelector('.row.mt-0.mt-md-3 .productPriceInner.pb-0.d-inline-block.w-100 .price').textContent, containerFluid);
-                console.log(title);
-                console.log(price);
-                console.log(Formfaktor);
+            let hatInterneGrafik = false; 
 
-                const details = await containerFluid.$$('#HTML_SPEC .ITSr0')
+            for(const element of detailsSelektor){
+                const data = await page.evaluate(el => el.querySelector('td:nth-child(2)').textContent, element);
+                const merkmal = await page.evaluate(el => el.querySelector('th:nth-child(1)').textContent, element);
 
-                for(const element of details){
-                    const data = await page.evaluate(el => el.querySelector('div:nth-child(1)').textContent, element);
-                    if(filterKomponente(data, "Threads") === "Threads"){
-                        console.log('###################', data);
-                        const data2 = await page.evaluate(el => el.querySelector('div:nth-child(2)').textContent, element);
-                        console.log('###################', data2);
+                if(data || merkmal){
+                    switch (merkmal.trim()) {
+                        case "Anz. der Kerne":
+                            if((data.trim()).includes('Quad-Core')){
+                                artikelProzessor.kerne = 4;
+                            }else{
+                                artikelProzessor.kerne = extrahiereZahl(data);
+                            }
+                            break;
+
+                        case "Taktfrequenz":
+                            artikelProzessor.taktfrequenz = data;
+                            break;
+                    
+                        case "Anz. der Threads":
+                            artikelProzessor.threads = konvertiereInInt(data, 'Threads');
+                            break;
+                    
+                        case "Geeignete Sockel":
+                            artikelProzessor.sockel = data;
+                            break;
+
+                        case "Thermal Design Power (TDP)":
+                            artikelProzessor.stromverbrauch = konvertiereInInt(data, 'W');
+                            break; 
+
+                        case "Max. Turbo-Taktfrequenz":
+                            artikelProzessor.maxTurboTaktfrequenz = data;
+                            break;  
+                        
+                        case "Typ":
+                            if(hatInterneGrafik){
+                                if(typeof artikelProzessor.CPUTyp === "undefined"){
+                                    artikelProzessor.CPUTyp = data;
+                                }else if(typeof artikelProzessor.interneGrafik === 'undefined'){
+                                    artikelProzessor.interneGrafik = data;
+                                }
+                            }
+                            hatInterneGrafik = false;
+                            break;  
+                        
+                        case "Prozessor":
+                            hatInterneGrafik = true;
+                            break; 
+                        
+                        case "Integrierte Grafik":
+                            hatInterneGrafik = true;
+                            break;     
+                    
+                        default:
+                            break;
                     }
                 }
-
-            } else {
-                console.log("Div spécifique introuvé.");
             }
+            if(typeof artikelProzessor.interneGrafik === 'undefined'){
+                artikelProzessor.interneGrafik = "ohne CPU-Grafik"
+            }
+
+            if(artikelProzessor.maxTurboTaktfrequenz && artikelProzessor.threads && artikelProzessor.taktfrequenz
+                && artikelProzessor.sockel){
+                    listProzessorArtikle.push(artikelProzessor);
+            }
+            
+        }catch(error){
+            console.error('Erreur de navigation :', error);
         }
+    }
+    console.log(listProzessorArtikle);
+    console.log("total", listProzessorArtikle.length);
+
+    /*
+    // Daten ins Backend senden
+    const axios = require('axios');
+    const backendUrl = 'http://192.168.198.48:3000/api/scrapedata';
+
+    try {
+        const response = await axios.post(backendUrl, listProzessorArtikle, { 
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        console.log('Données envoyées avec succès au backend.', response.data);
+    } catch (error) {
+        console.error('Erreur lors de l\'envoi des données au backend :', error);
+    }
+    */
 
     await browser.close();
 })();

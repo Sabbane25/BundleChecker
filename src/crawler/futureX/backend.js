@@ -1,3 +1,4 @@
+
 const express = require('express'); // Importieren des Express-Frameworks
 const mysql = require('mysql2'); // Importieren des MySQL2-Pakets
 const cors = require('cors'); // Importieren des cors-Pakets
@@ -17,55 +18,6 @@ connection.connect((err) => {
   } else {
     console.log('Connected to the database');
   }
-});
-/** 
-app.post('/setToken', (req, res)) => {
-  const {email} = req.body;
-  const password = 'GET Passwort FROM Nutzer WHERE Passwort ="${password}"'
-}
-*/
-//Verwendung des cors-Pakets
-app.use(cors());
-
-// Middleware für JSON-Verarbeitung
-app.use(express.json()); // Diese Middleware erlaubt das Verarbeiten von JSON-Daten in Anfragen
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  next();
-})
-
-// app.get('/getUsers', (req, res) => {
-//   const query = `SELECT n.email, n.password` +  
-//                 `FROM nutzer n` +  
-//                 `JOIN nutzer_nutzer_rollen_join nr ON n.user_id = nr.user_id` +  
-//                 `WHERE nr.role_id = 1`;
-
-//   connection.query(query, (err, results) => {
-//     if (err) {
-//       console.error('Fehler beim Abrufen der Nutzerdaten: ' + err);
-//       res.status(500).json({ error: 'Fehler beim Abrufen der Nutzerdaten' });
-//       return;
-//     }
-//     res.json(results);
-//   });
-// });
- 
-app.delete('/userLoeschen/:user_id', (req, res) => {
-  const user_id = req.params.user_id; // Nehmen Sie die E-Mail-Adresse des zu löschenden Benutzers aus der Anfrage (Stellen Sie sicher, dass die Anfrage dies enthält)
-
-  const query = `DELETE FROM nutzer WHERE user_id = ${user_id} `;
-  
-  console.log(user_id);
-
-  connection.query(query, [user_id], (err, results) => {
-    if (err) {
-      console.error('Fehler beim Löschen des Nutzers: ' + err.message);
-      res.status(500).json({ error: 'Fehler beim Löschen des Nutzers' }); // Senden Sie eine Fehlerantwort zurück
-    } else {
-      console.log('Nutzer wurde erfolgreich gelöscht.');
-      res.status(200).json({ message: 'Nutzer wurde erfolgreich gelöscht' }); // Senden Sie eine Erfolgsantwort zurück
-    }
-  });
 });
 
 app.get('/getUsers', (req, res) => {
@@ -87,61 +39,20 @@ app.get('/getUsers', (req, res) => {
 app.post('/addUser', (req, res) => {
   const { email, password } = req.body;
 
-  console.log("User wurde hinzugefügt im Backend");
-
   if (!email || !password) {
-    console.log('E-Mail und/oder Passwort fehlen.');
     return res.status(400).json({ message: 'E-Mail und Passwort sind erforderlich' });
   }
 
-  let sqlCheckMail = `SELECT * FROM Nutzer WHERE Email = "${email}"`;
-  connection.query(sqlCheckMail, (error, results, fields) => {
-    if (error) {
-      // Fehlermeldung bei Fehler
-      res.status(500).send({
-        state: true,
-        success: false,
-        message: error.message,
-        code: 1697580279
-      });
-      console.log('Datenbank fehler');
-    }
-
-    if (results.length > 0) {
-      // E-Mail Adresse bereits vorhanden
-      res.status(200).send({
-        state: true,
-        success: false,
-        message: "E-Mail Adresse bereits vorhanden.",
-        code: 1697580307
-      });
-      console.log('E-Mail bereits vorhanden.');
+  const sql = 'INSERT INTO Nutzer (Email, Passwort) VALUES (?, ?)';
+  connection.query(sql, [email, password], (err, results) => {
+    if (err) {
+      console.error('Fehler beim Ausführen der Datenbankabfrage: ' + err.message);
+      return res.status(500).json({ message: 'Fehler beim Hinzufügen des Benutzers' });
     } else {
-      const sql = 'INSERT INTO Nutzer (Email, Passwort) VALUES (?, ?)';
-      connection.query(sql, [email, password], (err, results) => {
-        if (err) {
-          console.error('Fehler beim Ausführen der Datenbankabfrage: ' + err.message);
-          res.status(500).send({
-            state: true,
-            success: false,
-            message: "Fehler beim Hinzufügen des Benutzers",
-            code: 1697580312
-          });
-          console.log('fehler beim hinzufügen');
-        } else {
-          res.status(200).send({
-            state: true,
-            success: true,
-            message: "Benutzer erfolgreich hinzugefügt",
-            code: 1697580318
-          });
-          console.log('hinzugefügt');
-        }
-      });
+      res.status(201).json({ message: 'Benutzer erfolgreich hinzugefügt' });
     }
   });
 });
-
 
 app.get('/Emails', (req, res) => {
 
@@ -202,6 +113,11 @@ app.post('/register', async (req, res) => {
         });
     });
 });*/
+//Verwendung des cors-Pakets
+app.use(cors());
+
+// Middleware für JSON-Verarbeitung
+app.use(express.json()); // Diese Middleware erlaubt das Verarbeiten von JSON-Daten in Anfragen
 
 // Get-Endpunk, um eine Liste von aller Artikel zu erhalten(Arnauld)
 app.get('/Artikel/:artikel', (req, res) => {
@@ -236,6 +152,98 @@ app.get('/Produkte/:table', (req, res) => {
         if (error) throw error;
         res.json(results);
     });
+});
+
+app.post('/api/scrapedata', (req, res) => {
+  const scrapedData = req.body; 
+  //Insertion in Artikel
+  for(const data of scrapedData){
+    const sqlArtikel = `INSERT INTO Artikel(Kategorie, Preis, ShopID, ProduktUrl, Bezeichnung, LieferDatum)
+                        VALUES (?, ?, ?, ?, ?, ?)
+                        ON DUPLICATE KEY UPDATE Preis = VALUES(Preis),LieferDatum = VALUES(LieferDatum)`;
+
+    const valuesArtikel = [
+        data.kategorie,
+        data.preis,
+        data.shopID,
+        data.produktlink,
+        data.bezeichnung,
+        data.deliveryDate, 
+    ];
+
+    connection.query(sqlArtikel, valuesArtikel, (error, results) => {
+        if (error) throw error;
+        console.log('Objet inséré avec succès, ID:', results.insertId);
+    });
+  }
+
+  //Insertion in CUP
+  for(const data of scrapedData){
+    let sqlUrl = `SELECT * FROM CPU WHERE Url = "${data.produktlink}"`;
+  
+    connection.query(sqlUrl, (error, results, fields) => {
+      if (error) {
+        res.status(500).send({
+          state: true,
+          success: false,
+          message: error.message,
+          code: 1697580279
+        });
+        console.log('Datenbank fehler');
+      }
+      if (results.length > 0) {
+        res.status(200).send({
+          state: true,
+          success: false,
+          message: "Url bereits vorhanden.",
+          code: 1697580307
+        });
+        console.log('Url bereits vorhanden.');
+      }else{
+        console.log("l insertion est possible ****");
+
+        const sql = `INSERT INTO CPU (Artikelnummer, Url, Sockel, AnzahlKerne, Stromverbrauch, Taktfrequenz, InterneGrafik, Threads)
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+
+        const valuesCpu = [
+            null,
+            data.produktlink,
+            data.sockel,
+            data.kerne,
+            data.stromverbrauch,
+            data.taktfrequenz,
+            data.interneGrafik,
+            data.threads
+        ];
+        
+        connection.query(sql, valuesCpu, (err, results) => {
+          if (err) {
+          console.error('Fehler beim Ausführen der Datenbankabfrage: ' + err.message);
+          res.status(500).send({
+              state: true,
+              success: false,
+              message: "Fehler beim Hinzufügen des CPU",
+              code: 1697580312
+          });
+          console.log('fehler beim hinzufügen');
+          } else {
+          res.status(200).send({
+              state: true,
+              success: true,
+              message: "CPU erfolgreich hinzugefügt",
+              code: 1697580318
+          });
+          console.log('hinzugefügt');
+          }
+        });
+      }
+
+    });
+  }
+
+  // Répondez au frontend pour indiquer que les données ont été reçues avec succès
+  res.status(200).send('Données reçues avec succès');
+  connection.end(); 
 });
 
 // GET-Endpunkt zum Abrufen von der Datenbank
