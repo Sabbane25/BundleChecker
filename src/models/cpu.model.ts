@@ -1,3 +1,4 @@
+/** 
 import { Artikel } from "./artikel.model";
 
 export class Cpu extends Artikel{
@@ -28,7 +29,7 @@ export class Cpu extends Artikel{
         Interne Grafik: ${this.interneGrafik}`;
       }
 
-    /** 
+    
     override gibArtikelTitel(): string {
         return `${this.marke}`;
     }
@@ -44,5 +45,6 @@ export class Cpu extends Artikel{
         Interne Grafik: ${this.interneGrafik}`;
       }
 
-    */
+
 }
+*/

@@ -1,3 +1,4 @@
+/**
 import { Artikel } from "./artikel.model";
 
 export class Mainboard extends Artikel{
@@ -30,3 +31,4 @@ export class Mainboard extends Artikel{
     }
 
 }
+*/

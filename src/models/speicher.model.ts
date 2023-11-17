@@ -1,3 +1,4 @@
+
 import { Artikel } from "./artikel.model";
 
 export class Speicher extends Artikel{
@@ -11,7 +12,7 @@ export class Speicher extends Artikel{
     constructor(artikelnummer: number, kategorie: string, preis: number, shopID: number, produktLink: string, anbieter: string,
                                 Marke: string, Modell: string, Speichertyp: string, Kapazitaet: string, Schreibgeschwindigkeit: string, Lesegeschwindigkeit: string)
                                    {
-        super(artikelnummer, kategorie, preis,  shopID, produktLink, anbieter)
+        super(artikelnummer, kategorie, preis,  shopID, produktLink)
         this.Marke = Marke;
         this.Modell = Modell;
         this.Speichertyp = Speichertyp;
@@ -19,7 +20,7 @@ export class Speicher extends Artikel{
         this.Schreibgeschwindigkeit = Schreibgeschwindigkeit;
         this.Lesegeschwindigkeit = Lesegeschwindigkeit;
     }
-
+    
     override gibArtikelTitel(): string {
         return `${this.Marke}`;
     }
@@ -27,6 +28,7 @@ export class Speicher extends Artikel{
     override gibArtikelBeschreibung(): string {
         return `${this.Modell} • ${this.Speichertyp} • ${this.Kapazitaet} • ${this.Schreibgeschwindigkeit} • ${this.Lesegeschwindigkeit}`;
     }
+    
 
     override getSpezifischeAttribute(): string {
         return `Marke: ${this.Marke}, Modell: ${this.Modell}, Speichertyp: ${this.Speichertyp}, Kapazität: ${this.Kapazitaet}, 

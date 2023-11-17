@@ -1,3 +1,4 @@
+/**
 import { Artikel } from "./artikel.model";
 
 export class Ram extends Artikel{
@@ -30,3 +31,4 @@ export class Ram extends Artikel{
         return `Marke: ${this.marke}, Modell: ${this.modell}, Typ: ${this.typ}, Kapazität: ${this.kapazitaet}, Timings: ${this.timings}`;
       }
 }
+*/

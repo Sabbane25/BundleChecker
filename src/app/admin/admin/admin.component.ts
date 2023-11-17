@@ -1,41 +1,49 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { NutzerService } from 'src/services/nutzer.service';
-import { Nutzer } from 'src/models/nutzer.model';
-import { keyframes } from '@angular/animations';
 
 @Component({
   selector: 'app-admin',
   templateUrl: 'admin.component.html',
   styleUrls: ['admin.component.css']
 })
-
 export class AdminComponent implements OnInit {
 
+  @ViewChild('emailInput', { static: false }) emailInput: ElementRef;
+
   users: any[] = [];
-  loading: boolean = true;
-  error: string = '';
+  userSearch: any[] = [];
+  searchQuery: string = ''; // Diese Zeile hinzufügen, um die Eigenschaft zu deklarieren
+
   constructor(private nutzerService: NutzerService) {}
 
   ngOnInit(): void {
-    this.nutzerService.getUsers().subscribe(
-      (data) => {
-        console.log('Daten vom Backend erhalten:', data);
-        this.users = data;
-        this.loading = false;
-      },
-      (error) => {
-        this.error = 'Fehler beim Laden der Nutzerdaten.';
-        this.loading = false;
-      }
-    );
+    this.loadUsers();
   }
-   
+
+  loadUsers() {
+    this.nutzerService.getUsers().subscribe((data) => {
+      this.users = data;
+    });
+  }
+
+  onClick(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.searchUser();
+    }
+  }
+
+  searchUser() {
+    const suchanfrage = this.searchQuery;
+    this.nutzerService.suchen(suchanfrage).subscribe((searchResults) => {
+      this.userSearch = searchResults;
+      this.users = suchanfrage ? this.userSearch : this.users;
+    });
+  }
+
   userLoeschen(user_id: number): void {
-      console.log("User wird gelöscht");
-      this.nutzerService.loeschen(user_id);
+    console.log("User wird gelöscht");
+    this.nutzerService.loeschen(user_id).subscribe(() => {
+      this.loadUsers();
+    });
   }
-  
-
-
 }

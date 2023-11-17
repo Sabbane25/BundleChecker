@@ -1,24 +1,25 @@
 <h2 class="text-center" style="padding-top: 30px;">SYSTEMADMIN</h2>
 <div class="center">
     <div class="suche">
-        <input style="width: 300px;" type="text" id="suche" placeholder="Nutzer suchen" [(ngModel)]="searchQuery" (keyup.enter)="filterUsers()">
+        <!-- Ändere das id-Attribut, um es eindeutig zu machen -->
+        <input type="email" id="emailSuche" placeholder="Nutzer suchen" #emailInput>
+        <input style="width: 300px;" type="text" id="textSuche" placeholder="Nutzer suchen" [(ngModel)]="searchQuery" (keyup.enter)="searchUser()">
     </div>
 </div>
-    <div class="containerAdmin">
-        <div class="tabellenueberschrift">
-            <p>E-Mail</p>
-        </div>
-        <div class="userListContainer">
-            <ul>
-                <li *ngFor="let user of users" style="background-color: #00528d4c ;">
-                    <h4> {{user.email}} </h4>
-                    <div>
-                        <button class="button_bearbeiten" >Bearbeiten</button>
-                        <button class="button_löschen" (click)="userLoeschen(user.id)">Löschen</button>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div> 
- 
+<div class="containerAdmin">
+    <div class="tabellenueberschrift">
+        <p>E-Mail</p>
+    </div>
+    <div class="userListContainer">
+        <ul>
+            <li *ngFor="let user of users" style="background-color: #00528d4c ;">
+                <h4> {{user.email}} </h4>
+                <div>
+                    <button class="button_bearbeiten" >Bearbeiten</button>
+                    <button class="button_löschen" (click)="userLoeschen(user.id)">Löschen</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
 

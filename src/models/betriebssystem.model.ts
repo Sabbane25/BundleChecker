@@ -1,3 +1,4 @@
+/**
 import { Artikel } from "./artikel.model";
 
 export class BetriebsSystem extends Artikel{
@@ -30,3 +31,4 @@ export class BetriebsSystem extends Artikel{
         return `Name: ${this.name}, Hersteller: ${this.hersteller}`;
       }
 }
+*/

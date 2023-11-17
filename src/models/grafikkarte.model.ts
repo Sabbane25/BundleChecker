@@ -1,3 +1,4 @@
+/**
 import { Artikel } from "./artikel.model";
 
 export class Grafikkarte extends Artikel{
@@ -26,3 +27,4 @@ export class Grafikkarte extends Artikel{
     }
 
 }
+*/
