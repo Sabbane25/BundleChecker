@@ -6,7 +6,7 @@ export class BetriebsSystem extends Artikel{
     hersteller: string;
 
     constructor(artikelnummer: number, kategorie: string, preis: number, shopID: number, produktLink: string, anbieter: string,
-        Name: string, Hersteller: string) {
+                Name: string, Hersteller: string) {
 
         super(artikelnummer, kategorie, preis, shopID, produktLink, anbieter)
         this.name = Name;
