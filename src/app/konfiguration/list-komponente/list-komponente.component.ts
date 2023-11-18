@@ -13,7 +13,7 @@ import { ARTIKEL_LIST } from 'src/models/artikel_mockup';
 })
 
 export class ListKomponenteComponent {
-  
+
   @Input() testFilter: any[] = ["malouda", "booba"];
 
   //enthält die gesamte Artikelliste aus der Datenbanken (Nicht sortiert)
@@ -23,7 +23,7 @@ export class ListKomponenteComponent {
   hinzugefuegteArtikel: Artikel[] = [];
 
   /**
-   * 
+   *
    * @param artikel Artikel, den der Kunde für die Konfiguration seines PCs ausgewählt hat
    */
   onButtonhinzufuegen(artikel: Artikel) {
@@ -33,7 +33,7 @@ export class ListKomponenteComponent {
   // die Variable wird benutzt, um alle Artkel aller Art zu speichern(RAM, CPU, Speicher...)
   artikelList2: any[] = [];
 
-    constructor(
+  constructor(
       private dataService: DataService,
       private artikelService: ArtikelService) {}
 
@@ -41,16 +41,16 @@ export class ListKomponenteComponent {
   ngOnInit(): void {
     this.loadProdukts();
     this.gibArtikellistnachKategorie();
-  } 
+  }
 
   //speichert die Data in dem entsprechenden Variable. Die kommen aus der Service (DataService)
   loadProdukts(): void {
     this.artikelService.getAllArtikel2("RAM").subscribe((data) => { for(let a of data) this.artikelList2.push(a)});
     this.artikelService.getAllArtikel2("Speicher").subscribe((data) => { for(let a of data) this.artikelList2.push(a)});
-  }  
+  }
 
   /**
-   * 
+   *
    * @returns gib eine liste von jeder Artikelkategorie zurück
    */
   gibKategorieArtikel(): string[] {
@@ -72,10 +72,10 @@ export class ListKomponenteComponent {
       artikelListenachKategorie.push(this.artikelListe.filter((artikel) => artikel instanceof Ram))
     } */
     const artikelListenachKategorie: Artikel[] = this.artikelListe.filter((artikel) => {
-        return kategorien.includes(artikel.constructor.name);
+      return kategorien.includes(artikel.constructor.name);
     });
     return artikelListenachKategorie;
   }
 
- 
+
 }
