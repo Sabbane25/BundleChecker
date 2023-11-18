@@ -9,10 +9,11 @@ module.exports = function(app, connection) {
 
   // Get-Endpunk, um eine Liste alle Kategorien zu erhalten(Arnauld)
   app.get('/Kategorie', (req, res) => {
+
     const query = `SELECT DISTINCT kategorie FROM Artikel`;
     connection.query(query, (error, results) => {
       if (error) throw error;
-            res.json(results);
+      res.json(results);
     });
   });
 };

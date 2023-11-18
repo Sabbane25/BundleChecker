@@ -15,7 +15,7 @@ module.exports = function(app, connection) {
     connection.query(query, (error, results) => {
       if (error){
         console.error('Erreur lors de l\'execution de la requete :', error);
-        res.status(500).json({ error: 'Erreur lors de la récupération des données' });
+        res.status(500).json({ error: 'Erreur lors de la rÃ©cupÃ©ration des donnÃ©es' });
       } else {
         res.json(results);
       }

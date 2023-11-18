@@ -1,19 +1,24 @@
 
 const express = require('express'); // Importieren des Express-Frameworks
 const cors = require('cors'); // Importieren des cors-Pakets
+const helmet = require('helmet');
 
 const app = express(); // Initialisieren der Express-App
 const port = process.env.PORT || 3000; // Port, auf dem der Server laufen wird
 
-// var corsOptions = {
-//   origin: "http://localhost:4200"
-// };
+var corsOptions = {
+  origin: "http://localhost:4200",
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
 
-// app.use(cors(corsOptions));
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Parse Anfragen mit Content-Type - application/json
 app.use(express.json());
+
+app.use(helmet());
 
 // Parse Anfragen mit Content-Type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
@@ -58,8 +63,9 @@ require('./routes/kategorie.routes')(app, connection);
 require('./routes/produkte.routes')(app, connection);
 require('./routes/table.routes')(app, connection);
 require('./routes/email.routes')(app, connection);
-// require('./routes/user.routes')(app);
- 
+require('./routes/user.routes')(app);
+require('./routes/scrape.routes')(app);
+
 app.delete('/userLoeschen/:user_id', (req, res) => {
   const id = req.params.id; // Nehmen Sie die E-Mail-Adresse des zu löschenden Benutzers aus der Anfrage (Stellen Sie sicher, dass die Anfrage dies enthält)
 
