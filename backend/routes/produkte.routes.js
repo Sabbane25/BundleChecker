@@ -12,8 +12,8 @@ module.exports = function(app, connection) {
     const tableName = req.params.table;
     const query = `SELECT * FROM ${tableName}`;
     connection.query(query, (error, results) => {
-        if (error) throw error;
-        res.json(results);
+      if (error) throw error;
+      res.json(results);
     });
   });
 };
