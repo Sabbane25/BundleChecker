@@ -1,3 +1,6 @@
+const {verifySignUp} = require("../middleware");
+const controller = require("../controllers/auth.controller");
+
 module.exports = function(app, connection) {
   app.use(function(req, res, next) {
     res.header(
@@ -33,41 +36,24 @@ module.exports = function(app, connection) {
 
     connection.query(sql, [userId], (err, result) => {
       if (err) {
-        console.error('Fehler beim LÃ¶schen des Benutzers: ' + err.message);
+        console.error('Fehler beim Löschen des Benutzers: ' + err.message);
         res.status(500).send('Interner Serverfehler');
         return;
       }
 
-      console.log('Benutzer erfolgreich gelÃ¶scht.');
+      console.log('Benutzer erfolgreich gelöscht.');
       res.setHeader('Content-Type', 'application/json');
-      res.status(200).end('Benutzer erfolgreich gelÃ¶scht.');
+      res.status(200).end('Benutzer erfolgreich gelöscht.');
     });
   });
 
-  app.post('/addUser', (req, res) => {
-    const { email, password } = req.body;
 
-    if (!email || !password) {
-      return res.status(400).json({ message: 'E-Mail und Passwort sind erforderlich' });
-    }
-
-    const sql = 'INSERT INTO Nutzer (Email, Passwort) VALUES (?, ?)';
-    connection.query(sql, [email, password], (err, results) => {
-      if (err) {
-        console.error('Fehler beim AusfÃ¼hren der Datenbankabfrage: ' + err.message);
-        return res.status(500).json({ message: 'Fehler beim HinzufÃ¼gen des Benutzers' });
-      } else {
-        res.status(201).json({ message: 'Benutzer erfolgreich hinzugefÃ¼gt' });
-      }
-    });
-  });
-
-  app.get('/Emails', (req, res) => {
-
-    const query = `SELECT Email FROM Nutzer`;
-    connection.query(query, (error, results) => {
-      if (error) throw error;
-      res.json(results);
-    });
-  });
+  app.post(
+      '/addUser',
+      [
+        verifySignUp.checkDuplicateEmail,
+        verifySignUp.checkRolesExisted
+      ],
+      controller.signup
+  )
 };
