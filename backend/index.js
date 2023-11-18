@@ -32,7 +32,8 @@ app.use((req, res, next) => {
 const db = require("./models");
 const Role = db.role;
 
-db.sequelize.sync();
+db.sequelize.sync(); // Starte server ohne synchronisierung
+// db.sequelize.sync({ alter: true }); // Synchronisiere Modelle mit Datenbank
 
 // simple route
 app.get("/", (req, res) => {
