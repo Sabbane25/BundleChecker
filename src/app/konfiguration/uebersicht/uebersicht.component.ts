@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { ARTIKEL_LIST } from 'src/models/artikel_mockup';
 import { Artikel } from 'src/models/artikel.model';
 import { MerkzettelComponent } from 'src/app/merkzettel/merkzettel/merkzettel.component';
+import { MerkzettelService } from 'src/services/merkzettel.service';
+import {TokenStorageService} from "../../../services/token-storage.service";
 
 @Component({
   selector: 'app-uebersicht',
@@ -14,12 +16,14 @@ export class UebersichtComponent implements OnInit {
   ausgewaehlteProdukte: any[] = [];
   bundles: { anbieter: string; artikelList: Artikel[] }[] = []; // Hier wird bundles deklariert
   merkzettel: { anbieter: string; artikelList: Artikel[] }[] = []; //Array, um die Bundles im Merkzettel aufzurufen/speichern.
+  isLoggedIn: boolean = false
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private merkzettelService: MerkzettelService, private tokenStorageService: TokenStorageService) {}
 
   ngOnInit() {
     this.gibGuenstigstesBundle(this.ausgewaehlteArtikel);
     this.groupByAnbieter();
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
   }
 
 
@@ -118,5 +122,24 @@ export class UebersichtComponent implements OnInit {
     if (index !== -1) {
       this.bundles.splice(index, 1);
     }
+  }
+
+  /**
+   * Sammle die Artikel urls und sende sie an den Service
+   * um einen Merkzettel zu erstellen
+   *
+   * @param bundles
+   */
+  erstelleMerkzettel(bundles: any) {
+    console.log(bundles);
+    const artikelUrls: string[] = [];
+
+    for (let bundle of bundles) {
+        for (let artikel of bundle.artikelList) {
+            artikelUrls.push(artikel.produktLink);
+        }
+    }
+
+    this.merkzettelService.erstelleMerkzettel(artikelUrls)
   }
 }
