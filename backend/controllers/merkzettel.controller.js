@@ -39,12 +39,12 @@ exports.create = (req, res) => {
  * @param res
  */
 exports.add = (req, res) => {
-    const merkzettellId = req.body.merkzettellId;
-    const artikel = req.body.produktUrl;
+    const merkzettelId = req.body.merkzettelId;
+    const artikel = req.body.produktLink;
 
     Merkzettel.findOne({
         where: {
-            id: merkzettellId,
+            id: merkzettelId,
             userId: req.userId
         }
     }).then(merkzettel => {
@@ -53,7 +53,7 @@ exports.add = (req, res) => {
         } else {
             Artikel.findOne({
                 where: {
-                    produktUrl: artikel
+                    produktLink: artikel
                 }
             }).then(artikel => {
                 if (!artikel) {
