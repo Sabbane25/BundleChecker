@@ -66,6 +66,7 @@ require('./routes/table.routes')(app, connection);
 require('./routes/email.routes')(app, connection);
 require('./routes/user.routes')(app, connection);
 require('./routes/scrape.routes')(app, connection);
+require('./routes/merkzettel.routes')(app, connection);
 
 // Server starten und auf Anfragen lauschen
 app.listen(port, () => {
