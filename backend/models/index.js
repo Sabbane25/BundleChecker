@@ -1,6 +1,7 @@
 const config = require("../config/db.config.js");
 
 const Sequelize = require("sequelize");
+const Merkzettel = require("./merkzettel.model");
 const sequelize = new Sequelize(
   config.DB,
   config.USER,
@@ -24,6 +25,7 @@ db.sequelize = sequelize;
 
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
+db.merkzettel = require("../models/merkzettel.model")(sequelize, Sequelize);
 
 db.shop = require("../models/shop.model")(sequelize, Sequelize);
 db.artikel = require("../models/artikel.model")(sequelize, Sequelize);
@@ -65,6 +67,16 @@ db.netzteil.hasMany(db.artikel, {
 });
 db.ram.hasMany(db.artikel, {
     foreignKey: 'url'
+});
+
+// Merkzettel
+db.user.hasMany(db.merkzettel);
+db.merkzettel.belongsTo(db.user);
+db.merkzettel.belongsToMany(db.artikel, {
+    through: "merkzettel_artikel_join"
+});
+db.artikel.belongsToMany(db.merkzettel, {
+    through: "merkzettel_artikel_join"
 });
 
 // Nutzer Rollen
