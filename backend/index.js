@@ -6,14 +6,7 @@ const helmet = require('helmet');
 const app = express(); // Initialisieren der Express-App
 const port = process.env.PORT || 3000; // Port, auf dem der Server laufen wird
 
-var corsOptions = {
-  origin: "http://localhost:4200",
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Parse Anfragen mit Content-Type - application/json
 app.use(express.json());
@@ -24,7 +17,9 @@ app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "*"); // erlaube anfragen
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, x-access-token');
   next();
 })
 
