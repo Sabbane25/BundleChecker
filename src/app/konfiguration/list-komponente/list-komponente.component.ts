@@ -12,6 +12,7 @@ import { ARTIKEL_LIST } from 'src/models/artikel_mockup';
   styleUrls: ['list-komponente.component.css']
 })
 
+
 export class ListKomponenteComponent{
   
   @Input() testFilter: any[] = ["malouda", "booba"];
