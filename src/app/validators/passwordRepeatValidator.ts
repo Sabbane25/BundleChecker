@@ -5,9 +5,9 @@ import {AbstractControl, FormControl, ValidationErrors, ValidatorFn} from '@angu
  *
  * @param passwordField
  */
-export function passwordRepeatValidator(passwordField: FormControl): ValidatorFn {
+export function passwordRepeatValidator(passwordValue: string): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-        const password = passwordField.getRawValue();
+        const password = passwordValue;
         const passwordRepeat = control.getRawValue();
 
         return password !== passwordRepeat ? {passwordRepeat: {value: true}} : null;

@@ -7,6 +7,7 @@ import { KontoComponent } from './konto/konto/konto.component';
 import { DatenschutzComponent } from './hilfe/datenschutz/datenschutz.component';
 import { UeberUnsComponent } from './hilfe/ueber-uns/ueber-uns.component';
 import { AdminComponent } from './admin/admin/admin.component';
+import { SeiteNichtGefundenComponent } from './seite-nicht-gefunden/seite-nicht-gefunden/seite-nicht-gefunden.component';
 
 const routes: Routes = [
   { path: 'admin', component: AdminComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'konfiguration', component: KonfigurationComponent },
   { path: 'kontakt', component: KontaktComponent },
   { path: 'merkzettel', component: MerkzettelComponent },
+  { path: '404', component: SeiteNichtGefundenComponent },
   { path: '', redirectTo:'konfiguration', pathMatch: 'full' },
 ];
 

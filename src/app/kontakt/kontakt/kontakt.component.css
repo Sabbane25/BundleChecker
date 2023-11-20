@@ -1,44 +1,100 @@
-/* Formatierung jedes Textes und Textfeldes im Gesamten HTML Dokument */
-*{
-    margin: 0px;
-    padding: 0px;
-}
-
 /* Zentrierung des gesamten Feldes */
-.kontakt{
+.kontakt {
     display: flex;
     justify-content: center;
 }
 
-
-
-.container{
+.container {
     display: flex;
     justify-content: center;
-    width: 800px; 
-    height: 160px; 
-    margin-bottom: 40px; 
+    margin-bottom: 40px;
 }
 
-/* Formatierung des Hauptcontainers */
-.containerAussen{
-    border: 2px solid #00528d65;
-    box-shadow: 0px 0px 15px rgba(160, 160, 160, 0.6);
-    border-radius: 12px;
+/* alert box */
+.alert {
+    padding: 5px;
+    background-color: #f44336; /* Red */
+    color: white;
+    margin-top: 5px;
     display: inline-block;
-    justify-content: center; 
-    padding: 16px;
-    margin-bottom: 80px;
+}
+.alert.alert-success {
+    background-color: #4CAF50; /* Green */
 }
 
-/* Formatierung des Textes im "container" */
-.container p{
-    margin-bottom: 4px;
+input:has(+ .alert-danger),
+textarea:has(+ .alert-danger) {
+    border: 2px solid red;
+}
+
+/* Formular-Elemente */
+label {
+    display: block;
     font-weight: bold;
 }
+textarea,
+input {
+    width: 100%;
+}
 
-/* Formatierung des Buttons im "containerAussen */
-.containerAussen button{
+/* Container */
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: normal;
+    align-items: normal;
+    align-content: normal;
+}
+
+.flex-items {
+    display: block;
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: auto;
+    align-self: auto;
+    width: 50%;
+    margin-bottom: 15px;
+}
+.flex-items.column-nachricht {
+    width: 100%;
+}
+
+/* Padding für abwechselnde Reihenfolge */
+.flex-items:nth-child(odd) {
+    padding-right: 15px;
+}
+.flex-items:nth-child(even) {
+    padding-left: 15px;
+}
+.flex-items:last-child {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+/* Formular-Footer */
+.kontakt-footer-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0 0;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "kontakt-footer-col-left kontakt-footer-col-right"
+        "kontakt-footer-message kontakt-footer-message";
+}
+.kontakt-footer-container .kontakt-footer-col-left {
+    grid-area: kontakt-footer-col-left;
+}
+.kontakt-footer-container .kontakt-footer-col-right {
+    grid-area: kontakt-footer-col-right;
+}
+.kontakt-footer-container .kontakt-footer-message {
+    grid-area: kontakt-footer-message;
+}
+
+/* Formatierung des Buttons */
+.kontakt-submit {
     width: 100px;
     height: 40px;
     font-weight: bold;
@@ -48,7 +104,3 @@
     box-shadow: 5px 5px 8px rgba(81, 124, 202, 0.6);
     float: right;
 }
-
-
-
-

@@ -1,7 +1,7 @@
 import { Artikel } from "./artikel.model";
 
 export class Cpu extends Artikel{
-    
+
     marke: string;
     modell: string;
     stromverbrauch: string;
@@ -10,18 +10,27 @@ export class Cpu extends Artikel{
     anzahlKerne: string;
     interneGrafik: string;
 
-    constructor(artikelnummer: number, kategorie: string, preis: number, shopID: number, produktLink: string, anbieter: string, marke: string, 
-        modell: string, stromverbrauch: string, taktfrequenz: string, sockel: string, anzahlKerne: string, interneGrafik: string) {
+    constructor(artikelnummer: number, kategorie: string, preis: number, shopID: number, produktLink: string, anbieter: string, marke: string,
+                modell: string, stromverbrauch: string, taktfrequenz: string, sockel: string, anzahlKerne: string, interneGrafik: string) {
 
         super(artikelnummer, kategorie, preis,  shopID, produktLink, anbieter)
         this.marke = marke;
         this.modell = modell;
         this.stromverbrauch = stromverbrauch;
         this.taktfrequenz = taktfrequenz;
-        this.sockel = sockel; 
+        this.sockel = sockel;
         this.anzahlKerne = anzahlKerne;
-        this.interneGrafik = interneGrafik; 
+        this.interneGrafik = interneGrafik;
     }
+
+
+    override getSpezifischeAttribute(): string {
+        return `Bezeichnung: ${this.bezeichnung}, 
+        Stromverbrauch: ${this.stromverbrauch}, Taktfrequenz: ${this.taktfrequenz}, 
+        Sockel: ${this.sockel}, Anzahl Kerne: ${this.anzahlKerne}, 
+        Interne Grafik: ${this.interneGrafik}`;
+      }
+
 
     override gibArtikelTitel(): string {
         return `${this.marke}`;
@@ -30,11 +39,4 @@ export class Cpu extends Artikel{
     override gibArtikelBeschreibung(): string {
         return `${this.modell} - ${this.stromverbrauch} - ${this.taktfrequenz} - ${this.sockel} - ${this.anzahlKerne} - ${this.interneGrafik}`;
     }
-    
-    override getSpezifischeAttribute(): string {
-        return `Marke: ${this.marke}, Modell: ${this.modell}, 
-        Stromverbrauch: ${this.stromverbrauch}, Taktfrequenz: ${this.taktfrequenz}, 
-        Sockel: ${this.sockel}, Anzahl Kerne: ${this.anzahlKerne}, 
-        Interne Grafik: ${this.interneGrafik}`;
-      }
 }

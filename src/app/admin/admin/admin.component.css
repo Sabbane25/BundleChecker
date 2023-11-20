@@ -1,0 +1,69 @@
+
+/*######  CSS STYLE (ARNAULD) ########*/
+
+.tabellenueberschrift p{
+    font-weight: bold;
+    text-align: left;
+    padding-left: 8%;
+    font-size: 20px;
+}
+
+.tabellenueberschrift{
+    padding: 5px;
+    margin-top: 20px;
+    height: 40px;
+    background-color: #00528dd7;
+    color: white;
+}
+
+.userListContainer{
+    margin: 0px;
+    padding: 0px;
+}
+
+.userListContainer ul li{
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    list-style-type: none;
+    border: 1px solid rgba(0, 0, 0, 0.137);
+    height: 44px;
+}
+
+.userListContainer h4{
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+.userListContainer ul{
+    margin: 0px;
+    padding: 0px;
+}
+
+.userListContainer ul li h4{ 
+    margin-left: 18px;
+}
+
+.userListContainer ul li div{
+    margin-right: 16px;
+}
+
+.userListContainer ul li div button{
+    width: 110px;
+    font-size: 14px;
+    padding: 2px 0px;
+    border: none;
+}
+
+.userListContainer ul li div .button_bearbeiten{
+    margin-right: 16px;
+    background-color: green;
+    color: white;
+}
+
+.userListContainer ul li div .button_löschen{
+    background-color: red;
+    color: white;
+}
+
+
