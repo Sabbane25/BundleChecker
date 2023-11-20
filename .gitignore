@@ -6,6 +6,10 @@
 /out-tsc
 /bazel-out
 
+# Puppeteer
+puppeteer/
+axios/
+
 # Node
 /node_modules
 npm-debug.log

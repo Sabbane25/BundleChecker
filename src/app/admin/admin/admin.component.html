@@ -1,2 +1,24 @@
-<h2 class="text-center">ADMIN</h2>
+<h2 class="text-center" style="padding-top: 30px;">SYSTEMADMIN</h2>
+<div class="center">
+    <div class="suche">
+        <input type="email" id="suche" placeholder="Nutzer suchen" #emailInput>
+    </div>
+    <div class="containerAdmin">
+        <div class="tabellenueberschrift">
+            <p>E-Mail</p>
+        </div>
+        <div class="userListContainer">
+            <ul>
+                <li *ngFor="let user of users" style="background-color: #00528d4c ;">
+                    <h4> {{user.email}} </h4>
+                    <div>
+                        <button class="button_bearbeiten" >Bearbeiten</button>
+                        <button class="button_löschen" (click)="userLoeschen(user.id)">Löschen</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+ 
 
+    </div>
+</div>

@@ -5,6 +5,7 @@ export abstract class Artikel {
   shopID: number;
   produktLink: string;
   anbieter: string;
+  bezeichnung: string;
 
   constructor(artikelnummer: number, kategorie: string, preis: number, shopID: number, produktLink: string, anbieter: string) {
     this.artikelnummer = artikelnummer;
@@ -18,6 +19,7 @@ export abstract class Artikel {
   abstract gibArtikelBeschreibung(): string;
 
   abstract gibArtikelTitel(): string;
+
 
   /*Yahya: Diese Template-Methode wird von den Unterklassen überschrieben werden,
   /um das Anzeigen von verschiedenen Attributen zu ermöglichen.
