@@ -11,6 +11,10 @@
 npm-debug.log
 yarn-error.log
 
+# Puppeteer
+puppeteer/
+axios
+
 # IDEs and editors
 .idea/
 .project
