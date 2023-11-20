@@ -1,7 +1,7 @@
 const { scheduled } = require("rxjs");
 
 class Prozessor{
-    constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktLink, marke, imgUrl, 
+    constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktlink, marke, imgUrl, 
         CPUTyp, sockel, kerne, threads, taktfrequenz, interneGrafik, stromverbrauch, maxTurboTaktfrequenz) {
 
         this.shopID = shopID;
@@ -9,7 +9,7 @@ class Prozessor{
         this.bezeichnung = bezeichnung;
         this.preis = preis; 
         this.deliveryDate = deliveryDate; 
-        this.produktlink = produktLink;
+        this.produktlink = produktlink;
         this.marke = marke;
         this.imgUrl = imgUrl;
 
@@ -25,14 +25,14 @@ class Prozessor{
 }
 
 class Gehaeuse {
-    constructor(shopID, kategorie, bezeichnung, preis, lieferDatum, produktLink, marke,imgUrl,
+    constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktLink, marke,imgUrl,
                     frontanschluesse, breite, tiefe, hoehe, gewicht, mainboardFormfaktor, produkttyp) {
-        
+        this.abmessung = "";
         this.shopID = shopID;
         this.kategorie = kategorie;
         this.bezeichnung = bezeichnung;
         this.preis = preis; 
-        this.lieferDatum = lieferDatum; 
+        this.deliveryDate = deliveryDate; 
         this.produktlink = produktLink;
         this.marke = marke;
         this.imgUrl = imgUrl;
@@ -49,23 +49,23 @@ class Gehaeuse {
 
 class Mainboard{
     constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktLink, marke, 
-        formfaktor, chipsatz, sockel, unterstuetzterSpeichertyp, maximalSpeicher, imgUrl) {
+        formfaktor, chipsatz, sockel, anzahlSpeichersockel, unterstuetzterSpeichertyp, maximalSpeicher, imgUrl) {
         
         this.shopID = shopID;
         this.kategorie = kategorie;
         this.bezeichnung = bezeichnung;
         this.preis = preis; 
         this.deliveryDate = deliveryDate; 
-        this.produktlink = produktLink;
         this.marke = marke;
         this.imgUrl = imgUrl;
 
-        this.formfaktor = formfaktor;
         this.chipsatz = chipsatz;
         this.sockel = sockel;
-        this.unterstuetzterSpeichertyp = unterstuetzterSpeichertyp;
+        this.anzahlSpeichersockel = anzahlSpeichersockel;
         this.maximalSpeicher = maximalSpeicher;
-        
+        this.produktlink = produktLink;
+        this.formfaktor = formfaktor;
+        this.unterstuetzterSpeichertyp = unterstuetzterSpeichertyp;
     }
 }
 
@@ -77,19 +77,20 @@ class Arbeitsspeicher{
         this.bezeichnung = bezeichnung;
         this.preis = preis; 
         this.deliveryDate = deliveryDate; 
-        this.produktlink = produktlink;
         this.marke = marke;
-        this.typ = typ;
-
-        this.kapazitaet = kapazitaet; 
-        this.spannung = spannung; 
-        this.latency = latency;
         this.imgUrl= imgUrl; 
+
+        this.typ = typ;
+        this.kapazitaet = kapazitaet; 
+        this.latency = latency;
+        this.produktlink = produktlink;
+        this.spannung = spannung;
     }
 }
 
 class Festplatte{
     constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktlink, marke, imgUrl, typ, kapazitaet, energieverbrauch, lesen, schreiben){
+        
         this.shopID = shopID;
         this.kategorie = kategorie;
         this.bezeichnung = bezeichnung;
@@ -109,7 +110,7 @@ class Festplatte{
 
 class Grafikkarte{
     constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktLink, 
-                    imgUrl, marke, typ, speicherKapazitaet, Grafikprozessor, durchschnittlicherVerbrauch, streamprozessorenAnzahl){
+                    imgUrl, marke, speicherKapazitaet, Grafikprozessor, durchschnittlicherVerbrauch, streamprozessorenAnzahl){
         this.shopID = shopID;
         this.kategorie = kategorie;
         this.bezeichnung = bezeichnung;
@@ -128,22 +129,23 @@ class Grafikkarte{
 
 class Netzteil {
     constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktLink,
-        imgUrl, marke, leistungskapazitaet, formfaktor){ 
+        bauForm, zertifizierung, imgUrl, marke, leistung, formfaktor){ 
 
         this.shopID = shopID;
         this.kategorie = kategorie;
         this.bezeichnung = bezeichnung;
         this.preis = preis; 
         this.deliveryDate = deliveryDate; 
-        this.produktlink = produktLink;
         this.marke = marke;
         this.imgUrl = imgUrl;
 
-        this.leistungskapazitaet = leistungskapazitaet; 
+        this.leistung = leistung; 
+        this.bauForm = bauForm;
+        this.produktlink = produktLink;
+        this.zertifizierung = zertifizierung;
         this.formfaktor = formfaktor;
     }
 }
-
 
 module.exports = {
     Prozessor,

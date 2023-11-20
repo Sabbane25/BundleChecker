@@ -1,13 +1,13 @@
 const puppeteer = require('puppeteer');
-const { filterKomponente, futureXUrls, extrahiereFloat2, extrahiereZahl, extrahiereDatum, isEmpty } = require('./funktionen.js');
+const { konvertiereInInt, futureXUrls, extrahiereFloat2, extrahiereZahl, extrahiereDatum, isEmpty } = require('./funktionen.js');
 const { Festplatte } = require('./models.js')
 
-let listeArtikel = [];
 
 (async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    let listVonUrlArtikel = await futureXUrls("https://www.future-x.de/Hardware-Netzwerk/PC-Komponenten/Festplatten/?b2bListingView=listing&p=", 1);
+    let listeArtikel = [];
+    let listVonUrlArtikel = await futureXUrls("https://www.future-x.de/Hardware-Netzwerk/PC-Komponenten/Festplatten/?b2bListingView=listing&order=topseller&p=", 1);
     
     //await page.waitForTimeout(5000);
 
@@ -32,31 +32,30 @@ let listeArtikel = [];
             artikel.produktlink = listVonUrlArtikel[i];
             artikel.imgUrl = await imgSelektor.evaluate(node => node.getAttribute('src'));
 
+            istExterne = false;
             for(const element of detailsSelektor){
                 const data = await page.evaluate(el => el.querySelector('td:nth-child(2)').textContent, element);
                 const merkmal = await page.evaluate(el => el.querySelector('th:nth-child(1)').textContent, element);
 
                 if(data || merkmal){
-                  if(merkmal === "Solid State Drive"){
+                  if(merkmal === "Typ"){
                     if(isEmpty(artikel.typ)){
                       artikel.typ = data; 
                     }
                   }else if(merkmal === "Kapazität"){
                     artikel.kapazitaet = data;
                   }else if(merkmal === "Energieverbrauch"){ 
-                    artikel.energieverbrauch = data;
+                    artikel.energieverbrauch = parseFloat(data.split(' ')[0]);
                   }else if(merkmal === "Interner Datendurchsatz"){  
-                    artikel.lesen = data;
-                  }else if(merkmal === "Interne Datenrate (Schreiben)" || merkmal === "Datenübertragungsrate"){  
-                    artikel.schreiben = data;
+                    artikel.lesen = konvertiereInInt(data, 'MBps');
+                  }else if(merkmal === "Interne Datenrate (Schreiben)"){  
+                    artikel.schreiben = konvertiereInInt(data, 'MBps');
                   }
                 }
             }
-            if(artikel.shopID && artikel.kategorie && artikel.bezeichnung && artikel.preis && artikel.deliveryDate && artikel.produktlink
-              && artikel.marke && artikel.imgUrl && artikel.typ && artikel.kapazitaet && artikel.energieverbrauch  && artikel.lesen && artikel.schreiben){
+            if(artikel.energieverbrauch){
                 listeArtikel.push(artikel);
             }
-            //listeArtikel.push(artikel);
         }catch(error){
             console.error('Erreur de navigation :', error);
         }
@@ -64,13 +63,15 @@ let listeArtikel = [];
     console.log(listeArtikel);
     console.log("total", listeArtikel.length);
 
-    /*
+    
     // Daten ins Backend senden
     const axios = require('axios');
     const backendUrl = 'http://192.168.198.48:3000/api/scrapedata';
 
+    const produktListe = { kategorie: 'Festplatte', value: listeArtikel };
+
     try {
-        const response = await axios.post(backendUrl, listeArtikel, {
+        const response = await axios.post(backendUrl, produktListe, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -79,7 +80,6 @@ let listeArtikel = [];
     } catch (error) {
         console.error('Erreur lors de l\'envoi des données au backend :', error);
     }
-    */
 
     await browser.close();
 })();

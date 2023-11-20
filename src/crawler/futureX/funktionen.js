@@ -57,7 +57,7 @@ async function futureXUrls2(url) {
 
   while(hatNachSeite === true){
     const page = await browser.newPage();
-    await page.waitForTimeout(5000);
+    //await page.waitForTimeout(5000);
 
     try{
       await page.goto(url + i);
@@ -65,7 +65,7 @@ async function futureXUrls2(url) {
       if(elements.length != 0){
         for(let element of elements){
           const link = await page.evaluate(el => el.querySelector('a').getAttribute('href'), element)
-          //console.log(link, "page number: ", i);
+          console.log(link, "page number: ", i);
           linkListe.push(link);
         }
       }else{
@@ -94,12 +94,12 @@ function filterKomponente(satz, wort) {
 
 
 function extrahiereZahl(satz){
-  const kerne = satz.split(" "); 
+  const kerne = (satz.trim()).split(" "); 
 
   if(kerne.length != 0){
     return parseInt(kerne[0]);
   }else{
-    kerne = " ";
+    kerne = 0;
     return kerne;
   }
 }
@@ -200,7 +200,6 @@ function konvertiereInFloat2(data, zeichen){
 }
 
 function konvertiereInInt(data, zeichen){
-  anzahlWortData = data.split(" ");
   if(data.includes(zeichen)){
     return parseInt((data.replace(zeichen, "").trim()));
   }else{

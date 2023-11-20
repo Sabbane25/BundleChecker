@@ -7,7 +7,7 @@ let listProzessorArtikle = [];
 (async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    let listVonUrlArtikel = await futureXUrls("https://www.future-x.de/Hardware-Netzwerk/PC-Komponenten/CPUs/?b2bListingView=listing&p=", 3);
+    let listVonUrlArtikel = await futureXUrls("https://www.future-x.de/Hardware-Netzwerk/PC-Komponenten/CPUs/?b2bListingView=listing&p=", 4);
     
     //await page.waitForTimeout(5000);
 
@@ -65,7 +65,7 @@ let listProzessorArtikle = [];
                             break; 
 
                         case "Max. Turbo-Taktfrequenz":
-                            artikelProzessor.maxTurboTaktfrequenz = data;
+                            artikelProzessor.maxTurboTaktfrequenz = extrahiereZahl(data);
                             break;  
                         
                         case "Typ":
@@ -108,13 +108,14 @@ let listProzessorArtikle = [];
     console.log(listProzessorArtikle);
     console.log("total", listProzessorArtikle.length);
 
-    /*
     // Daten ins Backend senden
     const axios = require('axios');
     const backendUrl = 'http://192.168.198.48:3000/api/scrapedata';
 
+    const produktListe = { kategorie: 'CPU', value: listeArtikel };
+
     try {
-        const response = await axios.post(backendUrl, listProzessorArtikle, { 
+        const response = await axios.post(backendUrl, produktListe, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -123,7 +124,6 @@ let listProzessorArtikle = [];
     } catch (error) {
         console.error('Erreur lors de l\'envoi des données au backend :', error);
     }
-    */
-
+    
     await browser.close();
 })();
