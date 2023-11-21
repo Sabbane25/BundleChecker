@@ -1,19 +1,20 @@
 const puppeteer = require('puppeteer');
-const { konvertiereInInt, konvertiereInFloat2, futureXUrls, extrahiereFloat2, extrahiereZahl, extrahiereDatum } = require('./funktionen.js');
-const { Prozessor } = require('./models.js')
+const { konvertiereInInt, konvertiereInFloat2, futureXUrls, futureXUrls2, extrahiereFloat2, extrahiereZahl, extrahiereDatum } = require('./funktionen.js');
+const { Prozessor } = require('./models.js');
 
-let listProzessorArtikle = [];
+
 
 (async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    let listVonUrlArtikel = await futureXUrls("https://www.future-x.de/Hardware-Netzwerk/PC-Komponenten/CPUs/?b2bListingView=listing&p=", 4);
-    
+    let listVonUrlArtikel = await futureXUrls2("https://www.future-x.de/Hardware-Netzwerk/PC-Komponenten/CPUs/?b2bListingView=listing&p=");
+    let listeArtikel = [];
     //await page.waitForTimeout(5000);
 
+    anzahlArtikel = 0;
     for(let i = 0; i < listVonUrlArtikel.length; i++){ 
         await page.goto(listVonUrlArtikel[i]);
-        let artikelProzessor = new Prozessor();
+        let artikel = new Prozessor();
 
         try{
             const containerFluid = await page.$('main > .container-main');
@@ -22,15 +23,16 @@ let listProzessorArtikle = [];
             const liferungDiv = await containerFluid.$('.product-detail-delivery-information p');
             const detailsSelektor = await containerFluid.$$('div.product-detail-description-text:nth-child(1) .table > tbody:nth-child(1) tr');
             const imgSelektor = await containerFluid.$('.img-fluid.gallery-slider-image.magnifier-image.js-magnifier-image');
+            const markeSelektor = await page.$('head > meta:nth-child(16)');
 
-            artikelProzessor.shopID = 2;
-            artikelProzessor.kategorie = 'Prozessor';
-            artikelProzessor.bezeichnung = await titleDiv.evaluate(node => node.innerText);
-            artikelProzessor.marke = (await titleDiv.evaluate(node => node.innerText)).split(" ")[0];
-            artikelProzessor.preis = extrahiereFloat2(await priceDiv.evaluate(node => node.innerText));
-            artikelProzessor.deliveryDate = extrahiereDatum(await liferungDiv.evaluate(node => node.innerText));
-            artikelProzessor.produktlink = listVonUrlArtikel[i];
-            artikelProzessor.imgUrl = await imgSelektor.evaluate(node => node.getAttribute('src'));
+            artikel.shopID = 2;
+            artikel.kategorie = 'Prozessor';
+            artikel.bezeichnung = await titleDiv.evaluate(node => node.innerText);
+            artikel.marke = await markeSelektor.evaluate(node => node.getAttribute('content'));
+            artikel.preis = extrahiereFloat2(await priceDiv.evaluate(node => node.innerText));
+            artikel.deliveryDate = extrahiereDatum(await liferungDiv.evaluate(node => node.innerText));
+            artikel.produktlink = listVonUrlArtikel[i];
+            artikel.imgUrl = await imgSelektor.evaluate(node => node.getAttribute('src'));
 
             let hatInterneGrafik = false; 
 
@@ -42,38 +44,38 @@ let listProzessorArtikle = [];
                     switch (merkmal.trim()) {
                         case "Anz. der Kerne":
                             if((data.trim()).includes('Quad-Core')){
-                                artikelProzessor.kerne = 4;
+                                artikel.kerne = 4;
                             }else{
-                                artikelProzessor.kerne = extrahiereZahl(data);
+                                artikel.kerne = extrahiereZahl(data);
                             }
                             break;
 
                         case "Taktfrequenz":
-                            artikelProzessor.taktfrequenz = data;
+                            artikel.taktfrequenz = data;
                             break;
                     
                         case "Anz. der Threads":
-                            artikelProzessor.threads = konvertiereInInt(data, 'Threads');
+                            artikel.threads = konvertiereInInt(data, 'Threads');
                             break;
                     
                         case "Geeignete Sockel":
-                            artikelProzessor.sockel = data;
+                            artikel.sockel = data;
                             break;
 
                         case "Thermal Design Power (TDP)":
-                            artikelProzessor.stromverbrauch = konvertiereInInt(data, 'W');
+                            artikel.stromverbrauch = konvertiereInInt(data, 'W');
                             break; 
 
                         case "Max. Turbo-Taktfrequenz":
-                            artikelProzessor.maxTurboTaktfrequenz = extrahiereZahl(data);
+                            artikel.maxTurboTaktfrequenz = extrahiereZahl(data);
                             break;  
                         
                         case "Typ":
                             if(hatInterneGrafik){
-                                if(typeof artikelProzessor.CPUTyp === "undefined"){
-                                    artikelProzessor.CPUTyp = data;
-                                }else if(typeof artikelProzessor.interneGrafik === 'undefined'){
-                                    artikelProzessor.interneGrafik = data;
+                                if(typeof artikel.CPUTyp === "undefined"){
+                                    artikel.CPUTyp = data;
+                                }else if(typeof artikel.interneGrafik === 'undefined'){
+                                    artikel.interneGrafik = data;
                                 }
                             }
                             hatInterneGrafik = false;
@@ -92,21 +94,21 @@ let listProzessorArtikle = [];
                     }
                 }
             }
-            if(typeof artikelProzessor.interneGrafik === 'undefined'){
-                artikelProzessor.interneGrafik = "ohne CPU-Grafik"
+            if(typeof artikel.interneGrafik === 'undefined'){
+                artikel.interneGrafik = "ohne CPU-Grafik"
             }
 
-            if(artikelProzessor.maxTurboTaktfrequenz && artikelProzessor.threads && artikelProzessor.taktfrequenz
-                && artikelProzessor.sockel){
-                    listProzessorArtikle.push(artikelProzessor);
+            if(artikel.threads &&  artikel.sockel){
+                    console.log("-- Anzahl Artikel: ", anzahlArtikel++);
+                    listeArtikel.push(artikel);
             }
             
         }catch(error){
             console.error('Erreur de navigation :', error);
         }
     }
-    console.log(listProzessorArtikle);
-    console.log("total", listProzessorArtikle.length);
+    console.log(listeArtikel);
+    console.log("total", listeArtikel.length);
 
     // Daten ins Backend senden
     const axios = require('axios');
