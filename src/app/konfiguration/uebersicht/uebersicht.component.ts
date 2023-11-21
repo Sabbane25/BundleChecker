@@ -73,7 +73,7 @@ export class UebersichtComponent implements OnInit {
     const usedKategorien: Set<string> = new Set();
 
     this.ausgewaehlteArtikel.forEach((artikel) => {
-      const anbieter = artikel.anbieter;
+      const anbieter = artikel.bildUrl;
       const kategorie = artikel.kategorie;
 
       // Prüfe, ob die Kategorie bereits in den Bundles verwendet wurde

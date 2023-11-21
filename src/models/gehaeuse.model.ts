@@ -1,23 +1,23 @@
 import { Artikel } from "./artikel.model";
 
 export class Gehaeuse extends Artikel{
-
-    marke: string;
-    modell: string;
-    frontenschluesse: number;
-    mainboardFormfaktor: string;
-    material: string;
+    artikelnummer: number;
+    formfaktor: string;
+    frontenschluesse: string;
     abmessungen: string;
+    typ: string;
+    gewicht: number;
 
-    constructor(artikelnummer: number, kategorie: string, preis: number, shopID: number, produktLink: string, anbieter: string,
-                marke: string, modell: string, frontenschluesse: number, mainboardFormfaktor: string, material: string, abmessungen: string) {
-        super(artikelnummer, kategorie, preis,  shopID, produktLink, anbieter)
-        this.marke = marke;
-        this.modell = modell;
+    constructor(kategorie: string, preis: number, shopID: number, produktLink: string, bezeichnung: string, lieferDatum: number, marke: string, bildUrl: string,
+        artikelnummer: number, formfaktor: string, frontenschluesse: string, abmessungen: string, typ: string, gewicht: number) {
+
+        super(kategorie, preis, shopID, produktLink, bezeichnung, lieferDatum, marke, bildUrl)
+        this.artikelnummer = artikelnummer;
+        this.formfaktor = formfaktor;
         this.frontenschluesse = frontenschluesse;
-        this.mainboardFormfaktor = mainboardFormfaktor;
-        this.material = material;
         this.abmessungen = abmessungen;
+        this.typ = typ;
+        this.gewicht = gewicht;
     }
 
     override gibArtikelTitel(): string {
@@ -25,10 +25,10 @@ export class Gehaeuse extends Artikel{
     }
 
     override gibArtikelBeschreibung(): string {
-        return `${this.modell} • ${this.frontenschluesse} • ${this.mainboardFormfaktor} • ${this.material} • ${this.abmessungen}`;
+        return `${this.frontenschluesse} • ${this.formfaktor} • ${this.typ} • ${this.abmessungen}`;
     }
 
-     override getSpezifischeAttribute(): string {
-        return `Marke: ${this.marke}, Modell: ${this.modell}, Frontanschlüsse: ${this.frontenschluesse}, Mainboard Formfaktor: ${this.mainboardFormfaktor}, Material: ${this.material}, Abmessungen: ${this.abmessungen}`;
-      }
+    override getSpezifischeAttribute(): string {
+        return `Marke: ${this.marke}, Modell: ${this.typ}, Frontanschlüsse: ${this.frontenschluesse}, Mainboard Formfaktor: ${this.formfaktor}, Abmessungen: ${this.abmessungen}`;
     }
+}
