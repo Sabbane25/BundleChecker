@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const { futureXUrls, extrahiereFloat2, extrahiereDatum, konvertiereInInt } = require('./funktionen.js');
+const { futureXUrls, futureXUrls2, extrahiereFloat2, extrahiereDatum, konvertiereInInt } = require('./funktionen.js');
 const { Arbeitsspeicher } = require('./models.js')
 
 let listeArtikel = [];
@@ -7,9 +7,10 @@ let listeArtikel = [];
 (async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    let listVonUrlArtikel = await futureXUrls("https://www.future-x.de/Hardware-Netzwerk/PC-Komponenten/Arbeitsspeicher/?b2bListingView=listing&p=", 1);
+    let listVonUrlArtikel = await futureXUrls2("https://www.future-x.de/Hardware-Netzwerk/PC-Komponenten/Arbeitsspeicher/?b2bListingView=listing&p=");
     
     //await page.waitForTimeout(5000);
+    anzahlArtikel = 1;
 
     for(let i = 0; i < listVonUrlArtikel.length; i++){ 
       await page.goto(listVonUrlArtikel[i]);
@@ -51,6 +52,7 @@ let listeArtikel = [];
             }
           }
           if(artikel.typ){
+            console.log("artikel: ", anzahlArtikel++)
             listeArtikel.push(artikel);
           }
           //listeArtikel.push(artikel);
