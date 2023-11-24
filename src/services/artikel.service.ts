@@ -44,7 +44,7 @@ export class ArtikelService {
    * @param kategorie es handelt sich um die Kategorie, für die man eine Artikelliste haben möchte
    * z.B: RAM, CPU, Speicher, Grafikkarte....
    * @returns eine Liste von Alle Artikel dieser Kategorie
-   */
+   
   getAllArtikel(kategorie: string): Observable<any> {
     return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`).pipe(
       map((data) => {
@@ -67,4 +67,5 @@ export class ArtikelService {
       })
     );
   }
+  */
 }

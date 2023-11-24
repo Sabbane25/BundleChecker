@@ -1,6 +1,5 @@
 import { Component, ElementRef, Input, Renderer2} from '@angular/core';
 import { DataService } from 'src/app/data.service';
-import { BetriebsSystem } from 'src/models/betriebssystem.model';
 import { Ram } from 'src/models/ram.model';
 import { Artikel } from 'src/models/artikel.model';
 import { ArtikelService } from 'src/services/artikel.service';

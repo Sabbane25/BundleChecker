@@ -1,24 +1,29 @@
-/** 
 import { Artikel } from "./artikel.model";
 
 export class Cpu extends Artikel{
-    
-    bezeichnung: string;
-    stromverbrauch: number;
-    taktfrequenz: string;
+    artikelnummer: number;
     sockel: string;
     anzahlKerne: number;
+    stromverbrauch: number;
+    taktfrequenz: string;
     interneGrafik: string;
+    threads: number;
+    typ: string;
+    turbo: number;
 
-    constructor(artikelnummer: number, kategorie: string, preis: number, shopID: number, bezeichnung: string, produktLink: string, stromverbrauch: number, taktfrequenz: string, sockel: string, anzahlKerne: number, interneGrafik: string) {
+    constructor(kategorie: string, preis: number, shopID: number, produktLink: string, bezeichnung: string, lieferDatum: number, marke: string, bildUrl: string,
+        artikelnummer: number, sockel: string, anzahlKerne: number, stromverbrauch: number, taktfrequenz: string, interneGrafik: string, threads: number, typ: string, turbo: number) {
 
-        super(artikelnummer, kategorie, preis, shopID, produktLink)
-        this.bezeichnung = bezeichnung;
+        super(kategorie, preis, shopID, produktLink, bezeichnung, lieferDatum, marke, bildUrl)
+        this.artikelnummer = artikelnummer;
+        this.sockel = sockel;
+        this.anzahlKerne = anzahlKerne;
         this.stromverbrauch = stromverbrauch;
         this.taktfrequenz = taktfrequenz;
-        this.sockel = sockel; 
-        this.anzahlKerne = anzahlKerne;
-        this.interneGrafik = interneGrafik; 
+        this.interneGrafik = interneGrafik;
+        this.threads = threads;
+        this.typ = typ;
+        this.turbo = turbo;
     }
 
 
@@ -29,22 +34,12 @@ export class Cpu extends Artikel{
         Interne Grafik: ${this.interneGrafik}`;
       }
 
-    
+
     override gibArtikelTitel(): string {
         return `${this.marke}`;
     }
 
     override gibArtikelBeschreibung(): string {
-        return `${this.modell} - ${this.stromverbrauch} - ${this.taktfrequenz} - ${this.sockel} - ${this.anzahlKerne} - ${this.interneGrafik}`;
+        return `${this.typ} - ${this.stromverbrauch} - ${this.taktfrequenz} - ${this.sockel} - ${this.anzahlKerne} - ${this.interneGrafik}`;
     }
-    
-    override getSpezifischeAttribute(): string {
-        return `Marke: ${this.marke}, Modell: ${this.modell}, 
-        Stromverbrauch: ${this.stromverbrauch}, Taktfrequenz: ${this.taktfrequenz}, 
-        Sockel: ${this.sockel}, Anzahl Kerne: ${this.anzahlKerne}, 
-        Interne Grafik: ${this.interneGrafik}`;
-      }
-
-
 }
-*/
