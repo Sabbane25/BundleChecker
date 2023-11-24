@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { NutzerService } from 'src/services/nutzer.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-admin',
@@ -8,7 +9,7 @@ import { NutzerService } from 'src/services/nutzer.service';
 })
 export class AdminComponent implements OnInit {
 
-  @ViewChild('emailInput', { static: false }) emailInput: ElementRef;
+  //@ViewChild('emailInput', { static: false }) emailInput: ElementRef;
 
   users: any[] = [];
   userSearch: any[] = [];
@@ -35,8 +36,7 @@ export class AdminComponent implements OnInit {
   searchUser() {
     const suchanfrage = this.searchQuery;
     this.nutzerService.suchen(suchanfrage).subscribe((searchResults) => {
-      this.userSearch = searchResults;
-      this.users = suchanfrage ? this.userSearch : this.users;
+      this.users = suchanfrage ? searchResults : this.userSearch;
     });
   }
 
