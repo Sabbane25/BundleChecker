@@ -21,79 +21,79 @@ export class UebersichtComponent implements OnInit {
     this.gibGuenstigstesBundle(this.ausgewaehlteArtikel);
     this.groupByAnbieter();
   }
-  
+
 
   //Die Variable enthält alle Artikel die in Listkomponenten ausgewälte wurde
-  ausgewaehlteArtikel:  Artikel[] = ARTIKEL_LIST; 
+  ausgewaehlteArtikel:  Artikel[] = ARTIKEL_LIST;
 
-/**
- * @param listArtikel Liste von allen verfügbaren Artikeln
- * @returns Eine Liste mit jeweils dem günstigsten Produkt aus jeder Kategorie.
- */
-gibGuenstigstesBundle(listArtikel: Artikel[]): Artikel[] {
-  const guenstigsteProdukte: Artikel[] = [];
+  /**
+   * @param listArtikel Liste von allen verfügbaren Artikeln
+   * @returns Eine Liste mit jeweils dem günstigsten Produkt aus jeder Kategorie.
+   */
+  gibGuenstigstesBundle(listArtikel: Artikel[]): Artikel[] {
+    const guenstigsteProdukte: Artikel[] = [];
 
-  // Erstelle eine Map, um die günstigsten Produkte pro Kategorie zu verfolgen
-  const guenstigsteProKategorie = new Map<string, Artikel>();
+    // Erstelle eine Map, um die günstigsten Produkte pro Kategorie zu verfolgen
+    const guenstigsteProKategorie = new Map<string, Artikel>();
 
-  // Iteriere durch alle verfügbaren Artikel
-  for (const artikel of listArtikel) {
-    const kategorie = artikel.kategorie;
+    // Iteriere durch alle verfügbaren Artikel
+    for (const artikel of listArtikel) {
+      const kategorie = artikel.kategorie;
 
-    // Prüfe, ob es bereits ein günstigstes Produkt in dieser Kategorie gibt
-    if (!guenstigsteProKategorie.has(kategorie)) {
-      guenstigsteProKategorie.set(kategorie, artikel);
-    } else {
-      // Vergleiche den Preis mit dem bisher günstigsten Produkt in dieser Kategorie
-      const bisherGuenstigstes = guenstigsteProKategorie.get(kategorie);
-      if (bisherGuenstigstes && artikel.preis < bisherGuenstigstes.preis) {
+      // Prüfe, ob es bereits ein günstigstes Produkt in dieser Kategorie gibt
+      if (!guenstigsteProKategorie.has(kategorie)) {
         guenstigsteProKategorie.set(kategorie, artikel);
+      } else {
+        // Vergleiche den Preis mit dem bisher günstigsten Produkt in dieser Kategorie
+        const bisherGuenstigstes = guenstigsteProKategorie.get(kategorie);
+        if (bisherGuenstigstes && artikel.preis < bisherGuenstigstes.preis) {
+          guenstigsteProKategorie.set(kategorie, artikel);
+        }
       }
     }
+
+    // Füge die günstigsten Produkte zur Ergebnisliste hinzu
+    guenstigsteProKategorie.forEach((artikel) => {
+      guenstigsteProdukte.push(artikel);
+    });
+
+    return guenstigsteProdukte;
+
+
   }
 
-  // Füge die günstigsten Produkte zur Ergebnisliste hinzu
-  guenstigsteProKategorie.forEach((artikel) => {
-    guenstigsteProdukte.push(artikel);
-  });
+  /**
+   * Die Methode prüft, ob ein Artikel aus einer Kategorie bereits im Bundle ist, falls ja, wird einen Artikel pro Kategorie genommen.
+   */
+  groupByAnbieter() {
+    // Gruppieren der Artikel nach Anbieter
+    const groupedByAnbieter: { [key: string]: Artikel[] } = {};
 
-  return guenstigsteProdukte;
+    // Verfolgen der bereits verwendeten Kategorien
+    const usedKategorien: Set<string> = new Set();
 
+    this.ausgewaehlteArtikel.forEach((artikel) => {
+      const anbieter = artikel.bildUrl;
+      const kategorie = artikel.kategorie;
 
-}
+      // Prüfe, ob die Kategorie bereits in den Bundles verwendet wurde
+      if (!usedKategorien.has(kategorie)) {
+        if (!groupedByAnbieter[anbieter]) {
+          groupedByAnbieter[anbieter] = [];
+        }
+        groupedByAnbieter[anbieter].push(artikel);
 
-/**
- * Die Methode prüft, ob ein Artikel aus einer Kategorie bereits im Bundle ist, falls ja, wird einen Artikel pro Kategorie genommen.
- */
-groupByAnbieter() {
-  // Gruppieren der Artikel nach Anbieter
-  const groupedByAnbieter: { [key: string]: Artikel[] } = {};
-
-  // Verfolgen der bereits verwendeten Kategorien
-  const usedKategorien: Set<string> = new Set();
-
-  this.ausgewaehlteArtikel.forEach((artikel) => {
-    const anbieter = artikel.anbieter;
-    const kategorie = artikel.kategorie;
-
-    // Prüfe, ob die Kategorie bereits in den Bundles verwendet wurde
-    if (!usedKategorien.has(kategorie)) {
-      if (!groupedByAnbieter[anbieter]) {
-        groupedByAnbieter[anbieter] = [];
+        // Markiere die Kategorie als verwendet
+        usedKategorien.add(kategorie);
       }
-      groupedByAnbieter[anbieter].push(artikel);
+    });
 
-      // Markiere die Kategorie als verwendet
-      usedKategorien.add(kategorie);
-    }
-  });
-
-  // Umwandeln in ein Array für die Verwendung in der Vorlage
-  this.bundles = Object.keys(groupedByAnbieter).map((anbieter) => ({
-    anbieter,
-    artikelList: groupedByAnbieter[anbieter],
-  }));
-}
+    // Umwandeln in ein Array für die Verwendung in der Vorlage
+    this.bundles = Object.keys(groupedByAnbieter).map((anbieter) => ({
+      anbieter,
+      artikelList: groupedByAnbieter[anbieter],
+    }));
+  }
 
   // Methode zum Löschen eines Bundles oder Artikel.
   delete(bundle: { anbieter: string; artikelList: Artikel[] }) {
@@ -110,7 +110,7 @@ groupByAnbieter() {
     // Nehme den gesamten Bundle und füge ihn dem Merkzettel hinzu
     this.merkzettel.push(bundle);
   }
-  
+
   deleteBundle(bundle: { anbieter: string; artikelList: Artikel[] }) {
     // Hier implementierst du die Logik zum Löschen des gesamten Bundles.
     // Du kannst die Bundles-Liste durchsuchen und das gewünschte Bundle entfernen.
@@ -119,8 +119,4 @@ groupByAnbieter() {
       this.bundles.splice(index, 1);
     }
   }
-  
-  
-
-
 }

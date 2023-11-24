@@ -2,9 +2,9 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { NutzerService } from 'src/services/nutzer.service';
 
 @Component({
-  selector: 'app-admin',
-  templateUrl: 'admin.component.html',
-  styleUrls: ['admin.component.css']
+    selector: 'app-admin',
+    templateUrl: 'admin.component.html',
+    styleUrls: ['admin.component.css']
 })
 export class AdminComponent implements OnInit {
 

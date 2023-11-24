@@ -2,25 +2,25 @@
 import { Artikel } from "./artikel.model";
 
 export class Grafikkarte extends Artikel{
-    
-    marke: string;
-    modell: string;
+    artikelnummer: number;
     kapazitaet: number;
-    anschluesse: string;
-    belegteSlots: string;
+    model: string;
+    verbrauch: number;
+    streamProzessoren: number;
 
-    constructor(artikelnummer: number, kategorie: string, preis: number, shopID: number, produktLink: string, anbieter: string,
-        marke: string, modell: string, kapazitaet: number, anschluesse: string, material: string) {
-        super(artikelnummer, kategorie, preis,  shopID, produktLink, anbieter)
-        this.marke = marke;
-        this.modell = modell;
+    constructor(kategorie: string, preis: number, shopID: number, produktLink: string, bezeichnung: string, lieferDatum: number, marke: string, bildUrl: string,
+        artikelnummer: number, kapazitaet: number, model: string, verbrauch: number, streamProzessoren: number) {
+
+        super(kategorie, preis, shopID, produktLink, bezeichnung, lieferDatum, marke, bildUrl)
+        this.artikelnummer = artikelnummer;
         this.kapazitaet = kapazitaet;
-        this.anschluesse = anschluesse;
-        this.belegteSlots = material;
+        this.model = model;
+        this.verbrauch = verbrauch;
+        this.streamProzessoren = streamProzessoren;
     }
 
     override gibArtikelBeschreibung(): string {
-        return `${this.modell} • ${this.modell} • ${this.kapazitaet} • ${this.anschluesse} • ${this.belegteSlots}`;;
+        return `{ ${this.kapazitaet} • ${this.model} • ${this.verbrauch}`;
     }
     override gibArtikelTitel(): string {
         return `${this.marke}`;
