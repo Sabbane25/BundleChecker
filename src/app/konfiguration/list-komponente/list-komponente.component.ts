@@ -1,10 +1,9 @@
 import { Component, ElementRef, Input, Renderer2} from '@angular/core';
-import { DataService } from 'src/app/data.service';
-import { BetriebsSystem } from 'src/models/betriebssystem.model';
-import { Ram } from 'src/models/ram.model';
 import { Artikel } from 'src/models/artikel.model';
+import { Cpu } from 'src/models/cpu.model';
+import { Ram } from 'src/models/ram.model';
+import { Speicher } from 'src/models/speicher.model';
 import { ArtikelService } from 'src/services/artikel.service';
-import { ARTIKEL_LIST } from 'src/models/artikel_mockup';
 
 @Component({
   selector: 'app-list-komponent',
@@ -14,68 +13,55 @@ import { ARTIKEL_LIST } from 'src/models/artikel_mockup';
 
 export class ListKomponenteComponent {
 
-  @Input() testFilter: any[] = ["malouda", "booba"];
+  @Input() testFilter: any[] = ["test", "test"];
 
-  //enthält die gesamte Artikelliste aus der Datenbanken (Nicht sortiert)
-  artikelListe: Artikel[] = ARTIKEL_LIST;
+  artikelListe: Array<{ kategorie: string, liste: Artikel[] }> = [];
+  produkt: Artikel[] = [];
+  listeRam: Ram[] = [];
+  listeCpu: Cpu[] = [];
+  listeFestplatte: Speicher[] = [];
+  listeProdukt: Artikel[] = [];
+  hinzugefuegteArtikel: Artikel[] = []; // Um Artikel im neu Kontiguration aufzulisten / zur Übersicht - Funktion
 
-  // Um Artikel im neu Kontiguration aufzulisten
-  hinzugefuegteArtikel: Artikel[] = [];
-
-  /**
-   *
-   * @param artikel Artikel, den der Kunde für die Konfiguration seines PCs ausgewählt hat
-   */
   onButtonhinzufuegen(artikel: Artikel) {
     this.hinzugefuegteArtikel.push(artikel);
   }
 
-  // die Variable wird benutzt, um alle Artkel aller Art zu speichern(RAM, CPU, Speicher...)
-  artikelList2: any[] = [];
-
   constructor(
-      private dataService: DataService,
       private artikelService: ArtikelService) {}
 
-  // Die Funktion "loadProdukts()" wird im "ngOnInit()" aufgerufen, um beim Start der App alle Produkte anzuzeigen.
   ngOnInit(): void {
-    this.loadProdukts();
-    this.gibArtikellistnachKategorie();
+   this.ladeRamData();
+   this.ladeCpuData();
+   this.ladeFestplatteData();
+   console.log('liste: ',this.listeProdukt);
   }
 
-  //speichert die Data in dem entsprechenden Variable. Die kommen aus der Service (DataService)
-  loadProdukts(): void {
-    this.artikelService.getAllArtikel2("RAM").subscribe((data) => { for(let a of data) this.artikelList2.push(a)});
-    this.artikelService.getAllArtikel2("Speicher").subscribe((data) => { for(let a of data) this.artikelList2.push(a)});
-  }
-
-  /**
-   *
-   * @returns gib eine liste von jeder Artikelkategorie zurück
-   */
-  gibKategorieArtikel(): string[] {
-    const kategorieliste: string[] = this.artikelListe
-        .map(artikel => artikel.kategorie)
-        .filter((kategorie, index, self) => self.indexOf(kategorie) === index);
-
-    return kategorieliste;
-  }
-
-  /**
-   * Die Methode gib für jede Kategorie eine sortierte Artikelliste zurück
-   * @returns eine liste von Artikelliste nach Kategorie
-   */
-  gibArtikellistnachKategorie(): Artikel[] {
-    const kategorien = this.gibKategorieArtikel();
-
-    /*for(let i = 0; i < this.gibKategorieArtikel().length; i++){
-      artikelListenachKategorie.push(this.artikelListe.filter((artikel) => artikel instanceof Ram))
-    } */
-    const artikelListenachKategorie: Artikel[] = this.artikelListe.filter((artikel) => {
-      return kategorien.includes(artikel.constructor.name);
+  ladeRamData() {
+    this.artikelService.gibArtikelliste('RAM').subscribe((ramListe: Ram[]) => {
+      this.artikelListe.push({kategorie: "RAM", liste: ramListe});
+      this.listeRam = ramListe;
+      for(let artikel of ramListe){
+        this.listeProdukt.push(artikel);
+      }
     });
-    return artikelListenachKategorie;
   }
 
+  ladeCpuData() {
+    this.artikelService.gibListeCPU('CPU').subscribe((cpuListe: Cpu[]) => {
+      this.artikelListe.push({kategorie: "CPU", liste: cpuListe});
+      for(let artikel of cpuListe){
+        this.listeProdukt.push(artikel);
+      }
+    });
+  }
 
+  ladeFestplatteData() {
+    this.artikelService.gibListeFestplatte().subscribe((festplatteListe: Speicher[]) => {
+      this.artikelListe.push({kategorie: "Festplatte", liste: festplatteListe});
+      for(let artikel of festplatteListe){
+        this.listeProdukt.push(artikel);
+      }
+    });
+  }
 }

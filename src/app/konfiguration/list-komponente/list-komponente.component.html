@@ -3,37 +3,34 @@
   <!-- Die Komponenten werden mit Hilfe einer schleife generiert -->
   <div class="komponanten-div" >
     <div class="accordion" id="accordionExample">
-      <!-- stellt eine Komponente dar. Mit Hilfe der Directive *ngFor werden alle Komponenten angezeigt -->
-      <div class="accordion-item" *ngFor="let kategorieItem of gibKategorieArtikel()">
-        <!--Komponente-Title. Es ist auch gleichzeitig den Dropdowm menu, um Artikel einer Komponente aufzulisten -->
-        <!-- item-4 / Komponent 4: GRAFIKKARTE -->
+      <div class="accordion-item" *ngFor="let artikel of artikelListe">
         <h2 class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#' + kategorieItem"  aria-expanded="false" aria-controls="flush-collapseTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#' + artikel.kategorie"  aria-expanded="false" aria-controls="flush-collapseTwo">
             <div class="item-img">
-              <img src="./assets/Komponenten/{{ kategorieItem }}.jpg" alt="">
+              <img src="./assets/Komponenten/{{ artikel.kategorie }}.jpg" alt="">
             </div>
-            {{ kategorieItem }}
+            {{artikel.kategorie}}
           </button>
         </h2>
         <!-- Hier wird alle Produkt einer Kategorie angezeigt. Und ein geeignetes Filter -->
-        <div [id]="kategorieItem" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+        <div [id]="artikel.kategorie" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
           <div class="accordion-body">
             <!-- filter (Es handelt es sich um eine separat Composant)-->
             <!-- <app-filter [listKomponente]="artikelList3" [listKomponenteItem]="kategorieItem"></app-filter> -->
-            <div class="list-artikel" *ngFor="let artikel of artikelListe">
-              <div class="row  item" *ngIf="artikel.kategorie === kategorieItem">
-                <!-- BILD Komponente(keine echtes Bild. Nur Kategorie Abkürzung) -->
+            <div class="list-artikel">
+              <div class="row  item" *ngFor="let item of artikel.liste">
                 <div class="col-1 border justify-content-md-center">
-                  <h5> {{ artikel.kategorie.substring(0, 3).toUpperCase() }} </h5>
+                  <h5>
+                    <img src=" {{ item.image }} " alt="">
+                      </h5> <!-- img de chaque produit -->
                 </div>
                 <!-- Beschreibung der Artikels-->
                 <div class="col-9 artikel-info">
-                  <h5> {{ artikel.gibArtikelTitel() }}</h5>
-                  <p> {{ artikel.gibArtikelBeschreibung() }} </p>
-                  <h6> {{ artikel.anbieter }}</h6>
+                  <h5 style="color: black; font-size: 14px;"> {{ item.bezeichnung }} </h5>
+                  <p> {{ item.shopID }} </p>
                 </div>
                 <div class="col">
-                  <button (click)="onButtonhinzufuegen(artikel)">HINZUFÜGEN</button>
+                  <button (click)="onButtonhinzufuegen(item)">HINZUFÜGEN</button>
                 </div>
               </div>
             </div>

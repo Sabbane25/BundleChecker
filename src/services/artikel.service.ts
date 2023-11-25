@@ -1,8 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map } from 'rxjs';
 import { Artikel } from 'src/models/artikel.model';
 import { Ram } from 'src/models/ram.model';
+import { Cpu } from 'src/models/cpu.model';
+import { Gehaeuse } from 'src/models/gehaeuse.model';
+import { Grafikkarte } from 'src/models/grafikkarte.model';
+import { Mainboard } from 'src/models/mainboard.model';
+import { Netzteil } from 'src/models/netzteil.model';
+import { Nutzer } from 'src/models/nutzer.model';
+import { Speicher } from 'src/models/speicher.model';
 import { apiConfig } from '../config/api.config';
 
 @Injectable({
@@ -17,54 +24,216 @@ export class ArtikelService {
     return this.http.get<any>(`${this.apiURL}/`);
   } 
 
-  /**
-   * 
-   * @returns die verschiedenen Kategorie von Artikel 
-   */
   getAllKategorien(): Observable<any> {
     return this.http.get<any>(`${this.apiURL}/Kategorie`);
   }
 
-  /**
-   * 
-   * @param products es handelt sich um das Produkt, für das man eine Artikelliste haben möchte
-   * z.B: RAM, CPU, Speicher, Grafikkarte....
-   * @returns 
-   */
   getAllProducts(products: string): Observable<any> {
     return this.http.get<any>(`${this.apiURL}/Produkte/${products}`);
   }
 
-  getAllArtikel2(kategorie: string): Observable<any> {
-    return this.http.get<Ram[]>(`${this.apiURL}/Artikel/${kategorie}`);
+  getAllRam(kategorie: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`);
   }
 
-  /**
-   * 
-   * @param kategorie es handelt sich um die Kategorie, für die man eine Artikelliste haben möchte
-   * z.B: RAM, CPU, Speicher, Grafikkarte....
-   * @returns eine Liste von Alle Artikel dieser Kategorie
-   */
-  getAllArtikel(kategorie: string): Observable<any> {
+  gibArtikelliste(kategorie: string): Observable<Ram[]> {
     return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`).pipe(
       map((data) => {
+        return data.map((ramData: any) => new Ram(
+          ramData.kategorie,
+          ramData.preis,
+          ramData.shopID,
+          ramData.produktLink,
+          ramData.bezeichnung,
+          ramData.lieferDatum,
+          ramData.marke,
+          ramData.bildUrl,
+          ramData.artikelnummer,
+          ramData.typ,
+          ramData.kapazitaet,
+          ramData.latency,
+          ramData.spannung
+        ));
+      })
+    );
+  }
+
+  gibListeCPU(kategorie: string): Observable<Cpu[]> {
+    return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`).pipe(
+      map((data) => {
+        return data.map((ramData: any) => new Cpu(
+          ramData.kategorie,
+          ramData.preis,
+          ramData.shopID,
+          ramData.produktUrl,
+          ramData.bezeichnung,
+          ramData.lieferDatum,
+          ramData.marke,
+          ramData.image,
+          ramData.artikelnummer,
+          ramData.sockel,
+          ramData.anzahlKerne,
+          ramData.stromverbrauch,
+          ramData.taktfrequenz,
+          ramData.interneGrafik,
+          ramData.threads,
+          ramData.typ,
+          ramData.turbo
+        ));
+      })
+    );
+  }
+
+  gibListeFestplatte(): Observable<Speicher[]> {
+    return this.http.get<any[]>(`${this.apiURL}/Artikel/Festplatte`).pipe(
+      map((data) => {
+        return data.map((ramData: any) => new Speicher(
+          ramData.kategorie,
+          ramData.preis,
+          ramData.shopID,
+          ramData.produktUrl,
+          ramData.bezeichnung,
+          ramData.lieferDatum,
+          ramData.marke,
+          ramData.image,
+          ramData.artikelnummer,
+          ramData.typ,
+          ramData.kapazitaet,
+          ramData.lesen,
+          ramData.schreiben
+        ));
+      })
+    );
+  }
+
+  gibListeGehaeuse(kategorie: string): Observable<Gehaeuse[]> {
+    return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`).pipe(
+      map((data) => {
+        return data.map((ramData: any) => new Gehaeuse(
+          ramData.kategorie,
+          ramData.preis,
+          ramData.shopID,
+          ramData.produktUrl,
+          ramData.bezeichnung,
+          ramData.lieferDatum,
+          ramData.marke,
+          ramData.image,
+          ramData.artikelnummer,
+          ramData.formfaktor,
+          ramData.frontenschluesse,
+          ramData.abmessungen,
+          ramData.typ,
+          ramData.gewicht
+        ));
+      })
+    );
+  }
+
+  gibListeGrafikkarte(kategorie: string): Observable<Grafikkarte[]> {
+    return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`).pipe(
+      map((data) => {
+        return data.map((ramData: any) => new Grafikkarte(
+          ramData.kategorie,
+          ramData.preis,
+          ramData.shopID,
+          ramData.produktUrl,
+          ramData.bezeichnung,
+          ramData.lieferDatum,
+          ramData.marke,
+          ramData.image,
+          ramData.artikelnummer,
+          ramData.kapazitaet,
+          ramData.model,
+          ramData.verbrauch,
+          ramData.streamProzessoren
+        ));
+      })
+    );
+  }
+
+  gibListeMainboard(kategorie: string): Observable<Mainboard[]> {
+    return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`).pipe(
+      map((data) => {
+        return data.map((data: any) => new Mainboard(
+          data.kategorie,
+          data.preis,
+          data.shopID,
+          data.produktUrl,
+          data.bezeichnung,
+          data.lieferDatum,
+          data.marke,
+          data.image,
+          data.artikelnummer,
+          data.chipsatz,
+          data.sockel,
+          data.anzahlSpeichersockel,
+          data.maxRam,
+          data.formfaktor,
+          data.speicherTyp
+        ));
+      })
+    );
+  }
+
+  gibListeNetzteil(kategorie: string): Observable<Netzteil[]> {
+    return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`).pipe(
+      map((data) => {
+        return data.map((data: any) => new Netzteil(
+          data.kategorie,
+          data.preis,
+          data.shopID,
+          data.produktUrl,
+          data.bezeichnung,
+          data.lieferDatum,
+          data.marke,
+          data.image,
+          data.artikelnummer,
+          data.bauform,
+          data.zertifizierung,
+          data.leistung
+        ));
+      })
+    );
+  }
+
+/**---------------------------------------------------------------------------- */
+  getAllArtikelRam(kategorie: string): Observable<Ram[]> {
+    return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`).pipe(
+      catchError((error: any) => {
+        console.error('Error fetching data:', error);
+        // Gérer l'erreur selon les besoins (renvoyer un Observable vide, une valeur par défaut, etc.)
+        return of([]);
+      }),
+      map((data) => {
+        if (!data || !Array.isArray(data)) {
+          console.error('Invalid data received:', data);
+          // Gérer le cas de données invalides
+          return [];
+        }
+  
         // Transformez les données en objets Ram
         return data.map((ramData: any) => {
-          return new Ram( 
-            ramData.artikelnummer,
+          return new Ram(
             ramData.kategorie,
-            ramData.Preis,
-            ramData.ShopID,
-            ramData.ProduktLink,
-            ramData.anbieter,
-            ramData.Marke,
-            ramData.Modell,
-            ramData.Typ,
+            ramData.preis,
+            ramData.shopID,
+            ramData.produktLink,
+            ramData.bezeichnung,
+            ramData.lieferDatum,
+            ramData.marke,
+            ramData.bildUrl,
+            ramData.artikelnummer,
+            ramData.typ,
             ramData.kapazitaet,
-            ramData.Timings,
+            ramData.latency,
+            ramData.spannung
           );
         });
       })
     );
   }
 }
+function of(arg0: never[]): any {
+  throw new Error('Function not implemented.');
+}
+

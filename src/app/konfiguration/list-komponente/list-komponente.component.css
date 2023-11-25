@@ -152,9 +152,12 @@
   justify-content: center;
   width: 60px;
   height: 60px;
-  background-color: black;
   margin: auto;
   margin-right: 8px;
+}
+
+.komponanten-div .list-artikel .row .col-1 img{
+  width: 100%;
 }
 
 .komponanten-div .list-artikel .row .col-1 h5{
