@@ -27,10 +27,42 @@ module.exports = function (app) {
     );
 
     app.delete(
-        "/api/merkzettel/remove",
+        "/api/merkzettel/delete",
         [
             authJwt.verifyToken // prüfe ob token valide ist
         ],
         controller.delete
+    );
+
+    app.post(
+        "/api/merkzettel/remove",
+        [
+            authJwt.verifyToken // prüfe ob token valide ist
+        ],
+        controller.removeItemFromList
+    );
+
+    app.get(
+        "/api/merkzettel/list",
+        [
+            authJwt.verifyToken // prüfe ob token valide ist
+        ],
+        controller.list
+    );
+
+    app.get(
+        "/api/merkzettel/list/:merkzettelid",
+        [
+            authJwt.verifyToken // prüfe ob token valide ist
+        ],
+        controller.listWithProducts
+    );
+
+    app.get(
+        "/api/merkzettel/price/:merkzettelid",
+        [
+            authJwt.verifyToken // prüfe ob token valide ist
+        ],
+        controller.priceOfList
     );
 };

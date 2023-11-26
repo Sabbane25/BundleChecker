@@ -131,7 +131,6 @@ export class UebersichtComponent implements OnInit {
    * @param bundles
    */
   erstelleMerkzettel(bundles: any) {
-    console.log(bundles);
     const artikelUrls: string[] = [];
 
     for (let bundle of bundles) {
