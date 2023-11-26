@@ -32,6 +32,10 @@ export class ArtikelService {
     return this.http.get<any>(`${this.apiURL}/Produkte/${products}`);
   }
 
+  getAllProducts2(shopId: number, products: string): Observable<any> {
+    return this.http.get<any>(`${this.apiURL}/Artikel2/${products}?shopId=${shopId}`);
+  }
+
   getAllRam(kategorie: string): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`);
   }
@@ -58,8 +62,9 @@ export class ArtikelService {
     );
   }
 
-  gibListeCPU(kategorie: string): Observable<Cpu[]> {
-    return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`).pipe(
+  //return this.http.get<any>(`${this.apiURL}/Artikel2/${products}?shopId=${shopId}`);
+  gibListeCPU(shopId: number, kategorie: string): Observable<Cpu[]> {
+    return this.http.get<any[]>(`${this.apiURL}/Artikel2/${kategorie}?shopId=${shopId}`).pipe(
       map((data) => {
         return data.map((ramData: any) => new Cpu(
           ramData.kategorie,
@@ -84,8 +89,8 @@ export class ArtikelService {
     );
   }
 
-  gibListeFestplatte(): Observable<Speicher[]> {
-    return this.http.get<any[]>(`${this.apiURL}/Artikel/Festplatte`).pipe(
+  gibListeFestplatte(shopId: number, kategorie: string): Observable<Speicher[]> {
+    return this.http.get<any[]>(`${this.apiURL}/Artikel2/${kategorie}?shopId=${shopId}`).pipe(
       map((data) => {
         return data.map((ramData: any) => new Speicher(
           ramData.kategorie,
@@ -195,45 +200,5 @@ export class ArtikelService {
       })
     );
   }
-
-/**---------------------------------------------------------------------------- */
-  getAllArtikelRam(kategorie: string): Observable<Ram[]> {
-    return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`).pipe(
-      catchError((error: any) => {
-        console.error('Error fetching data:', error);
-        // Gérer l'erreur selon les besoins (renvoyer un Observable vide, une valeur par défaut, etc.)
-        return of([]);
-      }),
-      map((data) => {
-        if (!data || !Array.isArray(data)) {
-          console.error('Invalid data received:', data);
-          // Gérer le cas de données invalides
-          return [];
-        }
-  
-        // Transformez les données en objets Ram
-        return data.map((ramData: any) => {
-          return new Ram(
-            ramData.kategorie,
-            ramData.preis,
-            ramData.shopID,
-            ramData.produktLink,
-            ramData.bezeichnung,
-            ramData.lieferDatum,
-            ramData.marke,
-            ramData.bildUrl,
-            ramData.artikelnummer,
-            ramData.typ,
-            ramData.kapazitaet,
-            ramData.latency,
-            ramData.spannung
-          );
-        });
-      })
-    );
-  }
-}
-function of(arg0: never[]): any {
-  throw new Error('Function not implemented.');
 }
 

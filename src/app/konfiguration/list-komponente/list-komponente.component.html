@@ -1,3 +1,7 @@
+<div>
+  <p>{{vergeicheArtikel(this.festplatteId1, this.festplatteId2)}} </p>
+  <p> {{ this.sortierteArtikelListe }} </p>
+</div>
 <div class="komponenten-main">
   <!-- Das Div beinhahlt alle Komponenten und jede Komponente die entspechenden Artikel -->
   <!-- Die Komponenten werden mit Hilfe einer schleife generiert -->
@@ -20,14 +24,12 @@
             <div class="list-artikel">
               <div class="row  item" *ngFor="let item of artikel.liste">
                 <div class="col-1 border justify-content-md-center">
-                  <h5>
-                    <img src=" {{ item.image }} " alt="">
-                      </h5> <!-- img de chaque produit -->
+                  <img src="{{ item.image }}" alt="">
                 </div>
                 <!-- Beschreibung der Artikels-->
                 <div class="col-9 artikel-info">
-                  <h5 style="color: black; font-size: 14px;"> {{ item.bezeichnung }} </h5>
-                  <p> {{ item.shopID }} </p>
+                  <h5 style="color: black; font-size: 14px;"> {{ item.marke }} </h5>
+                  <p> {{ item.shopID === 1 ? 'Alternate' : 'Future-X' }} : {{ item.preis }} EUR</p>
                 </div>
                 <div class="col">
                   <button (click)="onButtonhinzufuegen(item)">HINZUFÜGEN</button>
