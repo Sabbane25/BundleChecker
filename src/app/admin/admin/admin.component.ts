@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { NutzerService } from 'src/services/nutzer.service';
 import { FormsModule } from '@angular/forms';
+import { Nutzer } from 'src/models/nutzer.model';
 
 @Component({
     selector: 'app-admin',
@@ -9,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class AdminComponent implements OnInit {
 
-  //@ViewChild('emailInput', { static: false }) emailInput: ElementRef;
+  @ViewChild('searchInput', { static: false }) searchInput: ElementRef;
 
   users: any[] = [];
   userSearch: any[] = [];
@@ -26,18 +27,30 @@ export class AdminComponent implements OnInit {
       this.users = data;
     });
   }
-
-  onClick(event: KeyboardEvent) {
-    if (event.key === 'Enter') {
-      this.searchUser();
-    }
-  }
-
+  /**
   searchUser() {
-    const suchanfrage = this.searchQuery;
+    const suchanfrage = this.searchInput.nativeElement.value;
     this.nutzerService.suchen(suchanfrage).subscribe((searchResults) => {
       this.users = suchanfrage ? searchResults : this.userSearch;
     });
+  }
+  */
+
+  filterUsers() {
+    
+    
+    const email = this.searchInput.nativeElement.value;
+    const lowerCaseSearch = email.toLowerCase();
+    console.log("Eingegebene Email: " + lowerCaseSearch);
+    
+    if (!lowerCaseSearch) {
+      this.loadUsers()
+    } else {
+      this.users = this.users.filter(user => {
+        const lowerCaseEmail = user.email.toLowerCase();
+        return lowerCaseEmail === lowerCaseSearch;
+      });
+    }
   }
 
   userLoeschen(user_id: number): void {

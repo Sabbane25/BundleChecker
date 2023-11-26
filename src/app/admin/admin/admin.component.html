@@ -2,8 +2,7 @@
 <div class="center">
     <div class="suche">
         <!-- Ändere das id-Attribut, um es eindeutig zu machen -->
-        <input type="email" id="emailSuche" placeholder="Nutzer suchen" #emailInput>
-        <input style="width: 300px;" type="text" id="textSuche" placeholder="Nutzer suchen" (keyup.enter)="searchUser()">
+        <input style="width: 300px;" type="text" id="textSuche" placeholder="Nutzer suchen" #searchInput (keyup.enter)="filterUsers()">
     </div>
 </div>
 <div class="containerAdmin">

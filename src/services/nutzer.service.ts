@@ -56,7 +56,6 @@ export class NutzerService {
 
    getUsers(): Observable<any> {
       // Verwende das User-Interface als Datentyp für die Antwort
-      console.log("test")
       // return this.http.get<any>(`${apiURL}/getUsers`);
       return this.http.get<any[]>(`${apiURL}/getUsers`, { withCredentials: true });
    }
@@ -70,7 +69,7 @@ export class NutzerService {
     
     return this.http.delete<void>(`${apiURL}/userLoeschen`, options);
    }
-   
+   /** 
    suchen(email: string): Observable<any> {
     console.log("In Nutzerservice: " + email);
 
@@ -79,6 +78,7 @@ export class NutzerService {
         params: { email: email }
     });
   }
+  */
 
   getPublicContent(): Observable<any> {
     return this.http.get(API_URL + 'all', { responseType: 'text' });
