@@ -22,43 +22,32 @@ export class UebersichtComponent implements OnInit {
   }
 
   //Die Variable enthält alle Artikel die in Listkomponenten ausgewälte wurde
-  ausgewaehlteArtikel:  Artikel[] = ARTIKEL_LIST;
+  ausgewaehlteArtikel:  Artikel[] = ARTIKEL_LIST; 
 
-  /**
-   * @param listArtikel Liste von allen verfügbaren Artikeln
-   * @returns Eine Liste mit jeweils dem günstigsten Produkt aus jeder Kategorie.
-   */
-  gibGuenstigstesBundle(listArtikel: Artikel[]): Artikel[] {
-    const guenstigsteProdukte: Artikel[] = [];
+/**
+ * @param listArtikel Liste von allen verfügbaren Artikeln
+ * @returns Eine Liste mit jeweils dem günstigsten Produkt aus jeder Kategorie.
+ */
+gibGuenstigstesBundle(listArtikel: Artikel[]): Artikel[] {
+  const guenstigsteProdukte: Artikel[] = [];
 
-    // Erstelle eine Map, um die günstigsten Produkte pro Kategorie zu verfolgen
-    const guenstigsteProKategorie = new Map<string, Artikel>();
+  // Erstelle eine Map, um die günstigsten Produkte pro Kategorie zu verfolgen
+  const guenstigsteProKategorie = new Map<string, Artikel>();
 
-    // Iteriere durch alle verfügbaren Artikel
-    for (const artikel of listArtikel) {
-      const kategorie = artikel.kategorie;
+  // Iteriere durch alle verfügbaren Artikel
+  for (const artikel of listArtikel) {
+    const kategorie = artikel.kategorie;
 
     // Prüfe, ob es bereits ein günstigstes Produkt in dieser Kategorie gibt
     if (!guenstigsteProKategorie.has(kategorie) || artikel.preis < guenstigsteProKategorie.get(kategorie)!.preis) {
       guenstigsteProKategorie.set(kategorie, artikel);
     }
-
-    // Füge die günstigsten Produkte zur Ergebnisliste hinzu
-    guenstigsteProKategorie.forEach((artikel) => {
-      guenstigsteProdukte.push(artikel);
-    });
-
-    return guenstigsteProdukte;
-
-
   }
 
-  /**
-   * Die Methode prüft, ob ein Artikel aus einer Kategorie bereits im Bundle ist, falls ja, wird einen Artikel pro Kategorie genommen.
-   */
-  groupByAnbieter() {
-    // Gruppieren der Artikel nach Anbieter
-    const groupedByAnbieter: { [key: string]: Artikel[] } = {};
+  // Füge die günstigsten Produkte zur Ergebnisliste hinzu
+  guenstigsteProKategorie.forEach((artikel) => {
+    guenstigsteProdukte.push(artikel);
+  });
 
   return guenstigsteProdukte;
 }

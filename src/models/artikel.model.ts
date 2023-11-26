@@ -7,7 +7,8 @@ export abstract class Artikel {
   lieferDatum: number;
   marke: string;
   image: string;
-  
+  anbieter: string;
+  menge: number;
 
   constructor(kategorie: string, preis: number, shopID: number, produktUrl: string, bezeichnung: string, lieferDatum: number, marke: string, image: string) {
     this.kategorie = kategorie;
