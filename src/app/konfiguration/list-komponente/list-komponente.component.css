@@ -141,37 +141,57 @@
   font-size: 12px; 
 }
 
-
-.komponanten-div .list-artikel span{
-  color: black;
-}
-
+/* listet alle produkte einer Kategorie auf */
 .komponanten-div .list-artikel .row .col-1{
   display: flex;
   align-items: center;
   justify-content: center;
   width: 60px;
   height: 60px;
-  margin-right: 8px;
+  margin-right: 10px;
 }
-
+/* Bild eines Artikels */
 .komponanten-div .list-artikel .row .col-1 img{
   width: 100%;
   height: 100%;
 }
 
 
-.komponanten-div .list-artikel .row .col-1 h5{
-  color: white;
-  font-size: 14px;
+.komponanten-div .list-artikel .col-9 p{
+  /*
+  border-left: 1px solid black;
+  padding-left: 4px;
+  color: rgb(43, 70, 2);
+  display: inline;
+  */
+  color: rgb(49, 49, 49);
 }
 
+
+/*Farbe für shop Name Alternate */
+.komponanten-div .list-artikel .col-9 .alternate{
+  font-weight: 500;
+  font-size: 12px;
+}
+
+/*Farbe für shop Name Future-X */
+.komponanten-div .list-artikel .col-9 .futureX{
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.komponanten-div .list-artikel .col-9 .shoppreis{
+  font-size: 12px;
+}
+
+/* Div button HINZUFÜGEN */
 .komponanten-div .list-artikel .row .col{
   display: flex;
   align-items: center;
   justify-content: end;
 }
 
+/** button HINZUFÜGEN */
 .komponanten-div .list-artikel .row .col button{
   width: 80%;
   background-color: green;

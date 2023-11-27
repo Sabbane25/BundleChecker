@@ -40,18 +40,18 @@ export class ArtikelService {
     return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`);
   }
 
-  gibArtikelliste(kategorie: string): Observable<Ram[]> {
-    return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`).pipe(
+  gibListeRam(shopId: number, kategorie: string): Observable<Ram[]> {
+    return this.http.get<any[]>(`${this.apiURL}/Artikel2/${kategorie}?shopId=${shopId}`).pipe(
       map((data) => {
         return data.map((ramData: any) => new Ram(
           ramData.kategorie,
           ramData.preis,
           ramData.shopID,
-          ramData.produktLink,
+          ramData.produktUrl,
           ramData.bezeichnung,
           ramData.lieferDatum,
           ramData.marke,
-          ramData.bildUrl,
+          ramData.image,
           ramData.artikelnummer,
           ramData.typ,
           ramData.kapazitaet,
@@ -90,7 +90,7 @@ export class ArtikelService {
   }
 
   gibListeFestplatte(shopId: number, kategorie: string): Observable<Speicher[]> {
-    return this.http.get<any[]>(`${this.apiURL}/Artikel2/${kategorie}?shopId=${shopId}`).pipe(
+    return this.http.get<Speicher[]>(`${this.apiURL}/Artikel2/${kategorie}?shopId=${shopId}`).pipe(
       map((data) => {
         return data.map((ramData: any) => new Speicher(
           ramData.kategorie,
@@ -111,8 +111,8 @@ export class ArtikelService {
     );
   }
 
-  gibListeGehaeuse(kategorie: string): Observable<Gehaeuse[]> {
-    return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`).pipe(
+  gibListeGehaeuse(shopId: number, kategorie: string): Observable<Gehaeuse[]> {
+    return this.http.get<any[]>(`${this.apiURL}/Artikel2/${kategorie}?shopId=${shopId}`).pipe(
       map((data) => {
         return data.map((ramData: any) => new Gehaeuse(
           ramData.kategorie,
@@ -134,8 +134,8 @@ export class ArtikelService {
     );
   }
 
-  gibListeGrafikkarte(kategorie: string): Observable<Grafikkarte[]> {
-    return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`).pipe(
+  gibListeGrafikkarte(shopId: number, kategorie: string): Observable<Grafikkarte[]> {
+    return this.http.get<any[]>(`${this.apiURL}/Artikel2/${kategorie}?shopId=${shopId}`).pipe(
       map((data) => {
         return data.map((ramData: any) => new Grafikkarte(
           ramData.kategorie,
@@ -156,8 +156,8 @@ export class ArtikelService {
     );
   }
 
-  gibListeMainboard(kategorie: string): Observable<Mainboard[]> {
-    return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`).pipe(
+  gibListeMainboard(shopId: number, kategorie: string): Observable<Mainboard[]> {
+    return this.http.get<any[]>(`${this.apiURL}/Artikel2/${kategorie}?shopId=${shopId}`).pipe(
       map((data) => {
         return data.map((data: any) => new Mainboard(
           data.kategorie,
@@ -180,8 +180,8 @@ export class ArtikelService {
     );
   }
 
-  gibListeNetzteil(kategorie: string): Observable<Netzteil[]> {
-    return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`).pipe(
+  gibListeNetzteil(shopId: number, kategorie: string): Observable<Netzteil[]> {
+    return this.http.get<any[]>(`${this.apiURL}/Artikel2/${kategorie}?shopId=${shopId}`).pipe(
       map((data) => {
         return data.map((data: any) => new Netzteil(
           data.kategorie,

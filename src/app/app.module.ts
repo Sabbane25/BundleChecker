@@ -16,15 +16,15 @@ import { AdminModule } from './admin/admin.module';
     
   ],
   imports: [
-    AdminModule,
     BrowserModule,
+    AdminModule,
+    HttpClientModule,
+    FormsModule,
     KontoModule,
     KonfigurationModule,
     KontaktModule,
     MerkzettelModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
