@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const { konvertiereInFloat, futureXUrls, extrahiereDatum } = require('./funktionen');
+const { konvertiereInFloat, futureXUrls, extrahiereDatum, gibVerfuegbarkeit } = require('./funktionen');
 const { Gehaeuse } = require('./models.js');
 
 (async () => {
@@ -10,7 +10,7 @@ const { Gehaeuse } = require('./models.js');
 
     for(let i = 0; i < listVonUrlArtikel.length; i++){ 
         await page.goto(listVonUrlArtikel[i]);
-        let artikelGehaeuse = new Gehaeuse();
+        let artikel = new Gehaeuse();
 
         try{
             const containerFluid = await page.$('main > .container-main');
@@ -21,15 +21,16 @@ const { Gehaeuse } = require('./models.js');
             const imgSelektor = await containerFluid.$('.img-fluid.gallery-slider-image.magnifier-image.js-magnifier-image');
             const markeSelektor = await page.$('head > meta:nth-child(16)');
 
-            artikelGehaeuse.shopID = 2;
-            artikelGehaeuse.kategorie = 'Gehaeuse';
-            artikelGehaeuse.bezeichnung = await titleDiv.evaluate(node => node.innerText);
+            artikel.shopID = 2;
+            artikel.kategorie = 'Gehaeuse';
+            artikel.bezeichnung = await titleDiv.evaluate(node => node.innerText);
             const preis = await priceDiv.evaluate(node => node.getAttribute('content'));
-            artikelGehaeuse.preis = parseFloat(preis);
-            artikelGehaeuse.deliveryDate = extrahiereDatum(await liferungDiv.evaluate(node => node.innerText));
-            artikelGehaeuse.produktlink = listVonUrlArtikel[i];
-            artikelGehaeuse.marke = await markeSelektor.evaluate(node => node.getAttribute('content'));
-            artikelGehaeuse.imgUrl = await imgSelektor.evaluate(node => node.getAttribute('src'));
+            artikel.preis = parseFloat(preis);
+            artikel.deliveryDate = extrahiereDatum(await liferungDiv.evaluate(node => node.innerText));
+            artikel.produktlink = listVonUrlArtikel[i];
+            artikel.marke = await markeSelektor.evaluate(node => node.getAttribute('content'));
+            artikel.imgUrl = await imgSelektor.evaluate(node => node.getAttribute('src'));
+            artikel.verfuegbarkeit = gibVerfuegbarkeit(await liferungDiv.evaluate(node => node.innerText));
 
             for(const element of detailsSelektor){
                 const data = await page.evaluate(el => el.querySelector('td:nth-child(2)').textContent, element);
@@ -37,32 +38,32 @@ const { Gehaeuse } = require('./models.js');
 
                 if(data){
                     if(merkmal === "Anzahl von vorne zugänglicher Einbauschächte"){
-                        artikelGehaeuse.frontanschluesse = data;
+                        artikel.frontanschluesse = data;
                     }else if(merkmal == "Gewicht"){
-                         artikelGehaeuse.gewicht = konvertiereInFloat(data);
+                         artikel.gewicht = konvertiereInFloat(data);
                     }else if(merkmal === "Unterstützte Motherboards"){
-                        artikelGehaeuse.mainboardFormfaktor = data;
+                        artikel.mainboardFormfaktor = data;
                     }else if(merkmal ==="Breite"){
-                        artikelGehaeuse.breite = data;
+                        artikel.breite = data;
                     }else if(merkmal === "Tiefe"){
-                        artikelGehaeuse.tiefe = data;
+                        artikel.tiefe = data;
                     }else if(merkmal === "Höhe"){
-                        artikelGehaeuse.hoehe = data;
+                        artikel.hoehe = data;
                     }else if(merkmal === "Hersteller-Formfaktor"){
-                        artikelGehaeuse.produkttyp = data;
+                        artikel.produkttyp = data;
                     }
                 }
             }
-            if(typeof artikelGehaeuse.gewicht === 'undefined'){
-                artikelGehaeuse.gewicht = 0;
+            if(typeof artikel.gewicht === 'undefined'){
+                artikel.gewicht = 0;
             }
-            if(typeof artikelGehaeuse.frontanschluesse === 'undefined'){
-                artikelGehaeuse.frontanschluesse = 'nicht gegeben';
+            if(typeof artikel.frontanschluesse === 'undefined'){
+                artikel.frontanschluesse = 'nicht gegeben';
             }
             
-            artikelGehaeuse.abmessung = artikelGehaeuse.breite + " " + artikelGehaeuse.hoehe + " " + artikelGehaeuse.tiefe;
-            if(artikelGehaeuse.breite){
-                listeArtikel.push(artikelGehaeuse);
+            artikel.abmessung = artikel.breite + " " + artikel.hoehe + " " + artikel.tiefe;
+            if(artikel.preis){
+                listeArtikel.push(artikel);
             }
         }catch(error){
             console.error('Erreur de navigation :', error);
@@ -71,6 +72,7 @@ const { Gehaeuse } = require('./models.js');
     console.log(listeArtikel)
     console.log('Total: ', listeArtikel.length);
 
+    /*
     // Daten ins Backend senden
     const axios = require('axios');
     const backendUrl = 'http://192.168.198.48:3000/api/scrapedata';
@@ -87,6 +89,7 @@ const { Gehaeuse } = require('./models.js');
     } catch (error) {
         console.error('Erreur lors de l\'envoi des données au backend :', error);
     }
+    */
 
     await browser.close();
 })();

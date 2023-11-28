@@ -1,8 +1,7 @@
 const puppeteer = require('puppeteer');
-const { filterKomponente, futureXUrls, extrahiereFloat2, extrahiereZahl, extrahiereDatum } = require('./funktionen.js');
+const { gibVerfuegbarkeit, futureXUrls, extrahiereFloat2, extrahiereZahl, extrahiereDatum } = require('./funktionen.js');
 const { Grafikkarte } = require('./models.js')
 
-const merkmalKomponente = ["Kerne", "Threads", "Taktfrequenz", "Sockel", "(TDP)", "Grafik"];
 let listeArtikel = [];
 
 (async () => {
@@ -33,6 +32,7 @@ let listeArtikel = [];
             artikel.deliveryDate = extrahiereDatum(await liferungDiv.evaluate(node => node.innerText));
             artikel.produktlink = listVonUrlArtikel[i];
             artikel.imgUrl = await imgSelektor.evaluate(node => node.getAttribute('src'));
+            artikel.verfuegbarkeit = gibVerfuegbarkeit(await liferungDiv.evaluate(node => node.innerText));
 
 
             for(const element of detailsSelektor){

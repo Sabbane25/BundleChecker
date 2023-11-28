@@ -12,13 +12,8 @@ import { ARTIKEL_LIST } from 'src/models/artikel_mockup';
   styleUrls: ['list-komponente.component.css']
 })
 
-<<<<<<< HEAD
-export class ListKomponenteComponent{
-  
-=======
 export class ListKomponenteComponent {
 
->>>>>>> c294abc44db3ea870b3c5c4085fe8fbe099c6b8f
   @Input() testFilter: any[] = ["malouda", "booba"];
 
   //enthält die gesamte Artikelliste aus der Datenbanken (Nicht sortiert)

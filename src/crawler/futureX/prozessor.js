@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const { konvertiereInInt, konvertiereInFloat2, futureXUrls, extrahiereFloat2, extrahiereZahl, extrahiereDatum } = require('./funktionen.js');
+const { konvertiereInInt, gibVerfuegbarkeit, futureXUrls, extrahiereFloat2, extrahiereZahl, extrahiereDatum } = require('./funktionen.js');
 const { Prozessor } = require('./models.js')
 
 let listProzessorArtikle = [];
@@ -31,6 +31,7 @@ let listProzessorArtikle = [];
             artikelProzessor.deliveryDate = extrahiereDatum(await liferungDiv.evaluate(node => node.innerText));
             artikelProzessor.produktlink = listVonUrlArtikel[i];
             artikelProzessor.imgUrl = await imgSelektor.evaluate(node => node.getAttribute('src'));
+            artikelProzessor.verfuegbarkeit = gibVerfuegbarkeit(await liferungDiv.evaluate(node => node.innerText));
 
             let hatInterneGrafik = false; 
 
@@ -97,7 +98,8 @@ let listProzessorArtikle = [];
             }
 
             if(artikelProzessor.maxTurboTaktfrequenz && artikelProzessor.threads && artikelProzessor.taktfrequenz
-                && artikelProzessor.sockel){
+                && artikelProzessor.sockel && artikelProzessor.preis){
+                    console.log(artikelProzessor);
                     listProzessorArtikle.push(artikelProzessor);
             }
             
@@ -108,6 +110,7 @@ let listProzessorArtikle = [];
     console.log(listProzessorArtikle);
     console.log("total", listProzessorArtikle.length);
 
+    /*
     // Daten ins Backend senden
     const axios = require('axios');
     const backendUrl = 'http://192.168.198.48:3000/api/scrapedata';
@@ -124,6 +127,7 @@ let listProzessorArtikle = [];
     } catch (error) {
         console.error('Erreur lors de l\'envoi des données au backend :', error);
     }
+    */
     
     await browser.close();
 })();

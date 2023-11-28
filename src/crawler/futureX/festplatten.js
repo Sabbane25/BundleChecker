@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
-const { konvertiereInInt, futureXUrls, extrahiereFloat2, extrahiereZahl, extrahiereDatum, isEmpty } = require('./funktionen.js');
-const { Festplatte } = require('./models.js')
+const { konvertiereInInt, futureXUrls, extrahiereFloat2, gibVerfuegbarkeit, extrahiereDatum, isEmpty } = require('./funktionen.js');
+const { Festplatte } = require('./models.js');
 
 
 (async () => {
@@ -22,15 +22,18 @@ const { Festplatte } = require('./models.js')
             const liferungDiv = await containerFluid.$('.product-detail-delivery-information p');
             const detailsSelektor = await containerFluid.$$('div.product-detail-description-text:nth-child(1) .table > tbody:nth-child(1) tr')
             const imgSelektor = await containerFluid.$('.img-fluid.gallery-slider-image.magnifier-image.js-magnifier-image');
+            const markeSelektor = await page.$('head > meta:nth-child(16)');
 
             artikel.shopID = 2;
             artikel.kategorie = 'Festplatte';
             artikel.bezeichnung = await titleDiv.evaluate(node => node.innerText);
-            artikel.marke = artikel.bezeichnung.split(" ")[0];
+            //artikel.marke = artikel.bezeichnung.split(" ")[0];
             artikel.preis = extrahiereFloat2(await priceDiv.evaluate(node => node.innerText));
             artikel.deliveryDate = extrahiereDatum(await liferungDiv.evaluate(node => node.innerText));
             artikel.produktlink = listVonUrlArtikel[i];
             artikel.imgUrl = await imgSelektor.evaluate(node => node.getAttribute('src'));
+            artikel.marke = await markeSelektor.evaluate(node => node.getAttribute('content'));
+            artikel.verfuegbarkeit = gibVerfuegbarkeit(await liferungDiv.evaluate(node => node.innerText));
 
             istExterne = false;
             for(const element of detailsSelektor){
@@ -53,8 +56,8 @@ const { Festplatte } = require('./models.js')
                   }
                 }
             }
-            if(artikel.energieverbrauch){
-                listeArtikel.push(artikel);
+            if(artikel.energieverbrauch && artikel.preis){
+              listeArtikel.push(artikel);
             }
         }catch(error){
             console.error('Erreur de navigation :', error);
@@ -63,7 +66,7 @@ const { Festplatte } = require('./models.js')
     console.log(listeArtikel);
     console.log("total", listeArtikel.length);
 
-    
+    /*
     // Daten ins Backend senden
     const axios = require('axios');
     const backendUrl = 'http://192.168.198.48:3000/api/scrapedata';
@@ -80,6 +83,7 @@ const { Festplatte } = require('./models.js')
     } catch (error) {
         console.error('Erreur lors de l\'envoi des données au backend :', error);
     }
+    */
 
     await browser.close();
 })();

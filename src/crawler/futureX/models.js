@@ -1,7 +1,7 @@
 const { scheduled } = require("rxjs");
 
 class Prozessor{
-    constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktlink, marke, imgUrl, 
+    constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktlink, marke, imgUrl, verfuegbarkeit,
         CPUTyp, sockel, kerne, threads, taktfrequenz, interneGrafik, stromverbrauch, maxTurboTaktfrequenz) {
 
         this.shopID = shopID;
@@ -12,6 +12,7 @@ class Prozessor{
         this.produktlink = produktlink;
         this.marke = marke;
         this.imgUrl = imgUrl;
+        this.verfuegbarkeit = verfuegbarkeit;
 
         this.CPUTyp = CPUTyp;
         this.sockel = sockel;
@@ -25,7 +26,7 @@ class Prozessor{
 }
 
 class Gehaeuse {
-    constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktLink, marke,imgUrl,
+    constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktLink, marke, imgUrl, verfuegbarkeit,
                     frontanschluesse, breite, tiefe, hoehe, gewicht, mainboardFormfaktor, produkttyp) {
         this.abmessung = "";
         this.shopID = shopID;
@@ -36,6 +37,7 @@ class Gehaeuse {
         this.produktlink = produktLink;
         this.marke = marke;
         this.imgUrl = imgUrl;
+        this.verfuegbarkeit = verfuegbarkeit;
 
         this.breite = breite;
         this.hoehe = hoehe;
@@ -48,8 +50,8 @@ class Gehaeuse {
 }
 
 class Mainboard{
-    constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktLink, marke, 
-        formfaktor, chipsatz, sockel, anzahlSpeichersockel, unterstuetzterSpeichertyp, maximalSpeicher, imgUrl) {
+    constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktLink, marke, imgUrl, verfuegbarkeit,
+        formfaktor, chipsatz, sockel, anzahlSpeichersockel, unterstuetzterSpeichertyp, maximalSpeicher) {
         
         this.shopID = shopID;
         this.kategorie = kategorie;
@@ -58,6 +60,7 @@ class Mainboard{
         this.deliveryDate = deliveryDate; 
         this.marke = marke;
         this.imgUrl = imgUrl;
+        this.verfuegbarkeit = verfuegbarkeit;
 
         this.chipsatz = chipsatz;
         this.sockel = sockel;
@@ -70,7 +73,7 @@ class Mainboard{
 }
 
 class Arbeitsspeicher{
-    constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktlink, marke, 
+    constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktlink, marke, verfuegbarkeit,
                                 typ, kapazitaet, spannung, latency, imgUrl){
         this.shopID = shopID;
         this.kategorie = kategorie;
@@ -79,6 +82,7 @@ class Arbeitsspeicher{
         this.deliveryDate = deliveryDate; 
         this.marke = marke;
         this.imgUrl= imgUrl; 
+        this.verfuegbarkeit = verfuegbarkeit;
 
         this.typ = typ;
         this.kapazitaet = kapazitaet; 
@@ -89,7 +93,8 @@ class Arbeitsspeicher{
 }
 
 class Festplatte{
-    constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktlink, marke, imgUrl, typ, kapazitaet, energieverbrauch, lesen, schreiben){
+    constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktlink, marke, imgUrl, verfuegbarkeit,
+                        typ, kapazitaet, energieverbrauch, lesen, schreiben){
         
         this.shopID = shopID;
         this.kategorie = kategorie;
@@ -99,6 +104,7 @@ class Festplatte{
         this.produktlink = produktlink;
         this.marke = marke; 
         this.imgUrl = imgUrl;
+        this.verfuegbarkeit = verfuegbarkeit;
 
         this.typ = typ;
         this.kapazitaet = kapazitaet; 
@@ -109,7 +115,7 @@ class Festplatte{
 }
 
 class Grafikkarte{
-    constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktLink, 
+    constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktLink, verfuegbarkeit,
                     imgUrl, marke, speicherKapazitaet, Grafikprozessor, durchschnittlicherVerbrauch, streamprozessorenAnzahl){
         this.shopID = shopID;
         this.kategorie = kategorie;
@@ -119,6 +125,7 @@ class Grafikkarte{
         this.produktlink = produktLink;
         this.marke = marke;
         this.imgUrl = imgUrl;
+        this.verfuegbarkeit = verfuegbarkeit;
 
         this.speicherKapazitaet = speicherKapazitaet;
         this.grafikprozessor = Grafikprozessor;
@@ -128,7 +135,7 @@ class Grafikkarte{
 }
 
 class Netzteil {
-    constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktLink,
+    constructor(shopID, kategorie, bezeichnung, preis, deliveryDate, produktLink, verfuegbarkeit,
         bauForm, zertifizierung, imgUrl, marke, leistung, formfaktor){ 
 
         this.shopID = shopID;
@@ -138,6 +145,7 @@ class Netzteil {
         this.deliveryDate = deliveryDate; 
         this.marke = marke;
         this.imgUrl = imgUrl;
+        this.verfuegbarkeit = verfuegbarkeit;
 
         this.leistung = leistung; 
         this.bauForm = bauForm;

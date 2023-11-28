@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const { konvertiereInInt, futureXUrls, futureXUrls2, extrahiereFloat2, extrahiereZahl, extrahiereDatum, isEmpty } = require('./funktionen.js');
+const { konvertiereInInt, futureXUrls, futureXUrls2, gibVerfuegbarkeit, extrahiereDatum, isEmpty } = require('./funktionen.js');
 const { Netzteil } = require('./models.js')
 
 let listeArtikel = [];
@@ -35,6 +35,7 @@ let listeArtikel = [];
             artikel.deliveryDate = extrahiereDatum(await liferungDiv.evaluate(node => node.innerText));
             artikel.produktlink = listVonUrlArtikel[i];
             artikel.imgUrl = await imgSelektor.evaluate(node => node.getAttribute('src'));
+            artikel.verfuegbarkeit = gibVerfuegbarkeit(await liferungDiv.evaluate(node => node.innerText));
 
             for(const element of detailsSelektor){
                 const data = await page.evaluate(el => el.querySelector('td:nth-child(2)').textContent, element);
