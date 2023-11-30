@@ -104,8 +104,19 @@ function extrahiereZahl(satz){
   }
 }
 
-function extrahiereDatum(satz){
+function extrahiereDatum2(satz){
   return parseInt(satz.match(/\d+/)[0]);
+}
+
+function extrahiereDatum(satz){
+  splitSatz = satz.split(','); 
+  let lifertDatum =  0;
+
+  if(satz.length > 0){
+    lifertDatum =  parseInt(splitSatz[1].match(/\d+/)[0]);
+  }
+
+  return lifertDatum;
 }
 
 function gibVerfuegbarkeit(satz){

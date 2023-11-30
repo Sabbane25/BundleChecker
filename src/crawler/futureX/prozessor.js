@@ -7,12 +7,11 @@ let listProzessorArtikle = [];
 (async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    let listVonUrlArtikel = await futureXUrls("https://www.future-x.de/Hardware-Netzwerk/PC-Komponenten/CPUs/?b2bListingView=listing&p=", 4);
+    let listeArtikel = await futureXUrls("https://www.future-x.de/Hardware-Netzwerk/PC-Komponenten/CPUs/?b2bListingView=listing&p=", 1);
     
-    //await page.waitForTimeout(5000);
 
-    for(let i = 0; i < listVonUrlArtikel.length; i++){ 
-        await page.goto(listVonUrlArtikel[i]);
+    for(let i = 0; i < listeArtikel.length; i++){ 
+        await page.goto(listeArtikel[i]);
         let artikelProzessor = new Prozessor();
 
         try{
@@ -29,7 +28,7 @@ let listProzessorArtikle = [];
             artikelProzessor.marke = (await titleDiv.evaluate(node => node.innerText)).split(" ")[0];
             artikelProzessor.preis = extrahiereFloat2(await priceDiv.evaluate(node => node.innerText));
             artikelProzessor.deliveryDate = extrahiereDatum(await liferungDiv.evaluate(node => node.innerText));
-            artikelProzessor.produktlink = listVonUrlArtikel[i];
+            artikelProzessor.produktlink = listeArtikel[i];
             artikelProzessor.imgUrl = await imgSelektor.evaluate(node => node.getAttribute('src'));
             artikelProzessor.verfuegbarkeit = gibVerfuegbarkeit(await liferungDiv.evaluate(node => node.innerText));
 
@@ -110,12 +109,11 @@ let listProzessorArtikle = [];
     console.log(listProzessorArtikle);
     console.log("total", listProzessorArtikle.length);
 
-    /*
     // Daten ins Backend senden
     const axios = require('axios');
     const backendUrl = 'http://192.168.198.48:3000/api/scrapedata';
 
-    const produktListe = { kategorie: 'CPU', value: listeArtikel };
+    const produktListe = { kategorie: 'CPU', value: listProzessorArtikle };
 
     try {
         const response = await axios.post(backendUrl, produktListe, {
@@ -127,7 +125,6 @@ let listProzessorArtikle = [];
     } catch (error) {
         console.error('Erreur lors de l\'envoi des données au backend :', error);
     }
-    */
     
     await browser.close();
 })();
