@@ -22,8 +22,9 @@ export class ListKomponenteComponent {
 
   listeKategorie = ['CPU', 'Festplatte', 'Gehaeuse', 'Grafikkarte','Mainboard', 'Netzteil', 'RAM'];
   artikelListe: Array<{ kategorie: string, shop1: Artikel, shop2: Artikel }> = [];
-  // Déclarez un type générique T qui peut être n'importe quel type
-  
+  vergleichenenArtikelliste: Array<{ shop1: Artikel, shop2: Artikel}> = [];
+
+  artikelliste: Array<{ kategorie: string, artikelListe: Array<{ shop1: Artikel, shop2: Artikel}>}> = [];
 
   sortierteArtikelListe: Array<{ kategorie: string, liste1: Artikel[], liste2: Artikel[] }> = [];
   hinzugefuegteArtikel: Artikel[] = []; // Um Artikel im neu Kontiguration aufzulisten / zur Übersicht - Funktion
@@ -42,6 +43,7 @@ export class ListKomponenteComponent {
    this.gibGleichteNetzteil();
    this.gibGleichteGrafikkarte();
    this.gibGleichteGehaeuse();
+   console.log('probleme resolu:********', this.artikelliste);
   }
   
 
@@ -129,6 +131,7 @@ export class ListKomponenteComponent {
 
   async gibGleichteFestplatte() {
     try{
+      let vergleichenenArtikelliste: Array<{ shop1: Artikel, shop2: Artikel}> = [];
       const listeFestplatteShop1: Speicher[] = await this.ladeFestplatteData(1, 'Festplatte');
       const listeFestplatteShop2: Speicher[] = await this.ladeFestplatteData(2, 'Festplatte');
 
@@ -139,15 +142,13 @@ export class ListKomponenteComponent {
             && festplatteId1.schreiben === festplatteId2.schreiben
             && festplatteId1.kapazitaet === festplatteId2.kapazitaet
             && isGleichArikel === false){
-              this.artikelListe.push({ kategorie:"Festplatte", shop1: festplatteId1, shop2: festplatteId2 });
+              vergleichenenArtikelliste.push({ shop1: festplatteId1, shop2: festplatteId2 });
               isGleichArikel = true;
           }
         }
       }
-      for(let artikel of this.artikelListe){
-        console.log(artikel.kategorie);
-      }
-      console.log(this.artikelListe);
+      console.log('Festplatte vergleichenenArtikelliste: ', vergleichenenArtikelliste.length);
+      this.artikelliste.push({ kategorie: 'Festplatte', artikelListe: vergleichenenArtikelliste.slice()});
     }catch (error){
       console.error('Erreur während des La');
     }
@@ -155,6 +156,7 @@ export class ListKomponenteComponent {
 
   async gibGleichteRam() {
     try{
+      let vergleichenenArtikelliste: Array<{ shop1: Artikel, shop2: Artikel}> = [];
       const listeRamShop1: Ram[] = await this.ladeRamData(1, 'RAM');
       const listeRamShop2: Ram[] = await this.ladeRamData(2, 'RAM');
 
@@ -167,14 +169,13 @@ export class ListKomponenteComponent {
             && festplatteId1.spannung === festplatteId2.spannung
             && isGleichArikel === false){
               this.artikelListe.push({ kategorie:"RAM", shop1: festplatteId1, shop2: festplatteId2 });
+              vergleichenenArtikelliste.push({ shop1: festplatteId1, shop2: festplatteId2 });
               isGleichArikel = true;
           }
         }
       }
-      for(let artikel of this.artikelListe){
-        console.log(artikel.kategorie);
-      }
-      console.log(this.artikelListe);
+      console.log('RAM vergleichenenArtikelliste: ', vergleichenenArtikelliste.length);
+      this.artikelliste.push({ kategorie: 'RAM', artikelListe: vergleichenenArtikelliste.slice()});
     }catch (error){
       console.error('Erreur während des La');
     }
@@ -182,6 +183,7 @@ export class ListKomponenteComponent {
 
   async gibGleichteMainboard() {
     try{
+      let vergleichenenArtikelliste: Array<{ shop1: Artikel, shop2: Artikel}> = [];
       const listeMainboardShop1: Mainboard[] = await this.ladeMainboardData(1, 'Mainboard');
       const listeMainboardShop2: Mainboard[] = await this.ladeMainboardData(2, 'Mainboard');
 
@@ -194,14 +196,13 @@ export class ListKomponenteComponent {
             && mainboardId1.maxRam === mainboardId2.maxRam
             && isGleichArikel === false){
               this.artikelListe.push({ kategorie:"Mainboard", shop1: mainboardId1, shop2: mainboardId2 });
+              vergleichenenArtikelliste.push({ shop1: mainboardId1, shop2: mainboardId2 });
               isGleichArikel = true;
           }
         }
       }
-      for(let artikel of this.artikelListe){
-        console.log(artikel.kategorie);
-      }
-      console.log(this.artikelListe);
+      console.log('Mainboard vergleichenenArtikelliste: ', vergleichenenArtikelliste.length);
+      this.artikelliste.push({ kategorie: 'Mainboard', artikelListe: vergleichenenArtikelliste.slice()});
     }catch (error){
       console.error('Erreur während des La');
     }
@@ -209,6 +210,7 @@ export class ListKomponenteComponent {
 
   async gibGleichteNetzteil() {
     try{
+      let vergleichenenArtikelliste: Array<{ shop1: Artikel, shop2: Artikel}> = [];
       const listeNetzteilShop1: Netzteil[] = await this.ladeNetzteilData(1, 'Netzteil');
       const listeNetzteilShop2: Netzteil[] = await this.ladeNetzteilData(2, 'Netzteil');
 
@@ -221,14 +223,13 @@ export class ListKomponenteComponent {
             && mainboardId1.zertifizierung === mainboardId2.zertifizierung
             && isGleichArikel === false){
               this.artikelListe.push({ kategorie:"Netzteil", shop1: mainboardId1, shop2: mainboardId2 });
+              vergleichenenArtikelliste.push({ shop1: mainboardId1, shop2: mainboardId2 });
               isGleichArikel = true;
           }
         }
       }
-      for(let artikel of this.artikelListe){
-        console.log(artikel.kategorie);
-      }
-      console.log(this.artikelListe);
+      console.log('Netzteil vergleichenenArtikelliste: ', vergleichenenArtikelliste.length);
+      this.artikelliste.push({ kategorie: 'Netzteil', artikelListe: vergleichenenArtikelliste.slice()});
     }catch (error){
       console.error('Erreur während des La');
     }
@@ -236,27 +237,27 @@ export class ListKomponenteComponent {
 
   async gibGleichteGrafikkarte() {
     try{
+      let vergleichenenArtikelliste: Array<{ shop1: Artikel, shop2: Artikel}> = [];
       const listeGrafikkarteShop1: Grafikkarte[] = await this.ladeGrafikkarteData(1, 'Grafikkarte');
       const listeGrafikkarteShop2: Grafikkarte[] = await this.ladeGrafikkarteData(2, 'Grafikkarte');
 
-      for(const mainboardId1 of listeGrafikkarteShop1){
+      for(const grafikkarteId1 of listeGrafikkarteShop1){
         let isGleichArikel = false; 
-        for(const mainboardId2 of listeGrafikkarteShop2){
-          if(mainboardId1.marke === mainboardId2.marke 
-            && mainboardId1.kapazitaet === mainboardId2.kapazitaet
+        for(const grafikkarteId2 of listeGrafikkarteShop2){
+          if(grafikkarteId1.marke === grafikkarteId2.marke 
+            && grafikkarteId1.kapazitaet === grafikkarteId2.kapazitaet
             //&& mainboardId1.model === mainboardId2.model
-            && mainboardId1.streamProzessoren === mainboardId2.streamProzessoren
-            && mainboardId1.verbrauch === mainboardId2.verbrauch
+            && grafikkarteId1.streamProzessoren === grafikkarteId2.streamProzessoren
+            && grafikkarteId1.verbrauch === grafikkarteId2.verbrauch
             && isGleichArikel === false){
-              this.artikelListe.push({ kategorie:"Grafikkarte", shop1: mainboardId1, shop2: mainboardId2 });
+              this.artikelListe.push({ kategorie:"Grafikkarte", shop1: grafikkarteId1, shop2: grafikkarteId2 });
+              vergleichenenArtikelliste.push({ shop1: grafikkarteId1, shop2: grafikkarteId2 });
               isGleichArikel = true;
           }
         }
       }
-      for(let artikel of this.artikelListe){
-        console.log(artikel.kategorie);
-      }
-      console.log(this.artikelListe);
+      console.log('Grafikkarte vergleichenenArtikelliste: ', vergleichenenArtikelliste.length);
+      this.artikelliste.push({ kategorie: 'Grafikkarte', artikelListe: vergleichenenArtikelliste.slice()});
     }catch (error){
       console.error('Erreur während des La');
     }
@@ -264,28 +265,29 @@ export class ListKomponenteComponent {
 
   async gibGleichteGehaeuse() {
     try{
+      let vergleichenenArtikelliste: Array<{ shop1: Artikel, shop2: Artikel}> = [];
       const listeGehaeuseShop1: Gehaeuse[] = await this.ladeGehaeuseData(1, 'Gehäuse');
       const listeGehaeuseShop2: Gehaeuse[] = await this.ladeGehaeuseData(2, 'Gehäuse');
 
-      for(const mainboardId1 of listeGehaeuseShop1){
+      for(const gehaeuseId1 of listeGehaeuseShop1){
         let isGleichArikel = false; 
-        for(const mainboardId2 of listeGehaeuseShop2){
-          if(mainboardId1.marke === mainboardId2.marke 
-            //&& mainboardId1.formfaktor === mainboardId2.formfaktor
+        for(const gehaeuseId2 of listeGehaeuseShop2){
+          if(gehaeuseId1.marke === gehaeuseId2.marke 
+            //&& gehaeuseId1.formfaktor === gehaeuseId2.formfaktor
             //&& mainboardId1.model === mainboardId2.model
             //&& mainboardId1.frontenschluesse === mainboardId2.frontenschluesse
             //&& mainboardId1.typ === mainboardId2.typ
-            && mainboardId1.gewicht === mainboardId2.gewicht
+            && gehaeuseId1.gewicht === gehaeuseId2.gewicht
             && isGleichArikel === false){
-              this.artikelListe.push({ kategorie:"Gehaeuse", shop1: mainboardId1, shop2: mainboardId2 });
+              this.artikelListe.push({ kategorie:"Gehaeuse", shop1: gehaeuseId1, shop2: gehaeuseId2 });
+              vergleichenenArtikelliste.push({ shop1: gehaeuseId1, shop2: gehaeuseId2 });
               isGleichArikel = true;
           }
         }
       }
-      for(let artikel of this.artikelListe){
-        console.log(artikel.kategorie);
-      }
-      console.log(this.artikelListe);
+      console.log('Gehaeuse gleichen Artikel Anzahl: ', vergleichenenArtikelliste.length);
+      this.artikelliste.push({ kategorie: 'Gehaeuse', artikelListe: vergleichenenArtikelliste.slice()});
+
     }catch (error){
       console.error('Erreur während des La');
     }

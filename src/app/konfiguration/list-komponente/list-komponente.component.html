@@ -17,19 +17,22 @@
           <div class="accordion-body">
             <!-- filter (Es handelt es sich um eine separat Composant)-->
             <!-- <app-filter [listKomponente]="artikelList3" [listKomponenteItem]="kategorieItem"></app-filter> -->
-            <div class="list-artikel" *ngFor="let item of artikelListe">
-              <div class="row  item" *ngIf="kategorie === item.kategorie">
-                <div class="col-1 border justify-content-md-center">
-                  <img src="{{ item.shop2.image }}" alt="">
-                </div>
-                <!-- Beschreibung der Artikels-->
-                <div class="col-9 artikel-info">
-                  <h5 style="color: black; font-size: 14px;"> {{ item.shop2.bezeichnung }} </h5>
-                  <p> <span class="alternate">{{ item.shop1.shopID === 1 ? 'Alternate' : 'Future-X' }}</span> : <span class="shoppreis">{{ item.shop1.preis }} €</span></p>
-                  <p> <span class="futureX">{{ item.shop2.shopID === 1 ? 'Alternate' : 'Future-X' }}</span> : <span class="shoppreis">{{ item.shop2.preis }} €</span> </p>
-                </div>
-                <div class="col">
-                  <button (click)="onButtonhinzufuegen(item.shop1)">HINZUFÜGEN</button>
+            <div class="list-artikel" *ngFor="let item of artikelliste">
+              <div *ngIf="kategorie === item.kategorie">
+                <div class="row  item" *ngFor="let artikelItem of item.artikelListe">
+                  <div class="col-1 border justify-content-md-center">
+                    <!-- <img src="{{ item.shop2.image }}" alt=""> -->
+                    <img src="{{ artikelItem.shop2.image }}" alt="">
+                  </div>
+                  <!-- Beschreibung der Artikels-->
+                  <div class="col-9 artikel-info">
+                    <h5 style="color: black; font-size: 14px;"> {{ artikelItem.shop2.bezeichnung }} </h5>
+                    <p> <span class="alternate">{{ artikelItem.shop1.shopID === 1 ? 'Alternate' : 'Future-X' }}</span> : <span class="shoppreis">{{ artikelItem.shop1.preis }} €</span></p>
+                    <p> <span class="futureX">{{ artikelItem.shop2.shopID === 1 ? 'Alternate' : 'Future-X' }}</span> : <span class="shoppreis">{{ artikelItem.shop2.preis }} €</span> </p>
+                  </div>
+                  <div class="col">
+                    <button (click)="onButtonhinzufuegen(artikelItem.shop1)">HINZUFÜGEN</button>
+                  </div>
                 </div>
               </div>
             </div>
