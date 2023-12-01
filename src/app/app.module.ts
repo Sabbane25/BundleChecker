@@ -13,8 +13,10 @@ import { AdminModule } from './admin/admin.module';
 @NgModule({
 
   imports: [
-    AdminModule,
     BrowserModule,
+    AdminModule,
+    HttpClientModule,
+    FormsModule,
     KontoModule,
     KonfigurationModule,
     KontaktModule,
