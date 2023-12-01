@@ -1,20 +1,23 @@
       <!--Yahya: Bundle Nr.1 gibt eine Darstellung vom Bundle mit den günstigsten Komponenten. Alle Produkten werden hier betrachten-->
       <!--Günstigster Bundle-->    
       <div class="container-bundler">
+        <!--<app-list-komponent (ausgewaehlteArtikelChanged)="onAusgewaehlteArtikelChanged($event)"></app-list-komponent>-->
         <div class="container-bundle">
           <h3 class="bundleName">Günstigstes Bundle:</h3>
           <ul>
             <ng-container *ngFor="let bundle of bundles; let bundleIndex = index">
               <li>
                 <ul>
-                  <ng-container *ngFor="let anbieter of getUniqueAnbieter(bundle.artikelList)">
+                  <ng-container *ngFor="let shopID of getUniqueAnbieter(bundle.artikelList)">
                     <li>
-                      <h4>{{ anbieter }}</h4>
+                      <!-- Annahme, dass shopID in Ihrer Komponente verfügbar ist -->
+                      <h4>{{ anbieterName(shopID) }}</h4>
                       <ul>
                         <li *ngFor="let artikel of bundle.artikelList; let artikelIndex = index">
-                          <div class="artikel-info" *ngIf="artikel.anbieter === anbieter">
+                          <div class="artikel-info" *ngIf="artikel.shopID === shopID">
                             <span class="artikel-kategorie">Kategorie: {{ artikel.kategorie }}</span>
-                            <span class="artikel-spezifisch">{{ artikel.getSpezifischeAttribute() }}</span>
+                            <span class="artikel-kategorie">{{ artikel.bezeichnung }}</span>
+                            <!--<span class="artikel-spezifisch">{{ artikel.getSpezifischeAttribute() }}</span>-->
                             <span class="artikel-preis">Preis: {{ calculateArticlePrice(artikel) }} €</span>
                             
                             <div>
@@ -31,9 +34,8 @@
                           </div>
                         </li>
                       </ul>
-                      <!--die css Klasse muss noch geändert werden-->
                       <div class="total-price-products">
-                        Gesamtpreis bei {{ anbieter }}: {{ calculateAnbieterTotalPrice(bundle.artikelList, anbieter) }} €
+                        Gesamtpreis bei {{ anbieterName(shopID) }}: {{ calculateAnbieterTotalPrice(bundle.artikelList, shopID) }} €
                       </div>
                     </li>
                   </ng-container>

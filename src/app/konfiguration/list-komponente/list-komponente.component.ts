@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, Renderer2} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Artikel } from 'src/models/artikel.model';
 import { Cpu } from 'src/models/cpu.model';
 import { Ram } from 'src/models/ram.model';
@@ -14,7 +14,7 @@ import { ArtikelService } from 'src/services/artikel.service';
 export class ListKomponenteComponent {
 
   @Input() testFilter: any[] = ["test", "test"];
-
+  
   artikelListe: Array<{ kategorie: string, liste: Artikel[] }> = [];
   produkt: Artikel[] = [];
   listeRam: Ram[] = [];
@@ -26,9 +26,10 @@ export class ListKomponenteComponent {
   onButtonhinzufuegen(artikel: Artikel) {
     this.hinzugefuegteArtikel.push(artikel);
   }
-
-  constructor(
-      private artikelService: ArtikelService) {}
+  zurUebersicht() {
+    this.artikelService.updateAusgewaehlteArtikel(this.hinzugefuegteArtikel);
+  }
+  constructor(private artikelService: ArtikelService) {}
 
   ngOnInit(): void {
    this.ladeRamData();

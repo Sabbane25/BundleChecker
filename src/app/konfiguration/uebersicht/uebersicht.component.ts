@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ARTIKEL_LIST } from 'src/models/artikel_mockup';
 import { Artikel } from 'src/models/artikel.model';
-import { MerkzettelComponent } from 'src/app/merkzettel/merkzettel/merkzettel.component';
+import { ArtikelService } from 'src/services/artikel.service';
 
 @Component({
   selector: 'app-uebersicht',
@@ -11,18 +10,26 @@ import { MerkzettelComponent } from 'src/app/merkzettel/merkzettel/merkzettel.co
 })
 export class UebersichtComponent implements OnInit {
 
-  bundles: { bundleName: string; anbieter: string; artikelList: Artikel[]; totalPrice: number }[] = []; // Hier wird bundles deklariert
+  bundles: { bundleName: string; artikelList: Artikel[]; totalPrice: number }[] = []; // Hier wird bundles deklariert
+  ausgewaehlteArtikel: Artikel[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private artikelService: ArtikelService) {}
 
   ngOnInit() {
+    this.artikelService.ausgewaehlteArtikel$.subscribe(artikel => {
+      this.ausgewaehlteArtikel = artikel;
+    });
     this.gibGuenstigstesBundle(this.ausgewaehlteArtikel);
     this.groupByAnbieter();
-
   }
 
-  //Die Variable enthält alle Artikel die in Listkomponenten ausgewälte wurde
-  ausgewaehlteArtikel:  Artikel[] = ARTIKEL_LIST; 
+  onAusgewaehlteArtikelChanged(ausgewaehlteArtikel: Artikel[]) {
+    this.ausgewaehlteArtikel = ausgewaehlteArtikel;
+  }
+
+  anbieterName(shopID: number): string {
+    return (shopID === 1) ? 'Alternate' : 'Future-X';
+  }
 
 /**
  * @param listArtikel Liste von allen verfügbaren Artikeln
@@ -37,13 +44,11 @@ gibGuenstigstesBundle(listArtikel: Artikel[]): Artikel[] {
   // Iteriere durch alle verfügbaren Artikel
   for (const artikel of listArtikel) {
     const kategorie = artikel.kategorie;
-
     // Prüfe, ob es bereits ein günstigstes Produkt in dieser Kategorie gibt
     if (!guenstigsteProKategorie.has(kategorie) || artikel.preis < guenstigsteProKategorie.get(kategorie)!.preis) {
       guenstigsteProKategorie.set(kategorie, artikel);
     }
   }
-
   // Füge die günstigsten Produkte zur Ergebnisliste hinzu
   guenstigsteProKategorie.forEach((artikel) => {
     guenstigsteProdukte.push(artikel);
@@ -108,13 +113,13 @@ calculateArticlePrice(artikel: Artikel): number {
 
 // Methode zur Aktualisierung des Preises eines einzelnen Artikels
 updateArticlePrice(bundle: any, artikel: Artikel) {
-  // Annahme: Der Preis wird aus Ihrem Artikelobjekt extrahiert (ersetzen Sie dies durch Ihren tatsächlichen Code)
-  const preis = artikel.preis; // Hier wird angenommen, dass der Preis im Artikelobjekt gespeichert ist.
+  
+  const preis = artikel.preis;
 
-  // Berechnen Sie den neuen Preis (angenommen, die Menge bleibt unverändert)
+  // Neuen Preis (angenommen, die Menge bleibt unverändert)
   artikel.preis = artikel.menge * preis;
 
-  // Runden Sie den Preis auf zwei Dezimalstellen
+  // Preis auf zwei Dezimalstellen
   artikel.preis = parseFloat(artikel.preis.toFixed(2));
 
   this.updateTotalPrice(this.bundles.indexOf(bundle));
@@ -132,24 +137,24 @@ calculateTotalPrice(artikelList: Artikel[]): number {
     total += this.calculateArticlePrice(artikel);
   }
   
-  // Runde den Gesamtpreis auf zwei Dezimalstellen
+  // Gesamtpreis auf zwei Dezimalstellen
   return parseFloat(total.toFixed(2));
 }
 
-calculateAnbieterTotalPrice(artikelList: Artikel[], anbieter: string): number {
-  const artikelByAnbieter = artikelList.filter((artikel) => artikel.anbieter === anbieter);
+calculateAnbieterTotalPrice(artikelList: Artikel[], shopID: number): number {
+  const artikelByAnbieter = artikelList.filter((artikel) => artikel.shopID === shopID);
   
-  // Runde den Gesamtpreis auf zwei Dezimalstellen
+  //Gesamtpreis auf zwei Dezimalstellen
   return parseFloat(this.calculateTotalPrice(artikelByAnbieter).toFixed(2));
 }
 
-calculateBundleTotalPrice(bundles: { bundleName: string; anbieter: string; artikelList: Artikel[] }[]): number {
+calculateBundleTotalPrice(bundles: { bundleName: string; artikelList: Artikel[] }[]): number {
   let total = 0;
   for (const bundle of bundles) {
     total += this.calculateTotalPrice(bundle.artikelList);
   }
   
-  // Runde den Gesamtpreis auf zwei Dezimalstellen
+  // Gesamtpreis auf zwei Dezimalstellen
   return parseFloat(total.toFixed(2));
 }
 
@@ -168,18 +173,13 @@ groupByAnbieter() {
       guenstigsteProKategorie.set(artikel.kategorie, artikel);
     }
   }
-
-  // Erstellen Sie ein Bundle mit den günstigsten Artikeln
-// In der Methode groupByAnbieter:
-const guenstigstesBundle: { bundleName: string; anbieter: string; artikelList: Artikel[]; totalPrice: number } = {
+// Ein Bundle mit den günstigsten Artikeln
+const guenstigstesBundle: { bundleName: string; artikelList: Artikel[]; totalPrice: number } = {
   bundleName: '',
-  anbieter: '', // Hier können Sie einen generischen Anbieter festlegen.
   artikelList: Array.from(guenstigsteProKategorie.values()),
   totalPrice: this.calculateTotalPrice(Array.from(guenstigsteProKategorie.values())), // Gesamtpreis berechnen
 };
-
 this.bundles = [guenstigstesBundle];
-
 }
 
 /**
@@ -187,19 +187,19 @@ this.bundles = [guenstigstesBundle];
  * @param artikelList 
  * @returns 
  */
-getUniqueAnbieter(artikelList: Artikel[]): string[] {
-  return [...new Set(artikelList.map((artikel) => artikel.anbieter))];
+getUniqueAnbieter(artikelList: Artikel[]): number[] {
+  return [...new Set(artikelList.map((artikel) => artikel.shopID))];
 }
 
 /**
  * Zum des Produktlinks auf einem neuen Fenster.
  * @param produktLink 
  */
-openProductLink(productLink: string) {
+openProductLink(produktUrl: string) {
   // Überprüfen, ob ein gültiger Produktlink vorhanden ist
-  if (productLink) {
+  if (produktUrl) {
     // Die Methode window.open() öffnet den Link in einem neuen Tab oder Fenster
-    window.open(productLink, '_blank');
+    window.open(produktUrl, '_blank');
   } else {
     // Hier können Sie eine Meldung oder Aktion hinzufügen, wenn kein Produktlink vorhanden ist
     alert("Kein gültiger Produktlink vorhanden.");
@@ -212,7 +212,7 @@ openProductLink(productLink: string) {
    * Methode zum Löschen eines Bundles oder Artikel.
    * @param bundle 
    */
-  delete(bundle: { bundleName: string; anbieter: string; artikelList: Artikel[] }, artikel: Artikel) {
+  delete(bundle: { bundleName: string; artikelList: Artikel[] }, artikel: Artikel) {
     // Finde das ausgewählte Bundle
     const targetBundle = this.bundles.find(b => b.bundleName === bundle.bundleName);
 
@@ -232,7 +232,7 @@ openProductLink(productLink: string) {
    * @param bundle 
    * @param artikel 
    */
-  deleteArticle(bundle: { bundleName: string; anbieter: string; artikelList: Artikel[] }, artikel: Artikel) {
+  deleteArticle(bundle: { bundleName: string; artikelList: Artikel[] }, artikel: Artikel) {
     this.delete(bundle, artikel);
   }
   

@@ -50,7 +50,7 @@
         </div>
       </div>
       <div class="button-artikel">
-        <button><h3>Zur Übersicht</h3></button>
+        <button (click)="zurUebersicht()">Zur Übersicht</button>
       </div>
       <div class="artikel" *ngFor="let artikel of hinzugefuegteArtikel">
         <h4>{{artikel.kategorie}}: {{artikel.gibArtikelTitel()}}</h4>

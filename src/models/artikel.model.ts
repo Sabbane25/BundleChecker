@@ -7,7 +7,6 @@ export abstract class Artikel {
   lieferDatum: number;
   marke: string;
   image: string;
-  anbieter: string;
   menge: number;
 
   constructor(kategorie: string, preis: number, shopID: number, produktUrl: string, bezeichnung: string, lieferDatum: number, marke: string, image: string) {
@@ -26,7 +25,9 @@ export abstract class Artikel {
   abstract gibArtikelTitel(): string;
 
 
-  /*Yahya: Diese Template-Methode wird von den Unterklassen überschrieben werden,
+
+
+  /*Yahya: Diese Template-Methode wird von den Unterklassen überschrieben,
   /um das Anzeigen von verschiedenen Attributen zu ermöglichen.
   */
   getSpezifischeAttribute(): string {

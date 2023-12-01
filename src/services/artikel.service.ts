@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, map } from 'rxjs';
+import { Observable, catchError, map, BehaviorSubject } from 'rxjs';
 import { Artikel } from 'src/models/artikel.model';
 import { Ram } from 'src/models/ram.model';
 import { Cpu } from 'src/models/cpu.model';
@@ -231,6 +231,12 @@ export class ArtikelService {
         });
       })
     );
+  }
+  //Yahya
+  private ausgewaehlteArtikelSubject = new BehaviorSubject<Artikel[]>([]);
+  ausgewaehlteArtikel$ = this.ausgewaehlteArtikelSubject.asObservable();
+  updateAusgewaehlteArtikel(artikel: Artikel[]) {
+  this.ausgewaehlteArtikelSubject.next(artikel);
   }
 }
 function of(arg0: never[]): any {
