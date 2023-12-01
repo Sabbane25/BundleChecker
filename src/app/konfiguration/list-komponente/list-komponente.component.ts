@@ -43,6 +43,7 @@ export class ListKomponenteComponent {
    this.gibGleichteNetzteil();
    this.gibGleichteGrafikkarte();
    this.gibGleichteGehaeuse();
+   this.gibGleichteCPU();
    console.log('probleme resolu:********', this.artikelliste);
   }
   
@@ -119,6 +120,19 @@ export class ListKomponenteComponent {
   ladeGehaeuseData(shopId: number, kategorie: string): Promise<Gehaeuse[]> {
     return new Promise((resolve, reject) => {
       this.artikelService.gibListeGehaeuse(shopId, kategorie).subscribe(
+        (gehaeuseListe) => {
+          resolve(gehaeuseListe);
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  }
+
+  ladeCPUData(shopId: number, kategorie: string): Promise<Cpu[]> {
+    return new Promise((resolve, reject) => {
+      this.artikelService.gibListeCPU(shopId, kategorie).subscribe(
         (gehaeuseListe) => {
           resolve(gehaeuseListe);
         },
@@ -219,7 +233,7 @@ export class ListKomponenteComponent {
         for(const mainboardId2 of listeNetzteilShop2){
           if(mainboardId1.marke === mainboardId2.marke 
             && mainboardId1.bauform === mainboardId2.bauform
-            //&& mainboardId1.leistung === mainboardId2.leistung
+            && mainboardId1.leistung === mainboardId2.leistung
             && mainboardId1.zertifizierung === mainboardId2.zertifizierung
             && isGleichArikel === false){
               this.artikelListe.push({ kategorie:"Netzteil", shop1: mainboardId1, shop2: mainboardId2 });
@@ -287,6 +301,35 @@ export class ListKomponenteComponent {
       }
       console.log('Gehaeuse gleichen Artikel Anzahl: ', vergleichenenArtikelliste.length);
       this.artikelliste.push({ kategorie: 'Gehaeuse', artikelListe: vergleichenenArtikelliste.slice()});
+
+    }catch (error){
+      console.error('Erreur während des La');
+    }
+  }
+
+  async gibGleichteCPU() {
+    try{
+      let vergleichenenArtikelliste: Array<{ shop1: Artikel, shop2: Artikel}> = [];
+      const listeCPUShop1: Cpu[] = await this.ladeCPUData(1, 'CPU');
+      const listeCPUShop2: Cpu[] = await this.ladeCPUData(2, 'CPU');
+
+      for(const cpuId1 of listeCPUShop1){
+        let isGleichArikel = false; 
+        for(const cpuId2 of listeCPUShop2){
+          if(cpuId1.marke === cpuId2.marke 
+            && cpuId1.interneGrafik === cpuId2.interneGrafik
+            && cpuId1.marke === cpuId2.marke
+            && cpuId1.stromverbrauch === cpuId2.stromverbrauch
+            && cpuId1.anzahlKerne === cpuId2.anzahlKerne
+            && isGleichArikel === false){
+              this.artikelListe.push({ kategorie:"CPU", shop1: cpuId1, shop2: cpuId2 });
+              vergleichenenArtikelliste.push({ shop1: cpuId1, shop2: cpuId2 });
+              isGleichArikel = true;
+          }
+        }
+      }
+      console.log('Gehaeuse gleichen Artikel Anzahl: ', vergleichenenArtikelliste.length);
+      this.artikelliste.push({ kategorie: 'CPU', artikelListe: vergleichenenArtikelliste.slice()});
 
     }catch (error){
       console.error('Erreur während des La');
