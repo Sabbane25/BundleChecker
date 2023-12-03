@@ -5,6 +5,7 @@ import { Artikel } from 'src/models/artikel.model';
 import { MerkzettelComponent } from 'src/app/merkzettel/merkzettel/merkzettel.component';
 import { MerkzettelService } from 'src/services/merkzettel.service';
 import {TokenStorageService} from "../../../services/token-storage.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-uebersicht',
@@ -17,8 +18,9 @@ export class UebersichtComponent implements OnInit {
   bundles: { anbieter: string; artikelList: Artikel[] }[] = []; // Hier wird bundles deklariert
   merkzettel: { anbieter: string; artikelList: Artikel[] }[] = []; //Array, um die Bundles im Merkzettel aufzurufen/speichern.
   isLoggedIn: boolean = false
+  merkzettelHinzugefuegt: boolean = false;
 
-  constructor(private http: HttpClient, private merkzettelService: MerkzettelService, private tokenStorageService: TokenStorageService) {}
+  constructor(private http: HttpClient, private merkzettelService: MerkzettelService, private tokenStorageService: TokenStorageService, private router: Router, ) {}
 
   ngOnInit() {
     this.gibGuenstigstesBundle(this.ausgewaehlteArtikel);
@@ -140,5 +142,6 @@ export class UebersichtComponent implements OnInit {
     }
 
     this.merkzettelService.erstelleMerkzettel(artikelUrls)
+    this.merkzettelHinzugefuegt = true;
   }
 }

@@ -74,7 +74,7 @@ exports.add = (req, res) => {
  * @param res
  */
 exports.delete = (req, res) => {
-    const merkzettellId = req.body.merkzettellId;
+    const merkzettellId = req.params.merkzettellId;
 
     Merkzettel.findOne({
         where: {
@@ -83,10 +83,10 @@ exports.delete = (req, res) => {
         }
     }).then(merkzettel => {
         if (!merkzettel) {
-            return res.status(404).send({message: "Merkzettel nicht gefunden!"});
+            return res.status(404).send({message: `Merkzettel ${merkzettellId} nicht gefunden!`});
         } else {
             merkzettel.destroy();
-            res.send({message: "Merkzettel wurde gelöscht!"});
+            res.send({message: `Merkzettel ${merkzettellId} wurde gelöscht!`});
         }
     });
 };

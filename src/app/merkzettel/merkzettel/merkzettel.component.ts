@@ -13,7 +13,7 @@ import {TokenStorageService} from "../../../services/token-storage.service";
 export class MerkzettelComponent {
   merkzettelArtikel: Artikel[] = []; // Hier werden die Artikel im Merkzettel gespeichert
   bundles: any = [];
-  selectedBundleId: number;
+  selectedBundleId: number|undefined;
   selectedBundleLabel: string;
 
   constructor(private http: HttpClient, private merkzettelService: MerkzettelService, private tokenStorageService: TokenStorageService) {}
@@ -23,7 +23,10 @@ export class MerkzettelComponent {
   }
 
   // Methode, um Artikel aus dem Merkzettel zu entfernen
-  removeItemFromMerkzettel(selectedBundleId: number, artikel: Artikel) {
+  removeItemFromMerkzettel(selectedBundleId: number|undefined, artikel: Artikel) {
+    if (selectedBundleId === undefined) {
+        return;
+    }
     this.merkzettelService.removeItemFromMerkzettel(selectedBundleId, artikel);
 
     const index = this.merkzettelArtikel.indexOf(artikel);
@@ -55,8 +58,6 @@ export class MerkzettelComponent {
           produkte: await this.merkzettelService.holeProdukte(bundle.id)
         };
       }
-
-      console.log(this.bundles)
     }
   }
 
@@ -74,5 +75,17 @@ export class MerkzettelComponent {
       const artikel: Artikel = this.bundles[id_list].produkte[produkt];
       this.merkzettelArtikel.push(artikel);
     }
+  }
+
+  /**
+   * Lösche einen Merkzettel vollständig
+   *
+   * @param id_list
+   * @param merkzettelId
+   */
+  async entferneMerkzettel(id_list: number, merkzettelId: number) {
+    await this.merkzettelService.entferneMerkzettel(merkzettelId);
+    this.bundles.splice(id_list, 1);
+    this.selectedBundleId = undefined;
   }
 }

@@ -27,7 +27,7 @@ module.exports = function (app) {
     );
 
     app.delete(
-        "/api/merkzettel/delete",
+        "/api/merkzettel/list/:merkzettellId",
         [
             authJwt.verifyToken // prüfe ob token valide ist
         ],

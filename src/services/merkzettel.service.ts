@@ -36,10 +36,8 @@ export class MerkzettelService {
             console.log(data.id);
 
             if (data.id) {
-                for (let produktLink in artikel) {
-                    // ToDo: In der Übersicht werden die Links noch nicht korrekt gesetzt
-                    //  danach kann diese Zeile raus
-                    produktLink = 'https://www.alternate.de/configurator.xhtml?pca=20&pco=43&pkid=100002189&pcs=relevance'
+                for (let artikelId in artikel) {
+                    const produktLink = artikel[artikelId];
                     const merkzettelId = data.id
 
                     this.http.post(API_MERKZETTEL_PRODUKT_HINZUFUEGEN, { merkzettelId, produktLink }, httpOptions).subscribe(
@@ -82,5 +80,9 @@ export class MerkzettelService {
                 // console.error(error);
             }
         );
+    }
+
+    entferneMerkzettel(merkzettelId: number) {
+        return this.http.delete(`${API_MERKZETTEL_LISTE}/${merkzettelId}`, httpOptions).toPromise();
     }
 }
