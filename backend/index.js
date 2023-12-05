@@ -6,14 +6,7 @@ const helmet = require('helmet');
 const app = express(); // Initialisieren der Express-App
 const port = process.env.PORT || 3000; // Port, auf dem der Server laufen wird
 
-var corsOptions = {
-  origin: "http://localhost:4200",
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Parse Anfragen mit Content-Type - application/json
 app.use(express.json());
@@ -24,7 +17,9 @@ app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "*"); // erlaube anfragen
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, x-access-token');
   next();
 })
 
@@ -32,7 +27,8 @@ app.use((req, res, next) => {
 const db = require("./models");
 const Role = db.role;
 
-db.sequelize.sync();
+db.sequelize.sync(); // Starte server ohne synchronisierung
+// db.sequelize.sync({ alter: true }); // Synchronisiere Modelle mit Datenbank
 
 // simple route
 app.get("/", (req, res) => {
@@ -65,6 +61,7 @@ require('./routes/table.routes')(app, connection);
 require('./routes/email.routes')(app, connection);
 require('./routes/user.routes')(app, connection);
 require('./routes/scrape.routes')(app, connection);
+require('./routes/merkzettel.routes')(app, connection);
 
 // Server starten und auf Anfragen lauschen
 app.listen(port, () => {

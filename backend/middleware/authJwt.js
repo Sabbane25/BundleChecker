@@ -25,7 +25,7 @@ verifyToken = (req, res, next) => {
               message: "Unauthorized!",
           });
         }
-        req.userId = decoded.id;
+        req.userId = decoded.id; // speichere Nutzer-ID im Request für weitere Verwendung
         next();
     });
 };
