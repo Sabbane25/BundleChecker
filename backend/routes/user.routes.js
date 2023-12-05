@@ -47,6 +47,21 @@ module.exports = function(app, connection) {
     });
   });
 
+  app.put('/changePassword', (req, res) => {
+    const { email, password } = req.body;
+    const sql = `UPDATE nutzer SET password = ? WHERE email = ?`;
+
+    const hashedPassword = bcrypt.hashSync(req.body.password, 8);
+  
+    connection.query(sql, [hashedPassword, email], (err, results) => {
+      if (err) {
+        console.error('Fehler beim Ausführen der Datenbankabfrage: ' + err.message);
+        return res.status(500).json({ message: 'Fehler beim Ändern des Passworts' });
+      } else {
+        res.status(201).json({ message: 'Passwort erfolgreich geändert' });
+      }
+    });
+  });
 
   app.post(
       '/addUser',

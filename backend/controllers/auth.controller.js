@@ -10,15 +10,16 @@ var bcrypt = require("bcryptjs");
 
 /**
  * Registrierung-Controller
- * 
+ *
  * Dieser Controller verarbeitet Anfragen für eine Registrierung
- * 
- * @param {} req 
- * @param {*} res 
+ *
+ * @param {} req
+ * @param {*} res
  */
 exports.signup = (req, res) => {
   // Speichere Nutzer in die Datenbank
   User.create({
+    // User.updateOne({
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8) // Verschlüssele Passwort
   })
@@ -55,11 +56,11 @@ exports.signup = (req, res) => {
 
 /**
  * Anmeldung-Controller
- * 
+ *
  * Dieser Controller verarbeitet Anfragen für die Anmeldung von Nutzern
- * 
- * @param {} req 
- * @param {*} res 
+ *
+ * @param {} req
+ * @param {*} res
  */
 exports.signin = (req, res) => {
   User.findOne({

@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { NutzerService } from 'src/services/nutzer.service';
+import { Router } from '@angular/router'
 import { FormsModule } from '@angular/forms';
 import { Nutzer } from 'src/models/nutzer.model';
 
@@ -14,9 +15,9 @@ export class AdminComponent implements OnInit {
 
   users: any[] = [];
   userSearch: any[] = [];
-  searchQuery: string = ''; // Diese Zeile hinzufügen, um die Eigenschaft zu deklarieren
+  searchQuery: string = ''; 
 
-  constructor(private nutzerService: NutzerService) {}
+  constructor(private nutzerService: NutzerService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -26,18 +27,11 @@ export class AdminComponent implements OnInit {
     this.nutzerService.getUsers().subscribe((data) => {
       this.users = data;
     });
+
   }
-  /**
-  searchUser() {
-    const suchanfrage = this.searchInput.nativeElement.value;
-    this.nutzerService.suchen(suchanfrage).subscribe((searchResults) => {
-      this.users = suchanfrage ? searchResults : this.userSearch;
-    });
-  }
-  */
+
 
   filterUsers() {
-    
     
     const email = this.searchInput.nativeElement.value;
     const lowerCaseSearch = email.toLowerCase();
@@ -48,7 +42,8 @@ export class AdminComponent implements OnInit {
     } else {
       this.users = this.users.filter(user => {
         const lowerCaseEmail = user.email.toLowerCase();
-        return lowerCaseEmail === lowerCaseSearch;
+        return lowerCaseEmail.includes(lowerCaseSearch);
+        
       });
     }
   }
@@ -59,4 +54,9 @@ export class AdminComponent implements OnInit {
       this.loadUsers();
     });
   }
+
+  navigateToAdminBearbeiten(email: string, id: number): void {
+    console.log(id);
+    this.router.navigate(['/admin-bearbeiten', email, id]);
+}
 }

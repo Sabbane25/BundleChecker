@@ -1,7 +1,6 @@
 <h2 class="text-center" style="padding-top: 30px;">SYSTEMADMIN</h2>
 <div class="center">
     <div class="suche">
-        <!-- Ändere das id-Attribut, um es eindeutig zu machen -->
         <input style="width: 300px;" type="text" id="textSuche" placeholder="Nutzer suchen" #searchInput (keyup.enter)="filterUsers()">
     </div>
 </div>
@@ -14,7 +13,7 @@
             <li *ngFor="let user of users" style="background-color: #00528d4c ;">
                 <h4> {{user.email}} </h4>
                 <div>
-                    <button class="button_bearbeiten" >Bearbeiten</button>
+                    <button class="button_bearbeiten" (click)="navigateToAdminBearbeiten(user.email, user.id)" >Bearbeiten</button>
                     <button class="button_löschen" (click)="userLoeschen(user.id)">Löschen</button>
                 </div>
             </li>
