@@ -22,9 +22,12 @@
               </ul>
             </li>
           </ul>
-        <!-- </div> -->
-      </div>
-      
+          <button class="btn btn-primary" (click)="erstelleMerkzettel(bundles)" *ngIf="isLoggedIn && !merkzettelHinzugefuegt" >Zum Merkzettel hinzufügen</button>
+          <button class="btn btn-primary" (click)="erstelleMerkzettel(bundles)" *ngIf="isLoggedIn && merkzettelHinzugefuegt" disabled>Zum Merkzettel hinzufügen</button>
+          <p class="text-success" *ngIf="merkzettelHinzugefuegt">Der Merkzettel wurde angelegt.</p>
+          <a class="btn btn-primary" routerLink="/konto" *ngIf="!isLoggedIn">Merkzettel hinzufügen (Anmelden)</a>
+        </div>
+
       
       
 

@@ -10,7 +10,7 @@ module.exports = function(app, connection) {
   // Get-Endpunk, um eine Liste von aller Artikel zu erhalten(Arnauld)
   app.get('/Artikel/:artikel', (req, res) => {
     const tableArtikel = req.params.artikel;
-    const query = `SELECT A.*, T.* FROM Artikel A, ${tableArtikel} T WHERE A.Artikelnummer = T.Artikelnummer`
+    const query = `SELECT A.*, T.* FROM Artikel A, ${tableArtikel} T WHERE A.ProduktUrl = T.Url`
 
     connection.query(query, (error, results) => {
       if (error){
