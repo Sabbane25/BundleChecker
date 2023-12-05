@@ -1,68 +1,74 @@
 <div class="container">
-    <div class="container-form">
-        <form
-            *ngIf="!isSuccessful"
-            name="form"
-            (ngSubmit)="f.form.valid && onSubmit()"
-            #f="ngForm"
-            novalidate
-        >
-            <!-- E-Mail Eingabefeld-->
-            <div class="email">
-                <label for="email">E-Mail*</label><br>
-                <input type="email" name="email" [(ngModel)]="form.email" required #email="ngModel" placeholder="E-Mail Adresse" />
-                <div class="input-note-warning" *ngIf="email.errors && f.submitted">
-                    <div *ngIf="email.errors?.['required']">
-                        E-Mail ist ein Pflichtfeld.
-                    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-center">
+                <div class="container-form">
+                    <form
+                        *ngIf="!isSuccessful"
+                        name="form"
+                        (ngSubmit)="f.form.valid && onSubmit()"
+                        #f="ngForm"
+                        novalidate
+                    >
+                        <!-- E-Mail Eingabefeld-->
+                        <div class="email">
+                            <label for="email">E-Mail*</label><br>
+                            <input type="email" name="email" [(ngModel)]="form.email" required #email="ngModel" placeholder="E-Mail Adresse" />
+                            <div class="input-note-warning" *ngIf="email.errors && f.submitted">
+                                <div *ngIf="email.errors?.['required']">
+                                    E-Mail ist ein Pflichtfeld.
+                                </div>
 
-                </div>
-                <div class="input-note-warning" *ngIf="email.invalid && (email.dirty || email.touched)">
-                    <div *ngIf="email.errors?.['email']">
-                        Bitte geben Sie eine gültige E-Mail Adresse ein.
-                    </div>
-                </div>
-            </div>
-            <!-- Passwort Eingabefeld-->
-            <div class="passwort">
-                <label for="password">Passwort*</label><br>
-                <input type="password" name="password" [(ngModel)]="form.password" required minlength="{{passwordMinLength}}" #password="ngModel" placeholder="Passwort" />
-                <div class="input-note-warning" *ngIf="email.errors && f.submitted">
-                    <div *ngIf="email.errors?.['required']">
-                        Passwort ist ein Pflichtfeld.
-                    </div>
-                </div>
-                <div class="input-note-warning" *ngIf="password.invalid && (password.dirty || password.touched)">
-                    <div *ngIf="password.errors?.['minlength']">
-                        Das Passwort muss mindestens {{passwordMinLength}} Zeichen lang sein.
-                    </div>
-                </div>
-            </div>
+                            </div>
+                            <div class="input-note-warning" *ngIf="email.invalid && (email.dirty || email.touched)">
+                                <div *ngIf="email.errors?.['email']">
+                                    Bitte geben Sie eine gültige E-Mail Adresse ein.
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Passwort Eingabefeld-->
+                        <div class="passwort">
+                            <label for="password">Passwort*</label><br>
+                            <input type="password" name="password" [(ngModel)]="form.password" required minlength="{{passwordMinLength}}" #password="ngModel" placeholder="Passwort" />
+                            <div class="input-note-warning" *ngIf="email.errors && f.submitted">
+                                <div *ngIf="email.errors?.['required']">
+                                    Passwort ist ein Pflichtfeld.
+                                </div>
+                            </div>
+                            <div class="input-note-warning" *ngIf="password.invalid && (password.dirty || password.touched)">
+                                <div *ngIf="password.errors?.['minlength']">
+                                    Das Passwort muss mindestens {{passwordMinLength}} Zeichen lang sein.
+                                </div>
+                            </div>
+                        </div>
 
-            <!-- Button, um die Registrierung abzuschließen-->
-            <button type="submit" class="registrieren-button">
-                Registrieren
-            </button>
-            <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
-                Registrierung fehlgeschlagen!<br />{{ errorMessage }}
-              </div>
-            <!-- Falls bereits registriert, kann man hier zur Anmeldung springen-->
-            <div class="container-hinweis" style="text-align: center; margin-top: 8px;">
-                <p style="color: rgba(0, 0, 0, 0.615);">
-                    Haben Sie schon einen Kundenkonto?<br />
-                    <span>
-                        <a (click)="returnViewAnmelden()" style="color: #00528D; cursor: pointer;">
-                            Jetzt anmelden
-                        </a>
-                    </span>
-                </p>
+                        <!-- Button, um die Registrierung abzuschließen-->
+                        <button type="submit" class="registrieren-button btn btn-primary w-100">
+                            Registrieren
+                        </button>
+                        <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+                            Registrierung fehlgeschlagen!<br />{{ errorMessage }}
+                        </div>
+                        <!-- Falls bereits registriert, kann man hier zur Anmeldung springen-->
+                        <div class="container-hinweis" style="text-align: center; margin-top: 8px;">
+                            <p style="color: rgba(0, 0, 0, 0.615);">
+                                Haben Sie schon einen Kundenkonto?<br />
+                                <span>
+                                    <a (click)="returnViewAnmelden()" style="color: #00528D; cursor: pointer;">
+                                        Jetzt anmelden
+                                    </a>
+                                </span>
+                            </p>
+                        </div>
+                    </form>
+                    <div *ngIf="isSuccessful">
+                        <p class="mb-3">
+                            Die Registrierung war erfolgreich.
+                        </p>
+                        <a href="/konto" class="btn btn-success px-2 py-1">Weiter zur Anmeldung</a>
+                    </div>
+                </div>
             </div>
-        </form>
-        <div *ngIf="isSuccessful">
-            <p class="mb-3">
-                Die Registrierung war erfolgreich.
-            </p>
-            <a href="/konto" class="btn btn-success px-2 py-1">Weiter zur Anmeldung</a>
-          </div>
+        </div>
     </div>
 </div>
