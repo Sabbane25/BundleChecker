@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const { konvertiereInInt, gibVerfuegbarkeit, futureXUrls, extrahiereFloat2, extrahiereZahl, extrahiereDatum } = require('./funktionen.js');
+const { konvertiereInInt, gibVerfuegbarkeit, futureXUrls, futureXUrls2, extrahiereFloat2, extrahiereZahl, extrahiereDatum } = require('./funktionen.js');
 const { Prozessor } = require('./models.js')
 
 let listProzessorArtikle = [];
@@ -7,7 +7,9 @@ let listProzessorArtikle = [];
 (async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    let listeArtikel = await futureXUrls("https://www.future-x.de/Hardware-Netzwerk/PC-Komponenten/CPUs/?b2bListingView=listing&p=", 1);
+    //let listeArtikel = await futureXUrls("https://www.future-x.de/Hardware-Netzwerk/PC-Komponenten/CPUs/?b2bListingView=listing&p=", 1);
+
+    let listeArtikel = await futureXUrls2("https://www.future-x.de/Hardware-Netzwerk/PC-Komponenten/CPUs/?b2bListingView=listing&p=");
     
 
     for(let i = 0; i < listeArtikel.length; i++){ 
@@ -125,6 +127,6 @@ let listProzessorArtikle = [];
     } catch (error) {
         console.error('Erreur lors de l\'envoi des données au backend :', error);
     }
-    
+
     await browser.close();
 })();

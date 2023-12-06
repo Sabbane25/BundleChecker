@@ -62,7 +62,7 @@ async function futureXUrls2(url) {
     try{
       await page.goto(url + i);
       const elements = await page.$$('.cms-block.pos-1.cms-block-product-listing .product-image-wrapper');
-      if(elements.length != 0 && i < 4){
+      if(elements.length != 0 && i < 3){
         for(let element of elements){
           const link = await page.evaluate(el => el.querySelector('a').getAttribute('href'), element)
           console.log(link, "page number: ", i);
