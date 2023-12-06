@@ -1,6 +1,6 @@
-import { Component, ElementRef, Input, Renderer2} from '@angular/core';
-import { DataService } from 'src/app/data.service';
-import { Ram } from 'src/models/ram.model';
+
+import { AfterViewInit, Component, ElementRef, Input, Renderer2} from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { Artikel } from 'src/models/artikel.model';
 import { Cpu } from 'src/models/cpu.model';
 import { Gehaeuse } from 'src/models/gehaeuse.model';
@@ -9,6 +9,9 @@ import { Mainboard } from 'src/models/mainboard.model';
 import { Netzteil } from 'src/models/netzteil.model';
 import { Speicher } from 'src/models/speicher.model';
 import { ArtikelService } from 'src/services/artikel.service';
+import { FilterService } from 'src/services/filter.service'; 
+import { Filter } from 'src/models/filter.models';
+import { Ram } from 'src/models/ram.model';
 
 @Component({
   selector: 'app-list-komponent',
@@ -16,13 +19,11 @@ import { ArtikelService } from 'src/services/artikel.service';
   styleUrls: ['list-komponente.component.css']
 })
 
-export class ListKomponenteComponent {
+export class ListKomponenteComponent implements AfterViewInit{
 
-  @Input() testFilter: any[] = ["test", "test"];
-
-  listeKategorie = ['CPU', 'Festplatte', 'Gehaeuse', 'Grafikkarte','Mainboard', 'Netzteil', 'RAM'];
+  listeKategorie = ['CPU', 'Festplatte', 'Gehäuse', 'Grafikkarte','Mainboard', 'Netzteil', 'RAM'];
   artikelListe: Array<{ kategorie: string, shop1: Artikel, shop2: Artikel }> = [];
-  vergleichenenArtikelliste: Array<{ shop1: Artikel, shop2: Artikel}> = [];
+  vergleichenenArtikellisteTest: Speicher[] = [];
 
   artikelliste: Array<{ kategorie: string, artikelListe: Array<{ shop1: Artikel, shop2: Artikel}>}> = [];
 
@@ -38,10 +39,9 @@ export class ListKomponenteComponent {
     this.artikelService.updateGuenstigstesArtikel(this.hinzugefuegteArtikel);
     this.artikelService.updateSchnellstesArtikel(this.hinzugefuegteArtikel);
   }
-  
-  
-  
-  constructor(private artikelService: ArtikelService) {}
+
+  dataSubscription: Subscription; 
+  constructor(private artikelService: ArtikelService, private filterService: FilterService) {}
 
   ngOnInit(): void {
    this.gibGleichteFestplatte();
@@ -51,10 +51,51 @@ export class ListKomponenteComponent {
    this.gibGleichteGrafikkarte();
    this.gibGleichteGehaeuse();
    this.gibGleichteCPU();
-   console.log('probleme resolu:********', this.artikelliste);
+   this.maMethodeAsync();
+   console.log('Alle Artikel', this.artikelliste);
+   console.log('Mono liste', this.vergleichenenArtikellisteTest);
+
+   this.dataSubscription = this.filterService.dataFilter$.subscribe(data => {
+    //let receiverData: { von: number, bis: number } = data;
+    let artikelFilter: Filter = data;
+    console.log('ReceicerDATA', data);
+
+    let vergleichenenArtikelliste: Array<{ shop1: Artikel, shop2: Artikel}> = [];
+    this.vergleichenenArtikellisteTest = Speicher.filtrerParIntervallePrix(this.vergleichenenArtikellisteTest, 100, 150);
+    for(let artikel of this.artikelliste){
+      if(artikel.kategorie === artikelFilter.artikelKategorie){
+        //artikel.artikelListe = vergleichenenArtikelliste;
+        artikel.artikelListe = Speicher.filtrerParIntervallePrix2(artikel.artikelListe, artikelFilter.preis.von, artikelFilter.preis.bis);
+      }
+    }
+   });
+  }
+
+  ngAfterViewInit(): void {
+    
+  }
+
+  maMethodeAsync() {
+    if (this.artikelliste instanceof Observable) {
+      // Si artikelliste est un Observable
+      this.artikelliste.subscribe((data) => {
+        console.log('Données de l\'Observable :', data);
+        this.itererSurListe(data);
+      });
+    } else {
+      // Si artikelliste n'est pas un Observable (par exemple, c'est une liste normale)
+      this.itererSurListe(this.artikelliste);
+    }
   }
   
-
+  itererSurListe(liste: any[]) {
+    console.log('A liste', liste);
+  
+    liste.forEach(kategorie => {
+      console.log(kategorie);
+    });
+  }
+  
   rufeDataService<T>(shopId: number, kategorie: string): Promise<T[]> {
     return new Promise((resolve, reject) => {
       this.artikelService.gibListeFestplatte(shopId, kategorie).subscribe(
@@ -163,12 +204,11 @@ export class ListKomponenteComponent {
             && festplatteId1.schreiben === festplatteId2.schreiben
             && festplatteId1.kapazitaet === festplatteId2.kapazitaet
             && isGleichArikel === false){
-              vergleichenenArtikelliste.push({ shop1: festplatteId1, shop2: festplatteId2 });
+              vergleichenenArtikelliste.push({ shop1: festplatteId1, shop2: festplatteId2 });           
               isGleichArikel = true;
           }
         }
       }
-      console.log('Festplatte vergleichenenArtikelliste: ', vergleichenenArtikelliste.length);
       this.artikelliste.push({ kategorie: 'Festplatte', artikelListe: vergleichenenArtikelliste.slice()});
     }catch (error){
       console.error('Erreur während des La');
@@ -195,7 +235,6 @@ export class ListKomponenteComponent {
           }
         }
       }
-      console.log('RAM vergleichenenArtikelliste: ', vergleichenenArtikelliste.length);
       this.artikelliste.push({ kategorie: 'RAM', artikelListe: vergleichenenArtikelliste.slice()});
     }catch (error){
       console.error('Erreur während des La');
@@ -222,7 +261,6 @@ export class ListKomponenteComponent {
           }
         }
       }
-      console.log('Mainboard vergleichenenArtikelliste: ', vergleichenenArtikelliste.length);
       this.artikelliste.push({ kategorie: 'Mainboard', artikelListe: vergleichenenArtikelliste.slice()});
     }catch (error){
       console.error('Erreur während des La');
@@ -249,7 +287,6 @@ export class ListKomponenteComponent {
           }
         }
       }
-      console.log('Netzteil vergleichenenArtikelliste: ', vergleichenenArtikelliste.length);
       this.artikelliste.push({ kategorie: 'Netzteil', artikelListe: vergleichenenArtikelliste.slice()});
     }catch (error){
       console.error('Erreur während des La');
@@ -277,7 +314,6 @@ export class ListKomponenteComponent {
           }
         }
       }
-      console.log('Grafikkarte vergleichenenArtikelliste: ', vergleichenenArtikelliste.length);
       this.artikelliste.push({ kategorie: 'Grafikkarte', artikelListe: vergleichenenArtikelliste.slice()});
     }catch (error){
       console.error('Erreur während des La');
@@ -300,14 +336,13 @@ export class ListKomponenteComponent {
             //&& mainboardId1.typ === mainboardId2.typ
             && gehaeuseId1.gewicht === gehaeuseId2.gewicht
             && isGleichArikel === false){
-              this.artikelListe.push({ kategorie:"Gehaeuse", shop1: gehaeuseId1, shop2: gehaeuseId2 });
+              this.artikelListe.push({ kategorie:"Gehäuse", shop1: gehaeuseId1, shop2: gehaeuseId2 });
               vergleichenenArtikelliste.push({ shop1: gehaeuseId1, shop2: gehaeuseId2 });
               isGleichArikel = true;
           }
         }
       }
-      console.log('Gehaeuse gleichen Artikel Anzahl: ', vergleichenenArtikelliste.length);
-      this.artikelliste.push({ kategorie: 'Gehaeuse', artikelListe: vergleichenenArtikelliste.slice()});
+      this.artikelliste.push({ kategorie: 'Gehäuse', artikelListe: vergleichenenArtikelliste.slice()});
 
     }catch (error){
       console.error('Erreur während des La');
@@ -335,11 +370,14 @@ export class ListKomponenteComponent {
           }
         }
       }
-      console.log('Gehaeuse gleichen Artikel Anzahl: ', vergleichenenArtikelliste.length);
       this.artikelliste.push({ kategorie: 'CPU', artikelListe: vergleichenenArtikelliste.slice()});
 
     }catch (error){
       console.error('Erreur während des La');
     }
+  }
+
+  ngOnDestroy(): void {
+    this.dataSubscription.unsubscribe(); // Pour éviter les fuites de mémoire
   }
 }

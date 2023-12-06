@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { BetriebsSystem } from 'src/models/betriebssystem.model';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

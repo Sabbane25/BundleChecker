@@ -28,6 +28,16 @@ export class ArtikelService {
     return this.http.get<any>(`${this.apiURL}/Kategorie`);
   }
 
+  // gib eine liste von Marke einer kategorie
+  gibListeMarke(kategorie: string): Observable<any>{
+    return this.http.get<any>(`${this.apiURL}/marke/${kategorie}`); 
+  }
+
+  // gib eine liste von einer bestimmte Eigenschaft einer kategorie
+  gibListeEigenschaft(kategorie: string, parameter: string,): Observable<any>{
+    return this.http.get<any>(`${this.apiURL}/eigenschaften/${kategorie}/${parameter}`); 
+  }
+
   getAllProducts(products: string): Observable<any> {
     return this.http.get<any>(`${this.apiURL}/Produkte/${products}`);
   }

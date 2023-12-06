@@ -3,7 +3,7 @@
   margin: 0px;
 }
 
-.filter{
+.filter .test{
   padding: 0px 0px;
   border: 1px solid rgb(186, 186, 186);
   margin: 4px 4px;
@@ -80,6 +80,5 @@
 
   .accordion-item .filter_button .abbrechen_click{
     width: 20%;
-    
   }
 

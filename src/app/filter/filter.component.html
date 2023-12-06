@@ -2,78 +2,60 @@
      <div class="filterBorderAusser">
       <h4 (click)="zeigeFilter()">Filter</h4>
       <!-- Filter -->
-      <div class="accordion accordion-flush filter" id="accordionFlushExample" [hidden]="!isFilterSichtbar">
+      <div *ngFor="let kategorie of listeEigenschaften" class="accordion accordion-flush filter" id="accordionFlushExample" [hidden]="!isFilterSichtbar">
         <!-- Filter-Item 1: Preis-->
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-              Preis
-            </button>
-          </h2>
-          <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <div class="accordion-body filterItem">
-              <div>
-                <div class="itemInhalt">
-                  <div class="von">
-                    <p>von</p>
-                    <input type="number" name="von" id="von">
-                  </div>
-                  <div class="preis">
-                    <p>bis</p>
-                    <input type="number" name="bis" id="bis">
+        <div class="test" *ngIf="kategorie.kategorie === filterKategorie">
+          <div class="accordion-item" >
+            <h2 class="accordion-header" >
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                Preis
+              </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body filterItem">
+                <div>
+                  <div class="itemInhalt" >
+                    <div class="von">
+                      <p>von</p>
+                      <input type="number" name="von" id="von" [(ngModel)]="vonInputValue">
+                    </div>
+                    <div class="preis">
+                      <p>bis</p>
+                      <input type="number" name="bis" id="bis" [(ngModel)]="bisInputValue">
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- Filter-Item 2: Marke-->
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-              Marke
-            </button>
-          </h2>
-          <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <div class="accordion-body p-2" >
-              <div>
-                <input type="checkbox">
-                <label class="ms-2" for="">Marke 1</label>
-              </div>
-              <div>
-                <input type="checkbox">
-                <label class="ms-2" for="">Marke 2</label>
+          <!-- Filter-Item 2: Marke-->
+          <div class="accordion-item" *ngFor="let item of kategorie.liste">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#flush-collapseTwo' + item.typ" aria-expanded="false" aria-controls="flush-collapseTwo">
+                {{ item.typ }}
+              </button>
+            </h2>
+            <div [id]="'flush-collapseTwo' + item.typ"  class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body p-2" >
+              <!--<div class="accordion-body p-2" *ngFor="let kategorie of checkboxListeMarke" >-->  
+                <div *ngFor="let listeItem of item.listeType ">
+                  <input type="checkbox" [(ngModel)]="checkboxMarke">
+                  <label class="ms-2" for="">{{ listeItem }} </label>
+                  <!--<label class="ms-2" for="">{{ kategorie.marke }}</label>-->
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- Filter-Item 3: Modell-->
-        <div class="accordion-item">
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-              Modell
-            </button>
-          </h2>
-          <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-            <div class="accordion-body p-2" >
-              <div>
-                <input type="checkbox">
-                <label class="ms-2" for="">Model 1</label>
-              </div>
-              <div>
-                <input type="checkbox">
-                <label class="ms-2" for="">Model 2</label>
-              </div>
+          <div class="accordion-item">
+            <div class="filter_button">
+              <button (click)="filterErgebniss()" class="bestaetigen_click">Bestätigen</button>
+              <button (click)="filterAbbrechen()" class="abbrechen_click">Abbrechen</button>
             </div>
           </div>
+          <!-- <div>xxx</div> -->
         </div>
         <!-- Button für die Bestätigung oder Abbrechen eines Filters -->
-        <div class="accordion-item">
-          <div class="filter_button">
-            <button (click)="filterErgebniss()" class="bestaetigen_click">Bestätigen</button>
-            <button class="abbrechen_click">Abbrechen</button>
-          </div>
-        </div>
+        
       </div>
     </div> 
 </div>

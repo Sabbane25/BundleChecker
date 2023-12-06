@@ -7,7 +7,7 @@
         <h2 class="accordion-header">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#' + kategorie"  aria-expanded="false" aria-controls="flush-collapseTwo">
             <div class="item-img">
-              <img src="./assets/Komponenten/{{ kategorie }}.jpg" alt="">
+              <img src="./assets/Komponenten/{{ kategorie === 'Gehäuse' ? 'Gehaeuse' : kategorie }}.jpg" alt="">
             </div>
             {{kategorie}}
           </button>
@@ -15,8 +15,9 @@
         <!-- Hier wird alle Produkt einer Kategorie angezeigt. Und ein geeignetes Filter -->
         <div [id]="kategorie" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
           <div class="accordion-body">
-            <!-- filter (Es handelt es sich um eine separat Composant)-->
-            <!-- <app-filter [listKomponente]="artikelList3" [listKomponenteItem]="kategorieItem"></app-filter> -->
+            <!-- filter (Es handelt es sich um eine separat Composant)--> <!-- (datenSendenAnFilter)="empfangfilterdaten($event)"  -->
+            <!--<app-filter [listKomponente]="artikelliste" [listKomponenteItem]="listeKategorie"></app-filter>-->
+            <app-filter [filterKategorie]="kategorie" [artikelliste]="artikelliste" ></app-filter>
             <div class="list-artikel" *ngFor="let item of artikelliste">
               <div *ngIf="kategorie === item.kategorie">
                 <div class="row  item" *ngFor="let artikelItem of item.artikelListe">
