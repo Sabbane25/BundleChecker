@@ -70,9 +70,9 @@ export class MerkzettelService {
     }
 
     removeItemFromMerkzettel(merkzettelId: number, artikel: Artikel) {
-      const produktLink = artikel.produktLink;
+      const produktUrl = artikel.produktUrl;
 
-        this.http.post(API_MERKZETTEL_REMOVE, { merkzettelId, produktLink }, httpOptions).subscribe(
+        this.http.post(API_MERKZETTEL_REMOVE, { merkzettelId, produktUrl }, httpOptions).subscribe(
             (data) => {
                 // console.log(data);
             },

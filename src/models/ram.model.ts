@@ -7,10 +7,10 @@ export class Ram extends Artikel{
     latency: number;
     spannung: number;
 
-    constructor(kategorie: string, preis: number, shopID: number, produktLink: string, bezeichnung: string, lieferDatum: number, marke: string, bildUrl: string,
+    constructor(kategorie: string, preis: number, shopID: number, produktUrl: string, bezeichnung: string, lieferDatum: number, marke: string, image: string,
         artikelnummer: number, typ: string, kapazitaet: number, latency: number, spannung: number){
 
-        super(kategorie, preis, shopID, produktLink, bezeichnung, lieferDatum, marke, bildUrl)
+        super(kategorie, preis, shopID, produktUrl, bezeichnung, lieferDatum, marke, image)
         this.artikelnummer = artikelnummer;
         this.typ = typ;
         this.kapazitaet = kapazitaet;
@@ -26,7 +26,7 @@ export class Ram extends Artikel{
         return "";
     }
 
-    override getSpezifischeAttribute(): string {
+    /*override getSpezifischeAttribute(): string {
         return "";
-    }
+    }*/
 }

@@ -11,10 +11,10 @@ export class Cpu extends Artikel{
     typ: string;
     turbo: number;
 
-    constructor(kategorie: string, preis: number, shopID: number, produktLink: string, bezeichnung: string, lieferDatum: number, marke: string, bildUrl: string,
+    constructor(kategorie: string, preis: number, shopID: number, produktUrl: string, bezeichnung: string, lieferDatum: number, marke: string, image: string,
         artikelnummer: number, sockel: string, anzahlKerne: number, stromverbrauch: number, taktfrequenz: string, interneGrafik: string, threads: number, typ: string, turbo: number) {
 
-        super(kategorie, preis, shopID, produktLink, bezeichnung, lieferDatum, marke, bildUrl)
+        super(kategorie, preis, shopID, produktUrl, bezeichnung, lieferDatum, marke, image)
         this.artikelnummer = artikelnummer;
         this.sockel = sockel;
         this.anzahlKerne = anzahlKerne;
@@ -27,12 +27,12 @@ export class Cpu extends Artikel{
     }
 
 
-    override getSpezifischeAttribute(): string {
+    /*override getSpezifischeAttribute(): string {
         return `Bezeichnung: ${this.bezeichnung}, 
         Stromverbrauch: ${this.stromverbrauch}, Taktfrequenz: ${this.taktfrequenz}, 
         Sockel: ${this.sockel}, Anzahl Kerne: ${this.anzahlKerne}, 
         Interne Grafik: ${this.interneGrafik}`;
-      }
+      }*/
 
 
     override gibArtikelTitel(): string {

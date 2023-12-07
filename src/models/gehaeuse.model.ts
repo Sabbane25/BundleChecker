@@ -28,7 +28,7 @@ export class Gehaeuse extends Artikel{
         return `${this.frontenschluesse} • ${this.formfaktor} • ${this.typ} • ${this.abmessungen}`;
     }
 
-    override getSpezifischeAttribute(): string {
+    /*override getSpezifischeAttribute(): string {
         return `Marke: ${this.marke}, Modell: ${this.typ}, Frontanschlüsse: ${this.frontenschluesse}, Mainboard Formfaktor: ${this.formfaktor}, Abmessungen: ${this.abmessungen}`;
-    }
+    }*/
 }

@@ -26,10 +26,5 @@ export class Speicher extends Artikel{
     override gibArtikelBeschreibung(): string {
         return `${this.typ} • ${this.kapazitaet} • ${this.schreiben} • ${this.lesen}`;
     }
-    
 
-    override getSpezifischeAttribute(): string {
-        return `Marke: ${this.marke}, Speichertyp: ${this.typ}, Kapazität: ${this.kapazitaet}, 
-        Schreibgeschwindigkeit: ${this.schreiben}, Lesegeschwindigkeit: ${this.lesen}`;
-    }
 }
