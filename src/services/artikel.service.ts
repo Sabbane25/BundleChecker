@@ -203,12 +203,35 @@ export class ArtikelService {
 
 
   //Yahya
-  private ausgewaehlteArtikelSubject = new BehaviorSubject<Artikel[]>([]);
-  ausgewaehlteArtikel$ = this.ausgewaehlteArtikelSubject.asObservable();
-  updateAusgewaehlteArtikel(artikel: Artikel[]) {
-  this.ausgewaehlteArtikelSubject.next(artikel);
+  // BehaviorSubjects für guenstigstesArtikel und schnellstesArtikel erstellen
+  private guenstigstesArtikelSubject = new BehaviorSubject<Artikel[]>([]);
+  private schnellstesArtikelSubject = new BehaviorSubject<Artikel[]>([]);
+
+  // Observables für guenstigstesArtikel und schnellstesArtikel erstellen
+  guenstigstesArtikel$ = this.guenstigstesArtikelSubject.asObservable();
+  schnellstesArtikel$ = this.schnellstesArtikelSubject.asObservable();
+
+  // Methode zum Aktualisieren von guenstigstesArtikel aufrufen
+  updateGuenstigstesArtikel(artikel: Artikel[]) {
+    // Tiefenkopie von Artikel erstellen, um unerwünschte Seiteneffekte zu vermeiden
+    const deepCopy = this.deepCopy(artikel);
+    // guenstigstesArtikel aktualisieren
+    this.guenstigstesArtikelSubject.next(deepCopy);
+  }
+
+  // Methode zum Aktualisieren von schnellstesArtikel aufrufen
+  updateSchnellstesArtikel(artikel: Artikel[]) {
+    // Tiefenkopie von Artikel erstellen, um unerwünschte Seiteneffekte zu vermeiden
+    const deepCopy = this.deepCopy(artikel);
+    // schnellstesArtikel aktualisieren
+    this.schnellstesArtikelSubject.next(deepCopy);
+  }
+  // Hilfsmethode für die Tiefenkopie von Objekten
+  private deepCopy(obj: any): any {
+    return JSON.parse(JSON.stringify(obj));
   }
 }
+
 function of(arg0: never[]): any {
   throw new Error('Function not implemented.');
 }

@@ -27,12 +27,12 @@ export class Cpu extends Artikel{
     }
 
 
-    override getSpezifischeAttribute(): string {
+    /*override getSpezifischeAttribute(): string {
         return `Bezeichnung: ${this.bezeichnung}, 
         Stromverbrauch: ${this.stromverbrauch}, Taktfrequenz: ${this.taktfrequenz}, 
         Sockel: ${this.sockel}, Anzahl Kerne: ${this.anzahlKerne}, 
         Interne Grafik: ${this.interneGrafik}`;
-      }
+      }*/
 
 
     override gibArtikelTitel(): string {

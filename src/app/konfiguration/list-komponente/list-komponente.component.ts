@@ -29,12 +29,18 @@ export class ListKomponenteComponent {
   sortierteArtikelListe: Array<{ kategorie: string, liste1: Artikel[], liste2: Artikel[] }> = [];
   hinzugefuegteArtikel: Artikel[] = []; // Um Artikel im neu Kontiguration aufzulisten / zur Übersicht - Funktion
 
-  onButtonhinzufuegen(artikel: Artikel) {
+  onButtonhinzufuegen(artikel: Artikel, artikel2: Artikel) {
     this.hinzugefuegteArtikel.push(artikel);
+    this.hinzugefuegteArtikel.push(artikel2);
+
   }
   zurUebersicht() {
-    this.artikelService.updateAusgewaehlteArtikel(this.hinzugefuegteArtikel);
+    this.artikelService.updateGuenstigstesArtikel(this.hinzugefuegteArtikel);
+    this.artikelService.updateSchnellstesArtikel(this.hinzugefuegteArtikel);
   }
+  
+  
+  
   constructor(private artikelService: ArtikelService) {}
 
   ngOnInit(): void {

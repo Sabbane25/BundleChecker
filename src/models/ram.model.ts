@@ -26,7 +26,7 @@ export class Ram extends Artikel{
         return "";
     }
 
-    override getSpezifischeAttribute(): string {
+    /*override getSpezifischeAttribute(): string {
         return "";
-    }
+    }*/
 }

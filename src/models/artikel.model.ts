@@ -24,13 +24,4 @@ export abstract class Artikel {
 
   abstract gibArtikelTitel(): string;
 
-
-
-
-  /*Yahya: Diese Template-Methode wird von den Unterklassen überschrieben,
-  /um das Anzeigen von verschiedenen Attributen zu ermöglichen.
-  */
-  getSpezifischeAttribute(): string {
-    return '';
-  }
 }
