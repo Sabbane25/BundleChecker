@@ -1,21 +1,3 @@
-body {
-    display: flex;
-    justify-content: center; /* Horizontal zentrieren */
-    height: 100vh;
-    margin: 0;
-  }
-
-*{
-    margin: 0px;
-    padding: 0px;
-}
-
-.container{
-    margin-bottom: 64px;
-    display: flex;
-    justify-content: center;
-}
-
 .container-form{
     padding: 42px 0px 42px 0px;
     display: flex;

@@ -1,4 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
+
   /**
    * Modell für Nutzer
    */
@@ -10,6 +11,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING
     }
   }, {
+    timestamps: false,
     underscored: true,
     freezeTableName: true,
     tableName: 'nutzer'

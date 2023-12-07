@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { apiConfig } from '../config/api.config';
 import { ApiMessage } from 'src/models/apiMessage.model';
-import { Nutzer } from 'src/models/nutzer.model';
+import { throwError, Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
 
 const AUTH_API = `http://${apiConfig.HOST}:3000/api/auth/`;
 const API_URL = `http://${apiConfig.HOST}:3000/api/test/`;
@@ -33,6 +34,23 @@ export class NutzerService {
     }, httpOptions);
   }
 
+  updatePassword(id: number, newPassword: string): Observable<any> {
+    const updatePasswordUrl = `${apiURL}/changePassword`;
+    
+    const requestBody = {
+      id: id,
+      password: newPassword
+    };
+  
+    console.log('Request Body:', requestBody); 
+  
+    return this.http.put(updatePasswordUrl, requestBody).pipe(
+      catchError((error) => {
+        return throwError(error);
+      })
+    );
+  }
+
   suche(email:string){}
   
   
@@ -55,31 +73,29 @@ export class NutzerService {
   }
 
    getUsers(): Observable<any> {
-      // Verwende das User-Interface als Datentyp für die Antwort
-      console.log("test")
-      // return this.http.get<any>(`${apiURL}/getUsers`);
+      
       return this.http.get<any[]>(`${apiURL}/getUsers`, { withCredentials: true });
    }
 
    loeschen(user_id: number): Observable<void> {
     const options = {
-      body: { user_id: user_id }};
+      body: { user_id: user_id }
+    };
+  
     console.log("In Nutzerservice");
-    console.log("Hallo", user_id);
-    // return this.http.delete<void>(`${apiURL}/userLoeschen:${user_id}`);
-    
-    return this.http.delete<void>(`${apiURL}/userLoeschen`, options);
-   }
-   
-   suchen(email: string): Observable<any> {
-    console.log("In Nutzerservice: " + email);
-
-    // Korrekte HTTP-Anfrage mit einem Query-Parameter "email"
-    return this.http.get<any>(`${apiURL}/userSuchen`, {
-        params: { email: email }
-    });
+    console.log("UserID:", user_id);
+  
+    return this.http.delete<void>(`${apiURL}/userLoeschen/${user_id}`, options);
   }
-
+   
+   updateUser(password: string): Observable<any> {
+    const options = {
+      body: { password: password }
+    };
+    
+    return this.http.put<void>(`${apiURL}/updateUser`, options);
+  }
+  
   getPublicContent(): Observable<any> {
     return this.http.get(API_URL + 'all', { responseType: 'text' });
   }

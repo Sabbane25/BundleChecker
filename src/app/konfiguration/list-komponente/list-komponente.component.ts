@@ -1,12 +1,12 @@
 import { Component, ElementRef, Input, Renderer2} from '@angular/core';
-import { Observable } from 'rxjs';
+import { DataService } from 'src/app/data.service';
+import { Ram } from 'src/models/ram.model';
 import { Artikel } from 'src/models/artikel.model';
 import { Cpu } from 'src/models/cpu.model';
 import { Gehaeuse } from 'src/models/gehaeuse.model';
 import { Grafikkarte } from 'src/models/grafikkarte.model';
 import { Mainboard } from 'src/models/mainboard.model';
 import { Netzteil } from 'src/models/netzteil.model';
-import { Ram } from 'src/models/ram.model';
 import { Speicher } from 'src/models/speicher.model';
 import { ArtikelService } from 'src/services/artikel.service';
 

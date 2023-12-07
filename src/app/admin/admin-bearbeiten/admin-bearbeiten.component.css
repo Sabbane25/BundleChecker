@@ -1,0 +1,45 @@
+
+
+.titel h1 {
+    margin-top: 30px;
+    margin-bottom: 50px;
+    font-size:40px;
+    color: #00528d;
+    text-align: center;
+    
+}
+
+.center {   
+    
+    height: 400px; 
+    
+}
+
+.container {
+    
+    display: flex;
+    justify-content: center;
+    
+}
+
+.email{
+    display: flex;
+}
+
+.passwörter{
+    display: flex;
+    
+}
+
+.passwörter ul {
+    list-style-type: none;
+}
+
+.buttonConfirm button {
+    width: 100px;
+    height: 40px;
+    margin-left: 310px;
+    border-radius: 10px;
+    background-color: #00528d;
+    color: white;
+}
