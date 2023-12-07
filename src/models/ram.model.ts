@@ -1,32 +1,32 @@
 import { Artikel } from "./artikel.model";
 
 export class Ram extends Artikel{
-    marke: string;
-    modell: string;
+    artikelnummer: number;
     typ: string;
-    kapazitaet: string;
-    timings: string;
+    kapazitaet: number;
+    latency: number;
+    spannung: number;
 
-    constructor(artikelnummer: number, kategorie: string, preis: number, shopID: number, produktLink: string, anbieter: string,
-        marke: string, modell: string, typ: string, kapazitaet: string, timings: string){
-        super(artikelnummer, kategorie, preis,  shopID, produktLink, anbieter)
-        this.marke = marke;
-        this.modell = modell;
+    constructor(kategorie: string, preis: number, shopID: number, produktLink: string, bezeichnung: string, lieferDatum: number, marke: string, bildUrl: string,
+        artikelnummer: number, typ: string, kapazitaet: number, latency: number, spannung: number){
+
+        super(kategorie, preis, shopID, produktLink, bezeichnung, lieferDatum, marke, bildUrl)
+        this.artikelnummer = artikelnummer;
         this.typ = typ;
         this.kapazitaet = kapazitaet;
-        this.timings = timings;
+        this.latency = latency;
+        this.spannung = spannung;
     }
 
     override gibArtikelBeschreibung(): string{
-
-        return `${this.modell} • ${this.typ} • ${this.kapazitaet} • ${this.timings}`;
+        return "";
     }
 
     override gibArtikelTitel(): string {
-        return `${this.marke}`;
+        return "";
     }
 
     override getSpezifischeAttribute(): string {
-        return `Marke: ${this.marke}, Modell: ${this.modell}, Typ: ${this.typ}, Kapazität: ${this.kapazitaet}, Timings: ${this.timings}`;
-      }
+        return "";
+    }
 }

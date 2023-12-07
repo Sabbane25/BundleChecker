@@ -1,35 +1,35 @@
+
 import { Artikel } from "./artikel.model";
 
 export class Speicher extends Artikel{
-    Marke: string;
-    Modell: string;
-    Speichertyp: string;
-    Kapazitaet: string;
-    Schreibgeschwindigkeit: string;
-    Lesegeschwindigkeit: string;
+    artikelnummer: number;
+    typ: string;
+    kapazitaet: string;
+    lesen: number;
+    schreiben: number;
 
-    constructor(artikelnummer: number, kategorie: string, preis: number, shopID: number, produktLink: string, anbieter: string,
-                                Marke: string, Modell: string, Speichertyp: string, Kapazitaet: string, Schreibgeschwindigkeit: string, Lesegeschwindigkeit: string)
-                                   {
-        super(artikelnummer, kategorie, preis,  shopID, produktLink, anbieter)
-        this.Marke = Marke;
-        this.Modell = Modell;
-        this.Speichertyp = Speichertyp;
-        this.Kapazitaet = Kapazitaet;
-        this.Schreibgeschwindigkeit = Schreibgeschwindigkeit;
-        this.Lesegeschwindigkeit = Lesegeschwindigkeit;
+    constructor(kategorie: string, preis: number, shopID: number, produktLink: string, bezeichnung: string, lieferDatum: number, marke: string, bildUrl: string,
+        artikelnummer: number, typ: string, kapazitaet: string, lesen: number, schreiben: number) {
+
+        super(kategorie, preis, shopID, produktLink, bezeichnung, lieferDatum, marke, bildUrl)
+        this.artikelnummer = artikelnummer;
+        this.typ = typ;
+        this.kapazitaet = kapazitaet;
+        this.lesen = lesen;
+        this.schreiben = schreiben;
     }
-
+    
     override gibArtikelTitel(): string {
-        return `${this.Marke}`;
+        return `${this.typ}`;
     }
 
     override gibArtikelBeschreibung(): string {
-        return `${this.Modell} • ${this.Speichertyp} • ${this.Kapazitaet} • ${this.Schreibgeschwindigkeit} • ${this.Lesegeschwindigkeit}`;
+        return `${this.typ} • ${this.kapazitaet} • ${this.schreiben} • ${this.lesen}`;
     }
+    
 
     override getSpezifischeAttribute(): string {
-        return `Marke: ${this.Marke}, Modell: ${this.Modell}, Speichertyp: ${this.Speichertyp}, Kapazität: ${this.Kapazitaet}, 
-        Schreibgeschwindigkeit: ${this.Schreibgeschwindigkeit}, Lesegeschwindigkeit: ${this.Lesegeschwindigkeit}`;
-      }
+        return `Marke: ${this.marke}, Speichertyp: ${this.typ}, Kapazität: ${this.kapazitaet}, 
+        Schreibgeschwindigkeit: ${this.schreiben}, Lesegeschwindigkeit: ${this.lesen}`;
+    }
 }

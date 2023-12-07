@@ -1,40 +1,39 @@
 <div class="komponenten-main">
-    <!-- Das Div beinhahlt alle Komponenten und jede Komponente die entspechenden Artikel -->
-    <!-- Die Komponenten werden mit Hilfe einer schleife generiert -->
-    <div class="komponanten-div" >
-      <div class="accordion" id="accordionExample">
-        <!-- stellt eine Komponente dar. Mit Hilfe der Directive *ngFor werden alle Komponenten angezeigt -->
-        <div class="accordion-item" *ngFor="let kategorieItem of gibKategorieArtikel()">
+  <!-- Das Div beinhahlt alle Komponenten und jede Komponente die entspechenden Artikel -->
+  <!-- Die Komponenten werden mit Hilfe einer schleife generiert -->
+  <div class="komponanten-div" >
+    <div class="accordion" id="accordionExample">
+      <!-- stellt eine Komponente dar. Mit Hilfe der Directive *ngFor werden alle Komponenten angezeigt -->
+      <div class="accordion-item" *ngFor="let kategorieItem of gibKategorieArtikel()">
         <!--Komponente-Title. Es ist auch gleichzeitig den Dropdowm menu, um Artikel einer Komponente aufzulisten -->
         <!-- item-4 / Komponent 4: GRAFIKKARTE -->
-          <h2 class="accordion-header">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#' + kategorieItem"  aria-expanded="false" aria-controls="flush-collapseTwo">
-              <div class="item-img"> 
-                <img src="./assets/Komponenten/{{ kategorieItem }}.jpg" alt="">
-              </div> 
-              {{ kategorieItem }}
-            </button>
-          </h2>
-          <!-- Hier wird alle Produkt einer Kategorie angezeigt. Und ein geeignetes Filter -->
-          <div [id]="kategorieItem" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">  
-            <div class="accordion-body">
-              <!-- filter (Es handelt es sich um eine separat Composant)-->
-              <!-- <app-filter [listKomponente]="artikelList3" [listKomponenteItem]="kategorieItem"></app-filter> -->
-              <div class="list-artikel" *ngFor="let artikel of artikelListe">
-                <div class="row  item" *ngIf="artikel.kategorie === kategorieItem">
-                  <!-- BILD Komponente(keine echtes Bild. Nur Kategorie Abkürzung) -->
-                  <div class="col-1 border justify-content-md-center">
-                      <h5> {{ artikel.kategorie.substring(0, 3).toUpperCase() }} </h5>
-                  </div>
-                  <!-- Beschreibung der Artikels-->
-                  <div class="col-9 artikel-info">
-                    <h5> {{ artikel.gibArtikelTitel() }}</h5>
-                    <p> {{ artikel.gibArtikelBeschreibung() }} </p>
-                    <h6> {{ artikel.anbieter }}</h6>
-                  </div>
-                  <div class="col">
-                    <button (click)="onButtonhinzufuegen(artikel)">HINZUFÜGEN</button>
-                  </div>
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#' + kategorieItem"  aria-expanded="false" aria-controls="flush-collapseTwo">
+            <div class="item-img">
+              <img src="./assets/Komponenten/{{ kategorieItem }}.jpg" alt="">
+            </div>
+            {{ kategorieItem }}
+          </button>
+        </h2>
+        <!-- Hier wird alle Produkt einer Kategorie angezeigt. Und ein geeignetes Filter -->
+        <div [id]="kategorieItem" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+          <div class="accordion-body">
+            <!-- filter (Es handelt es sich um eine separat Composant)-->
+            <!-- <app-filter [listKomponente]="artikelList3" [listKomponenteItem]="kategorieItem"></app-filter> -->
+            <div class="list-artikel" *ngFor="let artikel of artikelListe">
+              <div class="row  item" *ngIf="artikel.kategorie === kategorieItem">
+                <!-- BILD Komponente(keine echtes Bild. Nur Kategorie Abkürzung) -->
+                <div class="col-1 border justify-content-md-center">
+                  <h5> {{ artikel.kategorie.substring(0, 3).toUpperCase() }} </h5>
+                </div>
+                <!-- Beschreibung der Artikels-->
+                <div class="col-9 artikel-info">
+                  <h5> {{ artikel.gibArtikelTitel() }}</h5>
+                  <p> {{ artikel.gibArtikelBeschreibung() }} </p>
+                  <h6> {{ artikel.kategorie }}</h6>
+                </div>
+                <div class="col">
+                  <button (click)="onButtonhinzufuegen(artikel)">HINZUFÜGEN</button>
                 </div>
               </div>
             </div>
@@ -42,23 +41,24 @@
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Neue Konfiguration (aside)-->
-    <div class="neu-konfig-div">
-        <div class="container">
-          <div class="container1">
-            <div class="description-img">
-              <h3>Neue <span>Konfiguration</span></h3>
-              <img src="./assets/konfiguarion.png" alt="">
-            </div>
-          </div>
-          <div class="button-artikel">
-            <button><h3>Zur Übersicht</h3></button>
-          </div>
-          <div class="artikel" *ngFor="let artikel of hinzugefuegteArtikel">
-            <h4>{{artikel.kategorie}}: {{artikel.gibArtikelTitel()}}</h4>
-            <p> {{artikel.gibArtikelBeschreibung()}} </p>
-          </div>
+  <!-- Neue Konfiguration (aside)-->
+  <div class="neu-konfig-div">
+    <div class="container">
+      <div class="container1">
+        <div class="description-img">
+          <h3>Neue <span>Konfiguration</span></h3>
+          <img src="./assets/konfiguarion.png" alt="">
         </div>
+      </div>
+      <div class="button-artikel">
+        <button><h3>Zur Übersicht</h3></button>
+      </div>
+      <div class="artikel" *ngFor="let artikel of hinzugefuegteArtikel">
+        <h4>{{artikel.kategorie}}: {{artikel.gibArtikelTitel()}}</h4>
+        <p> {{artikel.gibArtikelBeschreibung()}} </p>
+      </div>
     </div>
+  </div>
 </div>

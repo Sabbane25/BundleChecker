@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 @NgModule({
 
   imports: [
+    AdminModule,
+    CommonModule,
     BrowserModule,
     KontoModule,
     KonfigurationModule,

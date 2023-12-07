@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { Artikel } from 'src/models/artikel.model';
 import { Ram } from 'src/models/ram.model';
+import { apiConfig } from '../config/api.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArtikelService {
-  private apiURL = 'http://192.168.198.48:3000'; //API-URL vom Server
+  private apiURL = `http://${apiConfig.HOST}:3000`; //API-URL vom Server
 
   constructor(private http: HttpClient) { }
 
@@ -43,7 +44,7 @@ export class ArtikelService {
    * @param kategorie es handelt sich um die Kategorie, für die man eine Artikelliste haben möchte
    * z.B: RAM, CPU, Speicher, Grafikkarte....
    * @returns eine Liste von Alle Artikel dieser Kategorie
-   */
+   
   getAllArtikel(kategorie: string): Observable<any> {
     return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`).pipe(
       map((data) => {
@@ -66,4 +67,5 @@ export class ArtikelService {
       })
     );
   }
+  */
 }

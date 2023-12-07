@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="admin-bearbeiten.component.css">
+
+</head>
+<body>
+    <div class="titel">
+      <h1>User bearbeiten:</h1>
+    </div>
+    <div class="center">
+        <section class="container">
+          <div>
+            <section>
+                <p style="font-weight: bold;">Bitte gewünschtes neues Passwort eingeben:</p>
+            </section>
+            <section class="email" style="margin-left: 30px;">
+                <div style="margin-right: 80px;">
+                    <p>E-Mail Adresse:</p>
+                </div>
+                <div>
+                    <p style="margin-right: 80px;">{{email}}</p>
+                </div>
+            </section>
+            <section class="passwörter">
+                <div class="containerLinks">
+                    <ul>
+                        <li style="margin-bottom: 12px;">Neues Passwort:</li>
+                        <li>Passwort wiederholen:</li>
+                    </ul>
+                </div>
+                <div class="containerRechts">
+                    <ul>
+                        <li style="margin-bottom: 10px;"><input type="password" placeholder="Passwort eingeben" #newPassword></li>
+                        <li><input type="password" placeholder="Passwort wiederholen" #confirmPassword></li>
+                    </ul>
+                </div>
+            </section>
+            <section class="buttonConfirm">
+                <button type="button" (click)="updatePassword(newPassword, confirmPassword)">Bestätigen</button>
+            </section>
+          </div>
+        </section>
+    </div>
+</body>

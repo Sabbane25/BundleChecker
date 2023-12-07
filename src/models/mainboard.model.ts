@@ -1,32 +1,32 @@
 import { Artikel } from "./artikel.model";
 
 export class Mainboard extends Artikel{
-    marke: string;
-    modell: string;
-    anschluesseExtern: number;
-    anschluesseIntern: string;
+    artikelnummer: number;
     chipsatz: string;
-    anzahlSpeichersockel: string;
-    maxRam: string;
+    sockel: string;
+    anzahlSpeichersockel: number;
+    maxRam: number;
+    formfaktor: string;
+    speicherTyp: string;
 
-    constructor(artikelnummer: number, kategorie: string, preis: number, shopID: number, produktLink: string, anbieter: string,
-        marke: string, modell: string, frontenschluesse: number, anschluesseIntern: string, chipsatz: string, anzahlSpeichersockel: string, maxRam: string) {
-        super(artikelnummer, kategorie, preis,  shopID, produktLink, anbieter)
-        this.marke = marke;
-        this.modell = modell;
-        this.anschluesseExtern = frontenschluesse;
-        this.anschluesseIntern= anschluesseIntern;
+    constructor(kategorie: string, preis: number, shopID: number, produktLink: string, bezeichnung: string, lieferDatum: number, marke: string, bildUrl: string,
+        artikelnummer: number, chipsatz: string, sockel: string, anzahlSpeichersockel: number, maxRam: number, formfaktor: string, speicherTyp: string) {
+
+        super(kategorie, preis, shopID, produktLink, bezeichnung, lieferDatum, marke, bildUrl)
+        this.artikelnummer = artikelnummer;
         this.chipsatz = chipsatz;
+        this.sockel = sockel;
         this.anzahlSpeichersockel = anzahlSpeichersockel;
-        this.maxRam = maxRam;
+        this.maxRam= maxRam;
+        this.formfaktor = formfaktor;
+        this.speicherTyp = speicherTyp;
     }
 
     override gibArtikelBeschreibung(): string {
-        return `${this.modell} • ${this.modell} • ${this.anschluesseExtern} • ${this.anschluesseIntern} • ${this.chipsatz} 
+        return `${this.maxRam} • ${this.chipsatz} • ${this.speicherTyp} • ${this.speicherTyp} } 
         • ${this.anzahlSpeichersockel} • ${this.maxRam}}`; 
     }
     override gibArtikelTitel(): string {
         return `${this.marke}`;
     }
-
 }
