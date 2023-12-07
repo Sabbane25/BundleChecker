@@ -38,8 +38,16 @@
 .buttonConfirm button {
     width: 100px;
     height: 40px;
-    margin-left: 310px;
+    margin-left: 280px;
     border-radius: 10px;
     background-color: #00528d;
     color: white;
+}
+
+.confirmButton ul {
+    list-style-type: none;
+}
+
+.error-message{
+    color: red
 }

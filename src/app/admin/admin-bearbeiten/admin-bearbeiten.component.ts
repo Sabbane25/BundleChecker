@@ -16,8 +16,7 @@ export class AdminBearbeitenComponent implements OnInit {
   confirmPassword: string;
   passwordMinLength: number = 5;
   isUpdateSuccessful = false;
-  isUpdateFailed = false;
-  errorMessage = '';
+  errorMessage: string;  // Hier wird die Variable nur einmal deklariert
 
   constructor(private nutzerService: NutzerService, private route: ActivatedRoute) {}
 
@@ -25,33 +24,35 @@ export class AdminBearbeitenComponent implements OnInit {
     this.route.params.subscribe(params => {
         this.email = params['email'] || '';
         this.id = +params['id'] || 0;
-
-        console.log('Empfangene ID:', this.id);
     });
 }
 
-  
-  updatePassword(newPasswordInput: HTMLInputElement, confirmPasswordInput: HTMLInputElement): void {
-    
+//Methode zur Passwortaktualisierung  
+updatePassword(newPasswordInput: HTMLInputElement, confirmPasswordInput: HTMLInputElement): void {
     const newPassword: string = newPasswordInput.value;
     const confirmPassword: string = confirmPasswordInput.value;
-  
-    if (newPassword !== confirmPassword) {
-        console.error("Passwörter stimmen nicht überein!");
+    //Prüfung, ob bestimmte Bedingungen erfüllt sind
+    if (!newPassword.trim() || !confirmPassword.trim()) {
+        this.errorMessage = 'Bitte geben Sie ein Passwort in beide Felder ein!';
+    } else if (newPassword !== confirmPassword) {
+        this.errorMessage = 'Passwörter stimmen nicht überein!';
     } else if (newPassword.length < 5) {
-        console.error("Passwort zu kurz! Mindestens 5 Zeichen!");
+        this.errorMessage = 'Passwort zu kurz! Mindestens 5 Zeichen!';
     } else {
         // Alle Bedingungen sind erfüllt, rufe den nutzerService.updateUser auf
         console.log(this.id);
         this.nutzerService.updatePassword(this.id, newPassword).subscribe(
             () => {
                 console.log('Passwort erfolgreich aktualisiert!');
+                this.isUpdateSuccessful = true;
                 // Optional: Setze die Werte der Eingabefelder zurück
                 newPasswordInput.value = '';
                 confirmPasswordInput.value = '';
             },
+            //Falls etwas schief gelaufen ist, gibt es eine Fehlermeldung
             error => {
                 console.error('Fehler beim Aktualisieren des Passworts:', error);
+                this.errorMessage = error;
             }
         );
     }

@@ -65,4 +65,7 @@
     color: white;
 }
 
-
+.success-message {
+    color: green;
+    margin-left: 790px;
+}
