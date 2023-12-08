@@ -10,16 +10,9 @@ import { ArtikelService } from 'src/services/artikel.service';
 export class UebersichtComponent implements OnInit {
 
 // Definition von Bundles für die günstigsten und schnellsten Artikel
-guenstigstesBundle: { bundleName: string; artikelList: Artikel[]; totalPrice: number }[] = [{
-  bundleName: 'guenstigstesBundle',
-  artikelList: [],  
-  totalPrice: 0    
-}];
-schnellstesBundle: { bundleName: string; artikelList: Artikel[]; totalPrice: number }[] = [{
-  bundleName: 'schnellstesBundle',
-  artikelList: [],  
-  totalPrice: 0    
-}];
+guenstigstesBundle: { bundleName: string; artikelList: Artikel[]; totalPrice: number }[] = [];
+schnellstesBundle: { bundleName: string; artikelList: Artikel[]; totalPrice: number }[] = [];
+
 
 // Arrays für ausgewählte Artikel: ausgewaehlteArtikel1 für günstigstes Bundle und ausgewaehlteArtikel2 für schnellstes Bundle
 ausgewaehlteArtikel1: Artikel[] = [];
@@ -70,6 +63,9 @@ this.schnellstesBundle.forEach(bundle => {
     artikel.menge = 1;
   });
 });
+
+console.log('guenstigstesBundle:', this.guenstigstesBundle);
+console.log('schnellstesBundle:', this.schnellstesBundle);
 }
 
 
