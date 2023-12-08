@@ -11,6 +11,7 @@
     <div class="titel">
       <h1>User bearbeiten:</h1>
     </div>
+    <!--Klasse um den Inhalt zu zentrieren-->
     <div class="center">
         <section class="container">
           <div>
@@ -39,10 +40,35 @@
                     </ul>
                 </div>
             </section>
-            <section class="buttonConfirm">
-                <button type="button" (click)="updatePassword(newPassword, confirmPassword)">Bestätigen</button>
+            <section class="confirmButton">
+                <div class="containerLinks">
+                    <ul>
+                        <li>
+                            <!--Zeigt eine Errormeldung an falls etwas schief läuft-->
+                            <div *ngIf="errorMessage" class="error-message">
+                                {{ errorMessage }}
+                            </div>
+                            <!--Zeigt eine Erfolgsmeldung, wenn die Aktualisierung des Passworts erfolgreich war-->
+                            <div *ngIf="isUpdateSuccessful" class="success-message" style="color: green;">
+                                Passwort erfolgreich aktualisiert!
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="containerRechts">
+                    <ul>
+                        <li>
+                            <section class="buttonConfirm">
+                                <!--Button, welcher die Methode zum aktualisieren des Passworts startet und  an diese die beiden einegegebenen Passwörter übergibt-->
+                                <button type="button" (click)="updatePassword(newPassword, confirmPassword)">Bestätigen</button>
+                            </section>
+                        </li>
+                    </ul>
+                </div>
             </section>
           </div>
         </section>
+
     </div>
 </body>
+</html>

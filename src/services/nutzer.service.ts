@@ -36,19 +36,37 @@ export class NutzerService {
 
   updatePassword(id: number, newPassword: string): Observable<any> {
     const updatePasswordUrl = `${apiURL}/changePassword`;
-    
+  
     const requestBody = {
       id: id,
       password: newPassword
     };
   
-    console.log('Request Body:', requestBody); 
-  
     return this.http.put(updatePasswordUrl, requestBody).pipe(
       catchError((error) => {
-        return throwError(error);
+        // Hier die Fehlerbehandlung
+        const errorMessage = this.extractErrorMessage(error);
+        return throwError(errorMessage);
       })
     );
+  }
+  
+  private extractErrorMessage(error: any): string {
+    if (error.error && error.error.message) {
+      return error.error.message;
+    }
+  
+    // Hier können Sie weitere Bedingungen hinzufügen, um spezifischere Fehlermeldungen zu erstellen
+    if (error.message === 'Passwörter stimmen nicht überein!') {
+      return 'Die eingegebenen Passwörter stimmen nicht überein.';
+    } else if (error.message === 'Passwort zu kurz! Mindestens 5 Zeichen!') {
+      return 'Das eingegebene Passwort ist zu kurz. Mindestens 5 Zeichen sind erforderlich.';
+    } else if (error.message === 'Bitte geben Sie ein Passwort ein.') {
+      return 'Bitte geben Sie ein Passwort in beide Felder ein.'
+    }
+  
+    // Rückgabe einer allgemeinen Fehlermeldung, wenn keine spezifische Bedingung zutrifft
+    return 'Unerwarteter Fehler aufgetreten';
   }
 
   suche(email:string){}

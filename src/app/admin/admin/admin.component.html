@@ -1,22 +1,33 @@
 <h2 class="text-center" style="padding-top: 30px;">SYSTEMADMIN</h2>
 <div class="center">
+    <!--Suchleiste-->
     <div class="suche">
         <input style="width: 300px;" type="text" id="textSuche" placeholder="Nutzer suchen" #searchInput (keyup.enter)="filterUsers()">
     </div>
 </div>
+<!--Hier werden die verschiedenen User angezeigt-->
 <div class="containerAdmin">
     <div class="tabellenueberschrift">
         <p>E-Mail</p>
     </div>
     <div class="userListContainer">
         <ul>
+            <!--Schleife um über die User zu iterieren-->
             <li *ngFor="let user of users" style="background-color: #00528d4c ;">
                 <h4> {{user.email}} </h4>
                 <div>
+                    <!--Button, um auf die Seite zum Passwort bearbeiten zu gelangen-->
                     <button class="button_bearbeiten" (click)="navigateToAdminBearbeiten(user.email, user.id)" >Bearbeiten</button>
+                    <!--Button, um den User zu löschen-->
                     <button class="button_löschen" (click)="userLoeschen(user.id)">Löschen</button>
                 </div>
             </li>
         </ul>
+    </div>
+    <div *ngIf="deletedUserSuccess" class="success-message">
+        User erfolgreich entfernt!
+    </div>
+    <div *ngIf="deletedUserFail" class="success-message">
+        Fehler! User konnte nicht entfernt werden!
     </div>
 </div>
