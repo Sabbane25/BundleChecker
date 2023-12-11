@@ -1,3 +1,4 @@
+<!--Autor: Tim Hinder-->
 <h2 class="text-center" style="padding-top: 30px;">SYSTEMADMIN</h2>
 <div class="center">
     <!--Suchleiste-->
@@ -24,9 +25,11 @@
             </li>
         </ul>
     </div>
+    <!--Meldung, falls das Entfernen des Users erfolgreich war-->
     <div *ngIf="deletedUserSuccess" class="success-message">
         User erfolgreich entfernt!
     </div>
+    <!--Meldung, falls das Entfernen des Users gescheitert ist-->
     <div *ngIf="deletedUserFail" class="success-message">
         Fehler! User konnte nicht entfernt werden!
     </div>
