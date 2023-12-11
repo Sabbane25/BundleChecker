@@ -9,6 +9,13 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+/**
+ * Service für die Kontakt-Seite
+ *
+ * Dieser Service sendet eine E-Mail an den Administrator.
+ *
+ * @autor Mokhtar Yosofzay
+ */
 @Injectable({
   providedIn: 'root'
 })

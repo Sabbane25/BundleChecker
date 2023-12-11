@@ -2,6 +2,8 @@ module.exports = (sequelize, Sequelize) => {
 
   /**
    * Modell für Nutzer
+   *
+   * @autor Mokhtar Yosofzay
    */
   const User = sequelize.define("users", {
     email: {

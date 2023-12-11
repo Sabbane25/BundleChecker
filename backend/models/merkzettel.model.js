@@ -2,6 +2,8 @@ module.exports = (sequelize, Sequelize) => {
 
     /**
      * Modell für Merkzettel
+     *
+     * @autor Mokhtar Yosofzay
      */
     const Merkzettel = sequelize.define("merkzettel",
         {

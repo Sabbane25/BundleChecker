@@ -1,6 +1,15 @@
 const {verifySignUp} = require("../middleware");
 const controller = require("../controllers/auth.controller");
 
+/**
+ * Nutzer Schnittstellen
+ *
+ * @autor Arnauld Mba Kuitche
+ * @author Mokhtar Yosofzay
+ *
+ * @param app
+ * @param connection
+ */
 module.exports = function(app, connection) {
   app.use(function(req, res, next) {
     res.header(

@@ -1,3 +1,9 @@
+/**
+ * Scraping FutureX
+ *
+ * @param app
+ * @param connection
+ */
 module.exports = function(app, connection) {
   const { insertArtikel } = require('./../scrapingFutureX'); // Importieren des Scraping-FutureX
   const { insertDataIntoArtikel2, insertDataIntoCPU2, insertDataIntoRAM2, insertDataIntoGehaeuse2,insertDataIntoGrafikkarte2,

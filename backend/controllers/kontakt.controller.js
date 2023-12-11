@@ -1,3 +1,5 @@
+// Autor: Mokhtar Yosofzay
+
 const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
     service: 'outlook',

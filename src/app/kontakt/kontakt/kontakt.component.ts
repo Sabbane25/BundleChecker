@@ -7,6 +7,12 @@ import {KontaktService} from "../../../services/kontakt.service";
   templateUrl: './kontakt.component.html',
   styleUrls: ['./kontakt.component.css'],
 })
+
+/**
+ * Komponente für die Anzeige der Kontakt-Seite
+ *
+ * @autor Mokhtar Yosofzay
+ */
 export class KontaktComponent {
   form: any = {
     nachricht: null,

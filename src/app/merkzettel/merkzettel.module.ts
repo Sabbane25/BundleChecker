@@ -5,8 +5,9 @@ import {authInterceptorProviders} from "../../helpers/auth.interceptor";
 import {HttpClientModule} from "@angular/common/http";
 
 
-
-
+/**
+ * @autor Mokhtar Yosofzay
+ */
 @NgModule({
   declarations: [
     MerkzettelComponent,

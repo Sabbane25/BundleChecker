@@ -1,3 +1,14 @@
+/**
+ * Route-Datei für die Artikel
+ *
+ * Diese Datei enthält alle Routen für die Artikel.
+ *
+ * @autor Mokhtar Yosofzay
+ * @autor Arnauld Mba Kuitche
+ *
+ * @param app
+ * @param connection
+ */
 module.exports = function(app, connection) {
   app.use(function(req, res, next) {
     res.header(

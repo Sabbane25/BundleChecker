@@ -14,6 +14,14 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+/**
+ * Service für die Nutzer-Seite
+ *
+ * Dieser Service verwaltet die Nutzer.
+ *
+ * @autor Mokhtar Yosofzay
+ * @autor Tim Hinder
+ */
 @Injectable({
   providedIn: 'root'
 })

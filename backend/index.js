@@ -1,3 +1,30 @@
+/**
+ * Backend-Server
+ *
+ * Dieser Server stellt die REST-API für den Frontend-Client bereit.
+ *
+ * Der Server läuft auf Port 3000.
+ *
+ * Der Server verwendet das Express-Framework.
+ *
+ * Der Server verwendet das cors-Paket, um CORS-Anfragen zu erlauben.
+ *
+ * Der Server verwendet das helmet-Paket, um die Sicherheit zu erhöhen.
+ *
+ * Der Server verwendet das MySQL2-Paket, um auf die Datenbank zuzugreifen.
+ *
+ * Der Server verwendet das jsonwebtoken-Paket, um JSON Web Tokens zu erstellen.
+ *
+ * Der Server verwendet das bcryptjs-Paket, um Passwörter zu hashen.
+ *
+ * Der Server verwendet das nodemailer-Paket, um E-Mails zu versenden.
+ *
+ * Der Server verwendet das cheerio-Paket, um HTML zu parsen.
+ *
+ * Der Server verwendet das request-Paket, um HTTP-Anfragen zu senden.
+ *
+ * @author Mokhtar Yosofzay
+ */
 
 const express = require('express'); // Importieren des Express-Frameworks
 const cors = require('cors'); // Importieren des cors-Pakets

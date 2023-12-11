@@ -1,3 +1,13 @@
+/**
+ * Produkt-Endpunkte
+ *
+ * Hier werden die Endpunkte für die Produkte definiert.
+ *
+ * @autor Arnauld Mba Kuitche
+ *
+ * @param app
+ * @param connection
+ */
 module.exports = function(app, connection) {
   app.use(function(req, res, next) {
     res.header(

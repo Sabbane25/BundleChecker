@@ -2,6 +2,8 @@ module.exports = (sequelize, Sequelize) => {
 
   /**
    * Modell für Artikel
+   *
+   * @autor Mokhtar Yosofzay
    */
   const artikel = sequelize.define("artikel", {
     kategorie: {

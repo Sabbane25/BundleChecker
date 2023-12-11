@@ -2,6 +2,8 @@ module.exports = (sequelize, Sequelize) => {
 
   /**
    * Modell für ram
+   *
+   * @autor Mokhtar Yosofzay
    */
   const ram = sequelize.define("ram", {
     artikelnummer: {

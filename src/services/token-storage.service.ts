@@ -3,10 +3,16 @@ import { Injectable } from '@angular/core';
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
 
+/**
+ * Service für die Token-Verwaltung
+ *
+ * Dieser Service verwaltet den JWT-Token.
+ *
+ * @autor Mokhtar Yosofzay
+ */
 @Injectable({
   providedIn: 'root'
 })
-
 export class TokenStorageService {
   constructor() { }
 

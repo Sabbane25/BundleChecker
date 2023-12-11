@@ -1,6 +1,8 @@
 module.exports = (sequelize, Sequelize) => {
   /**
    * Model für Nutzer-Rolle
+   *
+   * @autor Mokhtar Yosofzay
    */
   const Role = sequelize.define("roles", {
     id: {

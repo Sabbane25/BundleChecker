@@ -22,6 +22,7 @@ schnellstesBundle: { bundleName: string; artikelList: Artikel[]; totalPrice: num
 ausgewaehlteArtikel1: Artikel[] = [];
 ausgewaehlteArtikel2: Artikel[] = [];
 
+  // Autor: Mokhtar Yosofzay
   isLoggedIn = false;
   merkzettelHinzugefuegtGuenstigste = false;
   merkzettelHinzugefuegtSchnellste = false;
@@ -458,6 +459,8 @@ groupByAnbieterForSchnellstesBundle() {
   /**
    * Sammle die Artikel urls und sende sie an den Service
    * um einen Merkzettel zu erstellen
+   *
+   * @author Mokhtar Yosofzay
    *
    * @param bundles
    */

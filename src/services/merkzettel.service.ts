@@ -17,11 +17,23 @@ const httpOptions = {
   })
 };
 
+/**
+ * Interface für die Merkzettel-Antwort
+ *
+ * @autor Mokhtar Yosofzay
+ */
 interface MerkzettelResponse {
     id: number;
     message: string;
 }
 
+/**
+ * Service für die Merkzettel-Seite
+ *
+ * Dieser Service erstellt einen Merkzettel und fügt Produkte hinzu.
+ *
+ * @autor Mokhtar Yosofzay
+ */
 @Injectable({
   providedIn: 'root'
 })

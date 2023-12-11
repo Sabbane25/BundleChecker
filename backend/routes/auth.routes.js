@@ -1,6 +1,13 @@
 const { verifySignUp } = require("../middleware");
 const controller = require("../controllers/auth.controller");
 
+/**
+ * Registrierung und Login
+ *
+ * @author Mokhtar Yosofzay
+ *
+ * @param app
+ */
 module.exports = function(app) {
   app.use(function(req, res, next) {
     res.header(

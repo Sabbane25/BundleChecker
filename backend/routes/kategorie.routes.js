@@ -1,3 +1,12 @@
+/**
+ * Die Kategorie-Routen werden hier definiert.
+ *
+ * @autor Mokhtar Yosofzay
+ * @autor Arnauld Mba Kuitche
+ *
+ * @param app
+ * @param connection
+ */
 module.exports = function(app, connection) {
   app.use(function(req, res, next) {
     res.header(

@@ -1,3 +1,5 @@
+// Autor: Mokhtar Yosofzay
+
 const db = require("../models");
 const Merkzettel = db.merkzettel;
 const Artikel = db.artikel;

@@ -1,6 +1,13 @@
 const {authJwt} = require("../middleware");
 const controller = require("../controllers/merkzettel.controller");
 
+/**
+ * Merkzettel erstellen, bearbeiten, löschen und anzeigen lassen
+ *
+ * @autor Mokhtar Yosofzay
+ *
+ * @param app
+ */
 module.exports = function (app) {
     app.use(function (req, res, next) {
         res.header(

@@ -1,3 +1,7 @@
+/**
+ * Der Index.js ist die zentrale Stelle, an der alle Models importiert werden.
+ */
+
 const config = require("../config/db.config.js");
 
 const Sequelize = require("sequelize");
