@@ -88,4 +88,6 @@ export class MerkzettelComponent {
     this.bundles.splice(id_list, 1);
     this.selectedBundleId = undefined;
   }
+
+    protected readonly Intl = Intl;
 }

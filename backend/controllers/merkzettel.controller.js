@@ -40,7 +40,17 @@ exports.create = (req, res) => {
  */
 exports.add = (req, res) => {
     const merkzettelId = req.body.merkzettelId;
-    const artikel = req.body.produktLink;
+    const artikel = req.body.produktUrl;
+
+    if (!merkzettelId || !artikel) {
+        return res.status(400).send({
+            message: "Merkzettel oder Artikel nicht angegeben!",
+            context: {
+                merkzettelId: merkzettelId,
+                artikel: artikel,
+            }
+        });
+    }
 
     Merkzettel.findOne({
         where: {
@@ -53,7 +63,7 @@ exports.add = (req, res) => {
         } else {
             Artikel.findOne({
                 where: {
-                    produktLink: artikel
+                    produktUrl: artikel
                 }
             }).then(artikel => {
                 if (!artikel) {
@@ -74,19 +84,19 @@ exports.add = (req, res) => {
  * @param res
  */
 exports.delete = (req, res) => {
-    const merkzettellId = req.params.merkzettellId;
+    const merkzettelId = req.params.merkzettelId;
 
     Merkzettel.findOne({
         where: {
-            id: merkzettellId,
+            id: merkzettelId,
             userId: req.userId
         }
     }).then(merkzettel => {
         if (!merkzettel) {
-            return res.status(404).send({message: `Merkzettel ${merkzettellId} nicht gefunden!`});
+            return res.status(404).send({message: `Merkzettel ${merkzettelId} nicht gefunden!`});
         } else {
             merkzettel.destroy();
-            res.send({message: `Merkzettel ${merkzettellId} wurde gelöscht!`});
+            res.send({message: `Merkzettel ${merkzettelId} wurde gelöscht!`});
         }
     });
 };
@@ -99,7 +109,7 @@ exports.delete = (req, res) => {
  */
 exports.removeItemFromList = (req, res) => {
     const merkzettelId = req.body.merkzettelId;
-    const artikel = req.body.produktLink;
+    const artikel = req.body.produktUrl;
 
     Merkzettel.findOne({
         where: {
@@ -112,7 +122,7 @@ exports.removeItemFromList = (req, res) => {
         } else {
             Artikel.findOne({
                 where: {
-                    produktLink: artikel
+                    produktUrl: artikel
                 }
             }).then(artikel => {
                 if (!artikel) {

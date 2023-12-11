@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Artikel } from 'src/models/artikel.model';
 import { ArtikelService } from 'src/services/artikel.service';
+import {HttpClient} from "@angular/common/http";
+import {TokenStorageService} from "../../../services/token-storage.service";
+import {Router} from "@angular/router";
+import {MerkzettelService} from "../../../services/merkzettel.service";
 
 @Component({
   selector: 'app-uebersicht',
@@ -18,6 +22,11 @@ schnellstesBundle: { bundleName: string; artikelList: Artikel[]; totalPrice: num
 ausgewaehlteArtikel1: Artikel[] = [];
 ausgewaehlteArtikel2: Artikel[] = [];
 
+  isLoggedIn = false;
+  merkzettelHinzugefuegtGuenstigste = false;
+  merkzettelHinzugefuegtSchnellste = false;
+
+  constructor(private artikelService: ArtikelService, private http: HttpClient, private merkzettelService: MerkzettelService, private tokenStorageService: TokenStorageService, private router: Router, ) {}
 
 /**
  * Erzeugt eine Tiefenkopie eines Objekts mithilfe von JSON-Parsing.
@@ -27,8 +36,6 @@ ausgewaehlteArtikel2: Artikel[] = [];
 deepCopy(obj: any): any {
   return JSON.parse(JSON.stringify(obj));
 }
-
-  constructor(private artikelService: ArtikelService) {}
 
 /**
  * Initialisiert das Komponente und abonniert Änderungen der guenstigstesArtikel-
@@ -66,6 +73,7 @@ this.schnellstesBundle.forEach(bundle => {
 
 console.log('guenstigstesBundle:', this.guenstigstesBundle);
 console.log('schnellstesBundle:', this.schnellstesBundle);
+this.isLoggedIn = this.tokenStorageService.isLoggedIn();
 }
 
 
@@ -447,4 +455,19 @@ groupByAnbieterForSchnellstesBundle() {
   this.schnellstesBundle = [newBundle];
 }
 
+  /**
+   * Sammle die Artikel urls und sende sie an den Service
+   * um einen Merkzettel zu erstellen
+   *
+   * @param bundles
+   */
+  erstelleMerkzettel(bundles: any) {
+    const artikelUrls: string[] = [];
+    for (let bundle of bundles) {
+      for (let artikel of bundle.artikelList) {
+        artikelUrls.push(artikel.produktUrl);
+      }
+    }
+    this.merkzettelService.erstelleMerkzettel(artikelUrls)
+  }
 }

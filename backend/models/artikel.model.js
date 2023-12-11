@@ -16,7 +16,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
       field: 'shopID'
     },
-    produktLink: {
+    produktUrl: {
       type: Sequelize.STRING,
       primaryKey: true,
       field: 'produktUrl'

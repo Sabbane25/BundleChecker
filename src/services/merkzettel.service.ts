@@ -37,10 +37,10 @@ export class MerkzettelService {
 
             if (data.id) {
                 for (let artikelId in artikel) {
-                    const produktLink = artikel[artikelId];
+                    const produktUrl = artikel[artikelId];
                     const merkzettelId = data.id
 
-                    this.http.post(API_MERKZETTEL_PRODUKT_HINZUFUEGEN, { merkzettelId, produktLink }, httpOptions).subscribe(
+                    this.http.post(API_MERKZETTEL_PRODUKT_HINZUFUEGEN, { merkzettelId, produktUrl }, httpOptions).subscribe(
                         (data) => {
                             console.log(data);
                         },
