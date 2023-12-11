@@ -37,6 +37,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       field: 'image'
     },
+    verfuegbarkeit: {
+      type: Sequelize.STRING,
+      field: 'verfügbarkeit'
+    },
   }, {
     timestamps: false,
     underscored: true,
