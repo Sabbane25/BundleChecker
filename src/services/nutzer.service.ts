@@ -103,7 +103,7 @@ export class NutzerService {
     console.log("In Nutzerservice");
     console.log("UserID:", user_id);
   
-    return this.http.delete<void>(`${apiURL}/userLoeschen/${user_id}`, options);
+    return this.http.delete<void>(`${apiURL}/users/${user_id}`, options);
   }
    
    updateUser(password: string): Observable<any> {

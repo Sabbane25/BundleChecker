@@ -48,12 +48,12 @@ module.exports = function(app, connection) {
   });
 
   app.put('/changePassword', (req, res) => {
-    const { email, password } = req.body;
-    const sql = `UPDATE nutzer SET password = ? WHERE email = ?`;
+    const { id, password } = req.body;
+    const sql = `UPDATE nutzer SET password = ? WHERE id = ?`;
 
-    const hashedPassword = bcrypt.hashSync(req.body.password, 8);
+    const hashedPassword = bcrypt.hashSync(password, 8);
   
-    connection.query(sql, [hashedPassword, email], (err, results) => {
+    connection.query(sql, [hashedPassword, id], (err, results) => {
       if (err) {
         console.error('Fehler beim Ausführen der Datenbankabfrage: ' + err.message);
         return res.status(500).json({ message: 'Fehler beim Ändern des Passworts' });
