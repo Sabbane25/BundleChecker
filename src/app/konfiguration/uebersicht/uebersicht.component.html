@@ -1,7 +1,10 @@
       <div class="container-bundler">
-        <!--<app-list-komponent (ausgewaehlteArtikelChanged)="onAusgewaehlteArtikelChanged($event)"></app-list-komponent>-->
         <div class="container-bundle">
           <h3 class="bundleName">Günstigstes Bundle:</h3>
+          <div class="alert alert-info" *ngIf="(!guenstigstesBundle || !guenstigstesBundle[0]?.artikelList || guenstigstesBundle[0]?.artikelList?.length === 0)">
+            Es sind keine Produkte im günstigsten Bundle vorhanden.
+            Bitte Artikel in Komponenten wählen.
+          </div>
           <ul>
             <ng-container *ngFor="let bundle of guenstigstesBundle; let bundleIndex = index">
               <li>
@@ -45,9 +48,14 @@
             </ng-container>
           </ul>
         </div>
+
         
         <div class="container-bundle">
           <h3 class="bundleName">Bundle mit schnellster Lieferzeit:</h3>
+          <div class="alert alert-info" *ngIf="(!schnellstesBundle || !schnellstesBundle[0]?.artikelList || schnellstesBundle[0]?.artikelList?.length === 0)">
+            Es sind keine Produkte im schnellsten Bundle vorhanden.
+            Bitte Artikel in Komponenten wählen.
+          </div>
           <ul>
             <ng-container *ngFor="let bundle of schnellstesBundle; let bundleIndex = index">
               <li>
@@ -90,5 +98,8 @@
               </li>
             </ng-container>
           </ul>
+        </div>
+        <div class="no-products-message" *ngIf="!schnellstesBundle || schnellstesBundle.length === 0">
+          Es sind keine Produkte im schnellsten Bundle vorhanden.
         </div>
       </div>
