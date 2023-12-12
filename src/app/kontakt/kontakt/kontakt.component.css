@@ -8,12 +8,6 @@ Autor: Mokhtar Yosofzay
     justify-content: center;
 }
 
-.container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 40px;
-}
-
 /* alert box */
 .alert {
     padding: 5px;
@@ -39,41 +33,6 @@ label {
 textarea,
 input {
     width: 100%;
-}
-
-/* Container */
-.flex-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: normal;
-    align-items: normal;
-    align-content: normal;
-}
-
-.flex-items {
-    display: block;
-    flex-grow: 0;
-    flex-shrink: 1;
-    flex-basis: auto;
-    align-self: auto;
-    width: 50%;
-    margin-bottom: 15px;
-}
-.flex-items.column-nachricht {
-    width: 100%;
-}
-
-/* Padding für abwechselnde Reihenfolge */
-.flex-items:nth-child(odd) {
-    padding-right: 15px;
-}
-.flex-items:nth-child(even) {
-    padding-left: 15px;
-}
-.flex-items:last-child {
-    padding-left: 0;
-    padding-right: 0;
 }
 
 /* Formular-Footer */
