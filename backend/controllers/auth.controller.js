@@ -19,6 +19,49 @@ var bcrypt = require("bcryptjs");
  * @param {*} res
  */
 exports.signup = (req, res) => {
+    const { email, password } = req.body;
+
+    // Überprüfe ob E-Mail gültiges email format entspricht
+    if (!email || typeof email !== 'string') {
+        return res.status(400).json({ message: 'E-Mail ist erforderlich' });
+    }
+
+    // Überprüfe ob Passwort gültiges Passwort format entspricht
+    if (!password || typeof password !== 'string') {
+        return res.status(400).json({ message: 'Passwort ist erforderlich' });
+    }
+
+    // Überprüfe ob Email ein @ enthält und ein gültiges format entspricht
+    if (!email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)) {
+        return res.status(400).json({ message: 'E-Mail ist ungültig' });
+    }
+
+    // Überprüfe ob Passwort mindestens 5 Zeichen lang ist
+    if (password.length < 5) {
+        return res.status(400).json({ message: 'Passwort muss mindestens 5 Zeichen lang sein' });
+    }
+
+    // Überprüfe ob Passwort mindestens ein Großbuchstaben enthält
+    if (!password.match(/[A-Z]/)) {
+        return res.status(400).json({ message: 'Passwort muss mindestens einen Großbuchstaben enthalten' });
+    }
+
+    // Überprüfe ob Passwort mindestens ein Kleinbuchstaben enthält
+    if (!password.match(/[a-z]/)) {
+        return res.status(400).json({ message: 'Passwort muss mindestens einen Kleinbuchstaben enthalten' });
+    }
+
+    // Überprüfe ob Passwort mindestens eine Zahl enthält
+    if (!password.match(/\d/)) {
+        return res.status(400).json({ message: 'Passwort muss mindestens eine Zahl enthalten' });
+    }
+
+    // Überprüfe ob Passwort mindestens ein Sonderzeichen enthält
+    if (!password.match(/[!@#$%^&*]/)) {
+        return res.status(400).json({ message: 'Passwort muss mindestens ein Sonderzeichen enthalten' });
+    }
+
+
   // Speichere Nutzer in die Datenbank
   User.create({
     // User.updateOne({
