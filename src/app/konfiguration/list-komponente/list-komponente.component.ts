@@ -26,6 +26,7 @@ export class ListKomponenteComponent implements AfterViewInit{
   vergleichenenArtikellisteTest: Speicher[] = [];
 
   artikelliste: Array<{ kategorie: string, artikelListe: Array<{ shop1: Artikel, shop2: Artikel}>}> = [];
+  backupArtikelliste: Array<{ kategorie: string, artikelListe: Array<{ shop1: Artikel, shop2: Artikel}>}> = [];
 
   sortierteArtikelListe: Array<{ kategorie: string, liste1: Artikel[], liste2: Artikel[] }> = [];
   hinzugefuegteArtikel: Artikel[] = []; // Um Artikel im neu Kontiguration aufzulisten / zur Übersicht - Funktion
@@ -41,6 +42,7 @@ export class ListKomponenteComponent implements AfterViewInit{
   }
 
   dataSubscription: Subscription; 
+  
   constructor(private artikelService: ArtikelService, private filterService: FilterService) {}
 
   ngOnInit(): void {
@@ -52,20 +54,15 @@ export class ListKomponenteComponent implements AfterViewInit{
    this.gibGleichteGehaeuse();
    this.gibGleichteCPU();
    this.maMethodeAsync();
-   console.log('Alle Artikel', this.artikelliste);
-   console.log('Mono liste', this.vergleichenenArtikellisteTest);
 
    this.dataSubscription = this.filterService.dataFilter$.subscribe(data => {
-    //let receiverData: { von: number, bis: number } = data;
     let artikelFilter: Filter = data;
-    console.log('ReceicerDATA', data);
-
-    let vergleichenenArtikelliste: Array<{ shop1: Artikel, shop2: Artikel}> = [];
     this.vergleichenenArtikellisteTest = Speicher.filtrerParIntervallePrix(this.vergleichenenArtikellisteTest, 100, 150);
     for(let artikel of this.artikelliste){
       if(artikel.kategorie === artikelFilter.artikelKategorie){
-        //artikel.artikelListe = vergleichenenArtikelliste;
-        artikel.artikelListe = Speicher.filtrerParIntervallePrix2(artikel.artikelListe, artikelFilter.preis.von, artikelFilter.preis.bis);
+        const gefilterteListe = Cpu.filterByMapCriteria(artikel.artikelListe, artikelFilter.checkbox);
+        console.log('gefilterteListe: ', gefilterteListe);
+        artikel.artikelListe = gefilterteListe;
       }
     }
    });
@@ -354,6 +351,9 @@ export class ListKomponenteComponent implements AfterViewInit{
       let vergleichenenArtikelliste: Array<{ shop1: Artikel, shop2: Artikel}> = [];
       const listeCPUShop1: Cpu[] = await this.ladeCPUData(1, 'CPU');
       const listeCPUShop2: Cpu[] = await this.ladeCPUData(2, 'CPU');
+
+      console.log('liste pour faire le test de filtre: ',  listeCPUShop1);
+      //console.log('list filtreE ', Cpu.filter(listeCPUShop1));
 
       for(const cpuId1 of listeCPUShop1){
         let isGleichArikel = false; 

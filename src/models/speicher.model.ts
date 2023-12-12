@@ -24,7 +24,6 @@ export class Speicher extends Artikel{
     }
 
     static filtrerParIntervallePrix2(objets: Array<{ shop1: Artikel, shop2: Artikel}>, vonPreis: number, bisPreis: number): Array<{ shop1: Artikel, shop2: Artikel}>{
-        
         return objets.filter(objet => objet.shop1.preis >= vonPreis && objet.shop1.preis <= bisPreis && objet.shop2.preis >= vonPreis && objet.shop2.preis <= bisPreis);
     }
 

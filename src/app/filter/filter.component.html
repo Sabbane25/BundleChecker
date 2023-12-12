@@ -3,8 +3,8 @@
       <h4 (click)="zeigeFilter()">Filter</h4>
       <!-- Filter -->
       <div *ngFor="let kategorie of listeEigenschaften" class="accordion accordion-flush filter" id="accordionFlushExample" [hidden]="!isFilterSichtbar">
-        <!-- Filter-Item 1: Preis-->
-        <div class="test" *ngIf="kategorie.kategorie === filterKategorie">
+        <form #filterForm="ngForm" (ngSubmit)="submitForm(filterForm.value)" class="test" *ngIf="kategorie.kategorie === filterKategorie">
+          <!-- Filter-Item 1: Preis-->
           <div class="accordion-item" >
             <h2 class="accordion-header" >
               <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
@@ -14,16 +14,16 @@
             <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
               <div class="accordion-body filterItem">
                 <div>
-                  <div class="itemInhalt" >
+                 <div class="itemInhalt" >
                     <div class="von">
                       <p>von</p>
-                      <input type="number" name="von" id="von" [(ngModel)]="vonInputValue">
+                      <input type="number" name="vonInputValue" id="von" [(ngModel)]="vonInputValue">
                     </div>
                     <div class="preis">
                       <p>bis</p>
-                      <input type="number" name="bis" id="bis" [(ngModel)]="bisInputValue">
+                      <input type="number" name="bisInputValue" [(ngModel)]="bisInputValue">
                     </div>
-                  </div>
+                  </div> 
                 </div>
               </div>
             </div>
@@ -37,11 +37,9 @@
             </h2>
             <div [id]="'flush-collapseTwo' + item.typ"  class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
               <div class="accordion-body p-2" >
-              <!--<div class="accordion-body p-2" *ngFor="let kategorie of checkboxListeMarke" >-->  
-                <div *ngFor="let listeItem of item.listeType ">
-                  <input type="checkbox" [(ngModel)]="checkboxMarke">
+                <div *ngFor="let listeItem of item.listeType">
+                  <input type="checkbox" [name]="listeItem" (change)="sedeListeItem(item.typ, listeItem, $event)">
                   <label class="ms-2" for="">{{ listeItem }} </label>
-                  <!--<label class="ms-2" for="">{{ kategorie.marke }}</label>-->
                 </div>
               </div>
             </div>
@@ -52,11 +50,7 @@
               <button (click)="filterAbbrechen()" class="abbrechen_click">Abbrechen</button>
             </div>
           </div>
-          <!-- <div>xxx</div> -->
-        </div>
-        <!-- Button für die Bestätigung oder Abbrechen eines Filters -->
-        
+        </form>
       </div>
     </div> 
 </div>
-
