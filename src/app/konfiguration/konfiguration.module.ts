@@ -17,7 +17,11 @@ import { FormsModule } from '@angular/forms';
     DropDownMenuComponent,
     FilterComponent,
   ], // Hier die Komponenten deklarieren.
-  imports: [CommonModule, FormsModule],
+  imports: [
+      CommonModule,
+      FormsModule,
+      RouterModule,
+  ],
   exports: [KonfigurationComponent], // Wenn die KonfigurationComponent exportiert werden muss.
 
 })

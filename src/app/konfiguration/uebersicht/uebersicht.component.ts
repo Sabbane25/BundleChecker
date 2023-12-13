@@ -28,7 +28,7 @@ ausgewaehlteArtikel2: Artikel[] = [];
   merkzettelHinzugefuegtGuenstigste = false;
   merkzettelHinzugefuegtSchnellste = false;
 
-  constructor(private artikelService: ArtikelService, private http: HttpClient, private merkzettelService: MerkzettelService, private tokenStorageService: TokenStorageService, private router: Router, ) {}
+  constructor(private artikelService: ArtikelService, private http: HttpClient, private merkzettelService: MerkzettelService, private tokenStorageService: TokenStorageService, private router: Router) {}
 
 /**
  * Erzeugt eine Tiefenkopie eines Objekts mithilfe von JSON-Parsing.
