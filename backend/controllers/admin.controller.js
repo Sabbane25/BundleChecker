@@ -60,7 +60,7 @@ exports.changePassword = (req, res) => {
     // Überprüfe ob id übergeben wurde
    // if (!id || typeof id !== 'string') {
      //   return res.status(400).json({ message: 'ID ist erforderlich' });
-    //}
+    //
 
     // Überprüfe ob Passwort gültiges Passwort format entspricht
     if (!password || typeof password !== 'string') {
