@@ -3,7 +3,7 @@
  *
  * @autor Mokhtar Yosofzay
  */
-const lokal_backend = true;
+const lokal_backend = false;
 
 /*
 Verwende mit:
