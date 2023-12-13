@@ -1,5 +1,6 @@
-const {verifySignUp} = require("../middleware");
+const {verifySignUp, authJwt} = require("../middleware");
 const controller = require("../controllers/auth.controller");
+const adminController = require("../controllers/admin.controller");
 
 /**
  * Nutzer Schnittstellen
@@ -34,43 +35,28 @@ module.exports = function(app, connection) {
         res.status(500).json({ error: 'Fehler beim Abrufen der Nutzerdaten' });
         return;
       }
-      res.json(results);
-    });
-  });
-
-  app.delete('/users/:id', (req, res) => {
-    const userId = req.params.id;
-
-    const sql = 'DELETE FROM nutzer WHERE id = ?';
-
-    connection.query(sql, [userId], (err, result) => {
-      if (err) {
-        console.error('Fehler beim Löschen des Benutzers: ' + err.message);
-        res.status(500).send('Interner Serverfehler');
-        return;
-      }
-
-      console.log('Benutzer erfolgreich gelöscht.');
       res.setHeader('Content-Type', 'application/json');
-      res.status(200).end('Benutzer erfolgreich gelöscht.');
+      res.status(200).json(results);
     });
   });
 
-  app.put('/changePassword', (req, res) => {
-    const { id, password } = req.body;
-    const sql = `UPDATE nutzer SET password = ? WHERE id = ?`;
+  app.delete(
+      '/users/:id',
+      [
+          authJwt.verifyToken, // prüfe ob token valide ist
+          authJwt.isAdmin, // prüfe ob Nutzer Admin ist
+      ],
+      adminController.delete
+  );
 
-    const hashedPassword = bcrypt.hashSync(password, 8);
-  
-    connection.query(sql, [hashedPassword, id], (err, results) => {
-      if (err) {
-        console.error('Fehler beim Ausführen der Datenbankabfrage: ' + err.message);
-        return res.status(500).json({ message: 'Fehler beim Ändern des Passworts' });
-      } else {
-        res.status(201).json({ message: 'Passwort erfolgreich geändert' });
-      }
-    });
-  });
+  app.put(
+      '/changePassword',
+      [
+        authJwt.verifyToken, // prüfe ob token valide ist
+        authJwt.isAdmin, // prüfe ob Nutzer Admin ist
+      ],
+      adminController.changePassword,
+  );
 
   app.post(
       '/addUser',
@@ -79,5 +65,5 @@ module.exports = function(app, connection) {
         verifySignUp.checkRolesExisted
       ],
       controller.signup
-  )
-};
+  );
+}

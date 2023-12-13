@@ -100,18 +100,14 @@ export class NutzerService {
 
    getUsers(): Observable<any> {
       
-      return this.http.get<any[]>(`${apiURL}/getUsers`, { withCredentials: true });
+      return this.http.get<any[]>(`${apiURL}/getUsers`);
    }
 
    loeschen(user_id: number): Observable<void> {
-    const options = {
-      body: { user_id: user_id }
-    };
-  
     console.log("In Nutzerservice");
     console.log("UserID:", user_id);
   
-    return this.http.delete<void>(`${apiURL}/users/${user_id}`, options);
+    return this.http.delete<void>(`${apiURL}/users/${user_id}`);
   }
    
    updateUser(password: string): Observable<any> {

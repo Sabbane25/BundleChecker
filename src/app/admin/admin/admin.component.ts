@@ -18,6 +18,8 @@ export class AdminComponent implements OnInit {
   users: any[] = [];
   deletedUserSuccess = false;
   deletedUserFail = false;
+  loeschenErfolgreichNachricht = '';
+  loeschenFehlerNachricht = '';
 
   constructor(private nutzerService: NutzerService, private router: Router) {}
 
@@ -50,15 +52,21 @@ export class AdminComponent implements OnInit {
     }
   }
   //Methode, um einen User zu löschen
-  userLoeschen(user_id: number): void {
-    console.log("User wird gelöscht");
-    this.nutzerService.loeschen(user_id).subscribe(() => {
+  userLoeschen(userId: number): void {
+    console.log(`User ${userId} wird gelöscht`);
+    this.nutzerService.loeschen(userId).subscribe((data) => {
+        console.log('User gelöscht!', data);
       this.deletedUserSuccess = true;
+      this.deletedUserFail = false;
+      // @ts-ignore
+      this.loeschenErfolgreichNachricht = data.message;
       this.loadUsers();
     },
     error => {
       console.error('Fehler beim Löschen des Users!', error);
       this.deletedUserFail = true;
+      this.deletedUserSuccess = false;
+      this.loeschenFehlerNachricht = error?.error?.message ? error.error.message : 'Fehler! User konnte nicht entfernt werden!';
     }
     );
   }

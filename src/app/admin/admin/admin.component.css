@@ -67,5 +67,8 @@
 
 .success-message {
     color: green;
-    margin-left: 790px;
+}
+
+.error-message {
+    color: red;
 }

@@ -27,8 +27,12 @@
                 </div>
                 <div class="containerRechts">
                     <ul>
-                        <li style="margin-bottom: 10px;"><input type="password" placeholder="Passwort eingeben" #newPassword></li>
-                        <li><input type="password" placeholder="Passwort wiederholen" #confirmPassword></li>
+                        <li style="margin-bottom: 10px;">
+                            <input type="password" minlength="5" placeholder="Passwort eingeben" #newPassword>
+                        </li>
+                        <li>
+                            <input type="password" minlength="5" placeholder="Passwort wiederholen" #confirmPassword>
+                        </li>
                     </ul>
                 </div>
             </section>
@@ -37,11 +41,11 @@
                     <ul>
                         <li>
                             <!--Zeigt eine Errormeldung an falls etwas schief läuft-->
-                            <div *ngIf="errorMessage" class="error-message">
+                            <div *ngIf="errorMessage && !isUpdateSuccessful" class="error-message">
                                 {{ errorMessage }}
                             </div>
                             <!--Zeigt eine Erfolgsmeldung, wenn die Aktualisierung des Passworts erfolgreich war-->
-                            <div *ngIf="isUpdateSuccessful" class="success-message" style="color: green;">
+                            <div *ngIf="!errorMessage && isUpdateSuccessful" class="success-message" style="color: green;">
                                 Passwort erfolgreich aktualisiert!
                             </div>
                         </li>

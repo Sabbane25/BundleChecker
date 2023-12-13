@@ -36,16 +36,20 @@ updatePassword(newPasswordInput: HTMLInputElement, confirmPasswordInput: HTMLInp
     //Prüfung, ob bestimmte Bedingungen erfüllt sind
     if (!newPassword.trim() || !confirmPassword.trim()) {
         this.errorMessage = 'Bitte geben Sie ein Passwort in beide Felder ein!';
+        this.isUpdateSuccessful = false;
     } else if (newPassword !== confirmPassword) {
         this.errorMessage = 'Passwörter stimmen nicht überein!';
+        this.isUpdateSuccessful = false;
     } else if (newPassword.length < 5) {
         this.errorMessage = 'Passwort zu kurz! Mindestens 5 Zeichen!';
+        this.isUpdateSuccessful = false;
     } else {
         // Alle Bedingungen sind erfüllt, rufe den nutzerService.updateUser auf
         console.log(this.id);
         this.nutzerService.updatePassword(this.id, newPassword).subscribe(
             () => {
                 console.log('Passwort erfolgreich aktualisiert!');
+                this.errorMessage = '';
                 this.isUpdateSuccessful = true;
                 // Optional: Setze die Werte der Eingabefelder zurück
                 newPasswordInput.value = '';
@@ -55,6 +59,7 @@ updatePassword(newPasswordInput: HTMLInputElement, confirmPasswordInput: HTMLInp
             error => {
                 console.error('Fehler beim Aktualisieren des Passworts:', error);
                 this.errorMessage = error;
+                this.isUpdateSuccessful = false;
             }
         );
     }
