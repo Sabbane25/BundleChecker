@@ -1,5 +1,34 @@
 # BundleChecker
 
+## Server
+
+Es müssen alle Dateien, bis auf `node_modules` und `backend` in `~/frontend` kopiert werden`
+
+### Frontend-Server im Hintergrund starten
+
+```shell
+forever start ~/frontend/node_modules/@angular/cli/bin/ng.js serve --host 192.168.198.48
+```
+
+### Frontend im Hintergrund NEU starten
+```shell
+forever restart ~/frontend/node_modules/@angular/cli/bin/ng.js serve --host 192.168.198.48
+```
+
+### Frontend im Hintergrund stoppen
+```shell
+forever list
+```
+
+Wähle die ID des Prozesses aus, wo in grau der Pfad mit `@angular` steht.
+![](./docs/img.png)
+
+```shell
+forever stop 1
+```
+
+---
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
 
 ## Development server
