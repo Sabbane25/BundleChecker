@@ -48,29 +48,44 @@ db.user.belongsToMany(db.role, {
   through: "nutzer_nutzer_rollen_join"
 });
 
-db.artikel.hasMany(db.shop, {
-    foreignKey: 'shopID'
+db.shop.hasMany(db.artikel, {
+    foreignKey: 'shopID',
+    as: 'ShopID',
 });
-db.cpu.hasMany(db.artikel, {
-    foreignKey: 'url'
+db.artikel.hasMany(db.cpu, {
+    foreignKey: 'url',
+    sourceKey: 'produktUrl',
+    keyType: Sequelize.STRING
 });
-db.festplatte.hasMany(db.artikel, {
-    foreignKey: 'url'
+db.artikel.hasMany(db.festplatte, {
+    foreignKey: 'url',
+    sourceKey: 'produktUrl',
+    keyType: Sequelize.STRING
 });
-db.gehaeuse.hasMany(db.artikel, {
-    foreignKey: 'url'
+db.artikel.hasMany(db.gehaeuse, {
+    foreignKey: 'url',
+    sourceKey: 'produktUrl',
+    keyType: Sequelize.STRING
 });
-db.grafikkarte.hasMany(db.artikel, {
-    foreignKey: 'url'
+db.artikel.hasMany(db.grafikkarte, {
+    foreignKey: 'url',
+    sourceKey: 'produktUrl',
+    keyType: Sequelize.STRING
 });
-db.mainboard.hasMany(db.artikel, {
-    foreignKey: 'url'
+db.artikel.hasMany(db.mainboard, {
+    foreignKey: 'url',
+    sourceKey: 'produktUrl',
+    keyType: Sequelize.STRING
 });
-db.netzteil.hasMany(db.artikel, {
-    foreignKey: 'url'
+db.artikel.hasMany(db.netzteil, {
+    foreignKey: 'url',
+    sourceKey: 'produktUrl',
+    keyType: Sequelize.STRING
 });
-db.ram.hasMany(db.artikel, {
-    foreignKey: 'url'
+db.artikel.hasMany(db.ram, {
+    foreignKey: 'url',
+    sourceKey: 'produktUrl',
+    keyType: Sequelize.STRING
 });
 
 // Merkzettel
