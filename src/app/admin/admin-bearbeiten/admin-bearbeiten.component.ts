@@ -1,9 +1,10 @@
 /*Autor: Tim Hinder*/
 
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { NutzerService } from 'src/services/nutzer.service';
+import {TokenStorageService} from "../../../services/token-storage.service";
 
 @Component({
   selector: 'app-admin-bearbeiten',
@@ -20,9 +21,13 @@ export class AdminBearbeitenComponent implements OnInit {
   isUpdateSuccessful = false; //ist Aktulisierung des Passworts erfolgreich?
   errorMessage: string;  // Hier wird die Variable nur einmal deklariert
 
-  constructor(private nutzerService: NutzerService, private route: ActivatedRoute) {}
+  constructor(private token: TokenStorageService, private router: Router, private nutzerService: NutzerService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+      if (!this.token.isLoggedIn() || !this.token.getUser().roles.includes('ROLE_ADMIN')) {
+          this.router.navigate(['/404'], { skipLocationChange: true });
+      }
+
     this.route.params.subscribe(params => {
         this.email = params['email'] || '';
         this.id = +params['id'] || 0;

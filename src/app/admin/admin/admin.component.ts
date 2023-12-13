@@ -5,6 +5,7 @@ import { NutzerService } from 'src/services/nutzer.service';
 import { Router } from '@angular/router'
 import { FormsModule } from '@angular/forms';
 import { Nutzer } from 'src/models/nutzer.model';
+import {TokenStorageService} from "../../../services/token-storage.service";
 
 @Component({
     selector: 'app-admin',
@@ -21,9 +22,13 @@ export class AdminComponent implements OnInit {
   loeschenErfolgreichNachricht = '';
   loeschenFehlerNachricht = '';
 
-  constructor(private nutzerService: NutzerService, private router: Router) {}
+  constructor(private token: TokenStorageService, private nutzerService: NutzerService, private router: Router) {}
 
   ngOnInit(): void {
+    if (!this.token.isLoggedIn() || !this.token.getUser().roles.includes('ROLE_ADMIN')) {
+      this.router.navigate(['/404'], { skipLocationChange: true });
+    }
+
     this.loadUsers();
   }
   //Methode, um die User aus der Datenbank zu bekommen
