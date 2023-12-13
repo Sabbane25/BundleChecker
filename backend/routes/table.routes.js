@@ -16,6 +16,12 @@ module.exports = function(app, connection) {
   // GET-Endpunkt zum Abrufen von der Datenbank
   app.get('/api/data/:table', (req, res) => {
     const tableName = req.params.table;
+
+    // Überprüfe ob TableName gültiges format entspricht
+    if (!tableName || typeof tableName !== 'string') {
+      return res.status(400).json({ message: 'Table ist erforderlich' });
+    }
+
     // Überprüfen, ob die angegebene Tabelle existiert oder Zugriff erlaubt ist
     if (allowedTables.includes(tableName)) {
       const query = `SELECT * FROM ${tableName}`; //Ruft die im Link angegebene Tabelle auf

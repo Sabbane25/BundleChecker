@@ -21,6 +21,10 @@ module.exports = function(app, connection) {
   app.post('/api/scrapedata', (req, res) => {
     const scrapedData = req.body;
 
+    if (!scrapedData) {
+      return res.status(400).json({ message: 'Body ist leer' });
+    }
+
     updateDataInArtikel(connection, scrapedData.value);
     insertArtikel(connection, scrapedData);
 
@@ -30,6 +34,11 @@ module.exports = function(app, connection) {
   // Crawler Alternate
   app.post('/api/scrapedata2', (req, res) => {
     const scrapedData = req.body;
+
+    if (!scrapedData) {
+      return res.status(400).json({ message: 'Body ist leer' });
+    }
+
     insertDataIntoArtikel2(connection, scrapedData);
     insertDataIntoKomponenten(connection, scrapedData);
 

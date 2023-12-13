@@ -21,6 +21,12 @@ module.exports = function(app, connection) {
   // Get-Endpunk, um eine Liste von aller Artikel zu erhalten(Arnauld)
   app.get('/Artikel/:artikel', (req, res) => {
     const tableArtikel = req.params.artikel;
+
+    // Überprüfe ob Artikel gültiges format entspricht
+    if (!tableArtikel || typeof tableArtikel !== 'string') {
+      return res.status(400).json({ message: 'Artikel ist erforderlich' });
+    }
+
     const query2 = `SELECT A.*, T.* FROM Artikel A, ${tableArtikel} T WHERE A.Url = T.Url`
 
     const query =`
@@ -42,7 +48,20 @@ module.exports = function(app, connection) {
 
   app.get('/Artikel2/:artikel', (req, res) => {
     const tableArtikel = req.params.artikel;
-    const shopId = req.query.shopId || 2; // Valeur par dÃ©faut Ã  2 si le paramÃ¨tre n'est pas fourni
+    let shopId = req.query.shopId || 2; // Valeur par dÃ©faut Ã  2 si le paramÃ¨tre n'est pas fourni
+
+    // Überprüfe ob Artikel gültiges format entspricht
+    if (!tableArtikel || typeof tableArtikel !== 'string') {
+      return res.status(400).json({ message: 'Artikel ist erforderlich' });
+    }
+
+    if (shopId) {
+      shopId = parseInt(shopId);
+    }
+    // Überprüfe ob ShopID gültiges format entspricht
+    if (!shopId || typeof shopId !== 'number') {
+      return res.status(400).json({ message: 'Shop-ID ist erforderlich' });
+    }
 
     const query = `
       SELECT *
@@ -65,6 +84,16 @@ module.exports = function(app, connection) {
     const tableName = req.params.table;
     const markeValue = req.params.marke; // Nouveau paramÃ¨tre
 
+    // Überprüfe ob Table-Name gültiges format entspricht
+    if (!tableName || typeof tableName !== 'string') {
+      return res.status(400).json({ message: 'Tabelle ist erforderlich' });
+    }
+
+    // Überprüfe ob Marke gültiges format entspricht
+    if (!markeValue || typeof markeValue !== 'string') {
+      return res.status(400).json({ message: 'Marke ist erforderlich' });
+    }
+
     const query = `
     SELECT DISTINCT ${tableName}.${markeValue}
     FROM ${tableName}
@@ -82,6 +111,12 @@ module.exports = function(app, connection) {
   // gib alle Artikelmarke einer Marke zurÃ¼k
   app.get('/marke/:table', (req, res) => {
     const tableName = req.params.table;
+
+    // Überprüfe ob TableName gültiges format entspricht
+    if (!tableName || typeof tableName !== 'string') {
+      return res.status(400).json({ message: 'Table ist erforderlich' });
+    }
+
     const query2 = `SELECT * FROM ${tableName}`;
 
     const query = `

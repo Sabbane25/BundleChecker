@@ -20,6 +20,12 @@ module.exports = function(app, connection) {
   //GET-Endpunk zum Abrufen von Produkten (Arnauld)
   app.get('/Produkte/:table', (req, res) => {
     const tableName = req.params.table;
+
+    // Überprüfe ob TableName gültiges format entspricht
+    if (!tableName || typeof tableName !== 'string') {
+      return res.status(400).json({ message: 'Table ist erforderlich' });
+    }
+
     const query = `SELECT * FROM ${tableName}`;
 
     connection.query(query, (error, results) => {

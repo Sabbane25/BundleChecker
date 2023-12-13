@@ -21,7 +21,13 @@ module.exports = function(app, connection) {
   });
 
   //GET-Endpunk zum Abrufen von Produkten (Arnauld)
-  app.get('/getUsers', (req, res) => {
+  app.get(
+      '/getUsers',
+      [
+        authJwt.verifyToken, // prüfe ob token valide ist
+        authJwt.isAdmin, // prüfe ob Nutzer Admin ist
+      ],
+      (req, res) => {
     console.log('Empfangene Anfrage-Methode:', req.method); // Logge die empfangene HTTP-Methode
 
     const query = `SELECT n.email, n.password, n.id

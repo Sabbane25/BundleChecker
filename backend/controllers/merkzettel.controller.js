@@ -88,19 +88,29 @@ exports.add = (req, res) => {
 exports.delete = (req, res) => {
     const merkzettelId = req.params.merkzettelId;
 
+    // Überprüfe ob Merkzettel-ID gültiges format entspricht
+    if (!merkzettelId || typeof merkzettelId !== 'string') {
+        return res.status(400).json({ message: 'Merkzettel-ID ist erforderlich' });
+    }
+
     Merkzettel.findOne({
         where: {
             id: merkzettelId,
             userId: req.userId
         }
-    }).then(merkzettel => {
-        if (!merkzettel) {
-            return res.status(404).send({message: `Merkzettel ${merkzettelId} nicht gefunden!`});
-        } else {
-            merkzettel.destroy();
-            res.send({message: `Merkzettel ${merkzettelId} wurde gelöscht!`});
-        }
-    });
+    })
+        .then(merkzettel => {
+            if (!merkzettel) {
+                return res.status(404).send({message: `Merkzettel ${merkzettelId} nicht gefunden!`});
+            } else {
+                merkzettel.destroy();
+                res.send({message: `Merkzettel ${merkzettelId} wurde gelöscht!`});
+            }
+        })
+        .catch(err => {
+            // Sende Fehlermeldung bei einem Fehler
+            res.status(500).send({message: err.message});
+        })
 };
 
 /**
@@ -112,6 +122,16 @@ exports.delete = (req, res) => {
 exports.removeItemFromList = (req, res) => {
     const merkzettelId = req.body.merkzettelId;
     const artikel = req.body.produktUrl;
+
+    // Überprüfe ob Merkzettel-ID gültiges format entspricht
+    if (!merkzettelId || typeof merkzettelId !== 'number') {
+        return res.status(400).json({ message: 'Merkzettel-ID ist erforderlich' });
+    }
+
+    // Überprüfe ob Produkt-URL gültiges format entspricht
+    if (!artikel || typeof artikel !== 'string') {
+        return res.status(400).json({ message: 'Produkt-URL ist erforderlich' });
+    }
 
     Merkzettel.findOne({
         where: {
@@ -163,6 +183,11 @@ exports.list = (req, res) => {
 exports.listWithProducts = (req, res) => {
     const merkzettelId = req.params.merkzettelid;
 
+    // Überprüfe ob Merkzettel-ID gültiges format entspricht
+    if (!merkzettelId || typeof merkzettelId !== 'string') {
+        return res.status(400).json({ message: 'Merkzettel-ID ist erforderlich' });
+    }
+
     Merkzettel.findOne({
         where: {
             id: merkzettelId,
@@ -187,6 +212,11 @@ exports.listWithProducts = (req, res) => {
  */
 exports.priceOfList = (req, res) => {
     const merkzettelId = req.params.merkzettelid;
+
+    // Überprüfe ob Merkzettel-ID gültiges format entspricht
+    if (!merkzettelId || typeof merkzettelId !== 'string') {
+        return res.status(400).json({ message: 'Merkzettel-ID ist erforderlich' });
+    }
 
     Merkzettel.findOne({
         where: {
