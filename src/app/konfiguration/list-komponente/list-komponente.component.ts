@@ -34,6 +34,9 @@ export class ListKomponenteComponent {
     this.hinzugefuegteArtikel.push(artikel2);
 
   }
+  /**
+   * Autor: Yahya Sabbane
+   */
   zurUebersicht() {
     this.artikelService.updateGuenstigstesArtikel(this.hinzugefuegteArtikel);
     this.artikelService.updateSchnellstesArtikel(this.hinzugefuegteArtikel);

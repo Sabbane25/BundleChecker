@@ -202,7 +202,7 @@ export class ArtikelService {
   }
 
 
-  //Yahya
+  //Autor: Yahya Sabbane
   // BehaviorSubjects für guenstigstesArtikel und schnellstesArtikel erstellen
   private guenstigstesArtikelSubject = new BehaviorSubject<Artikel[]>([]);
   private schnellstesArtikelSubject = new BehaviorSubject<Artikel[]>([]);

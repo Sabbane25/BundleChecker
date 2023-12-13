@@ -1,3 +1,4 @@
+// Autor: Yahya Sabbane
 import { Component, OnInit } from '@angular/core';
 import { Artikel } from 'src/models/artikel.model';
 import { ArtikelService } from 'src/services/artikel.service';
@@ -64,10 +65,19 @@ this.schnellstesBundle.forEach(bundle => {
   });
 });
 
-console.log('guenstigstesBundle:', this.guenstigstesBundle);
-console.log('schnellstesBundle:', this.schnellstesBundle);
 }
 
+decreaseQuantity(bundle: any, artikelIndex: number) {
+  if (bundle.artikelList[artikelIndex].menge > 1) {
+    bundle.artikelList[artikelIndex].menge--;
+    this.updateTotalPriceForGuenstigstesBundle(bundle);
+  }
+}
+
+increaseQuantity(bundle: any, artikelIndex: number) {
+  bundle.artikelList[artikelIndex].menge++;
+  this.updateTotalPriceForGuenstigstesBundle(bundle);
+}
 
 /**
  * Gibt den Namen des Anbieters basierend auf der Shop-ID zurück.
@@ -389,32 +399,46 @@ calculateBundleTotalPrice2(bundles: { bundleName: string; artikelList: Artikel[]
 }
 
 
-/**
- * Methode zum Löschen eines Bundles oder Artikel.
- * @param bundle 
- */
 delete2(bundle: { bundleName: string; artikelList: Artikel[] }, artikel: Artikel) {
+  // Parameterüberprüfung
+  if (!bundle || !artikel) {
+    console.error('Ungültige Parameter für delete2.');
+    return;
+  }
+
   // Finde das ausgewählte Bundle
   const targetBundle = this.schnellstesBundle.find(b => b.bundleName === bundle.bundleName);
 
   if (targetBundle) {
-    // Finde den Index des ausgewählten Artikels im Bundle
-    const index = targetBundle.artikelList.indexOf(artikel);
+    // Klonen des Zustandsobjekts für Unveränderlichkeit
+    const updatedBundle = { ...targetBundle };
+    
+    // Klonen der ArtikelListe für Unveränderlichkeit
+    updatedBundle.artikelList = [...targetBundle.artikelList];
 
+    // Finde den Index des ausgewählten Artikels im Bundle
+    const index = updatedBundle.artikelList.indexOf(artikel);
+    
     if (index !== -1) {
-      // Entferne den Artikel aus dem Bundle
-      targetBundle.artikelList.splice(index, 1);
+      // Entferne den Artikel aus dem geklonten Bundle
+      updatedBundle.artikelList.splice(index, 1);
+
+      // Aktualisiere den Zustand
+      this.schnellstesBundle = this.schnellstesBundle.map(b => 
+        b.bundleName === updatedBundle.bundleName ? updatedBundle : b
+      );
+
+      // Feedback an den Benutzer
+      console.log('Artikel erfolgreich gelöscht.');
     }
   }
 }
-/**
- * Löscht einen Artikel aus einem Bundle unter Verwendung der Methode `delete2`.
- * @param bundle - Das Bundle, aus dem der Artikel gelöscht werden soll.
- * @param artikel - Der zu löschende Artikel.
- */
+
 deleteArticle2(bundle: { bundleName: string; artikelList: Artikel[] }, artikel: Artikel) {
+  // Aufruf von delete2
   this.delete2(bundle, artikel);
 }
+
 
 
 /**

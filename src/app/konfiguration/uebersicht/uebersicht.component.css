@@ -1,166 +1,198 @@
-
+/* Autor: Yahya Sabbane */
 .container-bundler {
-margin: auto;
-width: 100%;
-padding: 10px;
-position: relative;
-display: flex;
-flex-wrap: wrap;
+	margin: auto;
+	width: 100%;
+	padding: 10px;
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
 }
 .container-bundle {
-margin: auto;
-width: 100%;
-border: 1px solid #ddd;
-padding: 10px;
-margin-bottom: 20px;
-border-style: outset;
-border-width: medium;
+	margin: auto;
+	width: 100%;
+	border: 1px solid #ddd;
+	padding: 10px;
+	margin-bottom: 20px;
+	border-style: outset;
+	border-width: medium;
 }
-
 .container-bundle ul{
-  list-style-type: none;
+	list-style-type: none;
 }
 .bundleName {
-color: #00528D;
+	color: #00528D;
 }
 h2 {
-color: purple;
+	color: purple;
 }
 /* Überschriften-Stil */
 h3 {
-font-size: 24px;
-margin-bottom: 10px;
+	font-size: 24px;
+	margin-bottom: 10px;
 }
 h4 {
-color: red;
+	color: red;
 }
 h5 {
-font-size: 16px;
-margin-bottom: 10px;
+	font-size: 16px;
+	margin-bottom: 10px;
 }
 /* Stil für die Artikelinformationen */
 .artikel-info {
-  border: 1px solid #ddd;
-  padding: 10px;
-  /*margin-bottom: 10px;*/
-  background-color: #f9f9f9;
-  margin: 10px 10px;
+	border: 1px solid #ddd;
+	padding: 10px;
+	/*margin-bottom: 10px;
+	*/
+	background-color: #f9f9f9;
+	margin: 10px 10px;
+  gap: 5px;
 }
-
 /* Stil für Artikelattribute innerhalb von .artikel-info */
-.artikel-info .artikel-kategorie,
-.artikel-info,
-.artikel-info .artikel-produktlink,
-.artikel-info .artikel-spezifisch,
-.artikel-info .artikel-anbieter {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 14px;
+.artikel-info .artikel-kategorie,.artikel-info,.artikel-info .artikel-produktlink,.artikel-info .artikel-spezifisch,.artikel-info .artikel-anbieter {
+	display: block;
+	margin-bottom: 5px;
+	font-size: 14px;
 }
 .artikel-preis{
-  font-weight: bold;
+	font-weight: bold;
 }
 /* Stil für spezifische Attribute innerhalb von .artikel-info */
 .artikel-info .artikel-spezifisch {
-  font-weight: bold;
+	font-weight: bold;
 }
-
 /* Hover-Stil für .artikel-info */
 .artikel-info:hover {
-  background-color: #e8e8e8;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+	background-color: #e8e8e8;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
 }
-
 .artikelmenge {
-  margin: 0px 10px 5px 5px;
+	margin: 0px 10px 5px 5px;
 }
-
-
-
 /* Stil für den Gesamtpreis bei Anbieter (ganz rechts ausgerichtet) */
 .total-price-products {
-  text-align: right;
-  font-weight: bold;
+	text-align: right;
+	font-weight: bold;
 }
-
 /* Stil für den Gesamtpreis des Bundles (in der Mitte ausgerichtet) */
 .total-price-bundle {
-  font-size: 20px;
-  margin-top: 10px;
-  color: #21364d;
-  text-align: center; /* In der Mitte ausgerichtet */
-  
-  background-color: #e0e0e0;
-  padding: 10px; /* Verringerte Polsterung für kleinere Box */
-  border-radius: 5px;
-  width: 150px; /* Kleinere Breite */
-  margin: 0 auto; /* In der Mitte ausgerichtet */
-  box-shadow: 0 0 4px #111;
+	font-size: 20px;
+	margin-top: 10px;
+	color: #21364d;
+	text-align: center;
+	/* In der Mitte ausgerichtet */
+	background-color: #e0e0e0;
+	padding: 10px;
+	/* Verringerte Polsterung für kleinere Box */
+	border-radius: 5px;
+	width: 150px;
+	/* Kleinere Breite */
+	margin: 0 auto;
+	/* In der Mitte ausgerichtet */
+	box-shadow: 0 0 4px #111;
 }
-
 .link-text:hover {
-  text-decoration: none; /* Entfernen Sie die Unterstreichung, wenn der Link gehovered wird */
+	text-decoration: none;
+	/* Entfernen Sie die Unterstreichung, wenn der Link gehovered wird */
 }
-
 .artikelmenge {
-  font-size: 14px; /* Kleinere Schriftgröße */
-  width: 60px;    /* Kleinere Breite */
-  padding: 5px;   /* Etwas Abstand um den Text herum */
-  border: 1px solid #ccc; /* Einen dünnen Rahmen hinzufügen */
-  border-radius: 5px;    /* Abgerundete Ecken für ein freundlicheres Aussehen */
-  text-align: center;    /* Text zentrieren */
-  box-shadow: 0 0 4px #111;
+	font-size: 14px;
+	/* Kleinere Schriftgröße */
+	width: 60px;
+	/* Kleinere Breite */
+	padding: 5px;
+	/* Etwas Abstand um den Text herum */
+	border: 1px solid #ccc;
+	/* Einen dünnen Rahmen hinzufügen */
+	border-radius: 5px;
+	/* Abgerundete Ecken für ein freundlicheres Aussehen */
+	text-align: center;
+	/* Text zentrieren */
+	box-shadow: 0 0 4px #111;
 }
 
+.buttons {
+  display: flex;
+  gap: 20px; /* Abstand zwischen den Elementen in der Flexbox */
+}
 /* Stil für die Schaltfläche "Produkt ansehen" */
 .link-button {
-  background-color: white;
-  color: black;
-  padding: 4px 10px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  border-radius: 5px;
-  margin: 10px 10px;
-  box-shadow: 0 0 4px #111;
+	background-color: white;
+	color: black;
+	padding: 4px 10px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	border-radius: 5px;
+	/*margin: 10px 10px;*/
+	box-shadow: 0 0 4px #111;
 }
-
 .link-button:hover {
-  background-color: lightgreen; /* Hintergrundfarbe ändert sich beim Hover */
+	background-color: lightgreen;
+	/* Hintergrundfarbe ändert sich beim Hover */
 }
-
 /*neue Style für Delete Button*/
 .delete-button {
-  position: relative;
-  width: 30px;
-  height: 30px;
-  border-radius: 25px;
-  border: 2px solid rgb(231, 50, 50);
-  background-color: #fff;
-  cursor: pointer;
-  box-shadow: 0 0 10px #333;
-  overflow: hidden;
-  transition: .3s;
-  margin: 10px 10px;
+	position: relative;
+	width: 30px;
+	height: 30px;
+	border-radius: 25px;
+	border: 2px solid rgb(231, 50, 50);
+	background-color: #fff;
+	cursor: pointer;
+	box-shadow: 0 0 10px #333;
+	overflow: hidden;
+	transition: .3s;
+	/*margin: 10px 10px;*/
+  
 }
-
 .delete-button:hover {
-  background-color: rgb(245, 207, 207);
-  transform: scale(1.2);
-  box-shadow: 0 0 4px #111;
-  transition: .3s;
+	background-color: rgb(245, 207, 207);
+	transform: scale(1.2);
+	box-shadow: 0 0 4px #111;
+	transition: .3s;
 }
-
 svg {
-  color: rgb(231, 50, 50);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: .3s;
+	color: rgb(231, 50, 50);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	transition: .3s;
 }
-
 button:focus svg {
-  opacity: 0;
-  transition: .3s;
+	opacity: 0;
+	transition: .3s;
+}
+.quantity-section {
+	display: flex;
+	align-items: center;
+}
+.quantity-controls {
+	display: flex;
+  align-items: center;
+	margin-left: 10px;
+	/* Abstand zwischen den Steuerelementen */
+}
+button {
+	cursor: pointer;
+	background-color: #007bff;
+	/* Hintergrundfarbe des Buttons */
+	color: #fff;
+	/* Textfarbe des Buttons */
+	border: none;
+	padding: 5px 8px;
+	/* Innenabstand des Buttons */
+	margin: 0;
+	border-radius: 5px;
+	/* Abgerundete Ecken des Buttons */
+}
+button:hover {
+	background-color: #0056b3;
+	/* Hintergrundfarbe des Buttons beim Hovern */
+}
+span {
+	margin: 0 8px;
+	/* Abstand zwischen der Menge und den Schaltflächen */
+	font-weight: bold;
+	/* Fetter Text für die Menge */
 }
