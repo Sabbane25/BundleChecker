@@ -2,6 +2,8 @@ module.exports = (sequelize, Sequelize) => {
 
   /**
    * Modell für Artikel
+   *
+   * @autor Mokhtar Yosofzay
    */
   const artikel = sequelize.define("artikel", {
     kategorie: {
@@ -16,7 +18,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
       field: 'shopID'
     },
-    produktLink: {
+    produktUrl: {
       type: Sequelize.STRING,
       primaryKey: true,
       field: 'produktUrl'
@@ -36,6 +38,10 @@ module.exports = (sequelize, Sequelize) => {
     bildUrl: {
       type: Sequelize.STRING,
       field: 'image'
+    },
+    verfuegbarkeit: {
+      type: Sequelize.STRING,
+      field: 'verfügbarkeit'
     },
   }, {
     timestamps: false,

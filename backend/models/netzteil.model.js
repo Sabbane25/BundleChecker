@@ -2,6 +2,8 @@ module.exports = (sequelize, Sequelize) => {
 
   /**
    * Modell für netzteil
+   *
+   * @autor Mokhtar Yosofzay
    */
   const netzteil = sequelize.define("netzteil", {
     artikelnummer: {

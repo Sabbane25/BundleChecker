@@ -1,5 +1,7 @@
 /**
  * Den Wert auf `true` setzen, damit das lokale Backend verwendet wird und nicht der vom Server
+ *
+ * @autor Mokhtar Yosofzay
  */
 const lokal_backend = false;
 

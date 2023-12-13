@@ -2,6 +2,8 @@ module.exports = (sequelize, Sequelize) => {
 
   /**
    * Modell für CPU
+   *
+   * @autor Mokhtar Yosofzay
    */
   const cpu = sequelize.define("cpu", {
     artikelnummer: {

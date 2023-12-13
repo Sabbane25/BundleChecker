@@ -7,6 +7,13 @@ import { Observable } from 'rxjs';
 
 const TOKEN_HEADER_KEY = 'x-access-token';
 
+/**
+ * Interceptor für die Authentifizierung
+ *
+ * Dieser Interceptor fügt dem Header der HTTP-Requests den JWT-Token hinzu.
+ *
+ * @autor Mokhtar Yosofzay
+ */
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private token: TokenStorageService) { }

@@ -2,6 +2,8 @@ module.exports = (sequelize, Sequelize) => {
 
   /**
    * Modell für grafikkarte
+   *
+   * @autor Mokhtar Yosofzay
    */
   const grafikkarte = sequelize.define("grafikkarte", {
     artikelnummer: {

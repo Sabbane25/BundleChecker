@@ -1,3 +1,5 @@
+/*Autor: Tim Hinder*/
+
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { NutzerService } from 'src/services/nutzer.service';
 import { Router } from '@angular/router'

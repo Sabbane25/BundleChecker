@@ -3,7 +3,9 @@ const ROLES = db.ROLES;
 const User = db.user;
 
 /**
- * Prüfe, ob eine E-Mail Adresse bereits in Verwendung ist
+ * Prüfe, ob eine E-Mail Adresse bereits in Verwendung
+ *
+ * @autor Mokhtar Yosofzay
  */
 checkDuplicateEmail = (req, res, next) => {
   // Email
@@ -25,6 +27,8 @@ checkDuplicateEmail = (req, res, next) => {
 
 /**
  * Prüfe, ob die Rolle existiert
+ *
+ * @autor Mokhtar Yosofzay
  */
 checkRolesExisted = (req, res, next) => {
   if (req.body.roles) {

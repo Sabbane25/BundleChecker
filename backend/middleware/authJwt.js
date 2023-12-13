@@ -5,6 +5,8 @@ const User = db.user;
 
 /**
  * Verifiziere, ob Token Valide ist
+ *
+ * @autor Mokhtar Yosofzay
  */
 verifyToken = (req, res, next) => {
   // Der Token wird über den Header `x-access-token` übergeben
@@ -32,6 +34,8 @@ verifyToken = (req, res, next) => {
 
 /**
  * Prüfe, ob Nutzer ein Admin ist
+ *
+ * @autor Mokhtar Yosofzay
  */
 isAdmin = (req, res, next) => {
   User.findByPk(req.userId).then(user => {

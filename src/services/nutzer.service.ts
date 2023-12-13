@@ -14,6 +14,14 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
+/**
+ * Service für die Nutzer-Seite
+ *
+ * Dieser Service verwaltet die Nutzer.
+ *
+ * @autor Mokhtar Yosofzay
+ * @autor Tim Hinder
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -103,7 +111,7 @@ export class NutzerService {
     console.log("In Nutzerservice");
     console.log("UserID:", user_id);
   
-    return this.http.delete<void>(`${apiURL}/userLoeschen/${user_id}`, options);
+    return this.http.delete<void>(`${apiURL}/users/${user_id}`, options);
   }
    
    updateUser(password: string): Observable<any> {

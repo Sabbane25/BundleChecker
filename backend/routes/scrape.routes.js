@@ -1,3 +1,9 @@
+/**
+ * Scraping FutureX
+ *
+ * @param app
+ * @param connection
+ */
 module.exports = function(app, connection) {
   const { insertArtikel } = require('./../scrapingFutureX'); // Importieren des Scraping-FutureX
   const { insertDataIntoArtikel2, insertDataIntoCPU2, insertDataIntoRAM2, insertDataIntoGehaeuse2,insertDataIntoGrafikkarte2,
@@ -11,22 +17,22 @@ module.exports = function(app, connection) {
     next();
   });
 
+  // Crawler FutureX
   app.post('/api/scrapedata', (req, res) => {
-
     const scrapedData = req.body;
 
+    updateDataInArtikel(connection, scrapedData.value);
     insertArtikel(connection, scrapedData);
 
-    res.status(200).send('DonnÃ©es reÃ§ues avec succÃ¨s');
+    res.status(200).send('Daten erfolgreich empfangen');
   });
 
+  // Crawler Alternate
   app.post('/api/scrapedata2', (req, res) => {
-
     const scrapedData = req.body;
-
     insertDataIntoArtikel2(connection, scrapedData);
     insertDataIntoKomponenten(connection, scrapedData);
 
-    res.status(200).send('DonnÃ©es reÃ§ues avec succÃ¨s');
+    res.status(200).send('Daten erfolgreich empfangen');
   });
 };

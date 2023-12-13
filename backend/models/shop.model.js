@@ -2,6 +2,8 @@ module.exports = (sequelize, Sequelize) => {
 
   /**
    * Modell für shop
+   *
+   * @autor Mokhtar Yosofzay
    */
   const shop = sequelize.define("shop", {
     shopID: {

@@ -2,6 +2,8 @@ module.exports = (sequelize, Sequelize) => {
 
   /**
    * Modell für festplatte
+   *
+   * @autor Mokhtar Yosofzay
    */
   const festplatte = sequelize.define("festplatte", {
     artikelnummer: {

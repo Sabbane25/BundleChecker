@@ -1,3 +1,13 @@
+/**
+ * Produkt-Endpunkte
+ *
+ * Hier werden die Endpunkte für die Produkte definiert.
+ *
+ * @autor Arnauld Mba Kuitche
+ *
+ * @param app
+ * @param connection
+ */
 module.exports = function(app, connection) {
   app.use(function(req, res, next) {
     res.header(
@@ -11,6 +21,17 @@ module.exports = function(app, connection) {
   app.get('/Produkte/:table', (req, res) => {
     const tableName = req.params.table;
     const query = `SELECT * FROM ${tableName}`;
+
+    connection.query(query, (error, results) => {
+      if (error) throw error;
+      res.json(results);
+    });
+  });
+
+  // Get-Endpunk, um eine Liste alle Kategorien zu erhalten(Arnauld)
+  app.get('/alleProdukte', (req, res) => {
+    const query = `SELECT * FROM Artikel`;
+
     connection.query(query, (error, results) => {
       if (error) throw error;
       res.json(results);

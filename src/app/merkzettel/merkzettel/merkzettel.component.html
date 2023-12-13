@@ -1,3 +1,4 @@
+<!-- Autor: Mokhtar Yosofzay -->
 <div class="row mb-4">
   <div class="col-12">
     <h2>Merkzettel {{ bundles }}</h2>
@@ -12,7 +13,7 @@
       <tbody>
       <tr *ngFor="let bundle of bundles">
         <th scope="row">{{ bundle.label }}</th>
-        <td class="bundle-preis">{{ bundle.preis }} &euro;</td>
+        <td class="bundle-preis">{{ Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(bundle.preis) }}</td>
         <td class="bundle-optionen">
           <button *ngIf="bundle.preis > 0" class="btn btn-sm btn-secondary me-2" (click)="zeigeProdukte(bundle.id_list)">Erweitern</button>
           <button class="btn btn-sm btn-danger" (click)="entferneMerkzettel(bundle.id_list, bundle.id)">Löschen</button>
@@ -35,7 +36,7 @@
             <h5 class="card-title">{{ artikel.bezeichnung }}</h5>
             <p class="card-text">
                 Kategorie: {{ artikel.kategorie }}<br />
-                Preis: {{ artikel.preis }}<br />
+                Preis: {{ Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(artikel.preis) }}<br />
             </p>
             <button (click)="removeItemFromMerkzettel(selectedBundleId, artikel)" class="btn btn-danger btn-sm me-3">Entfernen</button>
             <a href="{{ artikel.produktUrl }}" target="_blank" class="btn btn-primary btn-sm">Produktseite öffnen</a>

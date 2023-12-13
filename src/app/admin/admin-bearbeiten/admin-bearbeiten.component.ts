@@ -1,3 +1,5 @@
+/*Autor: Tim Hinder*/
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
@@ -10,12 +12,12 @@ import { NutzerService } from 'src/services/nutzer.service';
 })
 export class AdminBearbeitenComponent implements OnInit {
 
-  email: string;
-  id: number;
-  newPassword: string;
-  confirmPassword: string;
+  email: string; //E-Mail des Users
+  id: number; //id des Users
+  newPassword: string; //neues Passwort des Users
+  confirmPassword: string; //neues Passwort wiederholen
   passwordMinLength: number = 5;
-  isUpdateSuccessful = false;
+  isUpdateSuccessful = false; //ist Aktulisierung des Passworts erfolgreich?
   errorMessage: string;  // Hier wird die Variable nur einmal deklariert
 
   constructor(private nutzerService: NutzerService, private route: ActivatedRoute) {}

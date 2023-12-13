@@ -1,19 +1,21 @@
+// Autor: Oussama Soujoud
+
 const mysql = require('mysql2');
 
-
+// Funktion zum Einfügen von Daten in die Komponenten-Tabelle basierend auf der Kategorie des gecrawlten Produkts
 function insertDataIntoKomponenten(connection, scrapedData){
     for (const scrapedProductData of scrapedData) {
           switch (scrapedProductData.category) {
-            case 'Arbeitsspeicher':
+            case 'RAM':
                 insertDataIntoRAM2(connection, scrapedData);
               break;
             case 'Prozessor':
                 insertDataIntoCPU2(connection, scrapedData);
                 break;
-            case 'Gehäuse':
-                insertDataIntoGehaeuse2(connection, scrapedData);
+            case 'Gehaeuse':
+                insertDataIntoGehäuse2(connection, scrapedData);
                 break;
-            case 'Solid State Drive' || 'SATA':
+            case 'Festplatte':
                 insertDataIntoFestplatte2(connection, scrapedData);
                 break;
             case 'Grafikkarte':
@@ -22,18 +24,19 @@ function insertDataIntoKomponenten(connection, scrapedData){
             case 'Mainboard':
                 insertDataIntoMainboard2(connection, scrapedData);
                     break;
-            case 'PC-Netzteil':
+            case 'Netzteil':
                 insertDataIntoNetzteil2(connection, scrapedData);
                     break;
     }   
 }
 }
 
+// Funktion zum Einfügen von Daten in die Artikel-Tabelle
 function insertDataIntoArtikel2(connection, scrapedData) {
     for (const scrapedProductData of scrapedData) {
-      const sqlArtikel = `INSERT INTO Artikel(Kategorie, Preis, ShopID, ProduktUrl, Bezeichnung, LieferDatum, Marke, Image)
-                          VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                          ON DUPLICATE KEY UPDATE Preis = VALUES(Preis), LieferDatum = VALUES(LieferDatum)`;
+      const sqlArtikel = `INSERT INTO Artikel(kategorie, preis, shopID, produktUrl, bezeichnung, lieferDatum, marke, image, verfügbarkeit)
+                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                          ON DUPLICATE KEY UPDATE preis = VALUES(preis), lieferDatum = VALUES(lieferDatum), verfügbarkeit = VALUES(verfügbarkeit)` ;
   
       const valuesArtikel = [
         scrapedProductData.category,
@@ -43,22 +46,27 @@ function insertDataIntoArtikel2(connection, scrapedData) {
         scrapedProductData.productName,
         scrapedProductData.deliveryDate,
         scrapedProductData.marke,
-        scrapedProductData.image
+        scrapedProductData.image,
+        scrapedProductData.verfügbarkeit
       ];
   
       connection.query(sqlArtikel, valuesArtikel, (error, results) => {
         if (error) {
-            console.error('Error inserting data into Artikel:', error);
+            console.error('Fehler beim Einfügen der Daten in Artikel:', error);
         } else {
-            console.log('Object inserted successfully, ID:', results.insertId);
+            console.log('Objekt erfolgreich eingefügt, ID:', results.insertId);
         }
     });
   }
 }
 
+// Diese Funktionen führen das Einfügen in die entsprechenden Tabellen durch, basierend auf der Kategorie des gecrawlten Produkts
+// Die Verarbeitung der Daten und das Einfügen in die Datenbank sind ähnlich, aber die Spalten und die Logik können je nach Kategorie unterschiedlich sein
+// Hier ein Beispiel für die Funktion zum Einfügen in die CPU-Tabelle:
 
   function insertDataIntoCPU2(connection, scrapedData) {
     for (const scrapedProductData of scrapedData) {
+        // Hier werden die Werte für das Einfügen in die CPU-Tabelle vorbereitet
         const valuesCpu = [
             null, 
             scrapedProductData.url,
@@ -72,7 +80,8 @@ function insertDataIntoArtikel2(connection, scrapedData) {
             scrapedProductData.turbo
         ];
 
-        const sqlUrl = `SELECT * FROM CPU WHERE Url = "${scrapedProductData.url}"`;
+        // Hier wird geprüft, ob die URL bereits in der Datenbank vorhanden ist
+        const sqlUrl = `SELECT * FROM CPU WHERE url = "${scrapedProductData.url}"`;
 
         connection.query(sqlUrl, (error, results) => {
             if (error) {
@@ -80,16 +89,17 @@ function insertDataIntoArtikel2(connection, scrapedData) {
             } else if (results.length > 0) {
                 console.log('Url bereits vorhanden.');
             } else {
-                console.log("L'insertion est possible ****");
+                // Wenn die URL nicht vorhanden ist, werden die Daten in die CPU-Tabelle eingefügt
+                console.log("Import ist möglich ****");
 
-                const sqlCpu = `INSERT INTO CPU (Artikelnummer, Url, Sockel, AnzahlKerne, Stromverbrauch, Taktfrequenz, InterneGrafik, Threads, Typ, Turbo)
+                const sqlCpu = `INSERT INTO CPU (artikelnummer, url, sockel, anzahlKerne, stromverbrauch, taktfrequenz, interneGrafik, threads, typ, turbo)
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
                   connection.query(sqlCpu, valuesCpu, (error, resultat) => {
                     if (error) {
-                        console.error('Error inserting data into CPU:', error);
+                        console.error('Fehler beim Einfügen der Daten in CPU:', error);
                     } else {
-                        console.log('Object inserted successfully, ID:', resultat.insertId);
+                        console.log('Objekt erfolgreich eingefügt, ID:', resultat.insertId);
                     }
                 });
             }
@@ -97,7 +107,8 @@ function insertDataIntoArtikel2(connection, scrapedData) {
     }
 }
         
-
+// Die anderen Funktionen wie insertDataIntoRAM2, insertDataIntoGrafikkarte2 usw. haben eine ähnliche Struktur und sind jeweils für die Datenbanktabellen entsprechend ihrer Kategorie zuständig
+// Funktion zum Einfügen in die RAM-Tabelle
 function insertDataIntoRAM2(connection, scrapedData) {
   for (const scrapedProductData of scrapedData) {
       const valuesRam = [
@@ -109,7 +120,7 @@ function insertDataIntoRAM2(connection, scrapedData) {
           scrapedProductData.spannung,
       ];
 
-      const sqlUrl = `SELECT * FROM CPU WHERE Url = "${scrapedProductData.url}"`;
+      const sqlUrl = `SELECT * FROM CPU WHERE url = "${scrapedProductData.url}"`;
 
       connection.query(sqlUrl, (error, results) => {
           if (error) {
@@ -117,16 +128,16 @@ function insertDataIntoRAM2(connection, scrapedData) {
           } else if (results.length > 0) {
               console.log('Url bereits vorhanden.');
           } else {
-              console.log("L'insertion est possible ****");
+              console.log("Import ist möglich ****");
 
-              const sqlRam = `INSERT INTO RAM (Artikelnummer, Typ, Kapazitaet, Latency, Url, Spannung)
+              const sqlRam = `INSERT INTO RAM (artikelnummer, typ, kapazitaet, latency, url, spannung)
                 VALUES (?, ?, ?, ?, ?, ?)`;
 
                 connection.query(sqlRam, valuesRam, (error, resultat) => {
                   if (error) {
-                      console.error('Error inserting data into RAM:', error);
+                      console.error('Fehler beim Einfügen der Daten in RAM:', error);
                   } else {
-                      console.log('Object inserted successfully, ID:', resultat.insertId);
+                      console.log('Objekt erfolgreich eingefügt, ID:', resultat.insertId);
                   }
               });
           }
@@ -134,7 +145,8 @@ function insertDataIntoRAM2(connection, scrapedData) {
   }
 }
 
-function insertDataIntoGehaeuse2(connection, scrapedData) {
+// Funktion zum Einfügen in die Gehäuse-Tabelle
+function insertDataIntoGehäuse2(connection, scrapedData) {
     for (const scrapedProductData of scrapedData) {
         const valuesGehäuse = [
             null, 
@@ -146,7 +158,7 @@ function insertDataIntoGehaeuse2(connection, scrapedData) {
             scrapedProductData.gewicht
         ];
 
-        const sqlUrl = `SELECT * FROM Gehäuse WHERE Url = "${scrapedProductData.url}"`;
+        const sqlUrl = `SELECT * FROM Gehäuse WHERE url = "${scrapedProductData.url}"`;
 
         connection.query(sqlUrl, (error, results) => {
             if (error) {
@@ -154,16 +166,16 @@ function insertDataIntoGehaeuse2(connection, scrapedData) {
             } else if (results.length > 0) {
                 console.log('Url bereits vorhanden.');
             } else {
-                console.log("L'insertion est possible ****");
+                console.log("Import ist möglich ****");
 
-                const sqlGehäuse = `INSERT INTO Gehäuse (Artikelnummer, Formfaktor, FrontAnschlüsse, Abmessungen, Url, Typ, Gewicht)
+                const sqlGehäuse = `INSERT INTO Gehäuse (artikelnummer, formfaktor, frontAnschlüsse, abmessungen, url, typ, gewicht)
                   VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
                   connection.query(sqlGehäuse, valuesGehäuse, (error, resultat) => {
                     if (error) {
-                        console.error('Error inserting data into Gehäuse:', error);
+                        console.error('Fehler beim Einfügen der Daten in Gehäuse:', error);
                     } else {
-                        console.log('Object inserted successfully, ID:', resultat.insertId);
+                        console.log('Objekt erfolgreich eingefügt, ID:', resultat.insertId);
                     }
                 });
             }
@@ -171,6 +183,7 @@ function insertDataIntoGehaeuse2(connection, scrapedData) {
     }
 }
 
+// Funktion zum Einfügen in die Festplatte-Tabelle
 function insertDataIntoFestplatte2(connection, scrapedData) {
     for (const scrapedProductData of scrapedData) {
         const valuesFestplatte = [
@@ -182,7 +195,7 @@ function insertDataIntoFestplatte2(connection, scrapedData) {
             scrapedProductData.url,
         ];
 
-        const sqlUrl = `SELECT * FROM Festplatte WHERE Url = "${scrapedProductData.url}"`;
+        const sqlUrl = `SELECT * FROM Festplatte WHERE url = "${scrapedProductData.url}"`;
 
         connection.query(sqlUrl, (error, results) => {
             if (error) {
@@ -190,16 +203,16 @@ function insertDataIntoFestplatte2(connection, scrapedData) {
             } else if (results.length > 0) {
                 console.log('Url bereits vorhanden.');
             } else {
-                console.log("L'insertion est possible ****");
+                console.log("Import ist möglich ****");
 
-                const sqlFestplatte = `INSERT INTO Festplatte (Artikelnummer, Typ, Kapazitaet, Lesen, Schreiben, Url)
+                const sqlFestplatte = `INSERT INTO Festplatte (artikelnummer, typ, kapazitaet, lesen, schreiben, url)
                   VALUES (?, ?, ?, ?, ?, ?)`;
 
                   connection.query(sqlFestplatte, valuesFestplatte, (error, resultat) => {
                     if (error) {
-                        console.error('Error inserting data into Festplatte:', error);
+                        console.error('Fehler beim Einfügen der Daten in Festplatte:', error);
                     } else {
-                        console.log('Object inserted successfully, ID:', resultat.insertId);
+                        console.log('Objekt erfolgreich eingefügt, ID:', resultat.insertId);
                     }
                 });
             }
@@ -207,7 +220,7 @@ function insertDataIntoFestplatte2(connection, scrapedData) {
     }
 }
 
-
+// Funktion zum Einfügen in die Grafikkarte-Tabelle
 function insertDataIntoGrafikkarte2(connection, scrapedData) {
     for (const scrapedProductData of scrapedData) {
         const valuesGrafikkarte = [
@@ -219,7 +232,7 @@ function insertDataIntoGrafikkarte2(connection, scrapedData) {
             scrapedProductData.streamCpu,
         ];
   
-        const sqlUrl = `SELECT * FROM CPU WHERE Url = "${scrapedProductData.url}"`;
+        const sqlUrl = `SELECT * FROM CPU WHERE url = "${scrapedProductData.url}"`;
   
         connection.query(sqlUrl, (error, results) => {
             if (error) {
@@ -227,16 +240,16 @@ function insertDataIntoGrafikkarte2(connection, scrapedData) {
             } else if (results.length > 0) {
                 console.log('Url bereits vorhanden.');
             } else {
-                console.log("L'insertion est possible ****");
+                console.log("Import ist möglich ****");
   
-                const sqlGrafikkarte = `INSERT INTO Grafikkarte (Artikelnummer, Kapazitaet, Model, Verbrauch, Url, StreamProzessoren)
+                const sqlGrafikkarte = `INSERT INTO Grafikkarte (artikelnummer, kapazitaet, model, verbrauch, url, streamProzessoren)
                   VALUES (?, ?, ?, ?, ?, ?)`;
   
                   connection.query(sqlGrafikkarte, valuesGrafikkarte, (error, resultat) => {
                     if (error) {
-                        console.error('Error inserting data into Grafikkarte:', error);
+                        console.error('Fehler beim Einfügen der Daten in Grafikkarte:', error);
                     } else {
-                        console.log('Object inserted successfully, ID:', resultat.insertId);
+                        console.log('Objekt erfolgreich eingefügt, ID:', resultat.insertId);
                     }
                 });
             }
@@ -244,6 +257,7 @@ function insertDataIntoGrafikkarte2(connection, scrapedData) {
     }
   }
 
+  // Funktion zum Einfügen in die Mainboard-Tabelle
   function insertDataIntoMainboard2(connection, scrapedData) {
     for (const scrapedProductData of scrapedData) {
         const valuesMainboard = [
@@ -257,7 +271,7 @@ function insertDataIntoGrafikkarte2(connection, scrapedData) {
             scrapedProductData.speicher,
         ];
   
-        const sqlUrl = `SELECT * FROM Mainboard WHERE Url = "${scrapedProductData.url}"`;
+        const sqlUrl = `SELECT * FROM Mainboard WHERE url = "${scrapedProductData.url}"`;
   
         connection.query(sqlUrl, (error, results) => {
             if (error) {
@@ -265,22 +279,24 @@ function insertDataIntoGrafikkarte2(connection, scrapedData) {
             } else if (results.length > 0) {
                 console.log('Url bereits vorhanden.');
             } else {
-                console.log("L'insertion est possible ****");
+                console.log("Import ist möglich ****");
   
-                const sqlMainboard = `INSERT INTO Mainboard (Artikelnummer, Chipsatz, Sockel, AnzahlSpeichersockel, MaxRam, Url, FormFaktor, SpeicherTyp)
+                const sqlMainboard = `INSERT INTO Mainboard (artikelnummer, chipsatz, sockel, anzahlSpeichersockel, maxRam, url, formFaktor, speicherTyp)
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
   
                   connection.query(sqlMainboard, valuesMainboard, (error, resultat) => {
                     if (error) {
-                        console.error('Error inserting data into Mainboard:', error);
+                        console.error('Fehler beim Einfügen der Daten in Mainboard:', error);
                     } else {
-                        console.log('Object inserted successfully, ID:', resultat.insertId);
+                        console.log('Objekt erfolgreich eingefügt, ID:', resultat.insertId);
                     }
                 });
             }
         });
     }
   }
+
+  // Funktion zum Einfügen in die Netzteil-Tabelle
   function insertDataIntoNetzteil2(connection, scrapedData) {
     for (const scrapedProductData of scrapedData) {
         const valuesNetzteil = [
@@ -288,9 +304,11 @@ function insertDataIntoGrafikkarte2(connection, scrapedData) {
             scrapedProductData.bauform,
             scrapedProductData.url,
             scrapedProductData.zertifizierung,
+            scrapedProductData.leistung,
+            scrapedProductData.abmessungen,
         ];
   
-        const sqlUrl = `SELECT * FROM Netzteil WHERE Url = "${scrapedProductData.url}"`;
+        const sqlUrl = `SELECT * FROM Netzteil WHERE url = "${scrapedProductData.url}"`;
   
         connection.query(sqlUrl, (error, results) => {
             if (error) {
@@ -298,31 +316,33 @@ function insertDataIntoGrafikkarte2(connection, scrapedData) {
             } else if (results.length > 0) {
                 console.log('Url bereits vorhanden.');
             } else {
-                console.log("L'insertion est possible ****");
+                console.log("Import ist möglich ****");
   
-                const sqlNetzteil = `INSERT INTO Netzteil (Artikelnummer, Bauform, Url, Zertifizierung)
-                  VALUES (?, ?, ?, ?)`;
+                const sqlNetzteil = `INSERT INTO Netzteil (artikelnummer, bauform, url, zertifizierung, leistung, abmessungen)
+                  VALUES (?, ?, ?, ?, ?, ?)`;
   
                   connection.query(sqlNetzteil, valuesNetzteil, (error, resultat) => {
                     if (error) {
-                        console.error('Error inserting data into Netzteil:', error);
+                        console.error('Fehler beim Einfügen der Daten in Netzteil:', error);
                     } else {
-                        console.log('Object inserted successfully, ID:', resultat.insertId);
+                        console.log('Objekt erfolgreich eingefügt, ID:', resultat.insertId);
                     }
                 });
             }
         });
     }
   }
-module.exports = {
-  insertDataIntoArtikel2,
-  insertDataIntoKomponenten,
-  insertDataIntoCPU2,
-  insertDataIntoRAM2,
-  insertDataIntoGehaeuse2,
-  insertDataIntoFestplatte2,
-  insertDataIntoGrafikkarte2,
-  insertDataIntoMainboard2,
-  insertDataIntoNetzteil2
-};
+  
 
+// Export der verschiedenen Funktionen, um sie in anderen Dateien verwenden zu können
+module.exports = {
+    insertDataIntoArtikel2, // Funktion zum Einfügen von Daten in die Artikel-Tabelle
+    insertDataIntoKomponenten, // Funktion zum Einfügen von Daten in die Komponenten-Tabelle basierend auf der Kategorie
+    insertDataIntoCPU2, // Funktion zum Einfügen von CPU-Daten
+    insertDataIntoRAM2, // Funktion zum Einfügen von RAM-Daten
+    insertDataIntoGehäuse2, // Funktion zum Einfügen von Gehäuse-Daten
+    insertDataIntoFestplatte2, // Funktion zum Einfügen von Festplatten-Daten
+    insertDataIntoGrafikkarte2, // Funktion zum Einfügen von Grafikkarten-Daten
+    insertDataIntoMainboard2, // Funktion zum Einfügen von Mainboard-Daten
+    insertDataIntoNetzteil2 // Funktion zum Einfügen von Netzteil-Daten
+};

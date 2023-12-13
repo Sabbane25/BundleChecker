@@ -48,7 +48,11 @@
                 </ul>
                 <div class="total-price-bundle">
                   Gesamtpreis des Bundles: {{ calculateBundleTotalPrice(guenstigstesBundle) }} €
-                </div>                
+                </div>
+                <button class="btn btn-primary" (click)="erstelleMerkzettel(guenstigstesBundle); merkzettelHinzugefuegtGuenstigste = true" *ngIf="isLoggedIn && !merkzettelHinzugefuegtGuenstigste" >Zum Merkzettel hinzufügen</button>
+                <button class="btn btn-primary" *ngIf="isLoggedIn && merkzettelHinzugefuegtGuenstigste" disabled>Zum Merkzettel hinzufügen</button>
+                <p class="text-success" *ngIf="merkzettelHinzugefuegtGuenstigste">Der Merkzettel wurde angelegt.</p>
+                <a class="btn btn-primary" routerLink="/konto" *ngIf="!isLoggedIn">Merkzettel hinzufügen (Anmelden)</a>
               </li>
             </ng-container>
           </ul>
@@ -100,7 +104,12 @@
                 </ul>
                 <div class="total-price-bundle">
                   Gesamtpreis des Bundles: {{ calculateBundleTotalPrice2(schnellstesBundle) }} €
-                </div>                
+                </div>
+
+                <button class="btn btn-primary" (click)="erstelleMerkzettel(schnellstesBundle); merkzettelHinzugefuegtSchnellste = true" *ngIf="isLoggedIn && !merkzettelHinzugefuegtSchnellste" >Zum Merkzettel hinzufügen</button>
+                <button class="btn btn-primary" *ngIf="isLoggedIn && merkzettelHinzugefuegtSchnellste" disabled>Zum Merkzettel hinzufügen</button>
+                <p class="text-success" *ngIf="merkzettelHinzugefuegtSchnellste">Der Merkzettel wurde angelegt.</p>
+                <a class="btn btn-primary" routerLink="/konto" *ngIf="!isLoggedIn">Merkzettel hinzufügen (Anmelden)</a>
               </li>
             </ng-container>
           </ul>

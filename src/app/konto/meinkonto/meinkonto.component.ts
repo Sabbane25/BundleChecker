@@ -7,6 +7,12 @@ import { Router } from '@angular/router';
   templateUrl: 'meinkonto.component.html',
   styleUrls: ['meinkonto.component.css']
 })
+
+/**
+ * Komponente für die Anzeige der Meinkonto-Seite
+ *
+ * @autor Mokhtar Yosofzay
+ */
 export class MeinkontoComponent implements OnInit {
 
   currentUser: any;

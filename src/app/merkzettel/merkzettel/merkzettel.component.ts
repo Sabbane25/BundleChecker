@@ -10,6 +10,11 @@ import {TokenStorageService} from "../../../services/token-storage.service";
   templateUrl: './merkzettel.component.html',
   styleUrls: ['./merkzettel.component.css']
 })
+
+/**
+ * Komponente für die Anzeige des Merkzettels
+ * @author Mokhtar Yosofzay
+ */
 export class MerkzettelComponent {
   merkzettelArtikel: Artikel[] = []; // Hier werden die Artikel im Merkzettel gespeichert
   bundles: any = [];
@@ -88,4 +93,6 @@ export class MerkzettelComponent {
     this.bundles.splice(id_list, 1);
     this.selectedBundleId = undefined;
   }
+
+    protected readonly Intl = Intl;
 }
