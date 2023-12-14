@@ -17,7 +17,7 @@
           <div class="accordion-body">
             <!-- filter (Es handelt es sich um eine separat Composant)--> <!-- (datenSendenAnFilter)="empfangfilterdaten($event)"  -->
             <!--<app-filter [listKomponente]="artikelliste" [listKomponenteItem]="listeKategorie"></app-filter>-->
-            <app-filter [filterKategorie]="kategorie" [artikelliste]="artikelliste" ></app-filter>
+            <app-filter [filterKategorie]="kategorie" [artikelliste]="artikelliste"></app-filter>
             <div class="list-artikel" *ngFor="let item of artikelliste">
               <div *ngIf="kategorie === item.kategorie">
                 <div class="row  item" *ngFor="let artikelItem of item.artikelListe">

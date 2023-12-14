@@ -240,6 +240,9 @@ export class ArtikelService {
   private deepCopy(obj: any): any {
     return JSON.parse(JSON.stringify(obj));
   }
+
+  //cette variable retourne un true lorsque il y a au moins un elements lorsque le filtre est applique
+  hatArtikel = true;
 }
 
 function of(arg0: never[]): any {

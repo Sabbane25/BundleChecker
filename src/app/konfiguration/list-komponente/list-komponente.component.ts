@@ -31,6 +31,9 @@ export class ListKomponenteComponent implements AfterViewInit{
   sortierteArtikelListe: Array<{ kategorie: string, liste1: Artikel[], liste2: Artikel[] }> = [];
   hinzugefuegteArtikel: Artikel[] = []; // Um Artikel im neu Kontiguration aufzulisten / zur Übersicht - Funktion
 
+  // cette variable me sert de backup pour le filtre
+  backupListeartikel: Array<{ shop1: Artikel, shop2: Artikel }> = [];
+
   onButtonhinzufuegen(artikel: Artikel, artikel2: Artikel) {
     this.hinzugefuegteArtikel.push(artikel);
     this.hinzugefuegteArtikel.push(artikel2);
@@ -56,13 +59,30 @@ export class ListKomponenteComponent implements AfterViewInit{
    this.maMethodeAsync();
 
    this.dataSubscription = this.filterService.dataFilter$.subscribe(data => {
+    
+    //let backupListeartikel ;
     let artikelFilter: Filter = data;
     this.vergleichenenArtikellisteTest = Speicher.filtrerParIntervallePrix(this.vergleichenenArtikellisteTest, 100, 150);
+
     for(let artikel of this.artikelliste){
-      if(artikel.kategorie === artikelFilter.artikelKategorie){
-        const gefilterteListe = Cpu.filterByMapCriteria(artikel.artikelListe, artikelFilter.checkbox);
-        console.log('gefilterteListe: ', gefilterteListe);
-        artikel.artikelListe = gefilterteListe;
+      if(artikel.kategorie === artikelFilter.artikelKategorie && artikelFilter.brecheFilterAb){
+        this.backupListeartikel = artikel.artikelListe;
+        console.log('backup liste: ', this.backupListeartikel);
+        console.log('backup liste: ', this.backupListeartikel);
+        if(artikelFilter.checkbox.size != 0){
+          const gefilterteListe = Cpu.filterByMapCriteria(artikel.artikelListe, artikelFilter.checkbox);
+          console.log('gefilterteListe: ', gefilterteListe);
+          artikel.artikelListe = gefilterteListe;
+          if(gefilterteListe.length <= 0){
+            //this.hatArtikel = false;
+            console.log('laege: ',gefilterteListe.length )
+            this.artikelService.hatArtikel = false;
+          }
+        }
+      } else if(artikel.kategorie === artikelFilter.artikelKategorie && artikelFilter.brecheFilterAb === false){
+        if(this.backupListeartikel.length != 0){
+          artikel.artikelListe = this.backupListeartikel;
+        }
       }
     }
    });

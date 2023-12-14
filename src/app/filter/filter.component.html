@@ -38,8 +38,10 @@
             <div [id]="'flush-collapseTwo' + item.typ"  class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
               <div class="accordion-body p-2" >
                 <div *ngFor="let listeItem of item.listeType">
-                  <input type="checkbox" [name]="listeItem" (change)="sedeListeItem(item.typ, listeItem, $event)">
+                  <form #filterForm="ngForm">
+                    <input class="checkboxInput" type="checkbox" #checkbox [name]="listeItem" (change)="sedeListeItem(item.typ, listeItem, $event)">
                   <label class="ms-2" for="">{{ listeItem }} </label>
+                  </form>
                 </div>
               </div>
             </div>
@@ -47,10 +49,14 @@
           <div class="accordion-item">
             <div class="filter_button">
               <button (click)="filterErgebniss()" class="bestaetigen_click">Bestätigen</button>
-              <button (click)="filterAbbrechen()" class="abbrechen_click">Abbrechen</button>
+              <button type="button" (click)="filterAbbrechen()" class="abbrechen_click">Abbrechen</button>
             </div>
           </div>
+          
         </form>
       </div>
     </div> 
+    <div class="hatArtiel" [ngStyle]="{'display' : hatArtikelGefunden ? 'none' : 'block'}">
+      <p>Kein Artikel gefunden!</p>
+    </div>
 </div>

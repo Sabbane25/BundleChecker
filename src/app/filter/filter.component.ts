@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewChild, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FilterService } from 'src/services/filter.service'; 
 import { Filter } from 'src/models/filter.models';
@@ -18,7 +18,8 @@ export class FilterComponent{
   listeKategorie: string[] = ['CPU', 'Festplatte', 'Gehaeuse', 'Grafikkarte','Mainboard', 'Netzteil', 'RAM'];
   @Input() filterKategorie: string;
   @Input() artikelliste: Array<{ kategorie: string, artikelListe: Array<{ shop1: Artikel, shop2: Artikel}>}>;
-
+  @ViewChild('checkbox') checkbox!: ElementRef;
+  
   checkboxValue: {[key:string]: boolean} = {};
   vonInputValue: number;
   bisInputValue: number;
@@ -29,9 +30,14 @@ export class FilterComponent{
   isFilterSichtbar: boolean = false; //true wenn der Filter sichtbar ist 
   listeEigenschaften: { kategorie: string, liste: { typ: string; listeType: string[] }[] }[] = [];
   selektierteCheckboxMap = new Map();
+  checkboxStatus: any[] = [];
+  checkboxElement: any;
+  hatArtikelGefunden: boolean = true;   // gib ine Meldung zurük, wenn es kein Artikel gefunden wird
+
 
   // permet de recuper les donnees qui viennent du checkbox du html
   sedeListeItem(eigenschaftTyp: string, eigenschaftValue: string, event: any): void{
+    this.checkboxStatus.push(event.currentTarget);
     this.selektierteCheckboxMap.set(eigenschaftTyp, eigenschaftValue);
   }
 
@@ -43,14 +49,31 @@ export class FilterComponent{
     let artikelFilter: Filter = {
       artikelKategorie : this.filterKategorie,
       preis : {von: this.vonInputValue, bis: this.bisInputValue},
-      checkbox: this.selektierteCheckboxMap
+      checkbox: this.selektierteCheckboxMap,
+      brecheFilterAb: true,
     }
     this.filterService.sendeListeKomponenten(artikelFilter);
+    this.hatArtikelGefunden = this.artikelService.hatArtikel;
+    console.log('hatArtikel: ', this.hatArtikelGefunden);
   }
 
   // 
   filterAbbrechen(){
-    console.log('hier ist Abbrechen');
+    this.selektierteCheckboxMap.clear();
+    this.hatArtikelGefunden = true;
+    let artikelFilter: Filter = {
+      artikelKategorie : this.filterKategorie,
+      preis : {von: this.vonInputValue, bis: this.bisInputValue},
+      checkbox: this.selektierteCheckboxMap,
+      brecheFilterAb: false,
+    }
+    this.filterService.sendeListeKomponenten(artikelFilter);
+
+    for(let event of this.checkboxStatus){
+      console.log(event, 'value vor');
+      event.checked = false;
+      console.log(event.cheched, 'value nach');
+    }
   }
 
   // cette methode permet de recuper toutes une liste de Kritere de cle pour une categorie d'article
@@ -84,6 +107,11 @@ export class FilterComponent{
 
   ngOnInit(): void {
     this.ladeFilterkriterien();
+  }
+
+  ngAfterViewInit() {
+    // Maintenant, 'checkboxes' contient une liste de toutes les occurrences d'éléments de checkbox
+    // Vous pouvez y accéder avec this.checkboxes.toArray()
   }
 
   // Cette methode permet de recuper les differents criterer de filtre pour chaque kategorie d'article
