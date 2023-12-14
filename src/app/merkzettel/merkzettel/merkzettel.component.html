@@ -1,12 +1,48 @@
-<h2>Merkzettel</h2>
-<ul>
-  <li *ngFor="let artikel of merkzettelArtikel">
-    <div class="artikel-info">
-      <span class="artikel-kategorie">Kategorie: {{ artikel.kategorie }}</span>
-      <span class="artikel-preis">Preis: {{ artikel.preis }} €</span>
-      <span class="artikel-produktlink">Produkt-Link: {{ artikel.produktLink }}</span>
-      <span class="artikel-spezifisch">{{ artikel.getSpezifischeAttribute() }}</span>
-      <button (click)="removeItemFromMerkzettel(artikel)">Entfernen</button>
+<!-- Autor: Mokhtar Yosofzay -->
+<div class="row mb-4">
+  <div class="col-12">
+    <h2>Merkzettel {{ bundles }}</h2>
+    <table class="table table-striped table-hover" *ngIf="bundles.length > 0">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Preis</th>
+          <th scope="col">Optionen</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let bundle of bundles">
+        <th scope="row">{{ bundle.label }}</th>
+        <td class="bundle-preis">{{ Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(bundle.preis) }}</td>
+        <td class="bundle-optionen">
+          <button *ngIf="bundle.preis > 0" class="btn btn-sm btn-secondary me-2" (click)="zeigeProdukte(bundle.id_list)">Erweitern</button>
+          <button class="btn btn-sm btn-danger" (click)="entferneMerkzettel(bundle.id_list, bundle.id)">Löschen</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="alert alert-info" *ngIf="bundles.length == 0">
+      Du hast aktuell keinen Merkzettel angelegt.
     </div>
-  </li>
-</ul>
+  </div>
+
+  <div class="col-12" *ngIf="bundles.length > 0 && selectedBundleLabel">
+    <h2>Produkte im Bundle: {{ selectedBundleLabel }}</h2>
+    <div class="row">
+      <div class="col-12 col-md-4 col-lg-3" *ngFor="let artikel of merkzettelArtikel">
+        <div class="card">
+          <img *ngIf="artikel.bildUrl" src="https://{{ artikel.bildUrl }}" class="card-img-top px-2" />
+          <div class="card-body">
+            <h5 class="card-title">{{ artikel.bezeichnung }}</h5>
+            <p class="card-text">
+                Kategorie: {{ artikel.kategorie }}<br />
+                Preis: {{ Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' }).format(artikel.preis) }}<br />
+            </p>
+            <button (click)="removeItemFromMerkzettel(selectedBundleId, artikel)" class="btn btn-danger btn-sm me-3">Entfernen</button>
+            <a href="{{ artikel.produktUrl }}" target="_blank" class="btn btn-primary btn-sm">Produktseite öffnen</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

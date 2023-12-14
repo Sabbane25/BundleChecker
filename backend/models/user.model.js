@@ -1,6 +1,9 @@
 module.exports = (sequelize, Sequelize) => {
+
   /**
    * Modell für Nutzer
+   *
+   * @autor Mokhtar Yosofzay
    */
   const User = sequelize.define("users", {
     email: {
@@ -10,6 +13,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING
     }
   }, {
+    timestamps: false,
     underscored: true,
     freezeTableName: true,
     tableName: 'nutzer'

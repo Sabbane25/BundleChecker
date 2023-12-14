@@ -11,13 +11,12 @@ import { FormsModule } from '@angular/forms';
 import { AdminModule } from './admin/admin.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    
-  ],
+
   imports: [
-    AdminModule,
     BrowserModule,
+    AdminModule,
+    HttpClientModule,
+    FormsModule,
     KontoModule,
     KonfigurationModule,
     KontaktModule,
@@ -25,6 +24,12 @@ import { AdminModule } from './admin/admin.module';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    HttpClientModule,
+    FormsModule,
+  ],
+  declarations: [
+    AppComponent,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

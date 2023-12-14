@@ -10,6 +10,11 @@ import { TokenStorageService } from 'src/services/token-storage.service';
   styleUrls: ['anmelden.component.css']
 })
 
+/**
+ * Komponente für die Anzeige der Anmelden-Seite
+ *
+ * @autor Mokhtar Yosofzay
+ */
 export class AnmeldenComponent implements OnInit {
   form: any = {
     email: null,

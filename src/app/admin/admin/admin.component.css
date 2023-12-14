@@ -1,5 +1,4 @@
-
-/*######  CSS STYLE (ARNAULD) ########*/
+/*Autor: Tim Hinder*/
 
 .tabellenueberschrift p{
     font-weight: bold;
@@ -66,4 +65,10 @@
     color: white;
 }
 
+.success-message {
+    color: green;
+}
 
+.error-message {
+    color: red;
+}

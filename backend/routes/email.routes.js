@@ -1,5 +1,13 @@
 const controller = require("../controllers/kontakt.controller");
 
+/**
+ * E-Mail senden
+ *
+ * @autor Mokhtar Yosofzay
+ *
+ * @param app
+ * @param connection
+ */
 module.exports = function(app, connection) {
   app.use(function(req, res, next) {
     res.header(

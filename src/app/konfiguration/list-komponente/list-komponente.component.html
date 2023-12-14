@@ -1,39 +1,38 @@
 <div class="komponenten-main">
-    <!-- Das Div beinhahlt alle Komponenten und jede Komponente die entspechenden Artikel -->
-    <!-- Die Komponenten werden mit Hilfe einer schleife generiert -->
-    <div class="komponanten-div">
-      <div class="accordion" id="accordionExample">
-        <!-- stellt eine Komponente dar. Mit Hilfe der Directive *ngFor werden alle Komponenten angezeigt -->
-        <div class="accordion-item" *ngFor="let kategorieItem of gibKategorieArtikel()">
-        <!--Komponente-Title. Es ist auch gleichzeitig den Dropdowm menu, um Artikel einer Komponente aufzulisten -->
-        <!-- item-4 / Komponent 4: GRAFIKKARTE -->
+  <!-- Das Div beinhahlt alle Komponenten und jede Komponente die entspechenden Artikel -->
+  <!-- Die Komponenten werden mit Hilfe einer schleife generiert -->
+  <div class="komponanten-div" >
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item" *ngFor="let kategorie of listeKategorie">
         <h2 class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#' + kategorieItem"  aria-expanded="false" aria-controls="flush-collapseTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#' + kategorie"  aria-expanded="false" aria-controls="flush-collapseTwo">
             <div class="item-img">
-              <img src="./assets/Komponenten/{{ kategorieItem }}.jpg" alt="">
+              <img src="./assets/Komponenten/{{ kategorie }}.jpg" alt="">
             </div>
-            {{ kategorieItem }}
+            {{kategorie}}
           </button>
         </h2>
         <!-- Hier wird alle Produkt einer Kategorie angezeigt. Und ein geeignetes Filter -->
-        <div [id]="kategorieItem" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+        <div [id]="kategorie" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
           <div class="accordion-body">
             <!-- filter (Es handelt es sich um eine separat Composant)-->
             <!-- <app-filter [listKomponente]="artikelList3" [listKomponenteItem]="kategorieItem"></app-filter> -->
-            <div class="list-artikel" *ngFor="let artikel of artikelListe">
-              <div class="row  item" *ngIf="artikel.kategorie === kategorieItem">
-                <!-- BILD Komponente(keine echtes Bild. Nur Kategorie Abkürzung) -->
-                <div class="col-1 border justify-content-md-center">
-                  <h5> {{ artikel.kategorie.substring(0, 3).toUpperCase() }} </h5>
-                </div>
-                <!-- Beschreibung der Artikels-->
-                <div class="col-9 artikel-info">
-                  <h5> {{ artikel.gibArtikelTitel() }}</h5>
-                  <p> {{ artikel.gibArtikelBeschreibung() }} </p>
-                  <h6> {{ artikel.anbieter }}</h6>
-                </div>
-                <div class="col">
-                  <button (click)="onButtonhinzufuegen(artikel)">HINZUFÜGEN</button>
+            <div class="list-artikel" *ngFor="let item of artikelliste">
+              <div *ngIf="kategorie === item.kategorie">
+                <div class="row  item" *ngFor="let artikelItem of item.artikelListe">
+                  <div class="col-1 border justify-content-md-center">
+                    <!-- <img src="{{ item.shop2.image }}" alt=""> -->
+                    <img src="{{ artikelItem.shop2.image }}" alt="">
+                  </div>
+                  <!-- Beschreibung der Artikels-->
+                  <div class="col-9 artikel-info">
+                    <h5 style="color: black; font-size: 14px;"> {{ artikelItem.shop2.bezeichnung }} </h5>
+                    <p> <span class="alternate">{{ artikelItem.shop1.shopID === 1 ? 'Alternate' : 'Future-X' }}</span> : <span class="shoppreis">{{ artikelItem.shop1.preis }} €</span></p>
+                    <p> <span class="futureX">{{ artikelItem.shop2.shopID === 1 ? 'Alternate' : 'Future-X' }}</span> : <span class="shoppreis">{{ artikelItem.shop2.preis }} €</span> </p>
+                  </div>
+                  <div class="col">
+                    <button (click)="onButtonhinzufuegen(artikelItem.shop1, artikelItem.shop2)">HINZUFÜGEN</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -53,11 +52,11 @@
         </div>
       </div>
       <div class="button-artikel">
-        <button><h3>Zur Übersicht</h3></button>
+        <button (click)="zurUebersicht()">Zur Übersicht</button>
       </div>
       <div class="artikel" *ngFor="let artikel of hinzugefuegteArtikel">
-        <h4>{{artikel.kategorie}}: {{artikel.gibArtikelTitel()}}</h4>
-        <p> {{artikel.gibArtikelBeschreibung()}} </p>
+        <h4>{{artikel.kategorie}}: {{artikel.marke }}</h4>
+        <p> {{artikel.bezeichnung}} </p>
       </div>
     </div>
   </div>

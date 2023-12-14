@@ -8,6 +8,8 @@ import { DatenschutzComponent } from './hilfe/datenschutz/datenschutz.component'
 import { UeberUnsComponent } from './hilfe/ueber-uns/ueber-uns.component';
 import { AdminComponent } from './admin/admin/admin.component';
 import { SeiteNichtGefundenComponent } from './seite-nicht-gefunden/seite-nicht-gefunden/seite-nicht-gefunden.component';
+import { AdminBearbeitenComponent } from './admin/admin-bearbeiten/admin-bearbeiten.component';
+import { ListKomponenteComponent } from './konfiguration/list-komponente/list-komponente.component';
 
 const routes: Routes = [
   { path: 'admin', component: AdminComponent },
@@ -19,6 +21,9 @@ const routes: Routes = [
   { path: 'merkzettel', component: MerkzettelComponent },
   { path: '404', component: SeiteNichtGefundenComponent },
   { path: '', redirectTo:'konfiguration', pathMatch: 'full' },
+  { path: 'admin-bearbeiten/:email/:id', component: AdminBearbeitenComponent },
+  { path: 'komponenten', component: ListKomponenteComponent },
+
 ];
 
 @NgModule({

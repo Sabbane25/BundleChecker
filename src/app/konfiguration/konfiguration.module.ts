@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UebersichtComponent } from './uebersicht/uebersicht.component'; // Stellen Sie sicher, dass der Pfad korrekt ist.
 import { KonfigurationComponent } from './konfiguration/konfiguration.component';
-import { RouterModule, Routes } from '@angular/router';
+import {RouterLink, RouterModule, Routes} from '@angular/router';
 import { ListKomponenteComponent } from './list-komponente/list-komponente.component';
 import { DropDownMenuComponent } from '../drop-down-menu/drop-down-menu.component';
 import { FilterComponent } from '../filter/filter.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -14,9 +15,13 @@ import { FilterComponent } from '../filter/filter.component';
     UebersichtComponent, 
     KonfigurationComponent,
     DropDownMenuComponent,
-    FilterComponent
+    FilterComponent,
   ], // Hier die Komponenten deklarieren.
-  imports: [CommonModule],
+  imports: [
+      CommonModule,
+      FormsModule,
+      RouterModule,
+  ],
   exports: [KonfigurationComponent], // Wenn die KonfigurationComponent exportiert werden muss.
 
 })

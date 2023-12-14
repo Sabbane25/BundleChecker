@@ -1,0 +1,70 @@
+<!--Autor: Tim Hinder-->
+<body>
+    <div class="titel">
+      <h2>User bearbeiten:</h2>
+    </div>
+    <!--Klasse um den Inhalt zu zentrieren-->
+    <div class="center">
+        <section class="container">
+          <div>
+            <section>
+                <p style="font-weight: bold; margin-left: 28px;">Bitte gewünschtes neues Passwort eingeben:</p>
+            </section>
+            <section class="email" style="margin-left: 30px;">
+                <div style="margin-right: 80px;">
+                    <p>E-Mail Adresse:</p>
+                </div>
+                <div>
+                    <p style="margin-right: 80px;">{{email}}</p>
+                </div>
+            </section>
+            <section class="passwörter">
+                <div class="containerLinks">
+                    <ul>
+                        <li style="margin-bottom: 12px;">Neues Passwort:</li>
+                        <li>Passwort wiederholen:</li>
+                    </ul>
+                </div>
+                <div class="containerRechts">
+                    <ul>
+                        <li style="margin-bottom: 10px;">
+                            <input type="password" minlength="5" placeholder="Passwort eingeben" #newPassword>
+                        </li>
+                        <li>
+                            <input type="password" minlength="5" placeholder="Passwort wiederholen" #confirmPassword>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+            <section class="confirmButton">
+                <div class="containerLinks">
+                    <ul>
+                        <li>
+                            <!--Zeigt eine Errormeldung an falls etwas schief läuft-->
+                            <div *ngIf="errorMessage && !isUpdateSuccessful" class="error-message">
+                                {{ errorMessage }}
+                            </div>
+                            <!--Zeigt eine Erfolgsmeldung, wenn die Aktualisierung des Passworts erfolgreich war-->
+                            <div *ngIf="!errorMessage && isUpdateSuccessful" class="success-message" style="color: green;">
+                                Passwort erfolgreich aktualisiert!
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="containerRechts">
+                    <ul>
+                        <li>
+                            <section class="buttonConfirm">
+                                <!--Button, welcher die Methode zum aktualisieren des Passworts startet und  an diese die beiden einegegebenen Passwörter übergibt-->
+                                <button type="button" (click)="updatePassword(newPassword, confirmPassword)">Bestätigen</button>
+                            </section>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+          </div>
+        </section>
+
+    </div>
+</body>
+

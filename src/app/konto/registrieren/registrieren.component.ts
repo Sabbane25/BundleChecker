@@ -10,6 +10,11 @@ import { passwordRepeatValidator } from 'src/app/validators/passwordRepeatValida
     styleUrls: ['./registrieren.component.css']
 })
 
+/**
+ * Komponente für die Anzeige der Registrieren-Seite
+ *
+ * @autor Mokhtar Yosofzay
+ */
 export class RegistrierenComponent {
     passwordMinLength: number = 5;
 

@@ -2,6 +2,8 @@ import {AbstractControl, FormControl, ValidationErrors, ValidatorFn} from '@angu
 
 /**
  * Validator for password repeat fields
+ * 
+ * @autor Mokhtar Yosofzay
  *
  * @param passwordField
  */

@@ -1,0 +1,52 @@
+/*Autor: Tim Hinder*/
+
+.titel h2 {
+    margin-top: 30px;
+    margin-bottom: 50px;
+    color: #00528d;
+    text-align: center;
+    
+}
+
+.center {   
+    
+    height: 400px; 
+    
+}
+
+.container {
+    
+    display: flex;
+    justify-content: center;
+    
+}
+
+.email{
+    display: flex;
+}
+
+.passwörter{
+    display: flex;
+    
+}
+
+.passwörter ul {
+    list-style-type: none;
+}
+
+.buttonConfirm button {
+    width: 100px;
+    height: 40px;
+    margin-left: 280px;
+    border-radius: 10px;
+    background-color: #00528d;
+    color: white;
+}
+
+.confirmButton ul {
+    list-style-type: none;
+}
+
+.error-message{
+    color: red
+}

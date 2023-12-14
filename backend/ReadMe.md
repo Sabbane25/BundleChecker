@@ -1,8 +1,17 @@
-Der Ordner muss auf den Server kopiert werden.
+# Backend Server
+
+Der Backend-Ordner muss auf den Server kopiert werden.
 Anschließend muss `npm install` in diesem Ordner, auf dem Server, ausgeführt werden.
 Danach kann mit `npm run backend` der Server **manuell** gestartet werden oder im Hintergrund automatisch gestartet werden:
 
 ## Im Hintergrund starten
+
+Wenn der Backend Server aktualisiert wurde muss dieser erst gestopt und dann neu gestartet werden.
+
+```shell
+forever stop ~/backend-server/index.js
+forever start ~/backend-server/index.js
+```
 
 ### Ersteinrichtung
 

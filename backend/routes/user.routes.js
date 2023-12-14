@@ -1,6 +1,16 @@
-const {verifySignUp} = require("../middleware");
+const {verifySignUp, authJwt} = require("../middleware");
 const controller = require("../controllers/auth.controller");
+const adminController = require("../controllers/admin.controller");
 
+/**
+ * Nutzer Schnittstellen
+ *
+ * @autor Arnauld Mba Kuitche
+ * @author Mokhtar Yosofzay
+ *
+ * @param app
+ * @param connection
+ */
 module.exports = function(app, connection) {
   app.use(function(req, res, next) {
     res.header(
@@ -11,7 +21,13 @@ module.exports = function(app, connection) {
   });
 
   //GET-Endpunk zum Abrufen von Produkten (Arnauld)
-  app.get('/getUsers', (req, res) => {
+  app.get(
+      '/getUsers',
+      [
+        authJwt.verifyToken, // prüfe ob token valide ist
+        authJwt.isAdmin, // prüfe ob Nutzer Admin ist
+      ],
+      (req, res) => {
     console.log('Empfangene Anfrage-Methode:', req.method); // Logge die empfangene HTTP-Methode
 
     const query = `SELECT n.email, n.password, n.id
@@ -25,28 +41,28 @@ module.exports = function(app, connection) {
         res.status(500).json({ error: 'Fehler beim Abrufen der Nutzerdaten' });
         return;
       }
-      res.json(results);
-    });
-  });
-
-  app.delete('/users/:id', (req, res) => {
-    const userId = req.params.id;
-
-    const sql = 'DELETE FROM nutzer WHERE id = ?';
-
-    connection.query(sql, [userId], (err, result) => {
-      if (err) {
-        console.error('Fehler beim Löschen des Benutzers: ' + err.message);
-        res.status(500).send('Interner Serverfehler');
-        return;
-      }
-
-      console.log('Benutzer erfolgreich gelöscht.');
       res.setHeader('Content-Type', 'application/json');
-      res.status(200).end('Benutzer erfolgreich gelöscht.');
+      res.status(200).json(results);
     });
   });
 
+  app.delete(
+      '/users/:id',
+      [
+          authJwt.verifyToken, // prüfe ob token valide ist
+          authJwt.isAdmin, // prüfe ob Nutzer Admin ist
+      ],
+      adminController.delete
+  );
+
+  app.put(
+      '/changePassword',
+      [
+        authJwt.verifyToken, // prüfe ob token valide ist
+        authJwt.isAdmin, // prüfe ob Nutzer Admin ist
+      ],
+      adminController.changePassword,
+  );
 
   app.post(
       '/addUser',
@@ -55,5 +71,5 @@ module.exports = function(app, connection) {
         verifySignUp.checkRolesExisted
       ],
       controller.signup
-  )
-};
+  );
+}
