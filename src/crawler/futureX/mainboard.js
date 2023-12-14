@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const { extrahiereZahl, futureXUrls, extrahiereDatum } = require('./funktionen');
+const { extrahiereZahl, futureXUrls, extrahiereDatum, gibVerfuegbarkeit } = require('./funktionen');
 const { Mainboard } = require('./models.js');
 
 (async () => {
@@ -30,6 +30,7 @@ const { Mainboard } = require('./models.js');
             artikelMainboard.produktlink = listVonUrlArtikel[i];
             artikelMainboard.marke = await markeSelektor.evaluate(node => node.getAttribute('content'));
             artikelMainboard.imgUrl = await imgSelektor.evaluate(node => node.getAttribute('src'));
+            artikelMainboard.verfuegbarkeit = gibVerfuegbarkeit(await liferungDiv.evaluate(node => node.innerText));
 
 
             for(const element of detailsSelektor){

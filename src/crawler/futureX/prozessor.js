@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const { konvertiereInInt, konvertiereInFloat2, futureXUrls, futureXUrls2, extrahiereFloat2, extrahiereZahl, extrahiereDatum } = require('./funktionen.js');
+const { konvertiereInInt, gibVerfuegbarkeit, futureXUrls, futureXUrls2, futureXUrls2, extrahiereFloat2, extrahiereZahl, extrahiereDatum } = require('./funktionen.js');
 const { Prozessor } = require('./models.js');
 
 
@@ -7,13 +7,14 @@ const { Prozessor } = require('./models.js');
 (async () => {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    let listVonUrlArtikel = await futureXUrls2("https://www.future-x.de/Hardware-Netzwerk/PC-Komponenten/CPUs/?b2bListingView=listing&p=");
-    let listeArtikel = [];
-    //await page.waitForTimeout(5000);
+    //let listeArtikel = await futureXUrls("https://www.future-x.de/Hardware-Netzwerk/PC-Komponenten/CPUs/?b2bListingView=listing&p=", 1);
+
+    let listeArtikel = await futureXUrls2("https://www.future-x.de/Hardware-Netzwerk/PC-Komponenten/CPUs/?b2bListingView=listing&p=");
+    
 
     anzahlArtikel = 0;
-    for(let i = 0; i < listVonUrlArtikel.length; i++){ 
-        await page.goto(listVonUrlArtikel[i]);
+    for(let i = 0; i < listeArtikel.length; i++){ 
+        await page.goto(listeArtikel[i]);
         let artikel = new Prozessor();
 
         try{
@@ -25,14 +26,15 @@ const { Prozessor } = require('./models.js');
             const imgSelektor = await containerFluid.$('.img-fluid.gallery-slider-image.magnifier-image.js-magnifier-image');
             const markeSelektor = await page.$('head > meta:nth-child(16)');
 
-            artikel.shopID = 2;
-            artikel.kategorie = 'Prozessor';
-            artikel.bezeichnung = await titleDiv.evaluate(node => node.innerText);
-            artikel.marke = await markeSelektor.evaluate(node => node.getAttribute('content'));
-            artikel.preis = extrahiereFloat2(await priceDiv.evaluate(node => node.innerText));
-            artikel.deliveryDate = extrahiereDatum(await liferungDiv.evaluate(node => node.innerText));
-            artikel.produktlink = listVonUrlArtikel[i];
-            artikel.imgUrl = await imgSelektor.evaluate(node => node.getAttribute('src'));
+            artikelProzessor.shopID = 2;
+            artikelProzessor.kategorie = 'Prozessor';
+            artikelProzessor.bezeichnung = await titleDiv.evaluate(node => node.innerText);
+            artikelProzessor.marke = (await titleDiv.evaluate(node => node.innerText)).split(" ")[0];
+            artikelProzessor.preis = extrahiereFloat2(await priceDiv.evaluate(node => node.innerText));
+            artikelProzessor.deliveryDate = extrahiereDatum(await liferungDiv.evaluate(node => node.innerText));
+            artikelProzessor.produktlink = listeArtikel[i];
+            artikelProzessor.imgUrl = await imgSelektor.evaluate(node => node.getAttribute('src'));
+            artikelProzessor.verfuegbarkeit = gibVerfuegbarkeit(await liferungDiv.evaluate(node => node.innerText));
 
             let hatInterneGrafik = false; 
 
@@ -98,9 +100,10 @@ const { Prozessor } = require('./models.js');
                 artikel.interneGrafik = "ohne CPU-Grafik"
             }
 
-            if(artikel.threads &&  artikel.sockel){
-                    console.log("-- Anzahl Artikel: ", anzahlArtikel++);
-                    listeArtikel.push(artikel);
+            if(artikelProzessor.maxTurboTaktfrequenz && artikelProzessor.threads && artikelProzessor.taktfrequenz
+                && artikelProzessor.sockel && artikelProzessor.preis){
+                    console.log(artikelProzessor);
+                    listProzessorArtikle.push(artikelProzessor);
             }
             
         }catch(error){
@@ -114,7 +117,7 @@ const { Prozessor } = require('./models.js');
     const axios = require('axios');
     const backendUrl = 'http://192.168.198.48:3000/api/scrapedata';
 
-    const produktListe = { kategorie: 'CPU', value: listeArtikel };
+    const produktListe = { kategorie: 'CPU', value: listProzessorArtikle };
 
     try {
         const response = await axios.post(backendUrl, produktListe, {
@@ -126,6 +129,6 @@ const { Prozessor } = require('./models.js');
     } catch (error) {
         console.error('Erreur lors de l\'envoi des données au backend :', error);
     }
-    
+
     await browser.close();
 })();

@@ -62,7 +62,7 @@ async function futureXUrls2(url) {
     try{
       await page.goto(url + i);
       const elements = await page.$$('.cms-block.pos-1.cms-block-product-listing .product-image-wrapper');
-      if(elements.length != 0){
+      if(elements.length != 0 && i < 3){
         for(let element of elements){
           const link = await page.evaluate(el => el.querySelector('a').getAttribute('href'), element)
           console.log(link, "page number: ", i);
@@ -104,10 +104,33 @@ function extrahiereZahl(satz){
   }
 }
 
-function extrahiereDatum(lieferDatum){
-  return parseInt(lieferDatum.match(/\d+/)[0]);
+function extrahiereDatum2(satz){
+  return parseInt(satz.match(/\d+/)[0]);
 }
 
+function extrahiereDatum(satz){
+  splitSatz = satz.split(','); 
+  let lifertDatum =  0;
+
+  if(satz.length > 0){
+    lifertDatum =  parseInt(splitSatz[1].match(/\d+/)[0]);
+  }
+
+  return lifertDatum;
+}
+
+function gibVerfuegbarkeit(satz){
+  let verfuegbarkeit = "";
+
+  if(satz.length > 0){
+    if(satz.includes('Lager')){
+      verfuegbarkeit = satz.split(',')[0];
+    }else if(satz.includes('Versandfertig')){
+      verfuegbarkeit = satz.split(',')[0];
+    }
+  }
+  return verfuegbarkeit.trim(); 
+}
 
 function extrahiereCharakter(satz){
   const charakter = satz.replace(/\d+/g, "").trim(); 
@@ -148,30 +171,6 @@ function isNotEmpty(variable) {
                                                               && (!Array.isArray(variable) || variable.length !== 0);
 }
 
-
-function gibGehaeuseListe(merkmalListe, artikelObjekt, data, merkmal){
-  if(data){
-    if(merkmalListe.includes(filterKomponente(merkmal, "Motherboards"))){
-        artikelObjekt.mainboardFormfaktor = data;
-    }else if(merkmalListe.includes(filterKomponente(merkmal, "Anschlüsse"))){
-        artikelObjekt.frontanschluesse = data;
-    }else if(merkmalListe.includes(filterKomponente(merkmal, "Gewicht"))){
-        if(isEmpty(artikelObjekt.gewicht)){
-            artikelObjekt.gewicht = data;
-        }
-    }else if(merkmalListe.includes(filterKomponente(merkmal, "Formfaktor"))){
-        if(isEmpty(artikelObjekt.produkttyp)){
-            artikelObjekt.produkttyp = data;
-        }
-    }else if(merkmalListe.includes(filterKomponente(merkmal, "Breite"))){
-            artikelObjekt.breite = data;
-    }else if(merkmalListe.includes(filterKomponente(merkmal, "Tiefe"))){
-        artikelObjekt.tiefe = data;
-    }else if(merkmalListe.includes(filterKomponente(merkmal, "Höhe"))){
-        artikelObjekt.hoehe = data;
-    }
-  }
-}
 
 function konvertiereInFloat(data){
   anzahlWortData = data.split(" ");
@@ -220,9 +219,9 @@ module.exports = {
   isEmpty,
   isNotEmpty,
   extrahiereDatum,
-  gibGehaeuseListe,
   futureXUrls2,
   konvertiereInFloat,
   konvertiereInFloat2,
-  konvertiereInInt
+  konvertiereInInt,
+  gibVerfuegbarkeit
 };

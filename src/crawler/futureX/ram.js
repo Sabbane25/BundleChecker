@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const { futureXUrls, futureXUrls2, extrahiereFloat2, extrahiereDatum, konvertiereInInt } = require('./funktionen.js');
+const { futureXUrls, futureXUrls2, futureXUrls2, extrahiereFloat2, extrahiereDatum, konvertiereInInt, gibVerfuegbarkeit} = require('./funktionen.js');
 const { Arbeitsspeicher } = require('./models.js')
 
 let listeArtikel = [];
@@ -12,6 +12,7 @@ let listeArtikel = [];
     
     anzahlArtikel = 1;
     //await page.waitForTimeout(5000);
+    anzahlArtikel = 1;
 
     for(let i = 0; i < listVonUrlArtikel.length; i++){ 
       await page.goto(listVonUrlArtikel[i]);
@@ -35,6 +36,7 @@ let listeArtikel = [];
           artikel.deliveryDate = extrahiereDatum(await liferungDiv.evaluate(node => node.innerText));
           artikel.produktlink = listVonUrlArtikel[i];
           artikel.imgUrl = await imgSelektor.evaluate(node => node.getAttribute('src'));
+          artikel.verfuegbarkeit = gibVerfuegbarkeit(await liferungDiv.evaluate(node => node.innerText));
 
           for(const element of detailsSelektor){
             const data = await page.evaluate(el => el.querySelector('td:nth-child(2)').textContent, element);
