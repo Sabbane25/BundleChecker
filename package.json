@@ -4,9 +4,12 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "frontend": "ng serve",
     "backend": "node ./backend/index.js",
     "build": "ng build",
-    "watch": "ng build --watch --configuration development"
+    "watch": "ng build --watch --configuration development",
+    "ssh": "ssh -L 3306:127.0.0.1:3306 student@192.168.198.48",
+    "init": "npm install && cd backend && npm install && cd .."
   },
   "private": true,
   "dependencies": {

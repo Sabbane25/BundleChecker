@@ -1,8 +1,49 @@
 # BundleChecker
 
-## Server
+## Projekt LOKAL starten
 
-Es müssen alle Dateien, bis auf `node_modules` und `backend` in `~/frontend` kopiert werden`
+### Einmalige initialisierung
+
+Der Befehl führt im Projektverzeichnis und im Backend-Ordner `npm install` aus und muss nur einmal ausgeführt werden.
+
+```shell
+npm run init
+```
+
+### SSH-Verbindung zum Server
+
+Damit der Backend-Server lokal genutzt werden kann, muss folgender Befehl zuerst genutzt werden.
+Das Terminal-Fenster ___MUSS___ im Hintergrund geöffnet bleiben.
+
+```shell
+npm run ssh
+```
+
+Anschließend muss das SSH-Passwort eingegeben werden: <code>0EcKRCYYxZ</code>
+
+### Backend-Server starten
+
+Startet in einem neuen Terminal-Fenster den lokalen Backend-Server.
+
+```shell
+npm run backend
+```
+
+### Frontend-Server starten
+
+Bearbeite folgende Datei [api.config.ts](./src/config/api.config.ts) und setze die Variabel `lokal_backend` auf `true`.
+
+Startet in einem neuen Terminal-Fenster den lokalen Frontend-Server. Der Befehl macht dasselbe wie `ng serve`.
+
+```shell
+npm run frontend
+```
+
+---
+
+## Projekt auf Server starten
+
+Es müssen alle Dateien, bis auf `node_modules` und `backend` in `~/frontend` kopiert werden.
 
 ### Frontend-Server im Hintergrund starten
 
