@@ -27,6 +27,9 @@ exports.sendMail = (req, res) => {
     if (!nachricht) {
         return res.status(500).send({success: false, message: "Es ist keine Nachricht angegeben"});
     }
+    if (!email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)) {
+        return res.status(400).json({success: false, message: 'E-Mail ist ungültig'});
+    }
 
     const message = {
         from: 'bundlechecker@outlook.de',
