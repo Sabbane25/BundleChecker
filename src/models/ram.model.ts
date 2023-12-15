@@ -6,6 +6,7 @@ export class Ram extends Artikel{
     kapazitaet: number;
     latency: number;
     spannung: number;
+    [cle: string]: any; //neu
 
     constructor(kategorie: string, preis: number, shopID: number, produktUrl: string, bezeichnung: string, lieferDatum: number, marke: string, image: string,
         artikelnummer: number, typ: string, kapazitaet: number, latency: number, spannung: number){
