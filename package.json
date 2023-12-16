@@ -9,7 +9,21 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "ssh": "ssh -L 3306:127.0.0.1:3306 student@192.168.198.48",
-    "init": "npm install && cd backend && npm install && cd .."
+    "init": "npm install && cd backend && npm install && cd ..",
+    "crawler-alternate-ram": "node ./src/crawler/alternate/K.Arbeitsspeicher.js --host=local",
+    "crawler-alternate-cpu": "node ./src/crawler/alternate/K.CPU.js --host=local",
+    "crawler-alternate-festplatte": "node ./src/crawler/alternate/K.festplatten.js --host=local",
+    "crawler-alternate-gehaeuse": "node ./src/crawler/alternate/K.gehaeuse.js --host=local",
+    "crawler-alternate-grafikkarte": "node ./src/crawler/alternate/K.grafikkarte.js --host=local",
+    "crawler-alternate-mainboard": "node ./src/crawler/alternate/K.mainboard.js --host=local",
+    "crawler-alternate-netzteil": "node ./src/crawler/alternate/K.netzteil.js --host=local",
+    "crawler-futurex-ram": "node ./src/crawler/futureX/ram.js --host=local",
+    "crawler-futurex-cpu": "node ./src/crawler/futureX/prozessor.js --host=local",
+    "crawler-futurex-festplatte": "node ./src/crawler/futureX/festplatten.js --host=local",
+    "crawler-futurex-gehaeuse": "node ./src/crawler/futureX/gehaeuse.js --host=local",
+    "crawler-futurex-grafikkarte": "node ./src/crawler/futureX/grafikkarte.js --host=local",
+    "crawler-futurex-mainboard": "node ./src/crawler/futureX/mainboard.js --host=local",
+    "crawler-futurex-netzteil": "node ./src/crawler/futureX/netzteil.js --host=local"
   },
   "private": true,
   "dependencies": {
