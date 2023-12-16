@@ -1,5 +1,10 @@
 // Autor: Oussama Soujoud
 
+const argv = require('yargs').argv;
+const apiConfig = {
+  HOST: argv.host === 'local' ? '127.0.0.1' : '192.168.198.48',
+};
+
 const puppeteer = require('puppeteer');
 const axios = require('axios');
 const { calculateWorkingDays } = require('./Date.js');
@@ -111,7 +116,7 @@ const { calculateWorkingDays } = require('./Date.js');
         console.log(scrapedProductData);
 
         // Daten per POST an den Server senden
-       await axios.post('http://192.168.198.48:3000/api/scrapedata2', [scrapedProductData]);
+       await axios.post(`http://${apiConfig.HOST}:3000/api/scrapedata2`, [scrapedProductData]);
       } catch (error) {
         // Fehlerbehandlung bei Scrapen des Produkts
         console.error(`Error scraping product ID ${productURL}: ${error.message}`);

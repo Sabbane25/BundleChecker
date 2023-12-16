@@ -1,3 +1,8 @@
+const argv = require('yargs').argv;
+const apiConfig = {
+    HOST: argv.host === 'local' ? '127.0.0.1' : '192.168.198.48',
+};
+
 const puppeteer = require('puppeteer');
 const { gibVerfuegbarkeit, futureXUrls, extrahiereFloat2, extrahiereZahl, extrahiereDatum } = require('./funktionen.js');
 const { Grafikkarte } = require('./models.js')
@@ -65,7 +70,7 @@ let listeArtikel = [];
     
     // Daten ins Backend senden
     const axios = require('axios');
-    const backendUrl = 'http://192.168.198.48:3000/api/scrapedata';
+    const backendUrl = `http://${apiConfig.HOST}:3000/api/scrapedata`;
 
     const produktListe = { kategorie: 'Grafikkarte', value: listeArtikel };
 
