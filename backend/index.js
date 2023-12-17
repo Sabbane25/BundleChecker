@@ -30,9 +30,10 @@ const express = require('express'); // Importieren des Express-Frameworks
 const path = require('path'); // Importieren des path-Pakets
 const cors = require('cors'); // Importieren des cors-Pakets
 const helmet = require('helmet');
+const argv = require('yargs').argv;
 
 const app = express(); // Initialisieren der Express-App
-const port = process.env.PORT || 3000; // Port, auf dem der Server laufen wird
+const port = process.env.PORT || argv.port ? argv.port : 3000; // Port, auf dem der Server laufen wird
 
 app.use(cors());
 

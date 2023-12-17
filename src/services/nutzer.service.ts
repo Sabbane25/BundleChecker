@@ -6,9 +6,9 @@ import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 
-const AUTH_API = `http://${apiConfig.HOST}:3000/api/auth/`;
-const API_URL = `http://${apiConfig.HOST}:3000/api/test/`;
-const apiURL = `http://${apiConfig.HOST}:3000`;
+const AUTH_API = `http://${apiConfig.URL}/api/auth/`;
+const API_URL = `http://${apiConfig.URL}/api/test/`;
+const apiURL = `http://${apiConfig.URL}`;
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

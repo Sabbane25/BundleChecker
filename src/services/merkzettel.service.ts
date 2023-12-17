@@ -4,7 +4,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Artikel} from "../models/artikel.model";
 
 
-const apiURL = `http://${apiConfig.HOST}:3000`;
+const apiURL = `http://${apiConfig.URL}`;
 const API_MERKZETTEL_ERSTELLE = `${apiURL}/api/merkzettel/create`;
 const API_MERKZETTEL_PRODUKT_HINZUFUEGEN = `${apiURL}/api/merkzettel/add`;
 const API_MERKZETTEL_LISTE = `${apiURL}/api/merkzettel/list`;

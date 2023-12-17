@@ -77,7 +77,7 @@ let listeArtikel = [];
 
     // Daten ins Backend senden
     const axios = require('axios');
-    const backendUrl = `http://${apiConfig.HOST}:3000/api/scrapedata`;
+    const backendUrl = `http://${apiConfig.URL}/api/scrapedata`;
 
     const produktListe = { kategorie: 'Netzteil', value: listeArtikel };
 

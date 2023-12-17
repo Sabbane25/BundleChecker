@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { apiConfig } from '../config/api.config';
 
-const SERVER_URL__KONTAKT = `http://${apiConfig.HOST}:3000/send-email`;
+const SERVER_URL__KONTAKT = `http://${apiConfig.URL}/send-email`;
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

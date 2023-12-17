@@ -16,7 +16,7 @@ import { apiConfig } from '../config/api.config';
   providedIn: 'root'
 })
 export class ArtikelService {
-  private apiURL = `http://${apiConfig.HOST}:3000`; //API-URL vom Server
+  private apiURL = `http://${apiConfig.URL}`; //API-URL vom Server
 
   constructor(private http: HttpClient) { }
 

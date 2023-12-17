@@ -121,7 +121,7 @@ const { calculateWorkingDays } = require('./Date.js');
         console.log(scrapedProductData);
 
       // Daten per POST an den Server senden
-      await axios.post(`http://${apiConfig.HOST}:3000/api/scrapedata2`, [scrapedProductData]);
+      await axios.post(`http://${apiConfig.URL}/api/scrapedata2`, [scrapedProductData]);
       } catch (error) {
       // Fehlerbehandlung bei Scrapen des Produkts
         console.error(`Error scraping product ID ${productURL}: ${error.message}`);
