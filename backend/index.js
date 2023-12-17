@@ -27,6 +27,7 @@
  */
 
 const express = require('express'); // Importieren des Express-Frameworks
+const path = require('path'); // Importieren des path-Pakets
 const cors = require('cors'); // Importieren des cors-Pakets
 const helmet = require('helmet');
 
@@ -47,6 +48,7 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*"); // erlaube anfragen
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type, x-access-token');
+  res.setHeader('Content-Security-Policy', 'default-src \'self\' data: \'unsafe-inline\' \'unsafe-eval\' fonts.googleapis.com fonts.gstatic.com cdn.jsdelivr.net *.amazonaws.com *.tarox.de *.alternate.de;');
   next();
 })
 
@@ -56,12 +58,6 @@ const Role = db.role;
 
 db.sequelize.sync(); // Starte server ohne synchronisierung
 // db.sequelize.sync({ alter: true }); // Synchronisiere Modelle mit Datenbank
-
-// simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Backend läuft." });
-});
-
 
 // ToDo: Verwende gleiche Logik, wie für Registrierung statt direkten Datenbankzugriff
 const mysql = require('mysql2'); // Importieren des MySQL2-Pakets
@@ -80,6 +76,9 @@ connection.connect((err) => {
   }
 });
 
+// Statische Dateien aus dem Angular-Build-Ordner bereitstellen
+app.use(express.static(path.join(__dirname, 'dist')));
+
 require('./routes/auth.routes')(app);
 require('./routes/artikel.routes')(app, connection);
 require('./routes/kategorie.routes')(app, connection);
@@ -89,6 +88,11 @@ require('./routes/email.routes')(app, connection);
 require('./routes/user.routes')(app, connection);
 require('./routes/scrape.routes')(app, connection);
 require('./routes/merkzettel.routes')(app, connection);
+
+// Alle Anfragen, die nicht mit einer statischen Datei oder API-Route übereinstimmen, an die Index-Datei weiterleiten
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/index.html'));
+});
 
 // Server starten und auf Anfragen lauschen
 app.listen(port, () => {
