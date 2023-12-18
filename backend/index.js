@@ -33,7 +33,7 @@ const helmet = require('helmet');
 const argv = require('yargs').argv;
 
 const app = express(); // Initialisieren der Express-App
-const port = process.env.PORT || argv.port ? argv.port : 3000; // Port, auf dem der Server laufen wird
+const port = process.env.PORT || argv.port ? argv.port : 80; // Port, auf dem der Server laufen wird
 
 app.use(cors());
 
