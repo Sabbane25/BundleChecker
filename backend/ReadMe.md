@@ -1,46 +1,64 @@
 # Backend Server
 
-Der Backend-Ordner muss auf den Server kopiert werden.
-Anschließend muss `npm install` in diesem Ordner, auf dem Server, ausgeführt werden.
-Danach kann mit `npm run backend` der Server **manuell** gestartet werden oder im Hintergrund automatisch gestartet werden:
-
-## Im Hintergrund starten
-
-Wenn der Backend Server aktualisiert wurde muss dieser erst gestopt und dann neu gestartet werden.
+Führe lokal folgenden Befehl im Projektverzeichnis, nicht im Backend, aus:
 
 ```shell
-forever stop ~/backend-server/index.js
-forever start ~/backend-server/index.js
+npm run init
+npm run build
 ```
 
-### Ersteinrichtung
+Mit diesem Befehl wird das Projekt gebaut und in den Ordner `backend/dist` kopiert.
 
+Kopiere anschließend den Ordner `backend`, ohne `node_modules` auf den Server in das Verzeichnis `~/backend`.
+
+## Projekt auf Server starten
+
+Alle Befehle werden im Ordner `~/backend` ausgeführt.
+
+Installiere zuerst die Abhängigkeiten.
+    
 ```shell
-npm install forever -g
+npm install
 ```
+
+## Im Hintergrund starten (empfohlen)
 
 ### App im Hintergrund starten
+
+Der Befehl `npm run bg:start` startet die App im Hintergrund. Die Shell kann geschlossen werden, ohne dass die App beendet wird.
+
 ```shell
-forever start ~/backend-server/index.js
+npm run bg:start
 ```
 
 ### App im Hintergrund NEU starten
+
+Der Befehl `npm run bg:restart` startet die App im Hintergrund neu und ist erforderlich, wenn Änderungen auf dem Server
+veröffentlicht wurden. Die Shell kann geschlossen werden, ohne dass die App beendet wird.
+
 ```shell
-forever restart ~/backend-server/index.js
+npm run bg:restart
 ```
 
 ### App im Hintergrund stoppen
+
+Der Befehl `npm run bg:stop` stoppt die App im Hintergrund.
+
 ```shell
-forever stop ~/backend-server/index.js
+npm run bg:stop
 ```
 
 ### Hintergrund Apps auflisten
 
+Der Befehl `npm run bg:status` listet alle Apps auf, die im Hintergrund laufen.
+
 ```shell
-forever list
+npm run bg:status
 ```
 
-In der Datei [nutzer.service.ts](../src/services/nutzer.service.ts) muss unter `apiURL` die IP-Adresse des Servers hinterlegt sein.
+### Manuell starten
+
+Mit dem Befehl `npm run backend` wird der Server **manuell** gestartet. Wird die Shell geschlossen, wird die App ebenfalls beendet.
 
 ## Routen hinzufügen
 

@@ -6,6 +6,13 @@
   "scripts": {
     "init": "npm install",
     "backend": "node index.js --port 3000",
+    "backend-prod": "node index.js",
+    "bg:start": "forever start --uid bundlechecker ./index.js",
+    "bg:stop": "forever stop bundlechecker",
+    "bg:restart": "forever restart bundlechecker",
+    "bg:logs": "forever logs bundlechecker",
+    "bg:clean": "forever cleanlogs bundlechecker",
+    "bg:status": "forever list",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
