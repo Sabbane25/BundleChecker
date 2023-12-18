@@ -49,7 +49,7 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*"); // erlaube anfragen
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type, x-access-token');
-  res.setHeader('Content-Security-Policy', 'default-src \'self\' data: \'unsafe-inline\' \'unsafe-eval\' fonts.googleapis.com fonts.gstatic.com cdn.jsdelivr.net *.amazonaws.com *.tarox.de *.alternate.de;');
+  res.setHeader('Content-Security-Policy', 'default-src \'self\' data: \'unsafe-inline\' \'unsafe-eval\' fonts.googleapis.com fonts.gstatic.com cdn.jsdelivr.net *.amazonaws.com *.tarox.de *.alternate.de;de 192.168.198.48:3000;');
   next();
 })
 
