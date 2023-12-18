@@ -9,11 +9,11 @@ npm run build
 
 Mit diesem Befehl wird das Projekt gebaut und in den Ordner `backend/dist` kopiert.
 
-Kopiere anschließend den Ordner `backend`, ohne `node_modules` auf den Server in das Verzeichnis `~/backend`.
+Kopiere anschließend den Ordner `backend`, ohne `node_modules` auf den Server in das Verzeichnis `~/backend-server`.
 
 ## Projekt auf Server starten
 
-Alle Befehle werden im Ordner `~/backend` ausgeführt.
+Alle Befehle werden im Ordner `~/backend-server` ausgeführt.
 
 Installiere zuerst die Abhängigkeiten.
     
@@ -31,6 +31,12 @@ Der Befehl `npm run bg:start` startet die App im Hintergrund. Die Shell kann ges
 npm run bg:start
 ```
 
+oder
+
+```shell
+ forever start ~/backend-server/index.js
+```
+
 ### App im Hintergrund NEU starten
 
 Der Befehl `npm run bg:restart` startet die App im Hintergrund neu und ist erforderlich, wenn Änderungen auf dem Server
@@ -40,12 +46,24 @@ veröffentlicht wurden. Die Shell kann geschlossen werden, ohne dass die App bee
 npm run bg:restart
 ```
 
+oder
+
+```shell
+ forever restart ~/backend-server/index.js
+```
+
 ### App im Hintergrund stoppen
 
 Der Befehl `npm run bg:stop` stoppt die App im Hintergrund.
 
 ```shell
 npm run bg:stop
+```
+
+oder
+
+```shell
+ forever stop ~/backend-server/index.js
 ```
 
 ### Hintergrund Apps auflisten
