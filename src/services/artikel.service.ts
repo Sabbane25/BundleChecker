@@ -12,10 +12,12 @@ import { Nutzer } from 'src/models/nutzer.model';
 import { Speicher } from 'src/models/speicher.model';
 import { apiConfig } from '../config/api.config';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class ArtikelService {
+
   private apiURL = `http://${apiConfig.HOST}:3000`; //API-URL vom Server
 
   constructor(private http: HttpClient) { }
@@ -243,6 +245,42 @@ export class ArtikelService {
 
   //cette variable retourne un true lorsque il y a au moins un elements lorsque le filtre est applique
   hatArtikel = true;
+
+  //Arnauld
+  //Nouvelle maniere d'acceder a des methodes
+  artikelliste: Array<{ kategorie: string, artikelListe: Array<{ shop1: Artikel, shop2: Artikel}>}> = [];
+  
+  private listeRamSubject: BehaviorSubject<Ram[]> = new BehaviorSubject<Ram[]>([]);
+  public listeRam$: Observable<Ram[]> = this.listeRamSubject.asObservable();
+
+  public gibListeRam2(shopId: number, kategorie: string): Observable<Ram[]> {
+    return this.http.get<any[]>(`${this.apiURL}/Artikel2/${kategorie}?shopId=${shopId}`).pipe(
+      map((data) => {
+        const listeRam = data.map((ramData: any) => new Ram(
+          ramData.kategorie,
+          ramData.preis,
+          ramData.shopID,
+          ramData.produktUrl,
+          ramData.bezeichnung,
+          ramData.lieferDatum,
+          ramData.marke,
+          ramData.image,
+          ramData.artikelnummer,
+          ramData.typ,
+          ramData.kapazitaet,
+          ramData.latency,
+          ramData.spannung
+        ));
+        this.listeRamSubject.next(listeRam); // Met à jour les abonnés avec la nouvelle valeur
+        return listeRam;
+      })
+    );
+  }
+
+  public getListeRam(): Ram[] {
+    return this.listeRamSubject.value; // Récupère la valeur actuelle sans s'abonner à l'observable
+  }
+
 }
 
 function of(arg0: never[]): any {

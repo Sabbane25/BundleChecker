@@ -10,15 +10,14 @@
 }
 
 .komponanten-div{
-  flex: 0 0 auto; /* Équivalent à flex-grow: 0; flex-shrink: 0; flex-basis: auto; */
+  flex: 0 0 auto;
   align-self: flex-start;
   margin: 0px;
   padding:0px;
   width: 63%;
-  /*box-shadow: 0px 0px 15px rgba(160, 160, 160, 0.6);*/
+
 }
 
-/*----- ITEM STYLE -------*/
 .komponanten-div .accordion{
   margin-bottom: 18px;
 }
@@ -39,6 +38,7 @@
   height: 100%;
   border-radius: 12px;
   padding-right: 12px;
+  color: #00528D;
 }
 
 .komponanten-div .accordion-item .accordion-header .accordion-button .item-img{
@@ -257,15 +257,20 @@
   padding: 4px;
   margin-bottom: 4px;
   border-bottom: 1px solid black;
+  display: flex;
 }
 
-.neu-konfig-div .container .artikel h4{
+.neu-konfig-div .container .artikel .Beschreibung h4{
   font-size: 14px;
 }
 
-.neu-konfig-div .container .artikel p{
+.neu-konfig-div .container .artikel .Beschreibung p{
   font-size: 11px;
   color: rgb(54, 54, 54);
+}
+
+.neu-konfig-div .container .artikel button{
+  background: transparent; border: none; padding: 0;
 }
 
 input:invalid {

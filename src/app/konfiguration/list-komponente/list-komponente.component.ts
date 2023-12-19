@@ -12,6 +12,7 @@ import { ArtikelService } from 'src/services/artikel.service';
 import { FilterService } from 'src/services/filter.service'; 
 import { Filter } from 'src/models/filter.models';
 import { Ram } from 'src/models/ram.model';
+import { RamService } from 'src/services/ram.service';
 
 @Component({
   selector: 'app-list-komponent',
@@ -21,35 +22,71 @@ import { Ram } from 'src/models/ram.model';
 
 export class ListKomponenteComponent implements AfterViewInit{
 
-  listeKategorie = ['CPU', 'Festplatte', 'Gehäuse', 'Grafikkarte','Mainboard', 'Netzteil', 'RAM'];
+  listeKategorie = ['CPU', 'Festplatte', 'Gehäuse', 'Grafikkarte','Mainboard', 'Netzteil', 'RAM']; // 
   artikelListe: Array<{ kategorie: string, shop1: Artikel, shop2: Artikel }> = [];
-  vergleichenenArtikellisteTest: Speicher[] = [];
 
+  artikellisteMap: Map<string, Array<{ shop1: Artikel; shop2: Artikel; }>> = new Map();
   artikelliste: Array<{ kategorie: string, artikelListe: Array<{ shop1: Artikel, shop2: Artikel}>}> = [];
   backupArtikelliste: Array<{ kategorie: string, artikelListe: Array<{ shop1: Artikel, shop2: Artikel}>}> = [];
 
   sortierteArtikelListe: Array<{ kategorie: string, liste1: Artikel[], liste2: Artikel[] }> = [];
   hinzugefuegteArtikel: Artikel[] = []; // Um Artikel im neu Kontiguration aufzulisten / zur Übersicht - Funktion
+  hinzugefuegteArtikel2: Array<{ shop1: Artikel, shop2: Artikel}> = [];
 
   // cette variable me sert de backup pour le filtre
   backupListeartikel: Array<{ shop1: Artikel, shop2: Artikel }> = [];
 
-  onButtonhinzufuegen(artikel: Artikel, artikel2: Artikel) {
-    this.hinzugefuegteArtikel.push(artikel);
-    this.hinzugefuegteArtikel.push(artikel2);
+  ladeMehrArtikel = 5; // sert la charge plus d'artikel par kategorie;
+  kannNochProdukteLaden = false; // Permet d'afficher le Button LADE MEHR PRODUKTE si il y' encore les produits a afficher
 
+  onButtonhinzufuegen2(artikelItem: { shop1: Artikel; shop2: Artikel; }) {
+    let hatschonArtikel = false;
+    if(this.hinzugefuegteArtikel2.length > 0){
+      for(let i = 0; i < this.hinzugefuegteArtikel2.length && hatschonArtikel === false; i++){
+        hatschonArtikel = artikelItem.shop1.kategorie === this.hinzugefuegteArtikel2[i].shop1.kategorie;
+      }
+      if(hatschonArtikel){
+        console.log('Können Sie nicht mehrere Produkte dieser Kategorie auswählen!');
+      }else{
+        this.hinzugefuegteArtikel2.push(artikelItem);
+      }
+    }else{
+      this.hinzugefuegteArtikel2.push(artikelItem);
+    }
   }
+
   zurUebersicht() {
-    this.artikelService.updateGuenstigstesArtikel(this.hinzugefuegteArtikel);
-    this.artikelService.updateSchnellstesArtikel(this.hinzugefuegteArtikel);
+    let hinzugefuegteArtikel: Artikel[] = [];
+    for(const artikel of this.hinzugefuegteArtikel2 ){
+      hinzugefuegteArtikel.push(artikel.shop1);
+      hinzugefuegteArtikel.push(artikel.shop2);
+    }
+    this.artikelService.updateGuenstigstesArtikel(hinzugefuegteArtikel);
+    this.artikelService.updateSchnellstesArtikel(hinzugefuegteArtikel);
+  }
+
+  //methode pour supprimer une produit dans la liste de zur Übersicht
+  loescheArtikel(urlArtikel: string){
+    const zuloeschendeArtikel = this.hinzugefuegteArtikel2.findIndex(item => item.shop1.produktUrl === urlArtikel);
+    if(zuloeschendeArtikel !== -1){ // ob zu löschender Artikel in Array existiert
+      this.hinzugefuegteArtikel2.splice(zuloeschendeArtikel, 1);
+    }
   }
 
   dataSubscription: Subscription; 
+  listeRam22: Ram[] = [];
   
-  constructor(private artikelService: ArtikelService, private filterService: FilterService) {}
+  constructor(
+    private artikelService: ArtikelService, 
+    private filterService: FilterService,
+    private ramService: RamService
+    ) {}
 
   ngOnInit(): void {
-   this.gibGleichteFestplatte();
+    this.listeRam22 = this.ramService.getListeRam();
+    console.log('listeram22', this.listeRam22);
+
+    this.gibGleichteFestplatte();
    this.gibGleichteRam();
    this.gibGleichteMainboard();
    this.gibGleichteNetzteil();
@@ -57,39 +94,91 @@ export class ListKomponenteComponent implements AfterViewInit{
    this.gibGleichteGehaeuse();
    this.gibGleichteCPU();
    this.maMethodeAsync();
+   console.log('ma methode: ', this.maMethodeAsync());
 
    this.dataSubscription = this.filterService.dataFilter$.subscribe(data => {
-    
-    //let backupListeartikel ;
+
     let artikelFilter: Filter = data;
-    this.vergleichenenArtikellisteTest = Speicher.filtrerParIntervallePrix(this.vergleichenenArtikellisteTest, 100, 150);
+    console.log(artikelFilter, 'recu dans le List komp');
 
     for(let artikel of this.artikelliste){
+
+      let gefilterteListe: Array<{ shop1: Artikel, shop2: Artikel }> = [] ;
+
       if(artikel.kategorie === artikelFilter.artikelKategorie && artikelFilter.brecheFilterAb){
         this.backupListeartikel = artikel.artikelListe;
         console.log('backup liste: ', this.backupListeartikel);
-        console.log('backup liste: ', this.backupListeartikel);
-        if(artikelFilter.checkbox.size != 0){
-          const gefilterteListe = Cpu.filterByMapCriteria(artikel.artikelListe, artikelFilter.checkbox);
+        if((artikelFilter.checkbox.size != 0 || artikelFilter.preis.von > 0 || artikelFilter.preis.bis > 0)){
+          if(artikel.kategorie === 'CPU'){
+            gefilterteListe = Cpu.filterByMapCriteria(artikel.artikelListe, artikelFilter);
+          }else if(artikel.kategorie === 'Festplatte'){
+            gefilterteListe = Speicher.filterByMapCriteria(artikel.artikelListe, artikelFilter);
+          }else if(artikel.kategorie === 'Gehäuse'){
+            gefilterteListe = Gehaeuse.filterByMapCriteria(artikel.artikelListe, artikelFilter);
+          }else if(artikel.kategorie === 'Grafikkarte'){
+            gefilterteListe = Grafikkarte.filterByMapCriteria(artikel.artikelListe, artikelFilter);
+          }else if(artikel.kategorie === 'Mainboard'){
+            gefilterteListe = Mainboard.filterByMapCriteria(artikel.artikelListe, artikelFilter);
+          }else if(artikel.kategorie === 'Netzteil'){
+            gefilterteListe = Netzteil.filterByMapCriteria(artikel.artikelListe, artikelFilter);
+          }else if(artikel.kategorie === 'RAM'){
+            gefilterteListe = Ram.filterByMapCriteria(artikel.artikelListe, artikelFilter);
+          }
+          
           console.log('gefilterteListe: ', gefilterteListe);
-          artikel.artikelListe = gefilterteListe;
+          //artikel.artikelListe = gefilterteListe;
+          this.zeigeArtikel2.artikelListe = gefilterteListe;
+          artikelFilter.filterZustant = true;
           if(gefilterteListe.length <= 0){
-            //this.hatArtikel = false;
-            console.log('laege: ',gefilterteListe.length )
             this.artikelService.hatArtikel = false;
           }
         }
       } else if(artikel.kategorie === artikelFilter.artikelKategorie && artikelFilter.brecheFilterAb === false){
-        if(this.backupListeartikel.length != 0){
-          artikel.artikelListe = this.backupListeartikel;
+        for(const artikelliste of this.backupArtikelliste){
+          if(artikelliste.kategorie === artikelFilter.artikelKategorie){
+            //artikel.artikelListe = artikelliste.artikelListe;
+            this.zeigeArtikel2.artikelListe = artikelliste.artikelListe;
+          }
         }
       }
     }
    });
   }
 
+
+  zeigeArtikel2: {kategorie: string, artikelListe: Array<{ shop1: Artikel, shop2: Artikel}>} = {kategorie: '',artikelListe: []};
+  gibMehereProdukte( kategorie: string): Array<{ shop1: Artikel, shop2: Artikel}>{
+    let listeArtikel: Array<{ shop1: Artikel, shop2: Artikel}> = [];
+    for(const artikel of this.artikelliste){
+      if(artikel.kategorie === kategorie){
+        for(let i = 0; i < this.ladeMehrArtikel && artikel.artikelListe.length > listeArtikel.length ; i++){
+          listeArtikel.push(artikel.artikelListe[i]);
+        }
+      }
+    }
+    if(this.ladeMehrArtikel - listeArtikel.length > 0){
+      console.log(this.ladeMehrArtikel, 'TEST TEST#####');
+      this.kannNochProdukteLaden = true;
+    }
+    return listeArtikel;
+  }
+
+  ladeProdukte(kategorie: string){
+    this.ladeMehrArtikel = this.ladeMehrArtikel + 5;
+    this.zeigeArtikel2.kategorie = kategorie;
+    this.zeigeArtikel2.artikelListe = this.gibMehereProdukte(kategorie);
+    console.log(this.ladeMehrArtikel);
+  }
+
+  setzeLadeMehrProdukteZurueck(kategorie: string){
+    this.ladeMehrArtikel = 5;
+    this.kannNochProdukteLaden = false;
+    this.zeigeArtikel2.kategorie = kategorie;
+    this.zeigeArtikel2.artikelListe = this.gibMehereProdukte(kategorie);
+  }
+
   ngAfterViewInit(): void {
-    
+    //this.ladeProdukte();
   }
 
   maMethodeAsync() {
@@ -227,6 +316,7 @@ export class ListKomponenteComponent implements AfterViewInit{
         }
       }
       this.artikelliste.push({ kategorie: 'Festplatte', artikelListe: vergleichenenArtikelliste.slice()});
+      this.backupArtikelliste.push({ kategorie: 'Festplatte', artikelListe: vergleichenenArtikelliste.slice()});
     }catch (error){
       console.error('Erreur während des La');
     }
@@ -253,6 +343,7 @@ export class ListKomponenteComponent implements AfterViewInit{
         }
       }
       this.artikelliste.push({ kategorie: 'RAM', artikelListe: vergleichenenArtikelliste.slice()});
+      this.backupArtikelliste.push({ kategorie: 'RAM', artikelListe: vergleichenenArtikelliste.slice()});
     }catch (error){
       console.error('Erreur während des La');
     }
@@ -279,6 +370,7 @@ export class ListKomponenteComponent implements AfterViewInit{
         }
       }
       this.artikelliste.push({ kategorie: 'Mainboard', artikelListe: vergleichenenArtikelliste.slice()});
+      this.backupArtikelliste.push({ kategorie: 'Mainboard', artikelListe: vergleichenenArtikelliste.slice()});
     }catch (error){
       console.error('Erreur während des La');
     }
@@ -305,6 +397,7 @@ export class ListKomponenteComponent implements AfterViewInit{
         }
       }
       this.artikelliste.push({ kategorie: 'Netzteil', artikelListe: vergleichenenArtikelliste.slice()});
+      this.backupArtikelliste.push({ kategorie: 'Netzteil', artikelListe: vergleichenenArtikelliste.slice()});
     }catch (error){
       console.error('Erreur während des La');
     }
@@ -332,6 +425,7 @@ export class ListKomponenteComponent implements AfterViewInit{
         }
       }
       this.artikelliste.push({ kategorie: 'Grafikkarte', artikelListe: vergleichenenArtikelliste.slice()});
+      this.backupArtikelliste.push({ kategorie: 'Grafikkarte', artikelListe: vergleichenenArtikelliste.slice()});
     }catch (error){
       console.error('Erreur während des La');
     }
@@ -360,7 +454,7 @@ export class ListKomponenteComponent implements AfterViewInit{
         }
       }
       this.artikelliste.push({ kategorie: 'Gehäuse', artikelListe: vergleichenenArtikelliste.slice()});
-
+      this.backupArtikelliste.push({ kategorie: 'Gehäuse', artikelListe: vergleichenenArtikelliste.slice()});
     }catch (error){
       console.error('Erreur während des La');
     }
@@ -373,7 +467,6 @@ export class ListKomponenteComponent implements AfterViewInit{
       const listeCPUShop2: Cpu[] = await this.ladeCPUData(2, 'CPU');
 
       console.log('liste pour faire le test de filtre: ',  listeCPUShop1);
-      //console.log('list filtreE ', Cpu.filter(listeCPUShop1));
 
       for(const cpuId1 of listeCPUShop1){
         let isGleichArikel = false; 
@@ -390,14 +483,18 @@ export class ListKomponenteComponent implements AfterViewInit{
           }
         }
       }
-      this.artikelliste.push({ kategorie: 'CPU', artikelListe: vergleichenenArtikelliste.slice()});
-
+      this.artikelliste.push({ kategorie: 'CPU', artikelListe: vergleichenenArtikelliste.slice()}); 
+      this.backupArtikelliste.push({ kategorie: 'CPU', artikelListe: vergleichenenArtikelliste.slice()});
+      this.artikellisteMap.set('CPU', vergleichenenArtikelliste.slice());
+      console.log(this.artikellisteMap, 'liste map')
     }catch (error){
-      console.error('Erreur während des La');
+      console.error('Erreur während des Ladens');
     }
   }
 
   ngOnDestroy(): void {
     this.dataSubscription.unsubscribe(); // Pour éviter les fuites de mémoire
   }
+
+  
 }

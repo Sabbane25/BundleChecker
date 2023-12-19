@@ -1,5 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ViewChildren, QueryList, ElementRef } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, ViewChild,  ElementRef } from '@angular/core';
 import { FilterService } from 'src/services/filter.service'; 
 import { Filter } from 'src/models/filter.models';
 import { Artikel } from 'src/models/artikel.model';
@@ -15,35 +14,44 @@ export class FilterComponent{
 
   constructor(private filterService: FilterService, private artikelService: ArtikelService ){}
 
-  listeKategorie: string[] = ['CPU', 'Festplatte', 'Gehaeuse', 'Grafikkarte','Mainboard', 'Netzteil', 'RAM'];
-  @Input() filterKategorie: string;
-  @Input() artikelliste: Array<{ kategorie: string, artikelListe: Array<{ shop1: Artikel, shop2: Artikel}>}>;
+  @Input() filterKategorie: string; // recuper la Kategorie d'article lors du clik sur un filtre
+  @Input() artikelliste: Array<{ kategorie: string, artikelListe: Array<{ shop1: Artikel, shop2: Artikel}>}>; // liste de tout
   @ViewChild('checkbox') checkbox!: ElementRef;
-  
+  @ViewChild('preis') preis!: ElementRef;
   checkboxValue: {[key:string]: boolean} = {};
-  vonInputValue: number;
-  bisInputValue: number;
-  checkboxMarke: boolean;
-  filterPreis: { von: number, bis: number };
+  vonInputValue: number; // input Preis von 
+  bisInputValue: number; // input Preis bis
   alleEingenschaftenListe: { kategorie: string, eingenschaftListe: { marke: String }[] }[] = [];
-  itemFilter: { kategorie: string, eingenschaftListe: { marke: String }[] }[] = [];
   isFilterSichtbar: boolean = false; //true wenn der Filter sichtbar ist 
   listeEigenschaften: { kategorie: string, liste: { typ: string; listeType: string[] }[] }[] = [];
-  selektierteCheckboxMap = new Map();
-  checkboxStatus: any[] = [];
-  checkboxElement: any;
-  hatArtikelGefunden: boolean = true;   // gib ine Meldung zurük, wenn es kein Artikel gefunden wird
+  selektierteCheckboxMap = new Map(); // die Map enthält alle 
+  checkboxStatus: any[] = []; //tableau pour recuperer toute 
+  hatArtikelGefunden: boolean = true;   // gib ine Meldung zurük, wenn es kein Artikel gefunden wird (Filter)
 
 
-  // permet de recuper les donnees qui viennent du checkbox du html
+
+  /**
+   * permet de recuper les donnees qui viennent du checkbox du Cote HTML. Elle est appele cote HTML
+   * @param eigenschaftTyp objettype zB: Marke, Preis, Typ, Kapazität ...
+   * @param eigenschaftValue Objektvalue 
+   * @param event 
+   */
   sedeListeItem(eigenschaftTyp: string, eigenschaftValue: string, event: any): void{
-    this.checkboxStatus.push(event.currentTarget);
-    this.selektierteCheckboxMap.set(eigenschaftTyp, eigenschaftValue);
+    const checkboxChecked = (event.target as HTMLInputElement);
+    this.checkboxStatus.push(checkboxChecked);
+
+    console.log(eigenschaftTyp, 'Gehäuse');
+    
+    if(this.selektierteCheckboxMap.has(eigenschaftTyp)){
+      this.selektierteCheckboxMap.delete(eigenschaftTyp);
+    }else{
+      this.selektierteCheckboxMap.set(eigenschaftTyp, eigenschaftValue);
+    }
   }
 
   /**
    *  la methode s'execute lors du click sur le bouton Bestätigen. Elle permet de recuper 
-   *  les attributs qu'on souhaite filtrer et l'envoi vers le composant Konfiguration 
+   *  les attributs qu'on souhaite filtrer et l'envoi vers le composant Konfiguration pour executer le Filtre
    */
   filterErgebniss() {
     let artikelFilter: Filter = {
@@ -51,28 +59,37 @@ export class FilterComponent{
       preis : {von: this.vonInputValue, bis: this.bisInputValue},
       checkbox: this.selektierteCheckboxMap,
       brecheFilterAb: true,
+      filterZustant: false,
     }
     this.filterService.sendeListeKomponenten(artikelFilter);
+
+    artikelFilter.checkbox.clear();
+
     this.hatArtikelGefunden = this.artikelService.hatArtikel;
-    console.log('hatArtikel: ', this.hatArtikelGefunden);
   }
 
-  // 
+  /**
+   * Die Funktion breche der Filter ab und setze die betroffene Artikelliste zurück und
+   * entleeren auch die Kästchen (Chekbox)
+   */
   filterAbbrechen(){
-    this.selektierteCheckboxMap.clear();
+    this.selektierteCheckboxMap.clear(); 
+    this.vonInputValue = 0;
+    this.bisInputValue = 0;
     this.hatArtikelGefunden = true;
+    
     let artikelFilter: Filter = {
       artikelKategorie : this.filterKategorie,
-      preis : {von: this.vonInputValue, bis: this.bisInputValue},
+      preis : {von: 0, bis: 0},
       checkbox: this.selektierteCheckboxMap,
       brecheFilterAb: false,
+      filterZustant: false,
     }
     this.filterService.sendeListeKomponenten(artikelFilter);
 
-    for(let event of this.checkboxStatus){
-      console.log(event, 'value vor');
-      event.checked = false;
-      console.log(event.cheched, 'value nach');
+    // entleere die Kästchen
+    for(let checkboxItem of this.checkboxStatus){
+      checkboxItem.checked = false;
     }
   }
 
@@ -109,21 +126,16 @@ export class FilterComponent{
     this.ladeFilterkriterien();
   }
 
-  ngAfterViewInit() {
-    // Maintenant, 'checkboxes' contient une liste de toutes les occurrences d'éléments de checkbox
-    // Vous pouvez y accéder avec this.checkboxes.toArray()
-  }
-
-  // Cette methode permet de recuper les differents criterer de filtre pour chaque kategorie d'article
+  // Cette methode permet de recuper les differents critere de filtre pour chaque kategorie d'article
   sortiereFilterkriterien(){
     let listeEigenschaften: { kategorie: string, liste: { typ: string; listeType: string[] }[] }[] = [];
 
 
     //CPU
     let filterCPU = [
+      { typ: 'anzahlKerne', listeType: this.gibListeEigenschafte('CPU','anzahlkerne') },
       { typ: 'marke', listeType: this.gibListeArikelMarke('CPU') },
       { typ: 'typ', listeType: this.gibListeEigenschafte('CPU','typ') },
-      { typ: 'anzahlKerne', listeType: this.gibListeEigenschafte('CPU','anzahlkerne') },
       { typ: 'taktfrequenz', listeType: this.gibListeEigenschafte('CPU','taktfrequenz') },
     ];
 
@@ -174,7 +186,7 @@ export class FilterComponent{
       { typ: 'spannung', listeType: this.gibListeEigenschafte('RAM','spannung') }
     ];
     
-    listeEigenschaften.push( { kategorie: 'CPU', liste: filterCPU} );
+    listeEigenschaften.push( { kategorie: 'CPU', liste: filterCPU.sort()} );
     listeEigenschaften.push( { kategorie: 'Festplatte', liste: filterFestplatte} );
     listeEigenschaften.push( { kategorie: 'Mainboard', liste: filterMainboard } );
     listeEigenschaften.push( { kategorie: 'Gehäuse', liste: filterGehäuse } );
@@ -192,10 +204,8 @@ export class FilterComponent{
     }
   }
 
-  //submitForm(formData: any): void {
-  submitForm(formData: NgForm): void {
-    // Traitez les données du formulaire ici
-    //console.log('ouput <input>-tag', formData);
-    //console.log('Valeur du champ username :');
+  submitForm(arg0: any) {
+    console.log('')
   }
+
 }

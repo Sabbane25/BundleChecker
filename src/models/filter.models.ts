@@ -3,4 +3,5 @@ export interface Filter {
     preis: { von: number, bis: number };
     checkbox: Map<string, string>;
     brecheFilterAb: boolean;
+    filterZustant:boolean; // si le filtre a deja ete utilise ou pas
   }

@@ -42,7 +42,7 @@ module.exports = function(app, connection) {
 
   app.get('/Artikel2/:artikel', (req, res) => {
     const tableArtikel = req.params.artikel;
-    const shopId = req.query.shopId || 2; // Valeur par dÃ©faut Ã  2 si le paramÃ¨tre n'est pas fourni
+    const shopId = req.query.shopId || 2;
 
     const query = `
       SELECT *
@@ -63,23 +63,22 @@ module.exports = function(app, connection) {
   // um Eigenschaften jeder Artikel zu bekommen.
   app.get('/eigenschaften/:table/:marke', (req, res) => {
     const tableName = req.params.table;
-    const markeValue = req.params.marke; // Nouveau paramÃ¨tre
+    const markeValue = req.params.marke; 
 
     const query = `
     SELECT DISTINCT ${tableName}.${markeValue}
     FROM ${tableName}
-    JOIN Artikel ON ${tableName}.url = Artikel.produktUrl`; // Ajout d'une condition WHERE pour le paramÃ¨tre "marke"
+    JOIN Artikel ON ${tableName}.url = Artikel.produktUrl`; 
 
     connection.query(query, [markeValue], (error, results) => {
       if (error) {
-        // En cas d'erreur SQL, renvoyer un message d'erreur avec le code 500 (Erreur interne du serveur)
         return res.status(500).json({ error: 'Erreur interne du serveur lors de l\'exÃ©cution de la requÃªte SQL.' });
       }
       res.json(results);
     });
   });
 
-  // gib alle Artikelmarke einer Marke zurÃ¼k
+  // gib eine Liste von aller Marke einer Kategorie zurueck
   app.get('/marke/:table', (req, res) => {
     const tableName = req.params.table;
     const query2 = `SELECT * FROM ${tableName}`;

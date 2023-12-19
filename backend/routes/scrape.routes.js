@@ -1,5 +1,6 @@
 /**
  * Scraping FutureX
+ * Arnauld Mba Kuitche
  *
  * @param app
  * @param connection

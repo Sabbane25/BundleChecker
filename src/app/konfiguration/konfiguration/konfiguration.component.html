@@ -1,17 +1,31 @@
+<!--Mba Kuitche, Arnauld -->
+<!--übergeordnete HTML-Komponente der Komponentenliste(PC - Konfiguration) und der Übersicht(Übersicht) -->
 <h2 class="text-center">PC KONFIGURATION</h2>
-
 <div class="">
+    <!--Dieses Div enthält die beiden verschiedenen Buttons, um von einer Komponente zur anderen zu wechseln. (liste-kompoente und uebersicht)-->
     <div class="d-flex">
-        <div class="p-2 me-2 flex-fill text-center border rounded-4 custom-bg-color" (click)="zuKomponenten()" [style.backgroundColor]="gitFarbe ? 'white' : '#00528D'"> Komponenten</div>
-        <div class="p-2 ms-2 flex-fill text-center border rounded-4 custom-bg-color" (click)="zuUebersicht()" [style.backgroundColor]="gitFarbe ? '#00528D' : 'white'"> Übersicht</div>
+        <div class="p-2 me-2 flex-fill text-center border rounded-4 custom-bg-color" 
+            (click)="zuKomponenten()" [style.backgroundColor]="gibFarbe ? 'white' : '#00528D'"
+            [style.color]="gibFarbe ? '#00528D' : 'white'"> 
+                Komponenten
+        </div>
+        <div class="p-2 ms-2 flex-fill text-center border rounded-4 custom-bg-color" 
+            (click)="zuUebersicht()" 
+            [style.backgroundColor]="gibFarbe ? '#00528D' : 'white'"
+            [style.color]="gibFarbe ? 'white' : '#00528D'"> 
+                Übersicht
+        </div>
     </div>
 
-    <div *ngIf="zeigeListKomponenten">
+    <!--<div *ngIf="zeigeListKomponenten">
         <app-list-komponent></app-list-komponent>
     </div>
 
     <div *ngIf="zeigeListUebersicht">
         <app-uebersicht></app-uebersicht>
-    </div>
+    </div>-->
+    <!--Import von Composant -->
+    <app-list-komponent *ngIf="zeigeListKomponenten" [hidden]="!zeigeListKomponenten" ></app-list-komponent>
+    <app-uebersicht *ngIf="!zeigeListKomponenten" [hidden]="zeigeListKomponenten" ></app-uebersicht>
 </div>
 
