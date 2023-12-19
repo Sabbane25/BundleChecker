@@ -13,7 +13,7 @@
             {{kategorie}}
           </button>
         </h2>
-        <!-- Hier wird alle Produkte einer Kategorie angezeigt. Und ein geeignetes Filter dazu -->
+        <!-- Hier wird alle Produkte einer Kategorie angezeigt. Und ein geeignetes Filter dafür -->
         <div [id]="'flush-collapseTwo' + kategorie" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
           <div class="accordion-body">
             <app-filter [filterKategorie]="kategorie" [artikelliste]="artikelliste"></app-filter>
@@ -30,7 +30,7 @@
                     <p> <span class="futureX">{{ artikelItem.shop2.shopID === 1 ? 'Alternate' : 'Future-X' }}</span> : <span class="shoppreis">{{ artikelItem.shop2.preis }} €</span> </p>
                   </div>
                   <div class="col">
-                    <button (click)="onButtonhinzufuegen2(artikelItem)">HINZUFÜGEN</button>
+                    <button (click)="onButtonhinzufuegen(artikelItem)">HINZUFÜGEN</button>
                   </div>
                 </div>
               </div>

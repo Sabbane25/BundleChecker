@@ -21,7 +21,6 @@ module.exports = function(app, connection) {
   // Get-Endpunk, um eine Liste von aller Artikel zu erhalten(Arnauld)
   app.get('/Artikel/:artikel', (req, res) => {
     const tableArtikel = req.params.artikel;
-    const query2 = `SELECT A.*, T.* FROM Artikel A, ${tableArtikel} T WHERE A.Url = T.Url`
 
     const query =`
         SELECT *
@@ -32,8 +31,8 @@ module.exports = function(app, connection) {
 
     connection.query(query, (error, results) => {
       if (error){
-        console.error('Erreur lors de l\'execution de la requete :', error);
-        res.status(500).json({ error: 'Erreur lors de la rÃ©cupÃ©ration des donnÃ©es' });
+        console.error('Fehler bei der Ausführung der Anfrage', error);
+        res.status(500).json({ error: 'Fehler beim Abrufen der Daten' });
       } else {
         res.json(results);
       }
@@ -52,8 +51,8 @@ module.exports = function(app, connection) {
 
     connection.query(query, [shopId], (error, results) => {
       if (error){
-        console.error('Erreur lors de l\'execution de la requete :', error);
-        res.status(500).json({ error: 'Erreur lors de la rÃ©cupÃ©ration des donnÃ©es' });
+        console.error('Fehler bei der Ausführung der Anfrage', error);
+        res.status(500).json({ error: 'Fehler beim Abrufen der Daten' });
       } else {
         res.json(results);
       }
@@ -72,7 +71,7 @@ module.exports = function(app, connection) {
 
     connection.query(query, [markeValue], (error, results) => {
       if (error) {
-        return res.status(500).json({ error: 'Erreur interne du serveur lors de l\'exÃ©cution de la requÃªte SQL.' });
+        return res.status(500).json({ error: 'Fehler bei der Ausführung der Anfrage -- Eigenschaften' });
       }
       res.json(results);
     });

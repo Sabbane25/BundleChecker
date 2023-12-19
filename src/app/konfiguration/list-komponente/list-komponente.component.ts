@@ -22,31 +22,31 @@ import { RamService } from 'src/services/ram.service';
 
 export class ListKomponenteComponent implements AfterViewInit{
 
-  listeKategorie = ['CPU', 'Festplatte', 'Gehäuse', 'Grafikkarte','Mainboard', 'Netzteil', 'RAM']; // 
-  artikelListe: Array<{ kategorie: string, shop1: Artikel, shop2: Artikel }> = [];
+  listeKategorie = ['CPU', 'Festplatte', 'Gehäuse', 'Grafikkarte','Mainboard', 'Netzteil', 'RAM']; // Liste von Kategorien
+  artikelliste: Array<{ kategorie: string, artikelListe: Array<{ shop1: Artikel, shop2: Artikel}>}> = []; // Liste von allen Produkten
+  backupArtikelliste: Array<{ kategorie: string, artikelListe: Array<{ shop1: Artikel, shop2: Artikel}>}> = []; // Backup Liste von allen Produkten
 
-  artikellisteMap: Map<string, Array<{ shop1: Artikel; shop2: Artikel; }>> = new Map();
-  artikelliste: Array<{ kategorie: string, artikelListe: Array<{ shop1: Artikel, shop2: Artikel}>}> = [];
-  backupArtikelliste: Array<{ kategorie: string, artikelListe: Array<{ shop1: Artikel, shop2: Artikel}>}> = [];
+  hinzugefuegteArtikel: Artikel[] = []; // um selekArtikel zu speichern, die in Übersicht geschickt werden sollen
+  hinzugefuegteArtikel2: Array<{ shop1: Artikel, shop2: Artikel}> = []; // Variable zum Speichern der Artikel, die an die Übersicht gesendet werden sollen
 
-  sortierteArtikelListe: Array<{ kategorie: string, liste1: Artikel[], liste2: Artikel[] }> = [];
-  hinzugefuegteArtikel: Artikel[] = []; // Um Artikel im neu Kontiguration aufzulisten / zur Übersicht - Funktion
-  hinzugefuegteArtikel2: Array<{ shop1: Artikel, shop2: Artikel}> = [];
+  ladeMehrArtikel = 5; // dient als Variable, um die Anzahl der Artikel zu erhöhen, die geladen werden.
+  kannNochProdukteLaden = false; // Ermöglicht die Anzeige des Buttons LADE MEHR PRODUKTE, wenn es noch Produkte zum Anzeigen gibt.
 
-  // cette variable me sert de backup pour le filtre
-  backupListeartikel: Array<{ shop1: Artikel, shop2: Artikel }> = [];
+  dataSubscription: Subscription; 
 
-  ladeMehrArtikel = 5; // sert la charge plus d'artikel par kategorie;
-  kannNochProdukteLaden = false; // Permet d'afficher le Button LADE MEHR PRODUKTE si il y' encore les produits a afficher
-
-  onButtonhinzufuegen2(artikelItem: { shop1: Artikel; shop2: Artikel; }) {
+  /**
+   * Diese Methode fügt einen Artikel zur Liste der hinzugefügten Artikel hinzu, wenn er noch nicht vorhanden ist.
+   * Andernfalls wird eine Meldung ausgegeben, dass mehrere Produkte derselben Kategorie nicht ausgewählt werden können.
+   * @param artikelItem Ein Objekt, das Shop1- und Shop2-Artikel enthält.
+   */
+  onButtonhinzufuegen(artikelItem: { shop1: Artikel; shop2: Artikel; }) {
     let hatschonArtikel = false;
     if(this.hinzugefuegteArtikel2.length > 0){
       for(let i = 0; i < this.hinzugefuegteArtikel2.length && hatschonArtikel === false; i++){
         hatschonArtikel = artikelItem.shop1.kategorie === this.hinzugefuegteArtikel2[i].shop1.kategorie;
       }
       if(hatschonArtikel){
-        console.log('Können Sie nicht mehrere Produkte dieser Kategorie auswählen!');
+        console.log('Mehrere Produkte derselben Kategorie könen nicht ausgewählt werden!');
       }else{
         this.hinzugefuegteArtikel2.push(artikelItem);
       }
@@ -55,6 +55,10 @@ export class ListKomponenteComponent implements AfterViewInit{
     }
   }
 
+  /**
+   * diese methode sendet die vom benutzer gewählte artikelliste aus der liste-komponente 
+   * an die uebersicht-komponente
+   */
   zurUebersicht() {
     let hinzugefuegteArtikel: Artikel[] = [];
     for(const artikel of this.hinzugefuegteArtikel2 ){
@@ -65,16 +69,21 @@ export class ListKomponenteComponent implements AfterViewInit{
     this.artikelService.updateSchnellstesArtikel(hinzugefuegteArtikel);
   }
 
-  //methode pour supprimer une produit dans la liste de zur Übersicht
+  /**
+   * Diese Methode sucht nach einem Artikel mit der angegebenen Produkt-URL in der Liste der hinzugefügten Artikel
+   * und entfernt ihn, falls vorhanden.
+   * @param urlArtikel Die Produkt-URL des zu löschenden Artikels.
+   */
   loescheArtikel(urlArtikel: string){
+    // Finde den Index des zu löschenden Artikels anhand der Produkt-URL
     const zuloeschendeArtikel = this.hinzugefuegteArtikel2.findIndex(item => item.shop1.produktUrl === urlArtikel);
-    if(zuloeschendeArtikel !== -1){ // ob zu löschender Artikel in Array existiert
+
+    // Überprüfe, ob der zu löschende Artikel in der Liste existiert
+    if(zuloeschendeArtikel !== -1){ 
+      // Lösche den Artikel aus der Liste der hinzugefügten Artikel
       this.hinzugefuegteArtikel2.splice(zuloeschendeArtikel, 1);
     }
   }
-
-  dataSubscription: Subscription; 
-  listeRam22: Ram[] = [];
   
   constructor(
     private artikelService: ArtikelService, 
@@ -83,81 +92,98 @@ export class ListKomponenteComponent implements AfterViewInit{
     ) {}
 
   ngOnInit(): void {
-    this.listeRam22 = this.ramService.getListeRam();
-    console.log('listeram22', this.listeRam22);
-
     this.gibGleichteFestplatte();
-   this.gibGleichteRam();
-   this.gibGleichteMainboard();
-   this.gibGleichteNetzteil();
-   this.gibGleichteGrafikkarte();
-   this.gibGleichteGehaeuse();
-   this.gibGleichteCPU();
-   this.maMethodeAsync();
-   console.log('ma methode: ', this.maMethodeAsync());
+    this.gibGleichteRam();
+    this.gibGleichteMainboard();
+    this.gibGleichteNetzteil();
+    this.gibGleichteGrafikkarte();
+    this.gibGleichteGehaeuse();
+    this.gibGleichteCPU();
+    this.filterArtikel();
+  }
 
-   this.dataSubscription = this.filterService.dataFilter$.subscribe(data => {
+  /**
+  * Diese Methode abonniert Änderungen im FilterService und passt die Anzeige der Artikel entsprechend an.
+  * Das Ziel ist, die Artikel nach den vom Nutzer eingegebenen Kriterien zu filtern.
+  */
+  filterArtikel(){
+    // Abonnement auf die Datenänderungen im FilterService
+    this.dataSubscription = this.filterService.dataFilter$.subscribe(data => {
 
-    let artikelFilter: Filter = data;
-    console.log(artikelFilter, 'recu dans le List komp');
+       // Extrahiere die Filterdaten (Kommt aus der Filter in list-komponente)
+      let artikelFilter: Filter = data;
+  
+      for(let artikel of this.artikelliste){
+        // Liste für gefilterte Artikel initialisieren
+        let gefilterteListe: Array<{ shop1: Artikel, shop2: Artikel }> = [] ;
+  
+        // Überprüfe, ob die Kategorie des aktuellen Artikels mit der gefilterten Kategorie übereinstimmt und der Filter nicht abgebrochen wurde
+        if(artikel.kategorie === artikelFilter.artikelKategorie && artikelFilter.brecheFilterAb){
+          // Überprüfe, ob Filterkriterien vorhanden sind (Checkboxen, Preis)
+          if((artikelFilter.checkbox.size != 0 || artikelFilter.preis.von > 0 || artikelFilter.preis.bis > 0)){
+            // Filtere die Liste basierend auf der Artikelkategorie
+            if(artikel.kategorie === 'CPU'){
+              gefilterteListe = Cpu.filterByMapCriteria(artikel.artikelListe, artikelFilter);
+            }else if(artikel.kategorie === 'Festplatte'){
+              gefilterteListe = Speicher.filterByMapCriteria(artikel.artikelListe, artikelFilter);
+            }else if(artikel.kategorie === 'Gehäuse'){
+              gefilterteListe = Gehaeuse.filterByMapCriteria(artikel.artikelListe, artikelFilter);
+            }else if(artikel.kategorie === 'Grafikkarte'){
+              gefilterteListe = Grafikkarte.filterByMapCriteria(artikel.artikelListe, artikelFilter);
+            }else if(artikel.kategorie === 'Mainboard'){
+              gefilterteListe = Mainboard.filterByMapCriteria(artikel.artikelListe, artikelFilter);
+            }else if(artikel.kategorie === 'Netzteil'){
+              gefilterteListe = Netzteil.filterByMapCriteria(artikel.artikelListe, artikelFilter);
+            }else if(artikel.kategorie === 'RAM'){
+              gefilterteListe = Ram.filterByMapCriteria(artikel.artikelListe, artikelFilter);
+            }
+            
+            // Ausgabe der Anzahl der Treffer
+            console.log('Anzahl Treffer: ', gefilterteListe.length);
 
-    for(let artikel of this.artikelliste){
+            // Aktualisiere die Anzeige der Artikel
+            this.zeigeArtikel2.artikelListe = gefilterteListe;
+            artikelFilter.filterZustant = true;
 
-      let gefilterteListe: Array<{ shop1: Artikel, shop2: Artikel }> = [] ;
-
-      if(artikel.kategorie === artikelFilter.artikelKategorie && artikelFilter.brecheFilterAb){
-        this.backupListeartikel = artikel.artikelListe;
-        console.log('backup liste: ', this.backupListeartikel);
-        if((artikelFilter.checkbox.size != 0 || artikelFilter.preis.von > 0 || artikelFilter.preis.bis > 0)){
-          if(artikel.kategorie === 'CPU'){
-            gefilterteListe = Cpu.filterByMapCriteria(artikel.artikelListe, artikelFilter);
-          }else if(artikel.kategorie === 'Festplatte'){
-            gefilterteListe = Speicher.filterByMapCriteria(artikel.artikelListe, artikelFilter);
-          }else if(artikel.kategorie === 'Gehäuse'){
-            gefilterteListe = Gehaeuse.filterByMapCriteria(artikel.artikelListe, artikelFilter);
-          }else if(artikel.kategorie === 'Grafikkarte'){
-            gefilterteListe = Grafikkarte.filterByMapCriteria(artikel.artikelListe, artikelFilter);
-          }else if(artikel.kategorie === 'Mainboard'){
-            gefilterteListe = Mainboard.filterByMapCriteria(artikel.artikelListe, artikelFilter);
-          }else if(artikel.kategorie === 'Netzteil'){
-            gefilterteListe = Netzteil.filterByMapCriteria(artikel.artikelListe, artikelFilter);
-          }else if(artikel.kategorie === 'RAM'){
-            gefilterteListe = Ram.filterByMapCriteria(artikel.artikelListe, artikelFilter);
+            // Überprüfe, ob keine Treffer vorhanden sind
+            if(gefilterteListe.length <= 0){
+              this.artikelService.hatArtikel = false;
+            }
           }
-          
-          console.log('gefilterteListe: ', gefilterteListe);
-          //artikel.artikelListe = gefilterteListe;
-          this.zeigeArtikel2.artikelListe = gefilterteListe;
-          artikelFilter.filterZustant = true;
-          if(gefilterteListe.length <= 0){
-            this.artikelService.hatArtikel = false;
-          }
-        }
-      } else if(artikel.kategorie === artikelFilter.artikelKategorie && artikelFilter.brecheFilterAb === false){
-        for(const artikelliste of this.backupArtikelliste){
-          if(artikelliste.kategorie === artikelFilter.artikelKategorie){
-            //artikel.artikelListe = artikelliste.artikelListe;
-            this.zeigeArtikel2.artikelListe = artikelliste.artikelListe;
+        } else if(artikel.kategorie === artikelFilter.artikelKategorie && artikelFilter.brecheFilterAb === false){
+          // Wenn der Filter nicht abgebrochen wurde, setze die Anzeige auf die ursprüngliche Liste zurück
+          for(const artikelliste of this.backupArtikelliste){
+            if(artikelliste.kategorie === artikelFilter.artikelKategorie){
+              this.zeigeArtikel2.artikelListe = artikelliste.artikelListe;
+            }
           }
         }
       }
-    }
-   });
+     });
   }
 
-
   zeigeArtikel2: {kategorie: string, artikelListe: Array<{ shop1: Artikel, shop2: Artikel}>} = {kategorie: '',artikelListe: []};
+  /**
+   * Diese Methode gibt eine Liste von Artikeln aus der Artikelliste zurück, basierend auf der angegebenen Kategorie.
+   * @param kategorie Die Kategorie, für die die Artikel abgerufen werden sollen.
+   * @returns Eine Liste von Artikeln als Array von Objekten mit Shop1- und Shop2-Artikeln.
+   */
   gibMehereProdukte( kategorie: string): Array<{ shop1: Artikel, shop2: Artikel}>{
-    let listeArtikel: Array<{ shop1: Artikel, shop2: Artikel}> = [];
+    let listeArtikel: Array<{ shop1: Artikel, shop2: Artikel}> = []; // Initialisiere die Liste der Artikel
+
+    // Iteriere durch die Artikelliste
     for(const artikel of this.artikelliste){
+      // Überprüfe, ob die Kategorie übereinstimmt
       if(artikel.kategorie === kategorie){
         for(let i = 0; i < this.ladeMehrArtikel && artikel.artikelListe.length > listeArtikel.length ; i++){
           listeArtikel.push(artikel.artikelListe[i]);
         }
       }
     }
+
+    // Überprüfe, ob noch mehr Artikel geladen werden können
     if(this.ladeMehrArtikel - listeArtikel.length > 0){
-      console.log(this.ladeMehrArtikel, 'TEST TEST#####');
+      console.log(this.ladeMehrArtikel, 'Kein Produkte mehr');
       this.kannNochProdukteLaden = true;
     }
     return listeArtikel;
@@ -178,36 +204,24 @@ export class ListKomponenteComponent implements AfterViewInit{
   }
 
   ngAfterViewInit(): void {
-    //this.ladeProdukte();
   }
 
-  maMethodeAsync() {
-    if (this.artikelliste instanceof Observable) {
-      // Si artikelliste est un Observable
-      this.artikelliste.subscribe((data) => {
-        console.log('Données de l\'Observable :', data);
-        this.itererSurListe(data);
-      });
-    } else {
-      // Si artikelliste n'est pas un Observable (par exemple, c'est une liste normale)
-      this.itererSurListe(this.artikelliste);
-    }
-  }
-  
-  itererSurListe(liste: any[]) {
-    console.log('A liste', liste);
-  
-    liste.forEach(kategorie => {
-      console.log(kategorie);
-    });
-  }
-  
-  rufeDataService<T>(shopId: number, kategorie: string): Promise<T[]> {
-    return new Promise((resolve, reject) => {
-      this.artikelService.gibListeFestplatte(shopId, kategorie).subscribe(
+ /**
+ * Diese generische Methode ermöglicht das Abrufen von Daten durch Übergabe einer Funktion,
+ * die eine Liste von Werten vom Typ T zurückgibt.
+ * @param gibListeFn Die Funktion, die die Daten abruft (shopId, kategorie) => Observable<T[]>
+ * @param shopId Die ID des Shops, für den die Daten abgerufen werden sollen.
+ * @param kategorie Die Kategorie, für die die Daten abgerufen werden sollen.
+ * @returns Ein Promise, das eine Liste von Werten vom Typ T enthält.
+ */
+  rufeDataService2<T>(gibListeFn: (shopId: number, kategorie: string) => Observable<T[]>, shopId: number, kategorie: string): Promise<T[]> {
+    return new Promise<T[]>((resolve, reject) => {
+      // Die übergebene Funktion aufrufen und auf das Observable subscriben
+      gibListeFn(shopId, kategorie).subscribe(
         (dataList) => {
-          resolve(dataList as T[]);
+          resolve(dataList);
         },
+        // Im Fehlerfall das Promise mit dem Fehler ablehnen
         (error) => {
           reject(error);
         }
@@ -215,93 +229,12 @@ export class ListKomponenteComponent implements AfterViewInit{
     });
   }
 
-  ladeFestplatteData(shopId: number, kategorie: string): Promise<Speicher[]> {
-    return this.rufeDataService(shopId, kategorie);
-  }
-
-  ladeRamData(shopId: number, kategorie: string): Promise<Ram[]> {
-    return new Promise((resolve, reject) => {
-      this.artikelService.gibListeRam(shopId, kategorie).subscribe(
-        (festplatteListe) => {
-          resolve(festplatteListe);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
-    });
-  }
-
-  ladeMainboardData(shopId: number, kategorie: string): Promise<Mainboard[]> {
-    return new Promise((resolve, reject) => {
-      this.artikelService.gibListeMainboard(shopId, kategorie).subscribe(
-        (mainboardListe) => {
-          resolve(mainboardListe);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
-    });
-  }
-
-  ladeNetzteilData(shopId: number, kategorie: string): Promise<Netzteil[]> {
-    return new Promise((resolve, reject) => {
-      this.artikelService.gibListeNetzteil(shopId, kategorie).subscribe(
-        (mainboardListe) => {
-          resolve(mainboardListe);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
-    });
-  }
-
-  ladeGrafikkarteData(shopId: number, kategorie: string): Promise<Grafikkarte[]> {
-    return new Promise((resolve, reject) => {
-      this.artikelService.gibListeGrafikkarte(shopId, kategorie).subscribe(
-        (mainboardListe) => {
-          resolve(mainboardListe);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
-    });
-  }
-
-  ladeGehaeuseData(shopId: number, kategorie: string): Promise<Gehaeuse[]> {
-    return new Promise((resolve, reject) => {
-      this.artikelService.gibListeGehaeuse(shopId, kategorie).subscribe(
-        (gehaeuseListe) => {
-          resolve(gehaeuseListe);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
-    });
-  }
-
-  ladeCPUData(shopId: number, kategorie: string): Promise<Cpu[]> {
-    return new Promise((resolve, reject) => {
-      this.artikelService.gibListeCPU(shopId, kategorie).subscribe(
-        (gehaeuseListe) => {
-          resolve(gehaeuseListe);
-        },
-        (error) => {
-          reject(error);
-        }
-      );
-    });
-  }
-
+  // Methode, um gleiche Festplatten zu vergleichen
   async gibGleichteFestplatte() {
     try{
       let vergleichenenArtikelliste: Array<{ shop1: Artikel, shop2: Artikel}> = [];
-      const listeFestplatteShop1: Speicher[] = await this.ladeFestplatteData(1, 'Festplatte');
-      const listeFestplatteShop2: Speicher[] = await this.ladeFestplatteData(2, 'Festplatte');
+      const listeFestplatteShop1: Speicher[] = await this.rufeDataService2<Speicher>(this.artikelService.gibListeFestplatte.bind(this.artikelService), 1, 'Festplatte');
+      const listeFestplatteShop2: Speicher[] = await this.rufeDataService2<Speicher>(this.artikelService.gibListeFestplatte.bind(this.artikelService), 2, 'Festplatte');
 
       for(const festplatteId1 of listeFestplatteShop1){
         let isGleichArikel = false; 
@@ -322,11 +255,12 @@ export class ListKomponenteComponent implements AfterViewInit{
     }
   }
 
+  // Methode, um gleiche RAM zu vergleichen
   async gibGleichteRam() {
     try{
       let vergleichenenArtikelliste: Array<{ shop1: Artikel, shop2: Artikel}> = [];
-      const listeRamShop1: Ram[] = await this.ladeRamData(1, 'RAM');
-      const listeRamShop2: Ram[] = await this.ladeRamData(2, 'RAM');
+      const listeRamShop1: Ram[] = await this.rufeDataService2<Ram>(this.artikelService.gibListeRam.bind(this.artikelService), 1, 'RAM');
+      const listeRamShop2: Ram[] = await this.rufeDataService2<Ram>(this.artikelService.gibListeRam.bind(this.artikelService), 2, 'RAM');
 
       for(const festplatteId1 of listeRamShop1){
         let isGleichArikel = false; 
@@ -336,7 +270,6 @@ export class ListKomponenteComponent implements AfterViewInit{
             && festplatteId1.kapazitaet === festplatteId2.kapazitaet
             && festplatteId1.spannung === festplatteId2.spannung
             && isGleichArikel === false){
-              this.artikelListe.push({ kategorie:"RAM", shop1: festplatteId1, shop2: festplatteId2 });
               vergleichenenArtikelliste.push({ shop1: festplatteId1, shop2: festplatteId2 });
               isGleichArikel = true;
           }
@@ -349,11 +282,12 @@ export class ListKomponenteComponent implements AfterViewInit{
     }
   }
 
+  // Methode, um gleiche Mainboard zu vergleichen
   async gibGleichteMainboard() {
     try{
       let vergleichenenArtikelliste: Array<{ shop1: Artikel, shop2: Artikel}> = [];
-      const listeMainboardShop1: Mainboard[] = await this.ladeMainboardData(1, 'Mainboard');
-      const listeMainboardShop2: Mainboard[] = await this.ladeMainboardData(2, 'Mainboard');
+      const listeMainboardShop1: Mainboard[] = await this.rufeDataService2<Mainboard>(this.artikelService.gibListeMainboard.bind(this.artikelService), 1, 'Mainboard');
+      const listeMainboardShop2: Mainboard[] = await this.rufeDataService2<Mainboard>(this.artikelService.gibListeMainboard.bind(this.artikelService), 2, 'Mainboard');
 
       for(const mainboardId1 of listeMainboardShop1){
         let isGleichArikel = false; 
@@ -363,7 +297,6 @@ export class ListKomponenteComponent implements AfterViewInit{
             && mainboardId1.formfaktor === mainboardId2.formfaktor
             && mainboardId1.maxRam === mainboardId2.maxRam
             && isGleichArikel === false){
-              this.artikelListe.push({ kategorie:"Mainboard", shop1: mainboardId1, shop2: mainboardId2 });
               vergleichenenArtikelliste.push({ shop1: mainboardId1, shop2: mainboardId2 });
               isGleichArikel = true;
           }
@@ -376,11 +309,12 @@ export class ListKomponenteComponent implements AfterViewInit{
     }
   }
 
+  // Methode, um gleiche Netzteile zu vergleichen
   async gibGleichteNetzteil() {
     try{
       let vergleichenenArtikelliste: Array<{ shop1: Artikel, shop2: Artikel}> = [];
-      const listeNetzteilShop1: Netzteil[] = await this.ladeNetzteilData(1, 'Netzteil');
-      const listeNetzteilShop2: Netzteil[] = await this.ladeNetzteilData(2, 'Netzteil');
+      const listeNetzteilShop1: Netzteil[] = await this.rufeDataService2<Netzteil>(this.artikelService.gibListeNetzteil.bind(this.artikelService), 1, 'Netzteil');
+      const listeNetzteilShop2: Netzteil[] = await this.rufeDataService2<Netzteil>(this.artikelService.gibListeNetzteil.bind(this.artikelService), 2, 'Netzteil');
 
       for(const mainboardId1 of listeNetzteilShop1){
         let isGleichArikel = false; 
@@ -390,7 +324,6 @@ export class ListKomponenteComponent implements AfterViewInit{
             && mainboardId1.leistung === mainboardId2.leistung
             && mainboardId1.zertifizierung === mainboardId2.zertifizierung
             && isGleichArikel === false){
-              this.artikelListe.push({ kategorie:"Netzteil", shop1: mainboardId1, shop2: mainboardId2 });
               vergleichenenArtikelliste.push({ shop1: mainboardId1, shop2: mainboardId2 });
               isGleichArikel = true;
           }
@@ -403,11 +336,12 @@ export class ListKomponenteComponent implements AfterViewInit{
     }
   }
 
+  // Methode, um gleiche Grafikkarte zu vergleichen
   async gibGleichteGrafikkarte() {
     try{
       let vergleichenenArtikelliste: Array<{ shop1: Artikel, shop2: Artikel}> = [];
-      const listeGrafikkarteShop1: Grafikkarte[] = await this.ladeGrafikkarteData(1, 'Grafikkarte');
-      const listeGrafikkarteShop2: Grafikkarte[] = await this.ladeGrafikkarteData(2, 'Grafikkarte');
+      const listeGrafikkarteShop1: Grafikkarte[] = await this.rufeDataService2<Grafikkarte>(this.artikelService.gibListeGrafikkarte.bind(this.artikelService), 1, 'Grafikkarte');
+      const listeGrafikkarteShop2: Grafikkarte[] = await this.rufeDataService2<Grafikkarte>(this.artikelService.gibListeGrafikkarte.bind(this.artikelService), 2, 'Grafikkarte');
 
       for(const grafikkarteId1 of listeGrafikkarteShop1){
         let isGleichArikel = false; 
@@ -418,7 +352,6 @@ export class ListKomponenteComponent implements AfterViewInit{
             && grafikkarteId1.streamProzessoren === grafikkarteId2.streamProzessoren
             && grafikkarteId1.verbrauch === grafikkarteId2.verbrauch
             && isGleichArikel === false){
-              this.artikelListe.push({ kategorie:"Grafikkarte", shop1: grafikkarteId1, shop2: grafikkarteId2 });
               vergleichenenArtikelliste.push({ shop1: grafikkarteId1, shop2: grafikkarteId2 });
               isGleichArikel = true;
           }
@@ -431,23 +364,19 @@ export class ListKomponenteComponent implements AfterViewInit{
     }
   }
 
+  // Methode, um gleiche Gehäuse zu vergleichen
   async gibGleichteGehaeuse() {
     try{
       let vergleichenenArtikelliste: Array<{ shop1: Artikel, shop2: Artikel}> = [];
-      const listeGehaeuseShop1: Gehaeuse[] = await this.ladeGehaeuseData(1, 'Gehäuse');
-      const listeGehaeuseShop2: Gehaeuse[] = await this.ladeGehaeuseData(2, 'Gehäuse');
+      const listeGehaeuseShop1: Gehaeuse[] = await this.rufeDataService2<Gehaeuse>(this.artikelService.gibListeGehaeuse.bind(this.artikelService), 1, 'Gehäuse');
+      const listeGehaeuseShop2: Gehaeuse[] = await this.rufeDataService2<Gehaeuse>(this.artikelService.gibListeGehaeuse.bind(this.artikelService), 2, 'Gehäuse');
 
       for(const gehaeuseId1 of listeGehaeuseShop1){
         let isGleichArikel = false; 
         for(const gehaeuseId2 of listeGehaeuseShop2){
           if(gehaeuseId1.marke === gehaeuseId2.marke 
-            //&& gehaeuseId1.formfaktor === gehaeuseId2.formfaktor
-            //&& mainboardId1.model === mainboardId2.model
-            //&& mainboardId1.frontenschluesse === mainboardId2.frontenschluesse
-            //&& mainboardId1.typ === mainboardId2.typ
             && gehaeuseId1.gewicht === gehaeuseId2.gewicht
             && isGleichArikel === false){
-              this.artikelListe.push({ kategorie:"Gehäuse", shop1: gehaeuseId1, shop2: gehaeuseId2 });
               vergleichenenArtikelliste.push({ shop1: gehaeuseId1, shop2: gehaeuseId2 });
               isGleichArikel = true;
           }
@@ -460,13 +389,12 @@ export class ListKomponenteComponent implements AfterViewInit{
     }
   }
 
+  // Methode, um gleiche CPUs zu vergleichen
   async gibGleichteCPU() {
     try{
       let vergleichenenArtikelliste: Array<{ shop1: Artikel, shop2: Artikel}> = [];
-      const listeCPUShop1: Cpu[] = await this.ladeCPUData(1, 'CPU');
-      const listeCPUShop2: Cpu[] = await this.ladeCPUData(2, 'CPU');
-
-      console.log('liste pour faire le test de filtre: ',  listeCPUShop1);
+      const listeCPUShop1: Cpu[] = await this.rufeDataService2<Cpu>(this.artikelService.gibListeCPU.bind(this.artikelService), 1, 'CPU');
+      const listeCPUShop2: Cpu[] = await this.rufeDataService2<Cpu>(this.artikelService.gibListeCPU.bind(this.artikelService), 2, 'CPU');
 
       for(const cpuId1 of listeCPUShop1){
         let isGleichArikel = false; 
@@ -477,7 +405,6 @@ export class ListKomponenteComponent implements AfterViewInit{
             && cpuId1.stromverbrauch === cpuId2.stromverbrauch
             && cpuId1.anzahlKerne === cpuId2.anzahlKerne
             && isGleichArikel === false){
-              this.artikelListe.push({ kategorie:"CPU", shop1: cpuId1, shop2: cpuId2 });
               vergleichenenArtikelliste.push({ shop1: cpuId1, shop2: cpuId2 });
               isGleichArikel = true;
           }
@@ -485,8 +412,6 @@ export class ListKomponenteComponent implements AfterViewInit{
       }
       this.artikelliste.push({ kategorie: 'CPU', artikelListe: vergleichenenArtikelliste.slice()}); 
       this.backupArtikelliste.push({ kategorie: 'CPU', artikelListe: vergleichenenArtikelliste.slice()});
-      this.artikellisteMap.set('CPU', vergleichenenArtikelliste.slice());
-      console.log(this.artikellisteMap, 'liste map')
     }catch (error){
       console.error('Erreur während des Ladens');
     }
@@ -495,6 +420,5 @@ export class ListKomponenteComponent implements AfterViewInit{
   ngOnDestroy(): void {
     this.dataSubscription.unsubscribe(); // Pour éviter les fuites de mémoire
   }
-
   
 }

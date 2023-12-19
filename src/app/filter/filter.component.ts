@@ -31,27 +31,32 @@ export class FilterComponent{
 
 
   /**
-   * permet de recuper les donnees qui viennent du checkbox du Cote HTML. Elle est appele cote HTML
-   * @param eigenschaftTyp objettype zB: Marke, Preis, Typ, Kapazität ...
-   * @param eigenschaftValue Objektvalue 
-   * @param event 
+   * Diese Methode wird aufgerufen, wenn der Benutzer eine Checkbox ändert, und aktualisiert den Status der Checkbox im Modell.
+   * @param eigenschaftTyp Der Typ der Eigenschaft (Kategorie).
+   * @param eigenschaftValue Der Wert der Eigenschaft (Unterkategorie).
+   * @param event Das Change-Ereignisobjekt der Checkbox.
    */
   sedeListeItem(eigenschaftTyp: string, eigenschaftValue: string, event: any): void{
+    // Aktuellen Status der Checkbox erfassen
     const checkboxChecked = (event.target as HTMLInputElement);
+    // Checkbox-Status zur Liste hinzufügen
     this.checkboxStatus.push(checkboxChecked);
 
-    console.log(eigenschaftTyp, 'Gehäuse');
-    
-    if(this.selektierteCheckboxMap.has(eigenschaftTyp)){
+    // Konsolenausgabe für Debugging-Zwecke
+
+    // Überprüfe, ob bereits eine Auswahl für die aktuelle Kategorie existiert
+    if (this.selektierteCheckboxMap.has(eigenschaftTyp)) {
+      // Falls ja, entferne die bestehende Auswahl
       this.selektierteCheckboxMap.delete(eigenschaftTyp);
-    }else{
+    } else {
+      // Falls nicht, setze die aktuelle Auswahl
       this.selektierteCheckboxMap.set(eigenschaftTyp, eigenschaftValue);
     }
   }
 
   /**
-   *  la methode s'execute lors du click sur le bouton Bestätigen. Elle permet de recuper 
-   *  les attributs qu'on souhaite filtrer et l'envoi vers le composant Konfiguration pour executer le Filtre
+   * Diese Methode erstellt einen Filter basierend auf den ausgewählten Filteroptionen und sendet ihn an den FilterService.
+   * Außerdem aktualisiert sie den Status für das Vorhandensein von Artikeln.
    */
   filterErgebniss() {
     let artikelFilter: Filter = {
@@ -69,15 +74,21 @@ export class FilterComponent{
   }
 
   /**
-   * Die Funktion breche der Filter ab und setze die betroffene Artikelliste zurück und
-   * entleeren auch die Kästchen (Chekbox)
-   */
+ * Diese Methode setzt alle ausgewählten Filteroptionen zurück und sendet einen Filter mit den Standardwerten an den FilterService.
+ * Außerdem werden alle Checkboxen im Modell zurückgesetzt und auf nicht ausgewählt gesetzt.
+ */
   filterAbbrechen(){
-    this.selektierteCheckboxMap.clear(); 
+    // Setze die Checkbox-Map im Modell zurück
+    this.selektierteCheckboxMap.clear();  
+
+     // Setze die Preiseingaben im Modell zurück
     this.vonInputValue = 0;
     this.bisInputValue = 0;
+
+    // Setze den Status für das Vorhandensein von Artikeln zurück
     this.hatArtikelGefunden = true;
     
+    // Erstelle einen Filter mit den Standardwerten und sende ihn an den FilterService
     let artikelFilter: Filter = {
       artikelKategorie : this.filterKategorie,
       preis : {von: 0, bis: 0},
@@ -87,13 +98,18 @@ export class FilterComponent{
     }
     this.filterService.sendeListeKomponenten(artikelFilter);
 
-    // entleere die Kästchen
+    // Setze alle Checkboxen im Modell zurück und setze sie auf nicht ausgewählt
     for(let checkboxItem of this.checkboxStatus){
       checkboxItem.checked = false;
     }
   }
 
-  // cette methode permet de recuper toutes une liste de Kritere de cle pour une categorie d'article
+  /**
+   * Diese Methode ruft eine Liste von Eigenschaften basierend auf der Kategorie und Eigenschaft ab.
+   * @param kategorie Die Kategorie, für die die Eigenschaften abgerufen werden sollen.
+   * @param eigenschaft Die spezifische Eigenschaft, für die die Liste erstellt wird.
+   * @returns Eine Liste von Eigenschaften als Array von Zeichenketten.
+   */
   gibListeEigenschafte(kategorie: string, eigenschaft: string): string[] {
     let eingeschaftListe: string[] = [];
     this.artikelService.gibListeEigenschaft(kategorie, eigenschaft).subscribe((data) => {
@@ -105,7 +121,11 @@ export class FilterComponent{
     return eingeschaftListe;
   }
 
-  // Retourne la Liste de toutes les marques d'une categories
+  /**
+   * Diese Methode ruft eine Liste von Marken basierend auf der angegebenen Kategorie ab.
+   * @param kategorie Die Kategorie, für die die Marken abgerufen werden sollen.
+   * @returns Eine Liste von Marken als Array von Zeichenketten.
+   */
   gibListeArikelMarke(kategorie: string): string[]{
     let listeMarke: string[] = [];
     this.artikelService.gibListeMarke(kategorie).subscribe((data) => {
@@ -117,7 +137,7 @@ export class FilterComponent{
     return listeMarke;
   }
 
-  // permet d'afficher le filtre lorsque on clique sur filtre dans la page
+  // zeigt der Filter
   zeigeFilter(){
     this.isFilterSichtbar = !this.isFilterSichtbar;
   }
@@ -126,12 +146,16 @@ export class FilterComponent{
     this.ladeFilterkriterien();
   }
 
-  // Cette methode permet de recuper les differents critere de filtre pour chaque kategorie d'article
+  /**
+   * Diese Methode erstellt eine sortierte Liste von Filterkriterien für verschiedene Artikelkategorien.
+   * @returns Eine Liste von Filterkriterien für verschiedene Artikelkategorien.
+   */
   sortiereFilterkriterien(){
+    // Initialisiere die Liste für die Filterkriterien
     let listeEigenschaften: { kategorie: string, liste: { typ: string; listeType: string[] }[] }[] = [];
 
 
-    //CPU
+    // Filterkriterien für CPU
     let filterCPU = [
       { typ: 'anzahlKerne', listeType: this.gibListeEigenschafte('CPU','anzahlkerne') },
       { typ: 'marke', listeType: this.gibListeArikelMarke('CPU') },
@@ -139,14 +163,14 @@ export class FilterComponent{
       { typ: 'taktfrequenz', listeType: this.gibListeEigenschafte('CPU','taktfrequenz') },
     ];
 
-    //Festplatte
+    //Filterkriterien für Festplatte
     let filterFestplatte = [
       { typ: 'marke', listeType: this.gibListeArikelMarke('Festplatte') },
       { typ: 'typ', listeType: this.gibListeEigenschafte('Festplatte','typ') },
       { typ: 'kapazitaet', listeType: this.gibListeEigenschafte('Festplatte','kapazitaet') }
     ];
 
-    //Mainboard
+    //Filterkriterien für Mainboard
     let filterMainboard = [
       { typ: 'marke', listeType: this.gibListeArikelMarke('Mainboard') },
       { typ: 'chipsatz', listeType: this.gibListeEigenschafte('Mainboard','chipsatz') },
@@ -154,14 +178,14 @@ export class FilterComponent{
       { typ: 'sockel', listeType: this.gibListeEigenschafte('Mainboard','sockel') }
     ];
 
-    //Gehäuse
+    //Filterkriterien für Gehäuse
     let filterGehäuse = [
       { typ: 'marke', listeType: this.gibListeArikelMarke('Gehäuse') },
       { typ: 'formfaktor', listeType: this.gibListeEigenschafte('Gehäuse','formfaktor') },
       { typ: 'typ', listeType: this.gibListeEigenschafte('Gehäuse','typ') }
     ];
 
-    //Grafikkarte
+    //Filterkriterien für Grafikkarte
     let filterGrafikkarte = [
       { typ: 'marke', listeType: this.gibListeArikelMarke('Grafikkarte') },
       { typ: 'kapazitaet', listeType: this.gibListeEigenschafte('Grafikkarte','kapazitaet') },
@@ -169,7 +193,7 @@ export class FilterComponent{
       { typ: 'model', listeType: this.gibListeEigenschafte('Grafikkarte','model') }
     ];
 
-    //Netzteil
+    //Filterkriterien für Netzteil
     let filterNetzteil = [
       { typ: 'marke', listeType: this.gibListeArikelMarke('Netzteil') },
       { typ: 'bauform', listeType: this.gibListeEigenschafte('Netzteil','bauform') },
@@ -177,7 +201,7 @@ export class FilterComponent{
       { typ: 'leistung', listeType: this.gibListeEigenschafte('Netzteil','leistung') }
     ];
 
-    //RAM
+    //Filterkriterien für RAM
     let filterRAM = [
       { typ: 'marke', listeType: this.gibListeArikelMarke('RAM') },
       { typ: 'kapazitaet', listeType: this.gibListeEigenschafte('RAM','kapazitaet') },
@@ -186,6 +210,7 @@ export class FilterComponent{
       { typ: 'spannung', listeType: this.gibListeEigenschafte('RAM','spannung') }
     ];
     
+    // Füge die Filterkriterien für jede Kategorie zur Gesamtliste hinzu
     listeEigenschaften.push( { kategorie: 'CPU', liste: filterCPU.sort()} );
     listeEigenschaften.push( { kategorie: 'Festplatte', liste: filterFestplatte} );
     listeEigenschaften.push( { kategorie: 'Mainboard', liste: filterMainboard } );
@@ -194,18 +219,24 @@ export class FilterComponent{
     listeEigenschaften.push( { kategorie: 'Netzteil', liste: filterNetzteil } );
     listeEigenschaften.push( { kategorie: 'RAM', liste: filterRAM } );
 
+    // Gib die sortierte Liste von Filterkriterien zurück
     return listeEigenschaften;
   }
 
-  // permet de charger les differents filtres pour chaque categorie
+  /**
+   * Diese Methode lädt die sortierten Filterkriterien in die Komponente.
+   */
   ladeFilterkriterien(){
     for(let item of this.sortiereFilterkriterien()){
       this.listeEigenschaften.push(item);
     }
   }
 
+  /**
+   * Diese Methode wird beim Initialisieren der Komponente aufgerufen und lädt die Filterkriterien.
+   */
   submitForm(arg0: any) {
-    console.log('')
+    console.log('');
   }
 
 }
