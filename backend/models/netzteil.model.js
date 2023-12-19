@@ -9,7 +9,8 @@ module.exports = (sequelize, Sequelize) => {
     artikelnummer: {
       type: Sequelize.INTEGER,
       primaryKey: true,
-      field: 'artikelnummer'
+      field: 'artikelnummer',
+      autoIncrement: true
     },
     bauform: {
       type: Sequelize.STRING,

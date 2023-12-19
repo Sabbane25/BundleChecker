@@ -9,7 +9,7 @@ const lokal_backend = true;
 Verwende mit:
 
 ```
-const apiConfig = require("../config/api.config.js");
+const { apiConfig } = require("../config/api.config.ts");
 
 const url = `http://${apiConfig.HOST}:3000/api`;
 ```

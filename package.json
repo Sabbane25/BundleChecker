@@ -4,9 +4,33 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "backend": "node ./backend/index.js",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development"
+    "frontend": "ng serve",
+    "backend": "node ./backend/index.js --port 3000",
+    "backend-prod": "node ./backend/index.js",
+    "bg:start": "cd backend && npm run bg:start && cd ..",
+    "bg:stop": "cd backend && npm run bg:stop && cd ..",
+    "bg:restart": "cd backend && npm run bg:restart && cd ..",
+    "bg:logs": "cd backend && npm run bg:logs && cd ..",
+    "bg:clean": "cd backend && npm run bg:clean && cd ..",
+    "bg:status": "cd backend && npm run bg:status && cd ..",
+    "build": "ng build --output-path=backend/dist --configuration production",
+    "watch": "ng build --watch --configuration development",
+    "ssh": "ssh -L 3306:127.0.0.1:3306 student@192.168.198.48",
+    "init": "npm install && cd backend && npm install && cd ..",
+    "crawler-alternate-ram": "node ./src/crawler/alternate/K.Arbeitsspeicher.js --host=local",
+    "crawler-alternate-cpu": "node ./src/crawler/alternate/K.CPU.js --host=local",
+    "crawler-alternate-festplatte": "node ./src/crawler/alternate/K.festplatten.js --host=local",
+    "crawler-alternate-gehaeuse": "node ./src/crawler/alternate/K.gehaeuse.js --host=local",
+    "crawler-alternate-grafikkarte": "node ./src/crawler/alternate/K.grafikkarte.js --host=local",
+    "crawler-alternate-mainboard": "node ./src/crawler/alternate/K.mainboard.js --host=local",
+    "crawler-alternate-netzteil": "node ./src/crawler/alternate/K.netzteil.js --host=local",
+    "crawler-futurex-ram": "node ./src/crawler/futureX/ram.js --host=local",
+    "crawler-futurex-cpu": "node ./src/crawler/futureX/prozessor.js --host=local",
+    "crawler-futurex-festplatte": "node ./src/crawler/futureX/festplatten.js --host=local",
+    "crawler-futurex-gehaeuse": "node ./src/crawler/futureX/gehaeuse.js --host=local",
+    "crawler-futurex-grafikkarte": "node ./src/crawler/futureX/grafikkarte.js --host=local",
+    "crawler-futurex-mainboard": "node ./src/crawler/futureX/mainboard.js --host=local",
+    "crawler-futurex-netzteil": "node ./src/crawler/futureX/netzteil.js --host=local"
   },
   "private": true,
   "dependencies": {
@@ -27,12 +51,14 @@
     "puppeteer-extra-plugin-stealth": "^2.11.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "yargs": "^17.7.2",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.0.0",
     "@angular/cli": "^16.2.7",
     "@angular/compiler-cli": "^16.0.0",
+    "@types/yargs": "^17.0.32",
     "typescript": "~5.0.2"
   }
 }

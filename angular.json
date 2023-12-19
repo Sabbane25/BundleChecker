@@ -70,6 +70,12 @@
                   "maximumError": "4kb"
                 }
               ],
+              "fileReplacements": [
+                {
+                  "replace": "src/config/api.config.ts",
+                  "with": "src/config/api.config.prod.ts"
+                }
+              ],
               "outputHashing": "all"
             },
             "development": {

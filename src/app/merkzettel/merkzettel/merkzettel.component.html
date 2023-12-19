@@ -31,7 +31,7 @@
     <div class="row">
       <div class="col-12 col-md-4 col-lg-3" *ngFor="let artikel of merkzettelArtikel">
         <div class="card">
-          <img *ngIf="artikel.bildUrl" src="https://{{ artikel.bildUrl }}" class="card-img-top px-2" />
+          <img *ngIf="artikel.bildUrl" src="{{ artikel.bildUrl.startsWith('https://') ? artikel.bildUrl :  'https://' + artikel.bildUrl}}" class="card-img-top px-2" />
           <div class="card-body">
             <h5 class="card-title">{{ artikel.bezeichnung }}</h5>
             <p class="card-text">
