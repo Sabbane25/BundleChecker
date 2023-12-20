@@ -2,11 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-datenschutz',
-  template: `
-    <h2>
-      Datenschutz works!
-    </h2>
-  `,
+  templateUrl: `datenschutz.component.html`,
   styles: [
   ]
 })
