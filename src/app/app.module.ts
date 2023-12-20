@@ -9,10 +9,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { KontoModule } from './konto/konto.module';
 import { FormsModule } from '@angular/forms';
 import { AdminModule } from './admin/admin.module';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
 
   imports: [
+    CommonModule,
     BrowserModule,
     AdminModule,
     HttpClientModule,

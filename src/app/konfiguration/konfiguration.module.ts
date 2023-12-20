@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UebersichtComponent } from './uebersicht/uebersicht.component'; // Stellen Sie sicher, dass der Pfad korrekt ist.
 import { KonfigurationComponent } from './konfiguration/konfiguration.component';
-import {RouterLink, RouterModule, Routes} from '@angular/router';
 import { ListKomponenteComponent } from './list-komponente/list-komponente.component';
 import { DropDownMenuComponent } from '../drop-down-menu/drop-down-menu.component';
 import { FilterComponent } from '../filter/filter.component';

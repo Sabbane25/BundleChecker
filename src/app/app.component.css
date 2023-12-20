@@ -2,6 +2,12 @@
 .navbar .container-fluid .nav .dropdown a{
     border: none;
 }
+
+.navbar .container-fluid .nav .dropdown{
+    margin: 0px;
+    padding: 0px;
+}
+
 .navbar .container-fluid .nav .dropdown .dropdown-menu li a{
     color: #00528D;
 }

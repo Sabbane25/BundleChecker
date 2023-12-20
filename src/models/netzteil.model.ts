@@ -1,10 +1,12 @@
 import { Artikel } from "./artikel.model";
+import { Filter } from "./filter.models";
 
 export class Netzteil extends Artikel{
     artikelnummer: number;
     bauform: string;
     zertifizierung: string;
     leistung: number;
+    //[cle: string]: any; //neu
 
     constructor(kategorie: string, preis: number, shopID: number, produktLink: string, bezeichnung: string, lieferDatum: number, marke: string, bildUrl: string,
         artikelnummer: number, bauform: string, zertifizierung: string, leistung: number) {
@@ -22,5 +24,16 @@ export class Netzteil extends Artikel{
     
     override gibArtikelTitel(): string {
         return "";
+    }
+
+    static filterByMapCriteria(arr: Array<{ shop1: Artikel, shop2: Artikel }>, kriterium: Filter): Array<{ shop1: Artikel, shop2: Artikel }> {
+        let listeCpu: Array<{ shop1: Netzteil, shop2: Netzteil }> = [];
+
+        for (const artikel of arr) {
+            if (artikel.shop1 instanceof Netzteil && artikel.shop2 instanceof Netzteil) {
+                listeCpu.push({ shop1: artikel.shop1, shop2: artikel.shop2 });
+            }
+        }
+        return listeCpu.filter(item => this.filterKrierien(item, kriterium));
     }
 }

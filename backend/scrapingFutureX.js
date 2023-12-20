@@ -1,6 +1,11 @@
 const mysql = require('mysql2');
 
-// Fonction pour insérer des données dans la table Artikel
+/**
+ * Diese Funktion fügt gecrapte Daten in die Datenbanktabelle "Artikel" ein oder aktualisiert sie,
+ * falls ein Datensatz mit dem gleichen Primärschlüssel (produktUrl) bereits existiert.
+ * @param {object} connection - Die Datenbankverbindung.
+ * @param {Array} scrapedData - Ein Array von gecrapten Daten, die in die Datenbank eingefügt oder aktualisiert werden sollen.
+ */
 function insertDataIntoArtikel(connection, scrapedData) {
 
   for (const data of scrapedData) {
@@ -39,79 +44,21 @@ function insertDataIntoArtikel(connection, scrapedData) {
 
     connection.query(sqlArtikel, valuesArtikel, (error, results) => {
       if (error) {
-        console.error('Error inserting data into Artikel:', data.produktlink, '\nErreur:', error);
+        console.error('Fehler beim Einfügen von Daten in Artikel:', data.produktlink, '\nErreur:', error);
       } else {
-        console.log('Object inserted successfully, ID:', results.insertId);
+        console.log('Objekt erfolgreich eingefügt, ID:', results.insertId);
       }
     });
   }
 }
 
-// Insert Data into Artikel Tabelle DB
-function insertDataIntoArtikel3(connection, scrapedData) {
 
-  for (const data of scrapedData) {
-    const sqlArtikel = `INSERT INTO Artikel(kategorie, preis, shopID, produktUrl, bezeichnung, lieferDatum, marke, image, verfügbarkeit)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
-
-    const valuesArtikel = [
-      data.kategorie,
-      data.preis,
-      data.shopID,
-      data.produktlink,
-      data.bezeichnung,
-      data.deliveryDate,
-      data.marke,
-      data.imgUrl,
-      data.verfuegbarkeit
-    ];
-
-    connection.query(sqlArtikel, valuesArtikel, (error, results) => {
-      if (error) {
-        console.error('Error inserting data into Artikel:', data.produktlink, '\nErreur:', error);
-      } else {
-        console.log('Object inserted successfully, ID:', results.insertId);
-      }
-    });
-  }
-}
-
-function insertDataIntoArtikel2(connection, scrapedData) {
-  const insertPromises = scrapedData.map(data => {
-    const sqlArtikel = `INSERT INTO Artikel(kategorie, preis, shopID, produktUrl, bezeichnung, lieferDatum, marke, image, verfügbarkeit)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-      ON DUPLICATE KEY UPDATE preis = VALUES(preis), lieferDatum = VALUES(deliveryDate), verfügbarkeit = VALUES(verfuegbarkeit)`;
-
-    const valuesArtikel = [
-      data.kategorie,
-      data.preis,
-      data.shopID,
-      data.produktlink,
-      data.bezeichnung,
-      data.deliveryDate,
-      data.marke,
-      data.imgUrl,
-      data.verfuegbarkeit
-    ];
-
-    return new Promise((resolve, reject) => {
-      connection.query(sqlArtikel, valuesArtikel, (error, results) => {
-        if (error) {
-          console.error('Une erreur s\'est produite pour l\'élément avec ProduktUrl:', data.produktlink, '\nErreur:', error);
-          reject(error);
-        } else {
-          console.log('Objet inséré avec succès, ID:', results.insertId);
-          resolve(results);
-        }
-      });
-    });
-  });
-
-  // Utiliser Promise.all pour attendre l'achèvement de toutes les requêtes
-  return Promise.all(insertPromises);
-}
-
-// Fonction pour Udate les donnees deja present dans la base de donnees 
+/**
+ * Diese Funktion aktualisiert Daten in der Datenbanktabelle "Artikel".
+ * @param {object} connection - Die Datenbankverbindung.
+ * @param {Array} updatedData - Ein Array von aktualisierten Daten, die in der Tabelle "Artikel" aktualisiert werden sollen.
+ * @returns {Promise} - Ein Promise, das auflöst, wenn alle Aktualisierungsoperationen abgeschlossen sind.
+ */
 function updateDataInArtikel(connection, updatedData) {
   const updatePromises = [];
 
@@ -135,10 +82,10 @@ function updateDataInArtikel(connection, updatedData) {
     const queryPromise = new Promise((resolve, reject) => {
       connection.query(sqlUpdate, valuesUpdate, (error, results) => {
         if (error) {
-          console.error('Error updating data in Artikel:', data.produktlink, '\nError:', error);
+          console.error('Fehler beim Aktualisieren von Daten in Artikel:', data.produktlink, '\nError:', error);
           reject(error);
         } else {
-          console.log('Object updated successfully, ID:', results.affectedRows);
+          console.log('Objekt erfolgreich aktualisiert, ID:', results.affectedRows);
           resolve(results);
         }
       });
@@ -147,12 +94,16 @@ function updateDataInArtikel(connection, updatedData) {
     updatePromises.push(queryPromise);
   }
 
-  // Utiliser Promise.all pour attendre l'achèvement de toutes les requêtes
   return Promise.all(updatePromises);
 }
 
 
-// Fonction pour insérer des données dans la table CPU
+/**
+ * Diese Funktion fügt gecrapte CPU-Daten in die Datenbanktabelle "CPU" ein, wenn die URL noch nicht vorhanden ist.
+ * @param {object} connection - Die Datenbankverbindung.
+ * @param {Array} scrapedData - Ein Array von gecrapten CPU-Daten, die in die Datenbank eingefügt werden sollen.
+ * @returns {Promise[]} - Ein Array von Promises, die den Einfügevorgang für jede CPU repräsentieren.
+ */
 function insertDataIntoCPU(connection, scrapedData) {
   const insertPromises = [];
 
@@ -162,11 +113,11 @@ function insertDataIntoCPU(connection, scrapedData) {
     const queryPromise = new Promise((resolve, reject) => {
       connection.query(sqlUrl, (error, results) => {
         if (error) {
-          console.error('Datenbank fehler', error);
+          console.error('Datenbank Fehler', error);
           reject(error);
         } else if (results.length > 0) {
           console.log('Url bereits vorhanden.');
-          resolve();  // Continue with the next iteration
+          resolve(); 
         } else {
           console.log("Artikle insere");
 
@@ -186,14 +137,14 @@ function insertDataIntoCPU(connection, scrapedData) {
             data.maxTurboTaktfrequenz
           ];
 
-          console.log('valeur de valuesCPU: ', valuesCpu);
+          console.log('Werte von valuesCPU:  ', valuesCpu);
           connection.query(sqlCpu, valuesCpu, (error, resultat) => {
             if (error) {
-              console.error('Erreur lors de l\'insertion', error);
+              console.error('Fehler beim Einfügen', error);
               reject(error);
             } else {
-              console.log('Objet inséré avec succès, ID:', resultat.insertId);
-              resolve();  // Continue with the next iteration
+              console.log('Objekt erfolgreich eingefügt, ID:', resultat.insertId);
+              resolve(); 
             }
           });
         }
@@ -203,24 +154,22 @@ function insertDataIntoCPU(connection, scrapedData) {
     insertPromises.push(queryPromise);
   }
 
-  // Execute all promises and continue even if some fail
   return Promise.allSettled(insertPromises)
     .then(() => {
-      console.log('Toutes les insertions ont été traitées.');
+      console.log('Alle Produkte wurden hinzugefügt');
     })
     .catch((err) => {
-      console.error('Une erreur s\'est produite:', err);
+      console.error('Es ist ein Fehler aufgetreten:', err);
   });
 }
 
-// Fonction pour insérer des données dans la table CPU
 function insertDataIntoCPU2(connection, scrapedData) {
   const insertPromises = [];
 
   for (const data of scrapedData) {
     if (!data.produktlink) {
-      console.error('La propriété "produktlink" est manquante ou nulle dans les données.');
-      continue;  // Continue with the next iteration
+      console.error('Die Eigenschaft "produktlink" fehlt oder ist in den Daten nicht vorhanden.');
+      continue;  
     }
 
     const sqlUrl = `SELECT * FROM CPU WHERE Url = "${data.produktlink}"`;
@@ -228,13 +177,13 @@ function insertDataIntoCPU2(connection, scrapedData) {
     const queryPromise = new Promise((resolve, reject) => {
       connection.query(sqlUrl, (error, results) => {
         if (error) {
-          console.error('Datenbank fehler', error);
+          console.error('Datenbank Fehler', error);
           reject(error);
         } else if (results.length > 0) {
           console.log('Url bereits vorhanden.');
-          resolve();  // Continue with the next iteration
+          resolve();  
         } else {
-          console.log("L'insertion est possible ****");
+          console.log("**** Einfügen ist möglich ****");
 
           const sqlCpu = `INSERT INTO CPU (artikelnummer, url, sockel, anzahlKerne, stromverbrauch, taktfrequenz, interneGrafik, threads, typ, turbo)
           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
@@ -252,15 +201,14 @@ function insertDataIntoCPU2(connection, scrapedData) {
             data.maxTurboTaktfrequenz
           ];
 
-          console.log('valeur de valuesCPU: ', valuesCpu);
 
           connection.query(sqlCpu, valuesCpu, (error, resultat) => {
             if (error) {
-              console.error('Erreur lors de l\'insertion', error);
+              console.error('Fehler beim Einfügen', error);
               reject(error);
             } else {
-              console.log('Objet inséré avec succès, ID:', resultat.insertId);
-              resolve();  // Continue with the next iteration
+              console.log('Komponente erfolgreich eingefügt, ID:', resultat.insertId);
+              resolve();  
             }
           });
         }
@@ -270,12 +218,17 @@ function insertDataIntoCPU2(connection, scrapedData) {
     insertPromises.push(queryPromise);
   }
 
-  // Utiliser Promise.all pour attendre l'achèvement de toutes les requêtes
   return Promise.all(insertPromises);
 }
 
 
-// Fonction pour insérer des données dans la table Festplatte
+/**
+ * Diese Funktion fügt Daten in die Datenbanktabelle "Festplatte" ein, wobei Duplikate anhand der Produkt-URL vermieden werden.
+ * Die Methode ruft auch die Funktion `insertDataIntoArtikel` auf, um allgemeine Artikelinformationen zu aktualisieren.
+ * @param {object} connection - Die Datenbankverbindung.
+ * @param {Array} scrapedData - Ein Array von gescannten Daten, die in der Tabelle "Festplatte" eingefügt werden sollen.
+ * @returns {Promise} - Ein Promise, das auflöst, wenn alle Einfügeoperationen abgeschlossen sind.
+ */
 function insertDataIntoFestplatte(connection, scrapedData) {
 
   insertDataIntoArtikel(connection, scrapedData);
@@ -291,10 +244,10 @@ function insertDataIntoFestplatte(connection, scrapedData) {
           console.error('Datenbank fehler', error);
           reject(error);
         } else if (results.length > 0) {
-          console.log('Url bereits vorhanden.');
-          resolve();  // Continue with the next iteration
+          console.log("**** Einfügen ist möglich ****");
+          resolve();  
         } else {
-          console.log("L'insertion est possible ****");
+          console.log("*** Einfügen möglich ****");
 
           const sqlCpu = `INSERT INTO Festplatte (artikelnummer, typ, kapazitaet, lesen, schreiben, Url, stromverbrauch)
           VALUES (?, ?, ?, ?, ?, ?, ?)`;
@@ -311,11 +264,11 @@ function insertDataIntoFestplatte(connection, scrapedData) {
 
           connection.query(sqlCpu, valuesCpu, (error, resultat) => {
             if (error) {
-              console.error('Erreur lors de l\'insertion', error);
+              console.error('Fehler beim Einfügen', error);
               reject(error);
             } else {
-              console.log('Objet inséré avec succès, ID:', resultat.insertId);
-              resolve();  // Continue with the next iteration
+              console.log('Komponente erfolgreich eingefügt, ID:', resultat.insertId);
+              resolve(); 
             }
           });
         }
@@ -325,17 +278,16 @@ function insertDataIntoFestplatte(connection, scrapedData) {
     insertPromises.push(queryPromise);
   }
 
-  // Execute all promises and continue even if some fail
   return Promise.allSettled(insertPromises)
     .then(() => {
-      console.log('Toutes les insertions ont été traitées.');
+      console.log('Alle Einfügungen wurden bearbeitet.');
     })
     .catch((err) => {
-      console.error('Une erreur s\'est produite:', err);
+      console.error('Es ist ein Fehler aufgetreten:', err);
   });
 }
 
-// Fonction pour insérer des données dans la table Gehäuse
+// Einfügen (Gehaeuse)
 function insertDataIntoGehaeuse(connection, scrapedData) {
 
   insertDataIntoArtikel(connection, scrapedData);
@@ -374,7 +326,7 @@ function insertDataIntoGehaeuse(connection, scrapedData) {
               reject(error);
             } else {
               console.log('Objet inséré avec succès, ID:', resultat.insertId);
-              resolve();  // Continue with the next iteration
+              resolve();  
             }
           });
         }
@@ -383,7 +335,6 @@ function insertDataIntoGehaeuse(connection, scrapedData) {
     insertPromises.push(queryPromise);
   }
 
-  // Execute all promises and continue even if some fail
   return Promise.allSettled(insertPromises)
     .then(() => {
       console.log('Toutes les insertions ont été traitées.');
@@ -393,7 +344,7 @@ function insertDataIntoGehaeuse(connection, scrapedData) {
   });
 }
 
-// Fonction pour insérer des données dans la table Grafikkarte
+// Grafikkarte
 function insertDataIntoGrafikkarte(connection, scrapedData) {
 
   insertDataIntoArtikel(connection, scrapedData);
@@ -409,7 +360,7 @@ function insertDataIntoGrafikkarte(connection, scrapedData) {
           reject(error);
         } else if (results.length > 0) {
           console.log('Url bereits vorhanden.');
-          resolve();  // Continue with the next iteration
+          resolve();  
         } else {
           console.log("L'insertion est possible ****");
 
@@ -427,10 +378,10 @@ function insertDataIntoGrafikkarte(connection, scrapedData) {
 
           connection.query(sqlCpu, valuesCpu, (error, resultat) => {
             if (error) {
-              console.error('Erreur lors de l\'insertion', error);
+              console.error('Fehler beim Einfügen', error);
               reject(error);
             } else {
-              console.log('Objet inséré avec succès, ID:', resultat.insertId);
+              console.log('Komponente erfolgreich eingefügt, ID:', resultat.insertId);
               resolve();  // Continue with the next iteration
             }
           });
@@ -440,17 +391,16 @@ function insertDataIntoGrafikkarte(connection, scrapedData) {
     insertPromises.push(queryPromise);
   }
 
-  // Execute all promises and continue even if some fail
   return Promise.allSettled(insertPromises)
     .then(() => {
-      console.log('Toutes les insertions ont été traitées.');
+      console.log('Komponente erfolgreich eingefügt, ID:');
     })
     .catch((err) => {
-      console.error('Une erreur s\'est produite:', err);
+      console.error('Fehler beim Einfügen', err);
   });
 }
 
-// Fonction pour insérer des données dans la table Mainboard
+// Mainboard
 function insertDataIntoMainboard(connection, scrapedData) {
 
   insertDataIntoArtikel(connection, scrapedData);
@@ -462,11 +412,11 @@ function insertDataIntoMainboard(connection, scrapedData) {
     const queryPromise = new Promise((resolve, reject) => {
       connection.query(sqlUrl, (error, results) => {
         if (error) {
-          console.error('Datenbank fehler', error);
+          console.error('Datenbank Fehler', error);
           reject(error);
         } else if (results.length > 0) {
           console.log('Url bereits vorhanden.');
-          resolve();  // Continue with the next iteration
+          resolve(); 
         } else {
           console.log("***** L'insertion *****");
 
@@ -486,11 +436,11 @@ function insertDataIntoMainboard(connection, scrapedData) {
 
           connection.query(sqlCpu, valuesCpu, (error, resultat) => {
             if (error) {
-              console.error('Erreur lors de l\'insertion', error);
+              console.error('Fehler beim Einfügen', error);
               reject(error);
             } else {
-              console.log('Objet inséré avec succès, ID:', resultat.insertId);
-              resolve();  // Continue with the next iteration
+              console.log('Komponente erfolgreich eingefügt, ID:', resultat.insertId);
+              resolve(); 
             }
           });
         }
@@ -499,17 +449,16 @@ function insertDataIntoMainboard(connection, scrapedData) {
     insertPromises.push(queryPromise);
   }
 
-  // Execute all promises and continue even if some fail
   return Promise.allSettled(insertPromises)
     .then(() => {
-      console.log('Toutes les insertions ont été traitées.');
+      console.log('Alle Einfügungen wurden bearbeitet.');
     })
     .catch((err) => {
-      console.error('Une erreur s\'est produite:', err);
+      console.error('Es ist ein Fehler aufgetreten:', err);
   });
 }
 
-// Fonction pour insérer des données dans la table RAM
+//  RAM
 function insertDataIntoRam(connection, scrapedData) {
 
   insertDataIntoArtikel(connection, scrapedData);
@@ -527,7 +476,6 @@ function insertDataIntoRam(connection, scrapedData) {
           console.log('Url bereits vorhanden.');
           resolve();  // Continue with the next iteration
         } else {
-          console.log("***** L'insertion *****");
 
           const sqlCpu = `INSERT INTO RAM (artikelnummer, typ, kapazitaet, latency, url, spannung)
           VALUES (?, ?, ?, ?, ?, ?)`;
@@ -543,11 +491,11 @@ function insertDataIntoRam(connection, scrapedData) {
 
           connection.query(sqlCpu, valuesCpu, (error, resultat) => {
             if (error) {
-              console.error('Erreur lors de l\'insertion', error);
+              console.error('Fehler beim Einfügen', error);
               reject(error);
             } else {
-              console.log('Objet inséré avec succès, ID:', resultat.insertId);
-              resolve();  // Continue with the next iteration
+              console.log('Komponente erfolgreich eingefügt, ID:', resultat.insertId);
+              resolve();  
             }
           });
         }
@@ -556,17 +504,16 @@ function insertDataIntoRam(connection, scrapedData) {
     insertPromises.push(queryPromise);
   }
 
-  // Execute all promises and continue even if some fail
   return Promise.allSettled(insertPromises)
     .then(() => {
-      console.log('Toutes les insertions ont été traitées.');
+      console.log('Alle Einfügungen wurden bearbeitet.');
     })
     .catch((err) => {
-      console.error('Une erreur s\'est produite:', err);
+      console.error('Fehler beim Einfügen', err);
   });
 }
 
-// Fonction pour insérer des données dans la table Netzteil
+//Netzteil
 function insertDataIntoNetzteil(connection, scrapedData) {
 
   insertDataIntoArtikel(connection, scrapedData);
@@ -578,13 +525,12 @@ function insertDataIntoNetzteil(connection, scrapedData) {
     const queryPromise = new Promise((resolve, reject) => {
       connection.query(sqlUrl, (error, results) => {
         if (error) {
-          console.error('Datenbank fehler', error);
+          console.error('Datenbank Fehler', error);
           reject(error);
         } else if (results.length > 0) {
           console.log('Url bereits vorhanden.');
-          resolve();  // Continue with the next iteration
+          resolve(); 
         } else {
-          console.log("***** L'insertion *****");
 
           const sqlCpu = `INSERT INTO Netzteil (artikelnummer, bauform, url, zertifizierung, leistung)
           VALUES (?, ?, ?, ?, ?)`;
@@ -599,11 +545,11 @@ function insertDataIntoNetzteil(connection, scrapedData) {
 
           connection.query(sqlCpu, valuesCpu, (error, resultat) => {
             if (error) {
-              console.error('Erreur lors de l\'insertion', error);
+              console.error('Fehler beim Einfügen', error);
               reject(error);
             } else {
-              console.log('Objet inséré avec succès, ID:', resultat.insertId);
-              resolve();  // Continue with the next iteration
+              console.log('Komponente erfolgreich eingefügt, ID:', resultat.insertId);
+              resolve();  
             }
           });
         }
@@ -612,17 +558,21 @@ function insertDataIntoNetzteil(connection, scrapedData) {
     insertPromises.push(queryPromise);
   }
 
-  // Execute all promises and continue even if some fail
   return Promise.allSettled(insertPromises)
     .then(() => {
-      console.log('Toutes les insertions ont été traitées.');
+      console.log('Komponente erfolgreich eingefügt, ID:');
     })
     .catch((err) => {
-      console.error('Une erreur s\'est produite:', err);
+      console.error('Fehler beim Einfügen', err);
   });
 }
 
-//Insert les donnees dans la base de donnees en fonction de la categorie
+/**
+ * Diese Funktion fügt Artikel basierend auf der Kategorie in die Datenbank ein.
+ * Je nach Kategorie wird die entsprechende Funktion für das Einfügen aufgerufen.
+ * @param {object} connection - Die Datenbankverbindung.
+ * @param {object} artikelListe - Ein Objekt, das die Artikelkategorie und die dazugehörigen Daten enthält.
+ */
 function insertArtikel(connection, artikelListe){
 
   if(artikelListe.kategorie === 'Festplatte'){

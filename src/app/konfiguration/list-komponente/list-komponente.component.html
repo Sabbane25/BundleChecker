@@ -2,26 +2,25 @@
   <!-- Das Div beinhahlt alle Komponenten und jede Komponente die entspechenden Artikel -->
   <!-- Die Komponenten werden mit Hilfe einer schleife generiert -->
   <div class="komponanten-div" >
-    <div class="accordion" id="accordionExample">
+    <!--<div class="accordion" id="accordionExample">-->
+    <div class="accordion accordion-flush" id="accordionFlushExample">
       <div class="accordion-item" *ngFor="let kategorie of listeKategorie">
-        <h2 class="accordion-header">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#' + kategorie"  aria-expanded="false" aria-controls="flush-collapseTwo">
+        <h2 class="accordion-header" (click)="setzeLadeMehrProdukteZurueck(kategorie)" >
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#flush-collapseTwo' + kategorie"  aria-expanded="false" aria-controls="flush-collapseTwo">
             <div class="item-img">
-              <img src="./assets/Komponenten/{{ kategorie }}.jpg" alt="">
+              <img src="./assets/Komponenten/{{ kategorie === 'Gehäuse' ? 'Gehaeuse' : kategorie }}.jpg" alt="">
             </div>
             {{kategorie}}
           </button>
         </h2>
-        <!-- Hier wird alle Produkt einer Kategorie angezeigt. Und ein geeignetes Filter -->
-        <div [id]="kategorie" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+        <!-- Hier wird alle Produkte einer Kategorie angezeigt. Und ein geeignetes Filter dafür -->
+        <div [id]="'flush-collapseTwo' + kategorie" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
           <div class="accordion-body">
-            <!-- filter (Es handelt es sich um eine separat Composant)-->
-            <!-- <app-filter [listKomponente]="artikelList3" [listKomponenteItem]="kategorieItem"></app-filter> -->
-            <div class="list-artikel" *ngFor="let item of artikelliste">
-              <div *ngIf="kategorie === item.kategorie">
-                <div class="row  item" *ngFor="let artikelItem of item.artikelListe">
+            <app-filter [filterKategorie]="kategorie" [artikelliste]="artikelliste"></app-filter>
+            <div class="list-artikel" >
+              <div *ngIf="kategorie === zeigeArtikel2.kategorie">
+                <div class="row  item" *ngFor="let artikelItem of zeigeArtikel2.artikelListe">
                   <div class="col-1 border justify-content-md-center">
-                    <!-- <img src="{{ item.shop2.image }}" alt=""> -->
                     <img src="{{ artikelItem.shop2.image }}" alt="">
                   </div>
                   <!-- Beschreibung der Artikels-->
@@ -31,10 +30,16 @@
                     <p> <span class="futureX">{{ artikelItem.shop2.shopID === 1 ? 'Alternate' : 'Future-X' }}</span> : <span class="shoppreis">{{ artikelItem.shop2.preis }} €</span> </p>
                   </div>
                   <div class="col">
-                    <button (click)="onButtonhinzufuegen(artikelItem.shop1, artikelItem.shop2)">HINZUFÜGEN</button>
+                    <button (click)="onButtonhinzufuegen(artikelItem)">HINZUFÜGEN</button>
                   </div>
                 </div>
               </div>
+            </div>
+            <!-- Button für mehr Produkte laden -->
+            <div class="d-grid gap-2 col-5 mx-auto my-auto">
+              <button [hidden]="kannNochProdukteLaden" (click)="ladeProdukte(kategorie)" class="btn btn-outline-dark py-1" style="font-size: 14px;">
+                Mehr Produkte laden
+              </button>
             </div>
           </div>
         </div>
@@ -51,13 +56,21 @@
           <img src="./assets/konfiguarion.png" alt="">
         </div>
       </div>
+      <!--Button um die selektierende Artikel in übersicht zu schicken -->
       <div class="button-artikel">
         <button (click)="zurUebersicht()">Zur Übersicht</button>
       </div>
-      <div class="artikel" *ngFor="let artikel of hinzugefuegteArtikel">
-        <h4>{{artikel.kategorie}}: {{artikel.marke }}</h4>
-        <p> {{artikel.bezeichnung}} </p>
+      <div class="artikel" *ngFor="let artikel of hinzugefuegteArtikel2">
+        <div class="Beschreibung">
+          <h4>{{artikel.shop2.kategorie}}: {{artikel.shop2.marke }}</h4>
+          <p> {{artikel.shop2.bezeichnung}} </p>
+        </div>
+        <button (click)="loescheArtikel(artikel.shop1.produktUrl)" >
+          <img src="./assets/trash-regular-red-24.png" alt="Delete" />
+        </button>        
       </div>
     </div>
   </div>
 </div>
+
+

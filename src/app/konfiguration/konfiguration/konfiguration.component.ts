@@ -7,22 +7,22 @@ import { Component } from '@angular/core';
 })
 export class KonfigurationComponent {
 
-  //Initialisation de variable, qui servent au swich entre les Komponanten et la liste Übersicht
+  //Initialisierung von Variablen, die dem Switch zwischen den verschiedenen Komponenten dienen: Listenkomponente und Uebersicht.
   zeigeListUebersicht = false;
   zeigeListKomponenten = true;
-  gitFarbe: boolean = false;
+  gibFarbe: boolean = false;
 
-  //cette methode permet de passer de la liste de composant a la liste Übersicht
+  //diese Methode wechselt von der liste-komponentenliste zur uebersicht
   zuUebersicht(){
     this.zeigeListKomponenten = false;
     this.zeigeListUebersicht = true;
-    this.gitFarbe = this.zeigeListUebersicht;
+    this.gibFarbe = this.zeigeListUebersicht;
   }
 
-  //cette methode permet de passer de la liste de Übersicht a la liste de composant
+  //diese Methode wechselt von der uebersicht zur liste-komponentenliste 
   zuKomponenten(){
     this.zeigeListUebersicht = false;
     this.zeigeListKomponenten = true;
-    this.gitFarbe = this.zeigeListUebersicht;
+    this.gibFarbe = this.zeigeListUebersicht;
   }
 }

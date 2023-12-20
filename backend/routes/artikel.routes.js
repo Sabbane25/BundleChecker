@@ -27,7 +27,6 @@ module.exports = function(app, connection) {
       return res.status(400).json({ message: 'Artikel ist erforderlich' });
     }
 
-    const query2 = `SELECT A.*, T.* FROM Artikel A, ${tableArtikel} T WHERE A.Url = T.Url`
 
     const query =`
         SELECT *
@@ -38,8 +37,8 @@ module.exports = function(app, connection) {
 
     connection.query(query, (error, results) => {
       if (error){
-        console.error('Erreur lors de l\'execution de la requete :', error);
-        res.status(500).json({ error: 'Erreur lors de la rÃ©cupÃ©ration des donnÃ©es' });
+        console.error('Fehler bei der Ausführung der Anfrage', error);
+        res.status(500).json({ error: 'Fehler beim Abrufen der Daten' });
       } else {
         res.json(results);
       }
@@ -48,7 +47,7 @@ module.exports = function(app, connection) {
 
   app.get('/Artikel2/:artikel', (req, res) => {
     const tableArtikel = req.params.artikel;
-    let shopId = req.query.shopId || 2; // Valeur par dÃ©faut Ã  2 si le paramÃ¨tre n'est pas fourni
+    let shopId = req.query.shopId || 2;
 
     // Überprüfe ob Artikel gültiges format entspricht
     if (!tableArtikel || typeof tableArtikel !== 'string') {
@@ -71,8 +70,8 @@ module.exports = function(app, connection) {
 
     connection.query(query, [shopId], (error, results) => {
       if (error){
-        console.error('Erreur lors de l\'execution de la requete :', error);
-        res.status(500).json({ error: 'Erreur lors de la rÃ©cupÃ©ration des donnÃ©es' });
+        console.error('Fehler bei der Ausführung der Anfrage', error);
+        res.status(500).json({ error: 'Fehler beim Abrufen der Daten' });
       } else {
         res.json(results);
       }
@@ -82,7 +81,7 @@ module.exports = function(app, connection) {
   // um Eigenschaften jeder Artikel zu bekommen.
   app.get('/eigenschaften/:table/:marke', (req, res) => {
     const tableName = req.params.table;
-    const markeValue = req.params.marke; // Nouveau paramÃ¨tre
+    const markeValue = req.params.marke; 
 
     // Überprüfe ob Table-Name gültiges format entspricht
     if (!tableName || typeof tableName !== 'string') {
@@ -97,18 +96,17 @@ module.exports = function(app, connection) {
     const query = `
     SELECT DISTINCT ${tableName}.${markeValue}
     FROM ${tableName}
-    JOIN Artikel ON ${tableName}.url = Artikel.produktUrl`; // Ajout d'une condition WHERE pour le paramÃ¨tre "marke"
+    JOIN Artikel ON ${tableName}.url = Artikel.produktUrl`; 
 
     connection.query(query, [markeValue], (error, results) => {
       if (error) {
-        // En cas d'erreur SQL, renvoyer un message d'erreur avec le code 500 (Erreur interne du serveur)
-        return res.status(500).json({ error: 'Erreur interne du serveur lors de l\'exÃ©cution de la requÃªte SQL.' });
+        return res.status(500).json({ error: 'Fehler bei der Ausführung der Anfrage -- Eigenschaften' });
       }
       res.json(results);
     });
   });
 
-  // gib alle Artikelmarke einer Marke zurÃ¼k
+  // gib eine Liste von aller Marke einer Kategorie zurueck
   app.get('/marke/:table', (req, res) => {
     const tableName = req.params.table;
 

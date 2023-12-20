@@ -1,6 +1,11 @@
+/**
+ * Scraping FutureX
+ * Arnauld Mba Kuitche
+ *
+ */
 const mysql = require('mysql2');
 
-// Fonction pour insérer des données dans la table Artikel
+// Funktion zum Einfügen von Daten in die Tabelle Artikel
 function insertDataIntoArtikel(connection, scrapedData) {
   for (const data of scrapedData) {
     const sqlArtikel = `INSERT INTO Artikel(Kategorie, Preis, ShopID, ProduktUrl, Bezeichnung, LieferDatum)
@@ -23,7 +28,7 @@ function insertDataIntoArtikel(connection, scrapedData) {
   }
 }
 
-// Fonction pour insérer des données dans la table CPU
+// Funktion zum Einfügen von Daten in die CPU-Tabelle
 function insertDataIntoCPU(connection, scrapedData) {
   for (const data of scrapedData) {
     const sqlUrl = `SELECT * FROM CPU WHERE Url = "${data.produktlink}"`;
