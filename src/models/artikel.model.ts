@@ -1,11 +1,4 @@
-import { Cpu } from "./cpu.model";
 import { Filter } from "./filter.models";
-import { Gehaeuse } from "./gehaeuse.model";
-import { Grafikkarte } from "./grafikkarte.model";
-import { Mainboard } from "./mainboard.model";
-import { Netzteil } from "./netzteil.model";
-import { Ram } from "./ram.model";
-import { Speicher } from "./speicher.model";
 
 export abstract class Artikel {
   kategorie: string;
@@ -35,6 +28,12 @@ export abstract class Artikel {
 
   abstract gibArtikelTitel(): string;
 
+  /**
+   * Filtert zwei Artikel (shop1 und shop2) basierend auf den angegebenen Kriterien.
+   * @param item Ein Objekt mit zwei Artikel-Instanzen (shop1 und shop2).
+   * @param kriterium Das Filterobjekt, das die Kriterien enthält.
+   * @returns True, wenn beide Artikel den Kriterien entsprechen, sonst False.
+   */
   static filterKrierien(item: { shop1: Artikel, shop2: Artikel }, kriterium: Filter): boolean {
     let matchesShop1 = true;
     let matchesShop2 = true;

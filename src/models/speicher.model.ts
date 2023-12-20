@@ -7,7 +7,6 @@ export class Speicher extends Artikel{
     kapazitaet: string;
     lesen: number;
     schreiben: number;
-    [cle: string]: any; //neu
 
     constructor(kategorie: string, preis: number, shopID: number, produktLink: string, bezeichnung: string, lieferDatum: number, marke: string, bildUrl: string,
         artikelnummer: number, typ: string, kapazitaet: string, lesen: number, schreiben: number) {
@@ -20,6 +19,13 @@ export class Speicher extends Artikel{
         this.schreiben = schreiben;
     }
 
+    /**
+     * Filtert eine Liste von Objekten, die jeweils zwei Artikel (shop1 und shop2) enthalten, 
+     * und gibt eine gefilterte Liste von Objekten zurück.
+     * @param arr Eine Liste von Objekten, die jeweils zwei Artikel-Instanzen (shop1 und shop2) enthalten.
+     * @param kriterium Das Filterobjekt, das die Kriterien enthält.
+     * @returns Eine gefilterte Liste von Objekten, die jeweils zwei Instanzen enthalten.
+     */
     override gibArtikelTitel(): string {
         return `${this.typ}`;
     }

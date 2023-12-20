@@ -213,7 +213,7 @@
   box-shadow: 0px 0px 15px rgba(160, 160, 160, 0.6);
   width: 95%;
   margin-left: 26px;
-  padding: 16px 16px 40px 16px;
+  padding: 16px 16px 16px 16px;
 }
 
 .neu-konfig-div .container1{
@@ -261,11 +261,11 @@
 }
 
 .neu-konfig-div .container .artikel .Beschreibung h4{
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .neu-konfig-div .container .artikel .Beschreibung p{
-  font-size: 11px;
+  font-size: 12px;
   color: rgb(54, 54, 54);
 }
 
@@ -283,4 +283,14 @@ input:invalid:required {
 
 input:valid {
   border: 2px solid black;
+}
+
+.übersichAnzahlArtikel{
+  margin-top: 10px;
+}
+
+.übersichAnzahlArtikel p{
+  text-align: center;
+  font-size: 14px;
+  color: #00528D;
 }

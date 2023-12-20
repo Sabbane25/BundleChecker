@@ -31,7 +31,9 @@ export class ListKomponenteComponent implements AfterViewInit{
 
   ladeMehrArtikel = 5; // dient als Variable, um die Anzahl der Artikel zu erhöhen, die geladen werden.
   kannNochProdukteLaden = false; // Ermöglicht die Anzeige des Buttons LADE MEHR PRODUKTE, wenn es noch Produkte zum Anzeigen gibt.
+  zeigeArtikel2: {kategorie: string, artikelListe: Array<{ shop1: Artikel, shop2: Artikel}>} = {kategorie: '',artikelListe: []}; // 
 
+  isArtikelVorhanden = true; // true wenn der Artikel schon vorhanden ist. (Neu Konfiguration -- liste-komponente (50 - 72))
   dataSubscription: Subscription; 
 
   /**
@@ -41,12 +43,14 @@ export class ListKomponenteComponent implements AfterViewInit{
    */
   onButtonhinzufuegen(artikelItem: { shop1: Artikel; shop2: Artikel; }) {
     let hatschonArtikel = false;
+    this.isArtikelVorhanden = true;
     if(this.hinzugefuegteArtikel2.length > 0){
       for(let i = 0; i < this.hinzugefuegteArtikel2.length && hatschonArtikel === false; i++){
         hatschonArtikel = artikelItem.shop1.kategorie === this.hinzugefuegteArtikel2[i].shop1.kategorie;
       }
       if(hatschonArtikel){
         console.log('Mehrere Produkte derselben Kategorie könen nicht ausgewählt werden!');
+        this.isArtikelVorhanden = false;
       }else{
         this.hinzugefuegteArtikel2.push(artikelItem);
       }
@@ -81,12 +85,15 @@ export class ListKomponenteComponent implements AfterViewInit{
       // Lösche den Artikel aus der Liste der hinzugefügten Artikel
       this.hinzugefuegteArtikel2.splice(zuloeschendeArtikel, 1);
     }
+
+    if(this.hinzugefuegteArtikel2.length === 0){
+      this.isArtikelVorhanden = true;
+    }
   }
   
   constructor(
     private artikelService: ArtikelService, 
     private filterService: FilterService,
-    private ramService: RamService
     ) {}
 
   ngOnInit(): void {
@@ -160,7 +167,6 @@ export class ListKomponenteComponent implements AfterViewInit{
      });
   }
 
-  zeigeArtikel2: {kategorie: string, artikelListe: Array<{ shop1: Artikel, shop2: Artikel}>} = {kategorie: '',artikelListe: []};
   /**
    * Diese Methode gibt eine Liste von Artikeln aus der Artikelliste zurück, basierend auf der angegebenen Kategorie.
    * @param kategorie Die Kategorie, für die die Artikel abgerufen werden sollen.
@@ -187,11 +193,16 @@ export class ListKomponenteComponent implements AfterViewInit{
     return listeArtikel;
   }
 
+
+  /**
+   * Die Methode 'ladeProdukte' wird verwendet, um weitere Produkte zu laden und sie der angezeigten Produktliste hinzuzufügen.
+   * @param {string} kategorie - Die Produktkategorie, für die weitere Produkte geladen werden sollen.
+   * @returns {void}
+   */
   ladeProdukte(kategorie: string){
     this.ladeMehrArtikel = this.ladeMehrArtikel + 5;
     this.zeigeArtikel2.kategorie = kategorie;
     this.zeigeArtikel2.artikelListe = this.gibMehereProdukte(kategorie);
-    console.log(this.ladeMehrArtikel);
   }
 
   setzeLadeMehrProdukteZurueck(kategorie: string){

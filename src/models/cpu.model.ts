@@ -11,7 +11,7 @@ export class Cpu extends Artikel{
     threads: number;
     typ: string;
     turbo: number;
-    [cle: string]: any; //neu
+    [cle: string]: any; 
 
     constructor(kategorie: string, preis: number, shopID: number, produktUrl: string, bezeichnung: string, lieferDatum: number, marke: string, image: string,
         artikelnummer: number, sockel: string, anzahlKerne: number, stromverbrauch: number, taktfrequenz: string, interneGrafik: string, threads: number, typ: string, turbo: number) {
@@ -45,6 +45,12 @@ export class Cpu extends Artikel{
         return `${this.typ} - ${this.stromverbrauch} - ${this.taktfrequenz} - ${this.sockel} - ${this.anzahlKerne} - ${this.interneGrafik}`;
     }
 
+    /**
+     * Filtert zwei Cpu-Objekte (shop1 und shop2) basierend auf den angegebenen Kriterien.
+     * @param item Ein Objekt mit zwei Cpu-Instanzen (shop1 und shop2).
+     * @param kriterium Das Filterobjekt, das die Kriterien enthält.
+     * @returns True, wenn beide Cpu-Objekte den Kriterien entsprechen, sonst False.
+     */
     static filterCpuByCriteria(item: { shop1: Cpu, shop2: Cpu }, kriterium: Filter): boolean {
         let matchesShop1 = true;
         let matchesShop2 = true;
@@ -73,6 +79,13 @@ export class Cpu extends Artikel{
         return matchesShop1 && matchesShop2;
     }
 
+    /**
+     * Filtert eine Liste von Objekten, die jeweils zwei Artikel (shop1 und shop2) enthalten, 
+     * und gibt eine gefilterte Liste von Cpu-Objekten zurück.
+     * @param arr Eine Liste von Objekten, die jeweils zwei Artikel-Instanzen (shop1 und shop2) enthalten.
+     * @param kriterium Das Filterobjekt, das die Kriterien enthält.
+     * @returns Eine gefilterte Liste von Objekten, die jeweils zwei Cpu-Instanzen enthalten.
+     */
     static filterByMapCriteria(arr: Array<{ shop1: Artikel, shop2: Artikel }>, kriterium: Filter): Array<{ shop1: Artikel, shop2: Artikel }> {
         let listeCpu: Array<{ shop1: Cpu, shop2: Cpu }> = [];
 
@@ -82,6 +95,5 @@ export class Cpu extends Artikel{
             }
         }
         return listeCpu.filter(item => this.filterCpuByCriteria(item, kriterium));
-    }
-        
+    }   
 }
