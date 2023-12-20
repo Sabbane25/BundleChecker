@@ -1,5 +1,5 @@
-
 import { Artikel } from "./artikel.model";
+import { Filter } from "./filter.models";
 
 export class Speicher extends Artikel{
     artikelnummer: number;
@@ -18,7 +18,14 @@ export class Speicher extends Artikel{
         this.lesen = lesen;
         this.schreiben = schreiben;
     }
-    
+
+    /**
+     * Filtert eine Liste von Objekten, die jeweils zwei Artikel (shop1 und shop2) enthalten, 
+     * und gibt eine gefilterte Liste von Objekten zurück.
+     * @param arr Eine Liste von Objekten, die jeweils zwei Artikel-Instanzen (shop1 und shop2) enthalten.
+     * @param kriterium Das Filterobjekt, das die Kriterien enthält.
+     * @returns Eine gefilterte Liste von Objekten, die jeweils zwei Instanzen enthalten.
+     */
     override gibArtikelTitel(): string {
         return `${this.typ}`;
     }
@@ -27,4 +34,14 @@ export class Speicher extends Artikel{
         return `${this.typ} • ${this.kapazitaet} • ${this.schreiben} • ${this.lesen}`;
     }
 
+    static filterByMapCriteria(arr: Array<{ shop1: Artikel, shop2: Artikel }>, kriterium: Filter): Array<{ shop1: Artikel, shop2: Artikel }> {
+        let listeCpu: Array<{ shop1: Speicher, shop2: Speicher }> = [];
+
+        for (const artikel of arr) {
+            if (artikel.shop1 instanceof Speicher && artikel.shop2 instanceof Speicher) {
+                listeCpu.push({ shop1: artikel.shop1, shop2: artikel.shop2 });
+            }
+        }
+        return arr.filter(item => this.filterKrierien(item, kriterium));
+    }
 }

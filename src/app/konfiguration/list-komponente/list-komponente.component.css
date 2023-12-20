@@ -10,15 +10,14 @@
 }
 
 .komponanten-div{
-  flex: 0 0 auto; /* Équivalent à flex-grow: 0; flex-shrink: 0; flex-basis: auto; */
+  flex: 0 0 auto;
   align-self: flex-start;
   margin: 0px;
   padding:0px;
   width: 63%;
-  /*box-shadow: 0px 0px 15px rgba(160, 160, 160, 0.6);*/
+
 }
 
-/*----- ITEM STYLE -------*/
 .komponanten-div .accordion{
   margin-bottom: 18px;
 }
@@ -39,6 +38,7 @@
   height: 100%;
   border-radius: 12px;
   padding-right: 12px;
+  color: #00528D;
 }
 
 .komponanten-div .accordion-item .accordion-header .accordion-button .item-img{
@@ -213,7 +213,7 @@
   box-shadow: 0px 0px 15px rgba(160, 160, 160, 0.6);
   width: 95%;
   margin-left: 26px;
-  padding: 16px 16px 40px 16px;
+  padding: 16px 16px 16px 16px;
 }
 
 .neu-konfig-div .container1{
@@ -257,15 +257,20 @@
   padding: 4px;
   margin-bottom: 4px;
   border-bottom: 1px solid black;
+  display: flex;
 }
 
-.neu-konfig-div .container .artikel h4{
-  font-size: 14px;
+.neu-konfig-div .container .artikel .Beschreibung h4{
+  font-size: 16px;
 }
 
-.neu-konfig-div .container .artikel p{
-  font-size: 11px;
+.neu-konfig-div .container .artikel .Beschreibung p{
+  font-size: 12px;
   color: rgb(54, 54, 54);
+}
+
+.neu-konfig-div .container .artikel button{
+  background: transparent; border: none; padding: 0;
 }
 
 input:invalid {
@@ -278,4 +283,14 @@ input:invalid:required {
 
 input:valid {
   border: 2px solid black;
+}
+
+.übersichAnzahlArtikel{
+  margin-top: 10px;
+}
+
+.übersichAnzahlArtikel p{
+  text-align: center;
+  font-size: 14px;
+  color: #00528D;
 }

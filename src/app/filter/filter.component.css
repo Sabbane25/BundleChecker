@@ -3,17 +3,20 @@
   margin: 0px;
 }
 
-.filter{
+/*äußerer Rand des Filters*/
+.filter .test{
   padding: 0px 0px;
   border: 1px solid rgb(186, 186, 186);
   margin: 4px 4px;
 }
 
+/*T Überschrift der Item */
 .accordion-item h2{
   margin-top: 8px;
   margin: 0px;
 }
 
+/*Button in h2*/
 .accordion-item button{
   border-style: none;
   padding: 8px;
@@ -80,6 +83,5 @@
 
   .accordion-item .filter_button .abbrechen_click{
     width: 20%;
-    
   }
 
