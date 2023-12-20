@@ -17,15 +17,21 @@
         </div>
     </div>
 
-    <!--<div *ngIf="zeigeListKomponenten">
+    <div *ngIf="zeigeListKomponenten$ | async; else contenuAutre">
         <app-list-komponent></app-list-komponent>
     </div>
-
-    <div *ngIf="zeigeListUebersicht">
+    <ng-template #contenuAutre>
         <app-uebersicht></app-uebersicht>
-    </div>-->
+    </ng-template>
+
+
+
     <!--Import von Composant -->
-    <app-list-komponent *ngIf="zeigeListKomponenten" [hidden]="!zeigeListKomponenten" ></app-list-komponent>
-    <app-uebersicht *ngIf="!zeigeListKomponenten" [hidden]="zeigeListKomponenten" ></app-uebersicht>
+    <!--<app-list-komponent *ngIf="zeigeListKomponenten" [hidden]="!zeigeListKomponenten" ></app-list-komponent>
+    <app-uebersicht *ngIf="!zeigeListKomponenten" [hidden]="zeigeListKomponenten" ></app-uebersicht> -->
+    
+    <!--<app-list-komponent *ngIf="zeigeListKomponenten" [hidden]="!zeigeListKomponenten" ></app-list-komponent>
+    <app-uebersicht *ngIf="!zeigeListKomponenten" [hidden]="zeigeListKomponenten" ></app-uebersicht>-->
+
 </div>
 

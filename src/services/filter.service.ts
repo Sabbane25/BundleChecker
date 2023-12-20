@@ -14,5 +14,5 @@ export class FilterService {
     this.dataFilterSource.next(data);
   }
 
-  constructor() { }
+  constructor() {}
 }

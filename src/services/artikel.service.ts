@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, map, BehaviorSubject } from 'rxjs';
+import { Observable, catchError, map, BehaviorSubject, Subject } from 'rxjs';
 import { Artikel } from 'src/models/artikel.model';
 import { Ram } from 'src/models/ram.model';
 import { Cpu } from 'src/models/cpu.model';
@@ -8,7 +8,6 @@ import { Gehaeuse } from 'src/models/gehaeuse.model';
 import { Grafikkarte } from 'src/models/grafikkarte.model';
 import { Mainboard } from 'src/models/mainboard.model';
 import { Netzteil } from 'src/models/netzteil.model';
-import { Nutzer } from 'src/models/nutzer.model';
 import { Speicher } from 'src/models/speicher.model';
 import { apiConfig } from '../config/api.config';
 
@@ -22,15 +21,21 @@ export class ArtikelService {
 
   constructor(private http: HttpClient) { }
 
+  //zur übersicht switchen
+  private wechseltKomponente = new BehaviorSubject<boolean>(true);
+  wechseltKomponenteObservable$ = this.wechseltKomponente.asObservable();
+
+  /*
+  * Ermöglicht das Wechseln der Komponente, 
+  * wenn man auf ,,Zur Übersicht'' klickt.
+  */
+  wechseltKomponenteFunktion(zuneuenKomponente: boolean){
+    this.wechseltKomponente.next(zuneuenKomponente);
+  }
+
   getProducts(): Observable<any> {
     return this.http.get<any>(`${this.apiURL}/`);
   } 
-
-  /*
-  getAllKategorien(): Observable<any> {
-    return this.http.get<any>(`${this.apiURL}/Kategorie`);
-  }
-  */
 
   // gib eine Liste von Marke einer kategorie
   gibListeMarke(kategorie: string): Observable<any>{
@@ -41,21 +46,6 @@ export class ArtikelService {
   gibListeEigenschaft(kategorie: string, parameter: string,): Observable<any>{
     return this.http.get<any>(`${this.apiURL}/eigenschaften/${kategorie}/${parameter}`); 
   }
-
-  /*
-  getAllProducts(products: string): Observable<any> {
-    return this.http.get<any>(`${this.apiURL}/Produkte/${products}`);
-  }*/
-
-  /*
-  getAllProducts2(shopId: number, products: string): Observable<any> {
-    return this.http.get<any>(`${this.apiURL}/Artikel2/${products}?shopId=${shopId}`);
-  }*/
-
-  /*
-  getAllRam(kategorie: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiURL}/Artikel/${kategorie}`);
-  }*/
 
   /**
    * Diese Methode ruft eine Liste von Ram basierend auf der Shop-ID und Kategorie ab.
@@ -254,41 +244,7 @@ export class ArtikelService {
     return JSON.parse(JSON.stringify(obj));
   }
 
-  //cette variable retourne un true lorsque il y a au moins un elements lorsque le filtre est applique
+  //gibt true zurück, wenn es mindestens ein elements gibt, wenn der Filter angewendet wird
+  //sie dient dazu, die Elemente nach dem Filtern zurückzusetzen
   hatArtikel = true;
-
-  //Arnauld
-  //Nouvelle maniere d'acceder a des methodes
-  artikelliste: Array<{ kategorie: string, artikelListe: Array<{ shop1: Artikel, shop2: Artikel}>}> = [];
-  
-  private listeRamSubject: BehaviorSubject<Ram[]> = new BehaviorSubject<Ram[]>([]);
-  public listeRam$: Observable<Ram[]> = this.listeRamSubject.asObservable();
-
-  public gibListeRam2(shopId: number, kategorie: string): Observable<Ram[]> {
-    return this.http.get<any[]>(`${this.apiURL}/Artikel2/${kategorie}?shopId=${shopId}`).pipe(
-      map((data) => {
-        const listeRam = data.map((ramData: any) => new Ram(
-          ramData.kategorie,
-          ramData.preis,
-          ramData.shopID,
-          ramData.produktUrl,
-          ramData.bezeichnung,
-          ramData.lieferDatum,
-          ramData.marke,
-          ramData.image,
-          ramData.artikelnummer,
-          ramData.typ,
-          ramData.kapazitaet,
-          ramData.latency,
-          ramData.spannung
-        ));
-        this.listeRamSubject.next(listeRam); // Met à jour les abonnés avec la nouvelle valeur
-        return listeRam;
-      })
-    );
-  }
-
-  public getListeRam(): Ram[] {
-    return this.listeRamSubject.value; // Récupère la valeur actuelle sans s'abonner à l'observable
-  }
 }

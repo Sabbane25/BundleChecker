@@ -34,7 +34,7 @@ export class ListKomponenteComponent implements AfterViewInit{
   zeigeArtikel2: {kategorie: string, artikelListe: Array<{ shop1: Artikel, shop2: Artikel}>} = {kategorie: '',artikelListe: []}; // 
 
   isArtikelVorhanden = true; // true wenn der Artikel schon vorhanden ist. (Neu Konfiguration -- liste-komponente (50 - 72))
-  dataSubscription: Subscription; 
+  dataSubscription: Subscription; // Variable aus meinem Filterservice. Ermöglicht die Kommunikation zwischen der Filter- und der Liste-Komponente.
 
   /**
    * Diese Methode fügt einen Artikel zur Liste der hinzugefügten Artikel hinzu, wenn er noch nicht vorhanden ist.
@@ -69,6 +69,11 @@ export class ListKomponenteComponent implements AfterViewInit{
     }
     this.artikelService.updateGuenstigstesArtikel(hinzugefuegteArtikel);
     this.artikelService.updateSchnellstesArtikel(hinzugefuegteArtikel);
+    /*
+     * Methode aus dem ArtikelService. Ermöglicht das Wechseln der Komponente, 
+     * wenn man auf ,,Zur Übersicht'' klickt.
+     */
+    this.artikelService.wechseltKomponenteFunktion(false);
   }
 
   /**
