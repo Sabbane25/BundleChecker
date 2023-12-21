@@ -25,7 +25,7 @@ module.exports = function(app, connection) {
       return res.status(400).json({ message: 'Body ist leer' });
     }
 
-    updateDataInArtikel(connection, scrapedData.value);
+    //updateDataInArtikel(connection, scrapedData.value);
     insertArtikel(connection, scrapedData);
 
     res.status(200).send('Daten erfolgreich empfangen');
