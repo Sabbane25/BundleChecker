@@ -1,4 +1,5 @@
 //Autor: Tim Hinder
+
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { NutzerService } from 'src/services/nutzer.service';
 import { Router } from '@angular/router';
@@ -13,13 +14,17 @@ import { TokenStorageService } from 'src/services/token-storage.service';
 export class AdminComponent implements OnInit {
   @ViewChild('searchInput', { static: false }) searchInput: ElementRef;
   users: any[] = [];
+  originalUsers: any[] = [];
   displayedUsers: any[] = [];
   pageSize: number = 5;
+  currentPage: number = 1;
+  totalItems: number = 0;
   deletedUserSuccess = false;
   deletedUserFail = false;
   loeschenErfolgreichNachricht = '';
   loeschenFehlerNachricht = '';
   disableButton = false;
+  isSearching: boolean = false;
 
   constructor(
     private token: TokenStorageService,
@@ -40,26 +45,39 @@ export class AdminComponent implements OnInit {
   }
 
   //Ruft die User aus der Datenbank ab und fügt diese dem Array users zu.
-  loadUsers() {
+  loadUsers(): void {
     this.nutzerService.getUsers().subscribe((data) => {
-      this.users = data;
+      this.originalUsers = data;
+  
+      // Sortiere die Benutzer numerisch nach der Zahl in der E-Mail
+      this.originalUsers.sort((a, b) => {
+        const numA = this.extractNumber(a.email);
+        const numB = this.extractNumber(b.email);
+  
+        return numA - numB;
+      });
+  
+      this.totalItems = this.originalUsers.length;
       this.updateDisplayedUsers();
     });
   }
-  //Methode, um die Anzeige der Users zu aktualisieren
-  updateDisplayedUsers() {
-    this.displayedUsers = this.users.slice(0, this.pageSize);
+  
+  extractNumber(email: string): number {
+    const match = email.match(/\d+/);
+    return match ? parseInt(match[0], 10) : 0; // Wenn kein Match gefunden wurde, gib 0 zurück
   }
 
-  //Methode, um weitere User zu laden.
-  loadMoreUsers() {
-    const startIndex = this.displayedUsers.length;
+  updateDisplayedUsers(): void {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    if (startIndex < this.users.length) {
-      this.displayedUsers = [
-        ...this.displayedUsers,
-        ...this.users.slice(startIndex, endIndex),
-      ];
+    this.displayedUsers = this.originalUsers.slice(startIndex, endIndex);
+  }
+
+  loadMoreUsers(): void {
+    const totalPages = Math.ceil(this.totalItems / this.pageSize);
+    if (this.currentPage < totalPages) {
+      this.currentPage++;
+      this.updateDisplayedUsers();
     }
 
     if(this.users.length === this.displayedUsers.length){
@@ -68,20 +86,32 @@ export class AdminComponent implements OnInit {
 
   }
 
-  //Methode, um User zu suchen.
-  filterUsers() {
+  loadPreviousUsers(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updateDisplayedUsers();
+    }
+  }
+
+  filterUsers(): void {
     const email = this.searchInput.nativeElement.value;
     const lowerCaseSearch = email.toLowerCase();
-    
+  
     if (!lowerCaseSearch) {
+      this.isSearching = false; // Suche ist nicht aktiv
       this.loadUsers();
     } else {
-      this.users = this.users.filter(user => {
+      this.isSearching = true; // Suche ist aktiv
+      this.displayedUsers = this.originalUsers.filter((user) => {
         const lowerCaseEmail = user.email.toLowerCase();
         return lowerCaseEmail.includes(lowerCaseSearch);
       });
-      this.updateDisplayedUsers();
+  
+      this.currentPage = 1; // Zur ersten Seite zurückkehren, wenn die Suche aktiviert wird.
     }
+  
+    // Deaktiviere die Buttons während der Suche
+    this.disableButton = this.isSearching;
   }
 
   //Methode, um User zu löschen
@@ -94,6 +124,8 @@ export class AdminComponent implements OnInit {
         this.deletedUserFail = false;
         // @ts-ignore
         this.loeschenErfolgreichNachricht = data.message;
+  
+        // Nach dem Löschen die Seite aktualisieren
         this.loadUsers();
       },
       (error) => {

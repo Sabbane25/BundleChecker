@@ -1,4 +1,4 @@
-/*Autor: Tim Hinder*/
+//Autor: Tim Hinder*/
 
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';

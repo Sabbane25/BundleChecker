@@ -77,3 +77,8 @@
     color: white;
     background-color: #00528dd7; 
 }
+
+.text-center .button_mehr_anzeigen{
+    margin-right: 15px;
+    border-radius: 10px;
+}

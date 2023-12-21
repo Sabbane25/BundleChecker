@@ -1,14 +1,15 @@
 <!--Autor: Tim Hinder-->
+
 <h2 class="text-center" style="padding-top: 30px;">SYSTEMADMIN</h2>
 <div class="center">
   <div class="suche">
     <input
-        style="width: 300px;"
-        type="text"
-        id="textSuche"
-        placeholder="Nutzer suchen"
-        #searchInput
-        (input)="filterUsers()"
+      style="width: 300px;"
+      type="text"
+      id="textSuche"
+      placeholder="Nutzer suchen"
+      #searchInput
+      (input)="filterUsers()"
     />
   </div>
 </div>
@@ -51,6 +52,6 @@
   </div>
 </div>
 <div class="text-center">
-  <!--Button, um mehr User anzuzeigen-->
-  <button class="button_mehr_anzeigen" [hidden]="disableButton" (click)="loadMoreUsers()">Mehr anzeigen</button>
+  <button class="button_mehr_anzeigen" *ngIf="!disableButton && currentPage > 1" (click)="loadPreviousUsers()">Vorherige Seite</button>
+  <button class="button_mehr_anzeigen" *ngIf="!disableButton && currentPage * pageSize < totalItems" (click)="loadMoreUsers()">Nächste Seite</button>
 </div>
