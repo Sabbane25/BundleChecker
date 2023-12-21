@@ -305,7 +305,6 @@ function insertDataIntoGrafikkarte2(connection, scrapedData) {
             scrapedProductData.url,
             scrapedProductData.zertifizierung,
             scrapedProductData.leistung,
-            scrapedProductData.abmessungen,
         ];
   
         const sqlUrl = `SELECT * FROM Netzteil WHERE url = "${scrapedProductData.url}"`;
@@ -318,8 +317,8 @@ function insertDataIntoGrafikkarte2(connection, scrapedData) {
             } else {
                 console.log("Import ist möglich ****");
   
-                const sqlNetzteil = `INSERT INTO Netzteil (artikelnummer, bauform, url, zertifizierung, leistung, abmessungen)
-                  VALUES (?, ?, ?, ?, ?, ?)`;
+                const sqlNetzteil = `INSERT INTO Netzteil (artikelnummer, bauform, url, zertifizierung, leistung)
+                  VALUES (?, ?, ?, ?, ?)`;
   
                   connection.query(sqlNetzteil, valuesNetzteil, (error, resultat) => {
                     if (error) {

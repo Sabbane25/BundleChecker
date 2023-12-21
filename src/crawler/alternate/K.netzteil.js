@@ -36,7 +36,7 @@ const { calculateWorkingDays } = require('./Date.js');
             const c4 = element.querySelector('td.c4')?.textContent.trim();
 
             // Daten entsprechend der Spalten extrahieren und speichern
-            if (c1 === 'Bauform' || c1 === 'Zertifizierung'|| c1 === 'Abmessungen') {
+            if (c1 === 'Bauform' || c1 === 'Zertifizierung') {
               productData[c1] = c4;
             }
 
@@ -100,7 +100,6 @@ const { calculateWorkingDays } = require('./Date.js');
         const Zertifizierung = productInfo['Zertifizierung'];
         const Preis = parseFloat(price).toFixed(2);
         const Leistung = productInfo['Gesamt'];
-        const Abmessungen = productInfo['Abmessungen'];
         const workdays = calculateWorkingDays(deliveryDate);
         const image = splitUrls[0];
         const scrapedProductData = {
@@ -108,7 +107,6 @@ const { calculateWorkingDays } = require('./Date.js');
           productName: ProductName || '',
           category: Category || '',
           shopID: ShopID || '',
-          abmessungen: Abmessungen || '',
           verfügbarkeit: Verfügbarkeit|| '',
           bauform: Bauform || '',
           zertifizierung: Zertifizierung || '',
