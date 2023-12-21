@@ -26,7 +26,7 @@ export class FilterComponent{
   listeEigenschaften: { kategorie: string, liste: { typ: string; listeType: string[] }[] }[] = [];
   selektierteCheckboxMap = new Map(); // die Map enthält alle 
   checkboxStatus: any[] = []; //tableau pour recuperer toute 
-  hatArtikelGefunden: boolean = true;   // gib ine Meldung zurük, wenn es kein Artikel gefunden wird (Filter)
+  hatArtikelGefunden: boolean = true;   // gib eine Meldung zurük, wenn es kein Artikel gefunden wird (Filter)
 
 
 

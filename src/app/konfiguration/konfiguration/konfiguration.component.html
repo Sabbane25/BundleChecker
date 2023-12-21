@@ -4,16 +4,18 @@
 <div class="">
     <!--Dieses Div enthält die beiden verschiedenen Buttons, um von einer Komponente zur anderen zu wechseln. (liste-kompoente und uebersicht)-->
     <div class="d-flex">
-        <div class="p-2 me-2 flex-fill text-center border rounded-4 custom-bg-color" 
+        <div class="p-2 me-2 flex-fill text-center border rounded-4 custom-bg-color" style="cursor: pointer;"
             (click)="zuKomponenten()" [style.backgroundColor]="gibFarbe ? 'white' : '#00528D'"
             [style.color]="gibFarbe ? '#00528D' : 'white'"> 
-                Komponenten
+            Komponenten
         </div>
-        <div class="p-2 ms-2 flex-fill text-center border rounded-4 custom-bg-color" 
+
+
+        <div class="p-2 ms-2 flex-fill text-center border rounded-4 custom-bg-color" style="cursor: pointer;"
             (click)="zuUebersicht()" 
             [style.backgroundColor]="gibFarbe ? '#00528D' : 'white'"
             [style.color]="gibFarbe ? 'white' : '#00528D'"> 
-                Übersicht
+            Übersicht
         </div>
     </div>
 

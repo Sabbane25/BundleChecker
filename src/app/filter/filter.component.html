@@ -74,7 +74,7 @@
       Diese HTML-Div-Container wird nur angezeigt, wenn kein Artikel gefunden wurde.
       Der Zustand wird durch die Variable hatArtikelGefunden gesteuert.
     -->
-    <div class="hatArtiel" [ngStyle]="{'display' : hatArtikelGefunden ? 'none' : 'block'}">
-      <p>Kein Artikel gefunden!</p>
+    <div class="text-center mb-3" [ngStyle]="{'display' : hatArtikelGefunden ? 'none' : 'block'}">
+      <p style="font-size: 14px; color: red;">Kein Artikel gefunden!</p>
     </div>
 </div>

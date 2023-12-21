@@ -201,7 +201,7 @@
   border-style: none;
 }
 
-/* ########### NEU PC KONFIG ############ */
+/* Style für NEU PC KONFIG */
 .neu-konfig-div{
   width: 37%;
   margin-bottom: 32px;
@@ -273,6 +273,11 @@
   background: transparent; border: none; padding: 0;
 }
 
+.neu-konfig-div .container .artikel button img{
+  width: 30px;
+  height: 30px;
+}
+
 input:invalid {
   border: 2px dashed red;
 }
@@ -291,6 +296,22 @@ input:valid {
 
 .übersichAnzahlArtikel p{
   text-align: center;
-  font-size: 14px;
-  color: #00528D;
+  font-size: 13px;
+  color: red;
+}
+
+/*Style für loard Button */
+.loader {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #3498db;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
