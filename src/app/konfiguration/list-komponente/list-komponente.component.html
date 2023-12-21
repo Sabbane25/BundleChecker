@@ -15,13 +15,15 @@
         </h2>
         <!-- Hier wird alle Produkte einer Kategorie angezeigt. Und ein geeignetes Filter dafür -->
         <div [id]="'flush-collapseTwo' + kategorie" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-          <div class="accordion-body">
+          <div *ngIf="loading" class="loader"></div>
+          <div class="accordion-body" *ngIf="!loading">
             <app-filter [filterKategorie]="kategorie" [artikelliste]="artikelliste"></app-filter>
-            <div class="list-artikel" >
+            <!--<div *ngIf="loading" class="loader"></div>-->
+            <div class="list-artikel">
               <div *ngIf="kategorie === zeigeArtikel2.kategorie">
                 <div class="row  item" *ngFor="let artikelItem of zeigeArtikel2.artikelListe">
                   <div class="col-1 border justify-content-md-center">
-                    <img src="{{ artikelItem.shop2.image }}" alt="">
+                    <img src="https://{{ artikelItem.shop1.image }}" alt="">
                   </div>
                   <!-- Beschreibung der Artikels-->
                   <div class="col-9 artikel-info">
@@ -69,11 +71,9 @@
           <img src="./assets/trash-regular-red-24.png" alt="Delete" />
         </button>        
       </div>
-      <div [hidden]="isArtikelVorhanden" class="übersichAnzahlArtikel">
-        <p>Produkte dieser Kategorie können nicht zweimal hinzugefügt werden!</p>
+      <div [hidden]="isArtikelVorhanden" class="übersichAnzahlArtikel" role="alert">
+        <p>Kategorienprodukte können nicht doppelt hinzugefügt werden!</p>
       </div>
     </div>
   </div>
 </div>
-
-

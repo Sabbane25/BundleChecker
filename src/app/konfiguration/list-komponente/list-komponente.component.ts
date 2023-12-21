@@ -35,6 +35,7 @@ export class ListKomponenteComponent implements AfterViewInit{
 
   isArtikelVorhanden = true; // true wenn der Artikel schon vorhanden ist. (Neu Konfiguration -- liste-komponente (50 - 72))
   dataSubscription: Subscription; // Variable aus meinem Filterservice. Ermöglicht die Kommunikation zwischen der Filter- und der Liste-Komponente.
+  loading: boolean = true; // bewirkt eine Ladeanimation, solange die Produkte noch nicht angezeigt werden.
 
   /**
    * Diese Methode fügt einen Artikel zur Liste der hinzugefügten Artikel hinzu, wenn er noch nicht vorhanden ist.
@@ -69,7 +70,8 @@ export class ListKomponenteComponent implements AfterViewInit{
     }
     this.artikelService.updateGuenstigstesArtikel(hinzugefuegteArtikel);
     this.artikelService.updateSchnellstesArtikel(hinzugefuegteArtikel);
-    /*
+    /** 
+     * Autor: Arnauld Mba Kuitche
      * Methode aus dem ArtikelService. Ermöglicht das Wechseln der Komponente, 
      * wenn man auf ,,Zur Übersicht'' klickt.
      */
@@ -77,6 +79,7 @@ export class ListKomponenteComponent implements AfterViewInit{
   }
 
   /**
+   * 
    * Diese Methode sucht nach einem Artikel mit der angegebenen Produkt-URL in der Liste der hinzugefügten Artikel
    * und entfernt ihn, falls vorhanden.
    * @param urlArtikel Die Produkt-URL des zu löschenden Artikels.
@@ -102,6 +105,10 @@ export class ListKomponenteComponent implements AfterViewInit{
     ) {}
 
   ngOnInit(): void {
+    /*setTimeout(() => {
+      // Après avoir reçu les éléments (simulé ici avec un délai de 2 secondes)
+      this.loading = false;
+    }, 2000);*/
     this.gibGleichteFestplatte();
     this.gibGleichteRam();
     this.gibGleichteMainboard();
@@ -156,7 +163,8 @@ export class ListKomponenteComponent implements AfterViewInit{
             artikelFilter.filterZustant = true;
 
             // Überprüfe, ob keine Treffer vorhanden sind
-            if(gefilterteListe.length <= 0){
+            if(gefilterteListe.length === 0){
+              //this.artikelService.hatArtikel = false;
               this.artikelService.hatArtikel = false;
             }
           }
@@ -164,7 +172,8 @@ export class ListKomponenteComponent implements AfterViewInit{
           // Wenn der Filter nicht abgebrochen wurde, setze die Anzeige auf die ursprüngliche Liste zurück
           for(const artikelliste of this.backupArtikelliste){
             if(artikelliste.kategorie === artikelFilter.artikelKategorie){
-              this.zeigeArtikel2.artikelListe = artikelliste.artikelListe;
+              this.zeigeArtikel2.artikelListe = this.gibMehereProdukte(artikelliste.kategorie);
+              this.artikelService.hatArtikel = true;
             }
           }
         }
@@ -198,23 +207,30 @@ export class ListKomponenteComponent implements AfterViewInit{
     return listeArtikel;
   }
 
-
   /**
    * Die Methode 'ladeProdukte' wird verwendet, um weitere Produkte zu laden und sie der angezeigten Produktliste hinzuzufügen.
    * @param {string} kategorie - Die Produktkategorie, für die weitere Produkte geladen werden sollen.
    * @returns {void}
    */
-  ladeProdukte(kategorie: string){
+  ladeProdukte(kategorie: string): void{
     this.ladeMehrArtikel = this.ladeMehrArtikel + 5;
     this.zeigeArtikel2.kategorie = kategorie;
     this.zeigeArtikel2.artikelListe = this.gibMehereProdukte(kategorie);
   }
 
+  /**
+   * Diese Methode reagiert auf den Klick auf einen Button. Sie zeigt alle Artikel einer Kategorie an.
+   * @param kategorie 
+   */
   setzeLadeMehrProdukteZurueck(kategorie: string){
+    this.loading = true;
     this.ladeMehrArtikel = 5;
     this.kannNochProdukteLaden = false;
     this.zeigeArtikel2.kategorie = kategorie;
-    this.zeigeArtikel2.artikelListe = this.gibMehereProdukte(kategorie);
+    setTimeout(() => {
+      this.zeigeArtikel2.artikelListe = this.gibMehereProdukte(kategorie);
+      this.loading = false;
+    }, 500);
   }
 
   ngAfterViewInit(): void {
