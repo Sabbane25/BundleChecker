@@ -6,6 +6,7 @@ import { ListKomponenteComponent } from './list-komponente/list-komponente.compo
 import { DropDownMenuComponent } from '../drop-down-menu/drop-down-menu.component';
 import { FilterComponent } from '../filter/filter.component';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    RouterModule
   ],
   exports: [KonfigurationComponent], // Wenn die KonfigurationComponent exportiert werden muss.
 
