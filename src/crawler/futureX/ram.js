@@ -64,7 +64,6 @@ let listeArtikel = [];
             const produktListe = { kategorie: 'RAM', value: artikel };
 
             // sende gecrawlten Artikel in server
-            /*
             try {
               const response = await axios.post(backendUrl, produktListe, {
                 headers: {
@@ -74,7 +73,7 @@ let listeArtikel = [];
             console.log('Daten erfolgreich an das Backend gesendet', response.data);
             } catch (error) {
               console.error('Fehler beim Senden von Daten an das Backend (Angular):', error);
-            }*/
+            }
           }
       }catch(error){
         console.error('Erreur de navigation :', error);
