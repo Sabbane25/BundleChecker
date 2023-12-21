@@ -8,15 +8,16 @@ export class Grafikkarte extends Artikel{
     verbrauch: number;
     streamProzessoren: number;
 
-    constructor(kategorie: string, preis: number, shopID: number, produktLink: string, bezeichnung: string, lieferDatum: number, marke: string, bildUrl: string,
+    constructor(kategorie: string, preis: number, shopID: number, produktLink: string, bezeichnung: string, lieferDatum: number, marke: string, bildUrl: string, verfuegbarkeit: string,
         artikelnummer: number, kapazitaet: number, model: string, verbrauch: number, streamProzessoren: number) {
 
-        super(kategorie, preis, shopID, produktLink, bezeichnung, lieferDatum, marke, bildUrl)
+        super(kategorie, preis, shopID, produktLink, bezeichnung, lieferDatum, marke, bildUrl, verfuegbarkeit)
         this.artikelnummer = artikelnummer;
         this.kapazitaet = kapazitaet;
         this.model = model;
         this.verbrauch = verbrauch;
         this.streamProzessoren = streamProzessoren;
+        this.verfuegbarkeit = verfuegbarkeit; 
     }
 
     override gibArtikelBeschreibung(): string {

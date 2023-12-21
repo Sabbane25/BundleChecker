@@ -10,10 +10,10 @@ export class Mainboard extends Artikel{
     formfaktor: string;
     speicherTyp: string;
 
-    constructor(kategorie: string, preis: number, shopID: number, produktLink: string, bezeichnung: string, lieferDatum: number, marke: string, bildUrl: string,
+    constructor(kategorie: string, preis: number, shopID: number, produktLink: string, bezeichnung: string, lieferDatum: number, marke: string, bildUrl: string, verfuegbarkeit: string,
         artikelnummer: number, chipsatz: string, sockel: string, anzahlSpeichersockel: number, maxRam: number, formfaktor: string, speicherTyp: string) {
 
-        super(kategorie, preis, shopID, produktLink, bezeichnung, lieferDatum, marke, bildUrl)
+        super(kategorie, preis, shopID, produktLink, bezeichnung, lieferDatum, marke, bildUrl, verfuegbarkeit)
         this.artikelnummer = artikelnummer;
         this.chipsatz = chipsatz;
         this.sockel = sockel;
@@ -21,6 +21,7 @@ export class Mainboard extends Artikel{
         this.maxRam= maxRam;
         this.formfaktor = formfaktor;
         this.speicherTyp = speicherTyp;
+        this.verfuegbarkeit = verfuegbarkeit; 
     }
 
     override gibArtikelBeschreibung(): string {

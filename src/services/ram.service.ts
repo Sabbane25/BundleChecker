@@ -36,6 +36,7 @@ export class RamService {
           ramData.lieferDatum,
           ramData.marke,
           ramData.image,
+          ramData.verfuegbarkeit,
           ramData.artikelnummer,
           ramData.typ,
           ramData.kapazitaet,

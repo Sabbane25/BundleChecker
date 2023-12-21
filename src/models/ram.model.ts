@@ -9,15 +9,16 @@ export class Ram extends Artikel{
     spannung: number;
     //[cle: string]: any; //neu
 
-    constructor(kategorie: string, preis: number, shopID: number, produktUrl: string, bezeichnung: string, lieferDatum: number, marke: string, image: string,
+    constructor(kategorie: string, preis: number, shopID: number, produktUrl: string, bezeichnung: string, lieferDatum: number, marke: string, image: string, verfuegbarkeit: string, 
         artikelnummer: number, typ: string, kapazitaet: number, latency: number, spannung: number){
 
-        super(kategorie, preis, shopID, produktUrl, bezeichnung, lieferDatum, marke, image)
+        super(kategorie, preis, shopID, produktUrl, bezeichnung, lieferDatum, marke, image, verfuegbarkeit)
         this.artikelnummer = artikelnummer;
         this.typ = typ;
         this.kapazitaet = kapazitaet;
         this.latency = latency;
         this.spannung = spannung;
+        this.verfuegbarkeit = verfuegbarkeit; 
     }
 
     override gibArtikelBeschreibung(): string{

@@ -13,10 +13,10 @@ export class Cpu extends Artikel{
     turbo: number;
     [cle: string]: any; 
 
-    constructor(kategorie: string, preis: number, shopID: number, produktUrl: string, bezeichnung: string, lieferDatum: number, marke: string, image: string,
+    constructor(kategorie: string, preis: number, shopID: number, produktUrl: string, bezeichnung: string, lieferDatum: number, marke: string, image: string, verfuegbarkeit: string, 
         artikelnummer: number, sockel: string, anzahlKerne: number, stromverbrauch: number, taktfrequenz: string, interneGrafik: string, threads: number, typ: string, turbo: number) {
 
-        super(kategorie, preis, shopID, produktUrl, bezeichnung, lieferDatum, marke, image)
+        super(kategorie, preis, shopID, produktUrl, bezeichnung, lieferDatum, marke, image, verfuegbarkeit)
         this.artikelnummer = artikelnummer;
         this.sockel = sockel;
         this.anzahlKerne = anzahlKerne;
@@ -26,6 +26,7 @@ export class Cpu extends Artikel{
         this.threads = threads;
         this.typ = typ;
         this.turbo = turbo;
+        this.verfuegbarkeit = verfuegbarkeit; 
     }
 
 

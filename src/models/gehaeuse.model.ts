@@ -10,16 +10,17 @@ export class Gehaeuse extends Artikel{
     gewicht: number;
     //[cle: string]: any; //neu
 
-    constructor(kategorie: string, preis: number, shopID: number, produktLink: string, bezeichnung: string, lieferDatum: number, marke: string, bildUrl: string,
+    constructor(kategorie: string, preis: number, shopID: number, produktLink: string, bezeichnung: string, lieferDatum: number, marke: string, bildUrl: string, verfuegbarkeit: string,
         artikelnummer: number, formfaktor: string, frontenschluesse: string, abmessungen: string, typ: string, gewicht: number) {
 
-        super(kategorie, preis, shopID, produktLink, bezeichnung, lieferDatum, marke, bildUrl)
+        super(kategorie, preis, shopID, produktLink, bezeichnung, lieferDatum, marke, bildUrl, verfuegbarkeit)
         this.artikelnummer = artikelnummer;
         this.formfaktor = formfaktor;
         this.frontenschluesse = frontenschluesse;
         this.abmessungen = abmessungen;
         this.typ = typ;
         this.gewicht = gewicht;
+        this.verfuegbarkeit = verfuegbarkeit; 
     }
 
     override gibArtikelTitel(): string {

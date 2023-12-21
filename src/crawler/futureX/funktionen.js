@@ -37,11 +37,9 @@ async function futureXUrls2(url) {
     try{
       await page.goto(url + i);
       const elements = await page.$$('.cms-block.pos-1.cms-block-product-listing .product-image-wrapper');
-      if(elements.length != 0 && i < 2){
-        console.log(elements.length, 'longueur du tableau qui contient tous les lients');
+      if(elements.length != 0 && i < 10){
         for(let element of elements){
           const link = await page.evaluate(el => el.querySelector('a').getAttribute('href'), element)
-          //console.log("page number: ", i);
           linkListe.push(link);
         }
       }else{

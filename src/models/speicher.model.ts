@@ -8,15 +8,16 @@ export class Speicher extends Artikel{
     lesen: number;
     schreiben: number;
 
-    constructor(kategorie: string, preis: number, shopID: number, produktLink: string, bezeichnung: string, lieferDatum: number, marke: string, bildUrl: string,
+    constructor(kategorie: string, preis: number, shopID: number, produktLink: string, bezeichnung: string, lieferDatum: number, marke: string, bildUrl: string, verfuegbarkeit: string, 
         artikelnummer: number, typ: string, kapazitaet: string, lesen: number, schreiben: number) {
 
-        super(kategorie, preis, shopID, produktLink, bezeichnung, lieferDatum, marke, bildUrl)
+        super(kategorie, preis, shopID, produktLink, bezeichnung, lieferDatum, marke, bildUrl, verfuegbarkeit)
         this.artikelnummer = artikelnummer;
         this.typ = typ;
         this.kapazitaet = kapazitaet;
         this.lesen = lesen;
         this.schreiben = schreiben;
+        this.verfuegbarkeit = verfuegbarkeit; 
     }
 
     /**

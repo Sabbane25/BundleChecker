@@ -7,14 +7,15 @@ export class Netzteil extends Artikel{
     zertifizierung: string;
     leistung: number;
 
-    constructor(kategorie: string, preis: number, shopID: number, produktLink: string, bezeichnung: string, lieferDatum: number, marke: string, bildUrl: string,
+    constructor(kategorie: string, preis: number, shopID: number, produktLink: string, bezeichnung: string, lieferDatum: number, marke: string, bildUrl: string, verfuegbarkeit: string,
         artikelnummer: number, bauform: string, zertifizierung: string, leistung: number) {
 
-        super(kategorie, preis, shopID, produktLink, bezeichnung, lieferDatum, marke, bildUrl)
+        super(kategorie, preis, shopID, produktLink, bezeichnung, lieferDatum, marke, bildUrl, verfuegbarkeit)
         this.artikelnummer = artikelnummer;
         this.bauform = bauform;
         this.zertifizierung = zertifizierung;
         this.leistung = leistung;
+        this.verfuegbarkeit = verfuegbarkeit;
     }
 
     override gibArtikelBeschreibung(): string {

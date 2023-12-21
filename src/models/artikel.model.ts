@@ -11,9 +11,10 @@ export abstract class Artikel {
   image: string;
   menge: number;
   bildUrl: string;
+  verfuegbarkeit:string;
   [cle: string]: any; //neu
 
-  constructor(kategorie: string, preis: number, shopID: number, produktUrl: string, bezeichnung: string, lieferDatum: number, marke: string, image: string) {
+  constructor(kategorie: string, preis: number, shopID: number, produktUrl: string, bezeichnung: string, lieferDatum: number, marke: string, image: string, verfuegbarkeit:string) {
     this.kategorie = kategorie;
     this.preis = preis;
     this.shopID = shopID;
@@ -22,6 +23,7 @@ export abstract class Artikel {
     this.lieferDatum = lieferDatum;
     this.marke = marke;
     this.image = image;
+    this.verfuegbarkeit = verfuegbarkeit;
   }
 
   abstract gibArtikelBeschreibung(): string;

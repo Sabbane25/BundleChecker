@@ -1,3 +1,6 @@
+/**
+ * Arnauld Mba Kuitche
+ */
 const mysql = require('mysql2');
 
 /**
@@ -279,7 +282,7 @@ function insertDataIntoRam(connection, scrapedProductData) {
       scrapedProductData.typ,
       scrapedProductData.kapazitaet,
       scrapedProductData.latency,
-      scrapedProductData.url,
+      scrapedProductData.produktlink,
       scrapedProductData.spannung,
   ];
 

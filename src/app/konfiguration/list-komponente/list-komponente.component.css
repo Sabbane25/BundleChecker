@@ -128,13 +128,13 @@
 
 .komponanten-div .list-artikel .artikel-info p{
   color: rgb(47, 47, 47);
-  font-size: 12px; 
+  font-size: 14px; 
   opacity: 0.9;
 }
 
 .komponanten-div .list-artikel .artikel-info h5{
   font-size: 16px; 
-  font-weight: 300px;
+  font-weight: 400px;
 }
 
 .komponanten-div .list-artikel .artikel-info h6{
@@ -146,8 +146,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
-  height: 60px;
+  width: 82px;
+  height: 82px;
   margin-right: 10px;
 }
 /* Bild eines Artikels */
@@ -192,13 +192,23 @@
 }
 
 /** button HINZUFÜGEN */
-.komponanten-div .list-artikel .row .col button{
-  width: 80%;
+.komponanten-div .list-artikel .hinzufuegenButton{
+  /*width: 80%;*/
   background-color: green;
   font-size: 10px;
   color: white;
-  padding: 4px 8px;
+  padding: 8px 8px;
   border-style: none;
+}
+
+
+.list-artikel .hunzufügenbButton{
+  border: none;
+  background-color: green;
+  color: white;
+  font-size: 12px;
+  padding: 4px 8px;
+  width: 100%;
 }
 
 /* Style für NEU PC KONFIG */

@@ -105,10 +105,6 @@ export class ListKomponenteComponent implements AfterViewInit{
     ) {}
 
   ngOnInit(): void {
-    /*setTimeout(() => {
-      // Après avoir reçu les éléments (simulé ici avec un délai de 2 secondes)
-      this.loading = false;
-    }, 2000);*/
     this.gibGleichteFestplatte();
     this.gibGleichteRam();
     this.gibGleichteMainboard();
@@ -272,6 +268,8 @@ export class ListKomponenteComponent implements AfterViewInit{
           if(festplatteId1.lesen === festplatteId2.lesen 
             && festplatteId1.schreiben === festplatteId2.schreiben
             && festplatteId1.kapazitaet === festplatteId2.kapazitaet
+            && festplatteId1.typ.toLocaleLowerCase() === festplatteId2.kapazitaet.toLocaleLowerCase()
+            && festplatteId1.marke.toLocaleLowerCase() === festplatteId2.marke.toLocaleLowerCase()
             && isGleichArikel === false){
               vergleichenenArtikelliste.push({ shop1: festplatteId1, shop2: festplatteId2 });           
               isGleichArikel = true;

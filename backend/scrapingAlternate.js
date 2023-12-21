@@ -120,7 +120,7 @@ function insertDataIntoRAM2(connection, scrapedData) {
           scrapedProductData.spannung,
       ];
 
-      const sqlUrl = `SELECT * FROM CPU WHERE url = "${scrapedProductData.url}"`;
+      const sqlUrl = `SELECT * FROM RAM WHERE url = "${scrapedProductData.url}"`;
 
       connection.query(sqlUrl, (error, results) => {
           if (error) {
@@ -232,7 +232,7 @@ function insertDataIntoGrafikkarte2(connection, scrapedData) {
             scrapedProductData.streamCpu,
         ];
   
-        const sqlUrl = `SELECT * FROM CPU WHERE url = "${scrapedProductData.url}"`;
+        const sqlUrl = `SELECT * FROM Grafikkarte WHERE url = "${scrapedProductData.url}"`;
   
         connection.query(sqlUrl, (error, results) => {
             if (error) {

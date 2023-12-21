@@ -33,7 +33,7 @@ const { Prozessor } = require('./models.js');
             const markeSelektor = await page.$('head > meta:nth-child(17)');
 
             artikel.shopID = 2;
-            artikel.kategorie = 'CPU';
+            artikel.kategorie = 'Prozessor';
             artikel.bezeichnung = await titleDiv.evaluate(node => node.innerText);
             artikel.marke = await markeSelektor.evaluate(node => node.getAttribute('content'));
             const preis = await priceDiv.evaluate(node => node.getAttribute('content'));
