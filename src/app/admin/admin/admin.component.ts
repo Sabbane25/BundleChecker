@@ -9,6 +9,7 @@ import { TokenStorageService } from 'src/services/token-storage.service';
   templateUrl: 'admin.component.html',
   styleUrls: ['admin.component.css'],
 })
+
 export class AdminComponent implements OnInit {
   @ViewChild('searchInput', { static: false }) searchInput: ElementRef;
   users: any[] = [];
@@ -18,6 +19,7 @@ export class AdminComponent implements OnInit {
   deletedUserFail = false;
   loeschenErfolgreichNachricht = '';
   loeschenFehlerNachricht = '';
+  disableButton = false;
 
   constructor(
     private token: TokenStorageService,
@@ -25,6 +27,7 @@ export class AdminComponent implements OnInit {
     private router: Router
   ) {}
 
+  //Diese Methode Wird bei dem Aufruf der Seite ausgeführt.  
   ngOnInit(): void {
     if (
       !this.token.isLoggedIn() ||
@@ -36,17 +39,19 @@ export class AdminComponent implements OnInit {
     this.loadUsers();
   }
 
+  //Ruft die User aus der Datenbank ab und fügt diese dem Array users zu.
   loadUsers() {
     this.nutzerService.getUsers().subscribe((data) => {
       this.users = data;
       this.updateDisplayedUsers();
     });
   }
-
+  //Methode, um die Anzeige der Users zu aktualisieren
   updateDisplayedUsers() {
     this.displayedUsers = this.users.slice(0, this.pageSize);
   }
 
+  //Methode, um weitere User zu laden.
   loadMoreUsers() {
     const startIndex = this.displayedUsers.length;
     const endIndex = startIndex + this.pageSize;
@@ -56,8 +61,14 @@ export class AdminComponent implements OnInit {
         ...this.users.slice(startIndex, endIndex),
       ];
     }
+
+    if(this.users.length === this.displayedUsers.length){
+      this.disableButton = true;
+    }
+
   }
 
+  //Methode, um User zu suchen.
   filterUsers() {
     const email = this.searchInput.nativeElement.value;
     const lowerCaseSearch = email.toLowerCase();
@@ -73,6 +84,7 @@ export class AdminComponent implements OnInit {
     }
   }
 
+  //Methode, um User zu löschen
   userLoeschen(userId: number): void {
     console.log(`User ${userId} wird gelöscht`);
     this.nutzerService.loeschen(userId).subscribe(
@@ -95,6 +107,7 @@ export class AdminComponent implements OnInit {
     );
   }
 
+  //Methode, um auf die Seite zu gelangen, wo das Passwort geändert werden kann.
   navigateToAdminBearbeiten(email: string, id: number): void {
     console.log(id);
     this.router.navigate(['/admin-bearbeiten', email, id]);
