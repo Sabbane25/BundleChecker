@@ -29,10 +29,10 @@
                   <!-- Beschreibung des Artikels-->
                   <div class="col-9 artikel-info">
                     <h5 style="color: black; font-size: 14px;"> {{ artikelItem.shop2.bezeichnung }} </h5>
-                    <p> 
+                    <p style="color: #052587f2;"> 
                       <span class="alternate">{{ artikelItem.shop1.shopID === 1 ? 'Alternate' : 'Future-X' }}</span> : <span class="shoppreis">{{ artikelItem.shop1.preis }} €</span>
                     </p>
-                    <p> <span class="futureX">{{ artikelItem.shop2.shopID === 1 ? 'Alternate' : 'Future-X' }}</span> : <span class="shoppreis">{{ artikelItem.shop2.preis }} €</span> </p>
+                    <p style="color: #052587f2;"> <span class="futureX">{{ artikelItem.shop2.shopID === 1 ? 'Alternate' : 'Future-X' }}</span> : <span class="shoppreis">{{ artikelItem.shop2.preis }} €</span> </p>
                   </div>
                   <div class="col hunzufügenbButtonDIV">
                     <button class="hunzufügenbButton" (click)="onButtonhinzufuegen(artikelItem)">HINZUFÜGEN</button>

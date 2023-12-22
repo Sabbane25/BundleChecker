@@ -3,7 +3,6 @@ import { CommonModule, NgIf } from '@angular/common';
 import { UebersichtComponent } from './uebersicht/uebersicht.component'; // Stellen Sie sicher, dass der Pfad korrekt ist.
 import { KonfigurationComponent } from './konfiguration/konfiguration.component';
 import { ListKomponenteComponent } from './list-komponente/list-komponente.component';
-import { DropDownMenuComponent } from '../drop-down-menu/drop-down-menu.component';
 import { FilterComponent } from '../filter/filter.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -14,7 +13,6 @@ import { RouterModule } from '@angular/router';
     ListKomponenteComponent, 
     UebersichtComponent, 
     KonfigurationComponent,
-    DropDownMenuComponent,
     FilterComponent,
   ],
   imports: [
