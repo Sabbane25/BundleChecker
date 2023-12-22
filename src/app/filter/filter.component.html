@@ -46,7 +46,8 @@
               </button>
             </h2>
             <div [id]="'flush-collapseTwo1' + item.typ"  class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample1">
-              <div class="accordion-body p-2" >
+              <div *ngIf="loadingFilter" class="loader"></div>
+              <div class="accordion-body p-2" *ngIf="!loadingFilter">
                 <div *ngFor="let listeItem of item.listeType.sort()">
                   <form #filterForm="ngForm">
                     <input class="checkboxInput" type="checkbox" #checkbox [name]="listeItem" (change)="sedeListeItem(item.typ, listeItem, $event)">

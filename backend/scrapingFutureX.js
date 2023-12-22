@@ -276,7 +276,7 @@ function insertDataIntoMainboard(connection, scrapedProductData) {
 
 // insert RAM 
 function insertDataIntoRam(connection, scrapedProductData) {
-  insertDataIntoArtikel(connection, scrapedData);
+  insertDataIntoArtikel(connection, scrapedProductData);
   const valuesRam = [
       null,  
       scrapedProductData.typ,
@@ -286,7 +286,7 @@ function insertDataIntoRam(connection, scrapedProductData) {
       scrapedProductData.spannung,
   ];
 
-  const sqlUrl = `SELECT * FROM CPU WHERE url = "${scrapedProductData.url}"`;
+  const sqlUrl = `SELECT * FROM RAM WHERE url = "${scrapedProductData.url}"`;
 
   connection.query(sqlUrl, (error, results) => {
     if (error) {

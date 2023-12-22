@@ -157,6 +157,7 @@ export class ListKomponenteComponent implements AfterViewInit{
             // Aktualisiere die Anzeige der Artikel
             this.zeigeArtikel2.artikelListe = gefilterteListe;
             artikelFilter.filterZustant = true;
+            this.kannNochProdukteLaden = true;
 
             // Überprüfe, ob keine Treffer vorhanden sind
             if(gefilterteListe.length === 0){
@@ -268,7 +269,7 @@ export class ListKomponenteComponent implements AfterViewInit{
           if(festplatteId1.lesen === festplatteId2.lesen 
             && festplatteId1.schreiben === festplatteId2.schreiben
             && festplatteId1.kapazitaet === festplatteId2.kapazitaet
-            && festplatteId1.typ.toLocaleLowerCase() === festplatteId2.kapazitaet.toLocaleLowerCase()
+            && festplatteId1.typ.toLocaleLowerCase() === festplatteId2.typ.toLocaleLowerCase()
             && festplatteId1.marke.toLocaleLowerCase() === festplatteId2.marke.toLocaleLowerCase()
             && isGleichArikel === false){
               vergleichenenArtikelliste.push({ shop1: festplatteId1, shop2: festplatteId2 });           
@@ -279,7 +280,7 @@ export class ListKomponenteComponent implements AfterViewInit{
       this.artikelliste.push({ kategorie: 'Festplatte', artikelListe: vergleichenenArtikelliste.slice()});
       this.backupArtikelliste.push({ kategorie: 'Festplatte', artikelListe: vergleichenenArtikelliste.slice()});
     }catch (error){
-      console.error('Erreur während des La');
+      console.error('Erreur während des Ladung');
     }
   }
 
@@ -290,15 +291,20 @@ export class ListKomponenteComponent implements AfterViewInit{
       const listeRamShop1: Ram[] = await this.rufeDataService2<Ram>(this.artikelService.gibListeRam.bind(this.artikelService), 1, 'RAM');
       const listeRamShop2: Ram[] = await this.rufeDataService2<Ram>(this.artikelService.gibListeRam.bind(this.artikelService), 2, 'RAM');
 
+      console.log(listeRamShop1, ' Alternate');
+      console.log(listeRamShop2, ' FutureX');
+
       for(const festplatteId1 of listeRamShop1){
         let isGleichArikel = false; 
         for(const festplatteId2 of listeRamShop2){
           if(festplatteId1.latency === festplatteId2.latency 
-            && festplatteId1.marke === festplatteId2.marke
+            && festplatteId1.marke.toLocaleLowerCase() === festplatteId2.marke.toLocaleLowerCase()
             && festplatteId1.kapazitaet === festplatteId2.kapazitaet
+            && festplatteId1.typ.split('-')[0] === festplatteId2.typ.split(' ')[1]
             && festplatteId1.spannung === festplatteId2.spannung
             && isGleichArikel === false){
               vergleichenenArtikelliste.push({ shop1: festplatteId1, shop2: festplatteId2 });
+              
               isGleichArikel = true;
           }
         }
@@ -317,13 +323,17 @@ export class ListKomponenteComponent implements AfterViewInit{
       const listeMainboardShop1: Mainboard[] = await this.rufeDataService2<Mainboard>(this.artikelService.gibListeMainboard.bind(this.artikelService), 1, 'Mainboard');
       const listeMainboardShop2: Mainboard[] = await this.rufeDataService2<Mainboard>(this.artikelService.gibListeMainboard.bind(this.artikelService), 2, 'Mainboard');
 
+      console.log(listeMainboardShop1);
       for(const mainboardId1 of listeMainboardShop1){
         let isGleichArikel = false; 
         for(const mainboardId2 of listeMainboardShop2){
           if(mainboardId1.chipsatz === mainboardId2.chipsatz 
-            && mainboardId1.marke === mainboardId2.marke
-            && mainboardId1.formfaktor === mainboardId2.formfaktor
+            && mainboardId1.marke.toUpperCase() === mainboardId2.marke.toUpperCase()
             && mainboardId1.maxRam === mainboardId2.maxRam
+            && mainboardId1.anzahlSpeichersockel === mainboardId2.anzahlSpeichersockel
+            && mainboardId1.speicherTyp.includes(mainboardId2.speicherTyp.split(' ')[0])
+            && mainboardId2.sockel.includes(mainboardId1.sockel)
+            && mainboardId2.chipsatz.split(' ')[1] === (mainboardId1.chipsatz.split(' ')[1])
             && isGleichArikel === false){
               vergleichenenArtikelliste.push({ shop1: mainboardId1, shop2: mainboardId2 });
               isGleichArikel = true;
@@ -347,7 +357,7 @@ export class ListKomponenteComponent implements AfterViewInit{
       for(const mainboardId1 of listeNetzteilShop1){
         let isGleichArikel = false; 
         for(const mainboardId2 of listeNetzteilShop2){
-          if(mainboardId1.marke === mainboardId2.marke 
+          if(mainboardId1.marke.toLowerCase() === mainboardId2.marke.toLowerCase()
             && mainboardId1.bauform === mainboardId2.bauform
             && mainboardId1.leistung === mainboardId2.leistung
             && mainboardId1.zertifizierung === mainboardId2.zertifizierung
@@ -374,9 +384,9 @@ export class ListKomponenteComponent implements AfterViewInit{
       for(const grafikkarteId1 of listeGrafikkarteShop1){
         let isGleichArikel = false; 
         for(const grafikkarteId2 of listeGrafikkarteShop2){
-          if(grafikkarteId1.marke === grafikkarteId2.marke 
+          if(grafikkarteId1.marke.toLowerCase() === grafikkarteId2.marke.toLowerCase()
             && grafikkarteId1.kapazitaet === grafikkarteId2.kapazitaet
-            //&& mainboardId1.model === mainboardId2.model
+            && grafikkarteId1.model === grafikkarteId2.model
             && grafikkarteId1.streamProzessoren === grafikkarteId2.streamProzessoren
             && grafikkarteId1.verbrauch === grafikkarteId2.verbrauch
             && isGleichArikel === false){
@@ -402,18 +412,25 @@ export class ListKomponenteComponent implements AfterViewInit{
       for(const gehaeuseId1 of listeGehaeuseShop1){
         let isGleichArikel = false; 
         for(const gehaeuseId2 of listeGehaeuseShop2){
-          if(gehaeuseId1.marke === gehaeuseId2.marke 
+          if(gehaeuseId1.marke.toLowerCase() === gehaeuseId2.marke.toLowerCase()
             && gehaeuseId1.gewicht === gehaeuseId2.gewicht
+            //&& gehaeuseId1.typ.split('-')[0].toLowerCase() === gehaeuseId2.typ.toLowerCase()
+            && gehaeuseId1.abmessungen.split('cm')[0].match(/\d+,\d+/)?.[0] === gehaeuseId2.abmessungen.split('cm')[0].match(/\d+,\d+/)?.[0]
+            //&& gehaeuseId1.abmessungen.split('cm')[1].match(/\d+,\d+/)?.[0] === gehaeuseId2.abmessungen.split('cm')[1].match(/\d+,\d+/)?.[0]
+            //&& gehaeuseId1.abmessungen.split('cm')[2].match(/\d+,\d+/)?.[0] === gehaeuseId2.abmessungen.split('cm')[2].match(/\d+,\d+/)?.[0]
             && isGleichArikel === false){
               vergleichenenArtikelliste.push({ shop1: gehaeuseId1, shop2: gehaeuseId2 });
               isGleichArikel = true;
+              console.log(gehaeuseId2.abmessungen.split('cm')[0].match(/\d+,\d+/)?.[0], ' --- ', gehaeuseId2.abmessungen.split('cm')[0].match(/\d+,\d+/)?.[0]);
+              console.log(gehaeuseId2.abmessungen.split('cm')[1].match(/\d+,\d+/)?.[0], ' --- ', gehaeuseId2.abmessungen.split('cm')[1].match(/\d+,\d+/)?.[0]);
+              console.log(gehaeuseId2.abmessungen.split('cm')[2].match(/\d+,\d+/)?.[0], ' --- ', gehaeuseId2.abmessungen.split('cm')[2].match(/\d+,\d+/)?.[0]);
           }
         }
       }
       this.artikelliste.push({ kategorie: 'Gehäuse', artikelListe: vergleichenenArtikelliste.slice()});
       this.backupArtikelliste.push({ kategorie: 'Gehäuse', artikelListe: vergleichenenArtikelliste.slice()});
     }catch (error){
-      console.error('Erreur während des La');
+      console.error('Erreur während des Ladens');
     }
   }
 
@@ -427,11 +444,13 @@ export class ListKomponenteComponent implements AfterViewInit{
       for(const cpuId1 of listeCPUShop1){
         let isGleichArikel = false; 
         for(const cpuId2 of listeCPUShop2){
-          if(cpuId1.marke === cpuId2.marke 
-            && cpuId1.interneGrafik === cpuId2.interneGrafik
-            && cpuId1.marke === cpuId2.marke
+          if(cpuId1.marke.toLowerCase() === cpuId2.marke.toLowerCase()
+            && cpuId2.sockel.includes(cpuId1.sockel)
+            && parseFloat(cpuId2.taktfrequenz.replace(',', '.')) * 1000 === parseFloat(cpuId1.taktfrequenz)
             && cpuId1.stromverbrauch === cpuId2.stromverbrauch
             && cpuId1.anzahlKerne === cpuId2.anzahlKerne
+            && cpuId1.threads === cpuId2.threads
+            && cpuId1.turbo === cpuId2.turbo
             && isGleichArikel === false){
               vergleichenenArtikelliste.push({ shop1: cpuId1, shop2: cpuId2 });
               isGleichArikel = true;

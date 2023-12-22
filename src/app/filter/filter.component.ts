@@ -27,6 +27,7 @@ export class FilterComponent{
   selektierteCheckboxMap = new Map(); // die Map enthält alle 
   checkboxStatus: any[] = []; //tableau pour recuperer toute 
   hatArtikelGefunden: boolean = true;   // gib eine Meldung zurük, wenn es kein Artikel gefunden wird (Filter)
+  loadingFilter: boolean = true; // bewirkt eine Ladeanimation, solange die Produkte noch nicht angezeigt werden.
 
 
 
@@ -139,7 +140,12 @@ export class FilterComponent{
 
   // zeigt der Filter
   zeigeFilter(){
+    this.loadingFilter = true;
     this.isFilterSichtbar = !this.isFilterSichtbar;
+    setTimeout(() =>{
+      this.listeEigenschaften.length === 0;
+      this.loadingFilter = false;
+    }, 1500);
   }
 
   ngOnInit(): void {
