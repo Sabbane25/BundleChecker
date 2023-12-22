@@ -124,11 +124,15 @@ export class FilterComponent{
   gibListeEigenschafte(kategorie: string, eigenschaft: string): string[] {
     let eingeschaftListe: string[] = [];
     this.artikelService.gibListeEigenschaft(kategorie, eigenschaft).subscribe((data) => {
-      for(let param of data){
-        let item = Object.keys(param);
-        if(param[item[0]].length > 1){
-          eingeschaftListe.push(param[item[0]]);
+      try{
+        for(let param of data){
+          let item = Object.keys(param);
+          if(param[item[0]].length > 1 || param[item[0]] > 1){
+            eingeschaftListe.push(param[item[0]]);
+          }
         }
+      }catch (error){
+        console.error('Fehler während des Ladens der Eigentschaften');
       }
     });
     return eingeschaftListe;
@@ -157,7 +161,7 @@ export class FilterComponent{
     setTimeout(() =>{
       this.listeEigenschaften.length === 0;
       this.loadingFilter = false;
-    }, 1500);
+    }, 2000);
   }
 
   ngOnInit(): void {
@@ -175,7 +179,7 @@ export class FilterComponent{
 
     // Filterkriterien für CPU
     let filterCPU = [
-      { typ: 'anzahlKerne', listeType: this.gibListeEigenschafte('CPU','anzahlkerne') },
+      { typ: 'anzahlKerne', listeType: this.gibListeEigenschafte('CPU','anzahlKerne') },
       { typ: 'marke', listeType: this.gibListeArikelMarke('CPU') },
       { typ: 'typ', listeType: this.gibListeEigenschafte('CPU','typ') },
       { typ: 'taktfrequenz', listeType: this.gibListeEigenschafte('CPU','taktfrequenz') },
@@ -229,7 +233,7 @@ export class FilterComponent{
     ];
     
     // Füge die Filterkriterien für jede Kategorie zur Gesamtliste hinzu
-    listeEigenschaften.push( { kategorie: 'CPU', liste: filterCPU.sort()} );
+    listeEigenschaften.push( { kategorie: 'CPU', liste: filterCPU } );
     listeEigenschaften.push( { kategorie: 'Festplatte', liste: filterFestplatte} );
     listeEigenschaften.push( { kategorie: 'Mainboard', liste: filterMainboard } );
     listeEigenschaften.push( { kategorie: 'Gehäuse', liste: filterGehäuse } );
