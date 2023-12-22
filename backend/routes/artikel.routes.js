@@ -96,7 +96,8 @@ module.exports = function(app, connection) {
     const query = `
     SELECT DISTINCT ${tableName}.${markeValue}
     FROM ${tableName}
-    JOIN Artikel ON ${tableName}.url = Artikel.produktUrl`; 
+    JOIN Artikel ON ${tableName}.url = Artikel.produktUrl
+    WHERE shopID = 1`; 
 
     connection.query(query, [markeValue], (error, results) => {
       if (error) {
@@ -115,12 +116,11 @@ module.exports = function(app, connection) {
       return res.status(400).json({ message: 'Table ist erforderlich' });
     }
 
-    const query2 = `SELECT * FROM ${tableName}`;
-
     const query = `
       SELECT DISTINCT Artikel.marke
       FROM ${tableName}
-      JOIN Artikel ON ${tableName}.url = Artikel.produktUrl`;
+      JOIN Artikel ON ${tableName}.url = Artikel.produktUrl
+      WHERE shopID = 1`;
 
     connection.query(query, (error, results) => {
       if (error) throw error;

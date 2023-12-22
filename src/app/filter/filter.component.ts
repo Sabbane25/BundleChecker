@@ -67,9 +67,19 @@ export class FilterComponent{
       brecheFilterAb: true,
       filterZustant: false,
     }
+    //sendet das Filterobjekt an die Komponente list-komponente.ts, um den Filter auszuführen
     this.filterService.sendeListeKomponenten(artikelFilter);
 
+    // lösche alle Checkbox nach dem klickt, um zu filtern
     artikelFilter.checkbox.clear();
+
+    //hebt nach dem Klick alle Häkchen auf 
+    for(let checkboxItem of this.checkboxStatus){
+      checkboxItem.checked = false;
+    }
+
+    // schließt die Liste der Eigenschaften, nach dem Klick
+    this.isFilterSichtbar = false;
 
     this.hatArtikelGefunden = this.artikelService.hatArtikel;
   }
@@ -116,7 +126,9 @@ export class FilterComponent{
     this.artikelService.gibListeEigenschaft(kategorie, eigenschaft).subscribe((data) => {
       for(let param of data){
         let item = Object.keys(param);
-        eingeschaftListe.push(param[item[0]]);
+        if(param[item[0]].length > 1){
+          eingeschaftListe.push(param[item[0]]);
+        }
       }
     });
     return eingeschaftListe;
