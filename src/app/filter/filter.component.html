@@ -1,8 +1,8 @@
 <div class="fiterContainer">
      <div class="filterBorderAusser">
-      <h4 (click)="zeigeFilter()">Filter</h4>
+      <h4 style="cursor: pointer" (click)="zeigeFilter()">Filter</h4>
       <!-- Filter -->
-      <div *ngFor="let kategorie of listeEigenschaften" class="accordion accordion-flush filter" id="accordionFlushExample1" [hidden]="!isFilterSichtbar">
+      <div *ngFor="let kategorie of listeEigenschaften" class="accordion accordion-flush filter" id="accordionFlushExample1"  [hidden]="!isFilterSichtbar">
         <form #filterForm="ngForm" (ngSubmit)="submitForm(filterForm.value)" class="test" *ngIf="kategorie.kategorie === filterKategorie">
           <!-- 
             Filter-Item 1: Preis

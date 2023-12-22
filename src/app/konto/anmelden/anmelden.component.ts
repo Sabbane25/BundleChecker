@@ -62,4 +62,8 @@ export class AnmeldenComponent implements OnInit {
   returnViewRegistrieren() {
     this.router.navigate(['konto/registrieren']);
   }
+
+  returnViewKontaktFormular(){
+    this.router.navigate(['/kontakt']);
+  }
 }
