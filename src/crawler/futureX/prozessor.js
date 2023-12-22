@@ -76,7 +76,7 @@ const { Prozessor } = require('./models.js');
                             break; 
 
                         case "Max. Turbo-Taktfrequenz":
-                            artikel.maxTurboTaktfrequenz = extrahiereZahl(data);
+                            artikel.maxTurboTaktfrequenz = parseInt(parseFloat(data.replace(',', '.')) * 1000);
                             break;  
                         
                         case "Typ":
@@ -113,7 +113,7 @@ const { Prozessor } = require('./models.js');
                     console.log(artikel);
                     
                 // sende gecrawlten Artikel in server
-                const produktListe = { kategorie: 'CPU', value: artikel };
+                 const produktListe = { kategorie: 'CPU', value: artikel };
                 try {
                     const response = await axios.post(backendUrl, produktListe, {
                     headers: {
